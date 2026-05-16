@@ -3,7 +3,7 @@ from datetime import datetime
 import time
 
 
-def setup_gemini(api_key: str, model_name: str = "gemini-1.5-flash"):
+def setup_gemini(api_key: str, model_name: str = "gemini-2.5-flash"):
     client = genai.Client(api_key=api_key)
     client._model_name = model_name
     return client
