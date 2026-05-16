@@ -20,7 +20,37 @@
   --muted:   #8892a4;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif; font-size: 13px; padding: 14px; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif; font-size: 13px; padding: 14px; padding-top: 58px; }
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(13,17,23,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 14px;
+  height: 44px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.nav-brand { font-size: 13px; font-weight: 900; color: var(--gold); margin-right: 8px; flex-shrink: 0; }
+.nav-link {
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover { background: var(--card2); color: var(--text); }
 
 /* ── HEADER ── */
 .header { background: linear-gradient(135deg,#0f1923,#1a2535); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
@@ -28,7 +58,6 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .header-left .sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
 .header-right { display: flex; gap: 8px; align-items: center; }
 .date-badge { background: var(--gold); color: #000; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 6px; }
-.lang-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); font-size: 11px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
 
 /* ── MARKET OVERVIEW ── */
 .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px; }
@@ -51,11 +80,26 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 @media(max-width:700px){ .brief-grid { grid-template-columns: 1fr; } }
 .brief-section { background: var(--card2); border-radius: 8px; padding: 12px 14px; }
 .brief-label { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-.brief-body { font-size: 12px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.brief-body { font-size: 12px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+
+/* ── SECTOR HEATMAP ── */
+.sector-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.sector-block { background: var(--card2); border-radius: 8px; padding: 10px 14px; min-width: 180px; flex: 1; }
+.sector-name { font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 4px; }
+.sector-avg  { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+.sector-avg.high { color: var(--green); }
+.sector-avg.mid  { color: var(--gold); }
+.sector-avg.low  { color: var(--red); }
+.sector-tickers { display: flex; flex-wrap: wrap; gap: 4px; }
+.sector-ticker-chip { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+.sector-ticker-chip.high { background: rgba(46,204,113,0.15); color: var(--green); }
+.sector-ticker-chip.mid  { background: rgba(246,201,14,0.12);  color: var(--gold); }
+.sector-ticker-chip.low  { background: rgba(231,76,60,0.15);   color: var(--red); }
 
 /* ── LEADERBOARD ── */
+.lb-table-wrap { overflow-x: auto; }
 .lb-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.lb-table th { background: var(--card2); color: var(--muted); padding: 7px 10px; text-align: left; font-weight: 700; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; }
+.lb-table th { background: var(--card2); color: var(--muted); padding: 7px 10px; text-align: left; font-weight: 700; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; white-space: nowrap; }
 .lb-table td { padding: 8px 10px; border-bottom: 1px solid rgba(45,55,72,0.4); vertical-align: middle; }
 .lb-table tr:last-child td { border-bottom: none; }
 .lb-table tr:hover td { background: rgba(255,255,255,0.02); }
@@ -65,7 +109,7 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .chg-pos { color: var(--green); font-weight: 700; }
 .chg-neg { color: var(--red);   font-weight: 700; }
 .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
-.score-bar { height: 6px; border-radius: 3px; background: var(--card2); flex: 1; overflow: hidden; }
+.score-bar { height: 6px; border-radius: 3px; background: var(--card2); flex: 1; overflow: hidden; min-width: 60px; }
 .score-fill { height: 100%; border-radius: 3px; }
 .score-fill.high   { background: linear-gradient(90deg,var(--green),#27ae60); }
 .score-fill.mid    { background: linear-gradient(90deg,var(--gold),var(--orange)); }
@@ -78,6 +122,13 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .strength-buy   { background: rgba(46,204,113,0.15); color: var(--green); }
 .strength-neut  { background: rgba(246,201,14,0.12); color: var(--gold); }
 .strength-sell  { background: rgba(231,76,60,0.15);  color: var(--red); }
+.sparkline-cell { min-width: 68px; }
+
+/* ── ALERT HISTORY ── */
+.alert-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.alert-table th { background: var(--card2); color: var(--muted); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; }
+.alert-table td { padding: 7px 10px; border-bottom: 1px solid rgba(45,55,72,0.3); }
+.alert-table tr:last-child td { border-bottom: none; }
 
 /* ── STOCK CARDS ── */
 .stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
@@ -102,11 +153,96 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .sc-ai-body  { font-size: 11px; color: var(--text); line-height: 1.6; }
 .sc-score-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 
+/* ── ENTRY / TIMING SECTION ── */
+.sc-entry-section { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; }
+.sc-entry-label { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.sc-entry-body { font-size: 11px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+
+/* ── NEWS FEED ── */
+.sc-news { margin-bottom: 10px; }
+.sc-news-label { font-size: 10px; font-weight: 800; color: var(--purple); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.sc-news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.sc-news-item { font-size: 10px; color: var(--text); line-height: 1.4; padding: 4px 6px; background: var(--card2); border-radius: 4px; }
+.sc-news-publisher { font-size: 9px; color: var(--muted); margin-top: 1px; }
+
+/* ── SENTIMENT BADGE ── */
+.sentiment-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.sentiment-pos  { background: rgba(46,204,113,0.2);  color: var(--green);  border: 1px solid rgba(46,204,113,0.4); }
+.sentiment-neg  { background: rgba(231,76,60,0.2);   color: var(--red);    border: 1px solid rgba(231,76,60,0.4); }
+.sentiment-neut { background: rgba(136,146,164,0.2); color: var(--muted);  border: 1px solid rgba(136,146,164,0.3); }
+.sc-sentiment-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.sc-sentiment-text { font-size: 11px; color: var(--text); line-height: 1.5; flex: 1; }
+.sc-sentiment-label { font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+/* ── ANALYST TARGET ── */
+.sc-analyst-row { font-size: 11px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.sc-analyst-row strong { color: var(--text); }
+
+/* ── COPY BUTTON ── */
+.copy-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 6px 0;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 6px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-align: center;
+}
+.copy-btn:hover { background: rgba(59,130,246,0.22); }
+
 /* ── FOOTER ── */
 .footer { text-align: center; padding: 16px; color: var(--muted); font-size: 11px; margin-top: 4px; }
 </style>
 </head>
 <body>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <span class="nav-brand">📊 股票監控</span>
+  <a class="nav-link" href="#market-overview">大盤</a>
+  <a class="nav-link" href="#morning-brief">早盤簡報</a>
+  <a class="nav-link" href="#sector-heatmap">板塊</a>
+  <a class="nav-link" href="#leaderboard">排行榜</a>
+  <a class="nav-link" href="#alert-history">警示歷史</a>
+  <a class="nav-link" href="#stock-cards">個股詳情</a>
+  
+  <a class="nav-link" href="#stock-APP">APP</a>
+  
+  <a class="nav-link" href="#stock-MSFT">MSFT</a>
+  
+  <a class="nav-link" href="#stock-NVDA">NVDA</a>
+  
+  <a class="nav-link" href="#stock-GOOGL">GOOGL</a>
+  
+  <a class="nav-link" href="#stock-NOW">NOW</a>
+  
+  <a class="nav-link" href="#stock-AMD">AMD</a>
+  
+  <a class="nav-link" href="#stock-TSLA">TSLA</a>
+  
+  <a class="nav-link" href="#stock-AVGO">AVGO</a>
+  
+  <a class="nav-link" href="#stock-PLTR">PLTR</a>
+  
+  <a class="nav-link" href="#stock-META">META</a>
+  
+</nav>
 
 <!-- HEADER -->
 <div class="header">
@@ -120,7 +256,7 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 </div>
 
 <!-- MARKET OVERVIEW -->
-<div class="market-grid">
+<div id="market-overview" class="market-grid">
 
   <div class="market-card down">
     <div class="market-name">S&P 500</div>
@@ -166,46 +302,112 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
   <div class="market-card down">
     <div class="market-name">比特幣</div>
-    <div class="market-price">77884.81</div>
-    <div class="market-chg down">-1.49%</div>
+    <div class="market-price">78203.91</div>
+    <div class="market-chg down">-1.09%</div>
   </div>
 
 </div>
 
 <!-- MORNING BRIEF -->
-<div class="card">
+<div id="morning-brief" class="card">
   <div class="card-title"><span class="icon">🌅</span>早盤市場簡報（F→G→H→I）</div>
   <div class="brief-grid">
     
     <div class="brief-section">
       <div class="brief-label">F・市場消息整理</div>
-      <div class="brief-body">週五市場呈現明顯的風險規避（Risk-Off）態勢。美股大盤（SPY）與科技股（QQQ）均錄得超過1%的跌幅，恐慌指數（VIX）飆升近7%，美元指數同步走強逾0.5%，顯示資金正湧向避險資產。值得注意的是，黃金意外下跌，而原油則因潛在的供應擔憂或通膨預期而大幅上漲近4%。美債殖利率上升（TLT下跌），暗示市場正消化更高的利率預期或通膨壓力。比特幣也隨風險資產下跌。市場目前主要交易的是對通膨與經濟成長放緩並存的擔憂，以及流動性緊縮的壓力。</div>
+      <div class="brief-body">市場現在正高度交易通膨與地緣政治風險。美股大盤 SPY 及科技股 QQQ 雙雙顯著下跌，伴隨 VIX 恐慌指數飆升，顯示避險情緒濃厚。值得注意的是，原油價格逆勢大漲，暗示供應鏈緊張或地緣衝突加劇的擔憂持續。美元指數同步走強，而黃金與美債價格下跌，顯示資金正湧向美元尋求安全，而非傳統避險資產，並對升息預期或通膨壓力重新定價。加密貨幣比特幣也隨風險資產回落。</div>
     </div>
     
     <div class="brief-section">
       <div class="brief-label">G・市場情緒判讀</div>
-      <div class="brief-body">當前市場情緒顯然偏向「恐懼」。VIX指數的急劇上升是市場恐慌的直接指標。美元指數走強印證了資金流向避險資產的趨勢。美債價格下跌（殖利率上升）顯示投資者對未來利率走向或通膨的擔憂加劇，而非單純的避險買盤。雖然ETF資金流向未明，但主要股指的大幅下挫預示著資金正從風險資產撤離。比特幣作為風險資產，其下跌也強化了這一判斷。綜合來看，市場無疑處於強烈的 Risk-Off 模式。</div>
+      <div class="brief-body">目前市場情緒顯著偏向 Risk-Off。VIX 恐慌指數大漲，明確反映投資者避險情緒升溫至高點。美元指數 UUP 走強，資金流向美元資產尋求安全港。同時，美債 TLT 價格下跌導致殖利率上行，壓抑風險資產估值。由於股市普遍下跌，預計 ETF 資金流向將偏向流出風險性資產。比特幣價格亦追隨整體風險市場下跌。綜合判斷，市場已進入高度謹慎的避險模式。</div>
     </div>
     
     <div class="brief-section">
       <div class="brief-label">H・技術面關鍵價位</div>
-      <div class="brief-body">美股大盤SPY在739.17收盤，面臨下行壓力。近期重要的支撐位可關注 735 和 730 附近，若失守恐測試更深層次支撐。上方阻力首先位於 740 心理關口，隨後是 745-750 區間，需有效突破方能緩解下行趨勢。
-納指QQQ收於708.93，同樣疲軟。其關鍵支撐位在 705 和 700 整數關卡，這是多方必須守住的陣地。上行阻力則位於 710 附近，進一步阻力在 715-720 區域。整體技術面呈現偏空格局，空方佔據主導。</div>
+      <div class="brief-body">技術面來看，美股大盤 SPY 在昨日下跌後，初步支撐位可能落在 735-730 美元區間，若跌破則需留意 725 美元。上方壓力位則觀察 745-750 美元。科技納指 QQQ 表現相對疲弱，其關鍵支撐位看 700-695 美元，跌破則可能下探 685 美元。上方阻力位則位於 715-720 美元區間。整體趨勢偏空，短期或繼續探底。</div>
     </div>
     
     <div class="brief-section">
       <div class="brief-label">I・今日交易計畫</div>
-      <div class="brief-body">綜合當前消息面與情緒面，操作方向偏向 偏空。市場瀰漫著對通膨與經濟衰退的雙重擔憂，加上VIX飆升和美元走強，建議投資者保持謹慎。
-最值得關注的機會是：逢高做空美股SPY和QQQ，或考慮做多美元指數（UUP）。若原油（USO）持續上漲，可關注其作為對沖通膨的機會。
-必須警惕的風險事件包括：全球央行對高通膨的回應、任何潛在的地緣政治衝突升級（尤其影響原油供應），以及週末可能出現的重大宏觀經濟數據或聲明。避免盲目抄底，等待市場情緒穩定或出現明確反轉訊號。</div>
+      <div class="brief-body">綜合判斷，今日操作方向偏空。市場避險情緒濃厚，地緣政治與通膨壓力持續主導。最值得關注的機會是逢高做空美股大盤 SPY 或科技股 QQQ，尤其 QQQ 表現相對疲弱，可作為主要標的，目標位關注技術面支撐區間。此外，可考慮做多美元（UUP）或 VIX 相關產品。必須警惕的風險事件為任何地緣政治情勢的突然逆轉，或超出預期的經濟數據發布，可能導致空頭回補。</div>
     </div>
     
   </div>
 </div>
 
+<!-- SECTOR HEATMAP -->
+<div id="sector-heatmap" class="card">
+  <div class="card-title"><span class="icon">🗺️</span>板塊熱力圖</div>
+  <div class="sector-grid">
+  
+    
+    
+    <div class="sector-block">
+      <div class="sector-name">Communication Services</div>
+      <div class="sector-avg mid">50</div>
+      <div class="sector-tickers">
+        
+          
+          <span class="sector-ticker-chip high">APP 90</span>
+        
+          
+          <span class="sector-ticker-chip mid">GOOGL 52</span>
+        
+          
+          <span class="sector-ticker-chip low">META 8</span>
+        
+      </div>
+    </div>
+  
+    
+    
+    <div class="sector-block">
+      <div class="sector-name">Technology</div>
+      <div class="sector-avg mid">45</div>
+      <div class="sector-tickers">
+        
+          
+          <span class="sector-ticker-chip high">MSFT 70</span>
+        
+          
+          <span class="sector-ticker-chip mid">NVDA 54</span>
+        
+          
+          <span class="sector-ticker-chip mid">NOW 50</span>
+        
+          
+          <span class="sector-ticker-chip mid">AMD 44</span>
+        
+          
+          <span class="sector-ticker-chip low">AVGO 32</span>
+        
+          
+          <span class="sector-ticker-chip low">PLTR 18</span>
+        
+      </div>
+    </div>
+  
+    
+    
+    <div class="sector-block">
+      <div class="sector-name">Consumer Cyclical</div>
+      <div class="sector-avg mid">44</div>
+      <div class="sector-tickers">
+        
+          
+          <span class="sector-ticker-chip mid">TSLA 44</span>
+        
+      </div>
+    </div>
+  
+  </div>
+</div>
+
 <!-- SIGNAL LEADERBOARD -->
-<div class="card">
+<div id="leaderboard" class="card">
   <div class="card-title"><span class="icon">🏆</span>信號排行榜</div>
+  <div class="lb-table-wrap">
   <table class="lb-table">
     <thead>
       <tr>
@@ -213,6 +415,7 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <th>現價</th>
         <th>漲跌</th>
         <th>信號分數</th>
+        <th>趨勢</th>
         <th>強弱</th>
         <th>RSI</th>
         <th>MACD Hist</th>
@@ -238,6 +441,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <span class="score-num high">90</span>
           </div>
         </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
+        </td>
         <td><span class="strength-badge strength-buy">強力做多 🔥</span></td>
         <td>58.35</td>
         <td>1.59</td>
@@ -260,6 +468,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <div class="score-bar"><div class="score-fill high" style="width:70%"></div></div>
             <span class="score-num high">70</span>
           </div>
+        </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
         </td>
         <td><span class="strength-badge strength-buy">偏多 📈</span></td>
         <td>57.91</td>
@@ -284,6 +497,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <span class="score-num mid">54</span>
           </div>
         </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
+        </td>
         <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
         <td>64.67</td>
         <td>1.85</td>
@@ -306,6 +524,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <div class="score-bar"><div class="score-fill mid" style="width:52%"></div></div>
             <span class="score-num mid">52</span>
           </div>
+        </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
         </td>
         <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
         <td>70.24</td>
@@ -330,6 +553,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <span class="score-num mid">50</span>
           </div>
         </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
+        </td>
         <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
         <td>52.04</td>
         <td>0.75</td>
@@ -352,6 +580,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <div class="score-bar"><div class="score-fill mid" style="width:44%"></div></div>
             <span class="score-num mid">44</span>
           </div>
+        </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
         </td>
         <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
         <td>67.29</td>
@@ -376,6 +609,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <span class="score-num mid">44</span>
           </div>
         </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
+        </td>
         <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
         <td>57.97</td>
         <td>4.59</td>
@@ -398,6 +636,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <div class="score-bar"><div class="score-fill low" style="width:32%"></div></div>
             <span class="score-num low">32</span>
           </div>
+        </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
         </td>
         <td><span class="strength-badge strength-sell">偏空 📉</span></td>
         <td>58.65</td>
@@ -422,6 +665,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <span class="score-num low">18</span>
           </div>
         </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
+        </td>
         <td><span class="strength-badge strength-sell">強力做空 ❄️</span></td>
         <td>43.48</td>
         <td>-0.56</td>
@@ -445,6 +693,11 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
             <span class="score-num low">8</span>
           </div>
         </td>
+        <td class="sparkline-cell">
+          
+            <span style="color:var(--muted)">—</span>
+          
+        </td>
         <td><span class="strength-badge strength-sell">強力做空 ❄️</span></td>
         <td>45.6</td>
         <td>-2.87</td>
@@ -453,17 +706,54 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
     
     </tbody>
   </table>
+  </div>
+</div>
+
+<!-- ALERT HISTORY -->
+<div id="alert-history" class="card">
+  <div class="card-title"><span class="icon">🚨</span>警示歷史</div>
+  
+  <table class="alert-table">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>股票</th>
+        <th>分數</th>
+        <th>強弱</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      
+      <tr>
+        <td style="color:var(--muted)">2026-05-16</td>
+        <td><strong>APP</strong></td>
+        <td class="score-num high">90</td>
+        <td><span class="strength-badge strength-buy">強力做多 🔥</span></td>
+      </tr>
+    
+      
+      <tr>
+        <td style="color:var(--muted)">2026-05-16</td>
+        <td><strong>MSFT</strong></td>
+        <td class="score-num high">70</td>
+        <td><span class="strength-badge strength-buy">偏多 📈</span></td>
+      </tr>
+    
+    </tbody>
+  </table>
+  
 </div>
 
 <!-- STOCK CARDS -->
-<div class="card">
+<div id="stock-cards" class="card">
   <div class="card-title"><span class="icon">📈</span>個股詳情</div>
   <div class="stock-grid">
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-APP" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">APP</div>
@@ -479,7 +769,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill high" style="width:90%"></div></div>
         <span class="score-num high">90/100</span>
         <span class="strength-badge strength-buy">強力做多 🔥</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-pos" title="新聞情緒：+10">+10</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">公司預期未來十年盈利增長最佳，近期盈利飆升，分析師上調目標價，並獲知名對沖基金經理選為股票首選，整體情緒極度樂觀。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$654.83</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 481.76</span>
@@ -505,17 +819,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① 極強勢，強力做多。
-② 關鍵支撐：$481.76。
-③ 高機率續漲，有望挑戰更高點。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            Here’s Why AppLovin Corporation (APP) Is One of the Stocks With Best Earnings Growth For the Next Decade
+            
+            <div class="sc-news-publisher">Insider Monkey</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            5 Insightful Analyst Questions From AppLovin’s Q1 Earnings Call
+            
+            <div class="sc-news-publisher">StockStory</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Top Growth Companies With High Insider Ownership May 2026
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            3 High-Growth Insider-Owned Companies With Earnings Surging Up To 80%
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            AppLovin (APP) Price Target Raised by Piper Sandler to $665
+            
+            <div class="sc-news-publisher">Insider Monkey</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">①盤面極強，處於多頭排列。
+②關鍵價位：MA5支撐$481.76。
+③高機率劇本：股價有望持續上漲。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="APP"
+        data-price="501.00"
+        data-score="90"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-MSFT" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">MSFT</div>
@@ -531,7 +901,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill high" style="width:70%"></div></div>
         <span class="score-num high">70/100</span>
         <span class="strength-badge strength-buy">偏多 📈</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-neg" title="新聞情緒：-4">-4</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">比爾蓋茲基金會全面拋售其微軟股票，造成32億美元的巨大賣壓，此負面消息的影響力大於 Pershing Square 等機構對微軟 AI 擴張的支持。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$559.62</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 411.4</span>
@@ -557,17 +951,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① 盤面偏強，站穩短期均線。
-② 關鍵支撐：MA20 ($417.41)。
-③ 高機率劇本：上攻動能強勁，有望續創新高。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            How to navigate the tech-led market
+            
+            <div class="sc-news-publisher">Yahoo Finance Video</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            NANC Traders Beat the Crowd by 33 Points and the Difference Keeps Growing
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            The Staggering Number Jensen Huang Just Revealed Changes Everything About AI
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Pershing Square Backs Microsoft As AI Expansion Divides Major Investors
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Bill Gates’ Foundation Sells the Last of Its Microsoft Stock
+            
+            <div class="sc-news-publisher">Barrons.com</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">① **盤面強弱：** 偏強📈，股價站穩短期均線之上，動能轉強。
+② **關鍵價位：** 關鍵支撐MA20 $417.41。
+③ **高機率劇本：** 若守穩MA20，偏多格局持續，有望挑戰更高點。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="MSFT"
+        data-price="421.92"
+        data-score="70"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-NVDA" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">NVDA</div>
@@ -583,7 +1033,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:54%"></div></div>
         <span class="score-num mid">54/100</span>
         <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-pos" title="新聞情緒：+7">+7</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">華爾街億萬富翁將AI視為首選交易，且Nvidia被點名為帶動市場的關鍵股票，顯示出對AI領域和該公司的強烈樂觀情緒。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$273.52</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 225.42</span>
@@ -609,17 +1083,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① 短期轉弱，中線偏多。
-② 關鍵價位：MA5 (225.42)。
-③ 高機率劇本：回調整理，續觀MA20支撐。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            SpaceX, OpenAI, and Anthropic: Here are the most anticipated IPOs in 2026
+            
+            <div class="sc-news-publisher">Yahoo Finance</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            The global memory shortage is coming for Nintendo
+            
+            <div class="sc-news-publisher">Yahoo Finance Video</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Four Sub-$30 Silver Stocks To Buy Now
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            The SpaceX IPO Is Coming June 12. Here’s Why You Shouldn’t Rush In to Buy
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            NANC Traders Beat the Crowd by 33 Points and the Difference Keeps Growing
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">① **盤面強弱：** 長線強勢，短線高檔承壓回調。
+② **關鍵價位：** MA5 ($225.42) 成關鍵，下方支撐MA20 ($210.3)。
+③ **高機率劇本：** 短期於MA5附近震盪，或下探MA20尋求支撐。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="NVDA"
+        data-price="225.32"
+        data-score="54"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-GOOGL" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">GOOGL</div>
@@ -635,7 +1165,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:52%"></div></div>
         <span class="score-num mid">52/100</span>
         <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-pos" title="新聞情緒：+4">+4</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">儘管一位知名投資者出售了部分Alphabet股票，但該公司仍被點名為在廣泛的AI市場熱潮中引領本週的關鍵參與者，顯示出整體偏向樂觀的情緒。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$429.90</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 395.29</span>
@@ -661,17 +1215,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">①目前盤面偏強勢，但RSI過熱，短期面臨整理壓力。
-②關鍵支撐MA5 ($395.29)，其次為MA20 ($372.89)。
-③高機率短線整理或微幅回調，若能守穩MA5，有望續漲；跌破則考驗MA20支撐。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            Oracle, Google, Costco options trading: This expert explains all
+            
+            <div class="sc-news-publisher">Yahoo Finance Video</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            5-star analysts reset Broadcom stock price target
+            
+            <div class="sc-news-publisher">TheStreet</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            NANC Traders Beat the Crowd by 33 Points and the Difference Keeps Growing
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            The Staggering Number Jensen Huang Just Revealed Changes Everything About AI
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Nvidia Overtakes Silver To Become World's Second-Largest Asset At $5.52 Trillion, Market Commentator Calls It 'Historic Technological Revolution'
+            
+            <div class="sc-news-publisher">Benzinga</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">① 目前盤面偏強，但RSI過熱且量能不足，宜觀望。
+② 關鍵支撐：MA5 ($395.29)。
+③ 高機率劇本：高檔震盪整理，若跌破MA5恐回測MA20。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="GOOGL"
+        data-price="396.78"
+        data-score="52"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-NOW" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">NOW</div>
@@ -687,7 +1297,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:50%"></div></div>
         <span class="score-num mid">50/100</span>
         <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-pos" title="新聞情緒：+7">+7</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">多則新聞顯示ServiceNow在AI領域取得關鍵合作夥伴關係並持續擴大客戶群，展現強勁的成長潛力，儘管有一則新聞提及股價可能下跌，但整體趨勢正面。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$140.92</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 90.62</span>
@@ -713,17 +1347,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① **盤面強弱**：短期強勁，突破MA5/MA20，但中期仍受MA60壓制。
-② **關鍵價位**：支撐$91.9 (MA20)，阻力$101.21 (MA60)。
-③ **高機率劇本**：挑戰MA60為短線關鍵，未能突破恐回檔盤整。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            UiPath's Strong Cash Position Supports Strategic Flexibility
+            
+            <div class="sc-news-publisher">Zacks</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Can an Expanding Clientele Boost ServiceNow's Top-Line Growth?
+            
+            <div class="sc-news-publisher">Zacks</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            ServiceNow AI Partnerships Aim To Turn Pilot Projects Into Core Workflows
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            1 Incredible Artificial Intelligence (AI) Stock to Buy After Its Post-Earnings Sell-Off
+            
+            <div class="sc-news-publisher">Motley Fool</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            See ServiceNow Stock Heading Lower? This Trade Profits From Further Downside.
+            
+            <div class="sc-news-publisher">Investor's Business Daily</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">① **盤面強弱**：今日強勁反彈，但中線趨勢仍中性偏弱。
+② **關鍵價位**：支撐 $91.90 (MA20)，壓力 $101.21 (MA60)。
+③ **高機率劇本**：短線有望挑戰$101.21阻力，需觀察能否有效突破。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="NOW"
+        data-price="95.07"
+        data-score="50"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-AMD" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">AMD</div>
@@ -739,7 +1429,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:44%"></div></div>
         <span class="score-num mid">44/100</span>
         <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-neg" title="新聞情緒：-5">-5</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">儘管AMD在AI領域獲得關注並有伺服器市場份額的積極進展，但市場對其估值持謹慎態度，且有分析師對AI類股發出看空訊號，指出整體AI交易的潛在風險。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$467.46</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 445.28</span>
@@ -765,17 +1479,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① 盤面強弱：短期回檔偏弱，但中長期仍處於上升趨勢。
-② 關鍵價位：MA20 ($371.71) 為重要支撐，MA5 ($445.28) 為近期阻力。
-③ 高機率劇本：短期可能向下測試MA20支撐，若能守穩則有機會止跌反彈。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            Is AMD a Top Artificial Intelligence (AI) Stock to Buy?
+            
+            <div class="sc-news-publisher">Motley Fool</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            AMD Server Share Gains Test The Strength Of Its AI Growth Story
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Is Advanced Micro Devices (AMD) the Best Stock To Profit from AI?
+            
+            <div class="sc-news-publisher">Insider Monkey</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Jim Cramer Says Buy Nvidia for Valuation, Not China Bet. Stock Trades Cheaper Than Intel and AMD.
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Jim Cramer Said 'Smell' — AI Stocks Heard 'Sell'
+            
+            <div class="sc-news-publisher">Benzinga</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">①盤面強弱：短線回檔，中長線仍強勁。
+②關鍵價位：阻力$445(MA5)，支撐$371(MA20)。
+③高機率劇本：可能測試$371支撐後反彈。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="AMD"
+        data-price="424.10"
+        data-score="44"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-TSLA" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">TSLA</div>
@@ -791,7 +1561,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:44%"></div></div>
         <span class="score-num mid">44/100</span>
         <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-pos" title="新聞情緒：+7">+7</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">特斯拉調高Model Y價格，且是兩年來首次，顯示其定價權力及潛在利潤提升，加上其產品獲得正面肯定。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$400.22</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 437.85</span>
@@ -817,17 +1611,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">①目前盤面：短期偏弱，股價跌破MA5。
-②關鍵價位：MA20（$401.32）為短期重要支撐。
-③高機率劇本：可能下探MA20支撐，若能守穩，或有機會反彈。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            Tesla Raises U.S. Model Y Prices. Its Stock Just Forged A Lower Buy Point.
+            
+            <div class="sc-news-publisher">Investor's Business Daily</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Ron DeSantis Admits Tesla's Are Undeniably 'Top-Notch Products' But Rejects The Idea That 'EVs Will Save The World'
+            
+            <div class="sc-news-publisher">Benzinga</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Elon Musk Chimes In As Delta Picks Amazon Leo Over Starlink: They Wanted To Make It 'Painful, Difficult And Expensive'
+            
+            <div class="sc-news-publisher">Benzinga</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Trump’s More Than 3,700 Trades Astonish Wall Street Insiders
+            
+            <div class="sc-news-publisher">Bloomberg</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Automotive Properties Real Est Invt TR Q1 Earnings Call Highlights
+            
+            <div class="sc-news-publisher">MarketBeat</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">①目前盤面強弱：短線偏弱。
+②關鍵價位：MA20（$401）為重要支撐。
+③高機率劇本：下探MA20尋求支撐，守穩則有望止跌。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="TSLA"
+        data-price="422.24"
+        data-score="44"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-AVGO" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">AVGO</div>
@@ -843,7 +1693,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill low" style="width:32%"></div></div>
         <span class="score-num low">32/100</span>
         <span class="strength-badge strength-sell">偏空 📉</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-pos" title="新聞情緒：+9">+9</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">多則新聞指出分析師將公司評為首選，並強調其在AI領域的強勁表現與新產品發布。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$480.10</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 425.9</span>
@@ -869,17 +1743,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① 盤面整體偏空，短線動能減弱。
-② 關鍵阻力 $425.9 (MA5)，支撐 $418.54 (MA20)。
-③ 若未能站穩 MA5，高機率下探 MA20 尋求支撐。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            5-star analysts reset Broadcom stock price target
+            
+            <div class="sc-news-publisher">TheStreet</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Dow Jones Futures: S&P 500, Nasdaq Still Near Highs As Nvidia, Walmart Earnings Loom
+            
+            <div class="sc-news-publisher">Investor's Business Daily</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            What Broadcom (AVGO)'s AI-Native VMware Cloud Foundation 9.1 Launch Means For Shareholders
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Broadcom Leads Five IBD 50 Stocks Near Buy Points; Most Are AI Plays
+            
+            <div class="sc-news-publisher">Investor's Business Daily</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Jim Cramer Says Buy Nvidia for Valuation, Not China Bet. Stock Trades Cheaper Than Intel and AMD.
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">①目前盤面強弱：盤面偏弱，短期下行壓力大。
+②關鍵價位：上方阻力$426 (MA5)，下方支撐$418 (MA20)。
+③高機率劇本：若無法站穩$426，恐下測$418，失守則壓力增。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="AVGO"
+        data-price="425.19"
+        data-score="32"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-PLTR" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">PLTR</div>
@@ -895,7 +1825,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill low" style="width:18%"></div></div>
         <span class="score-num low">18/100</span>
         <span class="strength-badge strength-sell">強力做空 ❄️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-neut" title="新聞情緒：+1">+1</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">公司上調了2026年展望並被視為AI領域的關鍵參與者，但同時面臨法律爭議。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$189.46</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 134.13</span>
@@ -921,17 +1875,73 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">①目前盤面極弱，股價處於所有均線下方，呈明顯下降趨勢。
-②關鍵阻力：MA5 $134.13。
-③高機率劇本：股價受阻MA5，恐將繼續下跌探底。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            Palantir (PLTR) Must Arbitrate Claims made by Former Staffers who Started a Rival Company, Judge says
+            
+            <div class="sc-news-publisher">Insider Monkey</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            What Palantir Technologies (PLTR)'s Upgraded 2026 Outlook and Rising ESG Scrutiny Means For Shareholders
+            
+            <div class="sc-news-publisher">Simply Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Trump Bought Palantir Shares Before Praising Stock on Truth Social
+            
+            <div class="sc-news-publisher">MT Newswires</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Where Will Palantir Stock Be in 5 Years?
+            
+            <div class="sc-news-publisher">Motley Fool</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Microsoft vs Palantir: Two AI Plays, One Winner
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">① 目前盤面極度弱勢，處於強烈空頭趨勢。
+② 關鍵阻力：MA5 $134.13，上方MA20 $139.79。
+③ 高機率劇本：股價受阻於MA5，高機率持續下探尋求支撐。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="PLTR"
+        data-price="133.99"
+        data-score="18"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
     
     
     
-    <div class="stock-card">
+    <div id="stock-META" class="stock-card">
       <div class="sc-header">
         <div>
           <div class="sc-ticker">META</div>
@@ -947,7 +1957,31 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill low" style="width:8%"></div></div>
         <span class="score-num low">8/100</span>
         <span class="strength-badge strength-sell">強力做空 ❄️</span>
+        
+          
+          
+          
+          <span class="sentiment-circle sentiment-neg" title="新聞情緒：-3">-3</span>
+        
       </div>
+
+      
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">儘管AI發展和Oracle等公司有積極消息，但關於資本主義的悲觀評論以及社群媒體公司和任天堂等面臨的負面新聞，導致整體情緒略微看空。</div>
+        </div>
+      </div>
+      
+
+      
+      <div class="sc-analyst-row">
+        
+        <span>分析師目標價：<strong>$819.91</strong></span>
+        
+        
+      </div>
+      
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: 610.23</span>
@@ -973,11 +2007,67 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
       
       <hr class="sc-divider">
-      <div class="sc-ai-label">🤖 AI 快速判讀</div>
-      <div class="sc-ai-body">① 盤面弱勢，技術信號強力做空。
-② 關鍵價位：上方阻力$627-$635，下方支撐$610。
-③ 高機率劇本：高機率續跌，留意$610支撐是否失守。</div>
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          
+          <li class="sc-news-item">
+            The global memory shortage is coming for Nintendo
+            
+            <div class="sc-news-publisher">Yahoo Finance Video</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            5-star analysts reset Broadcom stock price target
+            
+            <div class="sc-news-publisher">TheStreet</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            The SpaceX IPO Is Coming June 12. Here’s Why You Shouldn’t Rush In to Buy
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            The Staggering Number Jensen Huang Just Revealed Changes Everything About AI
+            
+            <div class="sc-news-publisher">24/7 Wall St.</div>
+            
+          </li>
+          
+          <li class="sc-news-item">
+            Oracle Corporation (ORCL) Named Top Pick as Oppenheimer Lifts Price Target
+            
+            <div class="sc-news-publisher">Insider Monkey</div>
+            
+          </li>
+          
+        </ul>
+      </div>
       
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">①盤面極弱，強力做空。
+②關鍵阻力 $626.88 (MA60)。
+③高機率進一步下跌。</div>
+      
+
+      
+
+      <button
+        class="copy-btn"
+        data-ticker="META"
+        data-price="614.23"
+        data-score="8"
+        data-entry=""
+        onclick="copyTradeSetup(this)"
+      >複製交易設置</button>
     </div>
   
   </div>
@@ -985,5 +2075,57 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 
 <div class="footer">⚠️ 本報告由 AI 自動生成，僅供參考，不構成投資建議。投資有風險，請審慎評估。</div>
 
+<script>
+function copyTradeSetup(btn) {
+  const ticker  = btn.dataset.ticker;
+  const price   = btn.dataset.price;
+  const score   = btn.dataset.score;
+  const entry   = btn.dataset.entry || "";
+
+  // Try to parse entry/stop/target from AI text
+  function extractPrice(text, keywords) {
+    for (const kw of keywords) {
+      // Match keyword followed by optional spaces/colon then a dollar sign or plain number
+      const re = new RegExp(kw + '[\s：:]*[$＄]?([\d]+\.?[\d]*)');
+      const m = text.match(re);
+      if (m) return m[1];
+    }
+    // Generic $ or ＄ price pattern near keyword
+    return null;
+  }
+
+  const entryPrice  = extractPrice(entry, ['買入', '入場', '建議買入', 'buy', 'entry']) || price;
+  const stopPrice   = extractPrice(entry, ['止損', 'stop', '停損']);
+  const targetPrice = extractPrice(entry, ['目標', 'target', '第一目標', '目標價']);
+
+  let text;
+  if (stopPrice || targetPrice) {
+    text = `[${ticker}] 入場：$${entryPrice}`;
+    if (stopPrice)   text += ` | 止損：$${stopPrice}`;
+    if (targetPrice) text += ` | 目標：$${targetPrice}`;
+    text += ` | 信號：${score}/100`;
+  } else {
+    // Fallback: copy full entry text or price+score
+    text = entry
+      ? `[${ticker}] ${entry} | 信號：${score}/100`
+      : `[${ticker}] 現價：$${price} | 信號：${score}/100`;
+  }
+
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "已複製 ✓";
+    btn.style.background = "rgba(46,204,113,0.18)";
+    btn.style.color = "var(--green)";
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = "";
+      btn.style.color = "";
+    }, 2000);
+  }).catch(() => {
+    btn.textContent = "複製失敗";
+    setTimeout(() => { btn.textContent = "複製交易設置"; }, 2000);
+  });
+}
+</script>
 </body>
 </html>
