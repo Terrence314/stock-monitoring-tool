@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 股票監控系統 · 2026/05/16</title>
+<style>
+:root {
+  --bg:      #0d1117;
+  --card:    #161b22;
+  --card2:   #1c2230;
+  --border:  #2d3748;
+  --gold:    #f6c90e;
+  --green:   #2ecc71;
+  --red:     #e74c3c;
+  --blue:    #3b82f6;
+  --purple:  #a78bfa;
+  --orange:  #f97316;
+  --text:    #e2e8f0;
+  --muted:   #8892a4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif; font-size: 13px; padding: 14px; }
+
+/* ── HEADER ── */
+.header { background: linear-gradient(135deg,#0f1923,#1a2535); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.header-left h1 { font-size: 22px; font-weight: 900; color: #fff; }
+.header-left .sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.header-right { display: flex; gap: 8px; align-items: center; }
+.date-badge { background: var(--gold); color: #000; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 6px; }
+.lang-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); font-size: 11px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
+
+/* ── MARKET OVERVIEW ── */
+.market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.market-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.market-card.up   { border-left: 3px solid var(--green); }
+.market-card.down { border-left: 3px solid var(--red); }
+.market-name  { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+.market-price { font-size: 16px; font-weight: 800; color: var(--text); margin: 2px 0; }
+.market-chg   { font-size: 12px; font-weight: 700; }
+.market-chg.up   { color: var(--green); }
+.market-chg.down { color: var(--red); }
+
+/* ── SECTION CARD ── */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+.card-title { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
+.card-title .icon { font-size: 15px; }
+
+/* ── MORNING BRIEF ── */
+.brief-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media(max-width:700px){ .brief-grid { grid-template-columns: 1fr; } }
+.brief-section { background: var(--card2); border-radius: 8px; padding: 12px 14px; }
+.brief-label { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.brief-body { font-size: 12px; color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+
+/* ── LEADERBOARD ── */
+.lb-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.lb-table th { background: var(--card2); color: var(--muted); padding: 7px 10px; text-align: left; font-weight: 700; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; }
+.lb-table td { padding: 8px 10px; border-bottom: 1px solid rgba(45,55,72,0.4); vertical-align: middle; }
+.lb-table tr:last-child td { border-bottom: none; }
+.lb-table tr:hover td { background: rgba(255,255,255,0.02); }
+.ticker-cell { font-weight: 800; font-size: 14px; color: #fff; }
+.name-cell   { font-size: 11px; color: var(--muted); }
+.price-cell  { font-weight: 700; }
+.chg-pos { color: var(--green); font-weight: 700; }
+.chg-neg { color: var(--red);   font-weight: 700; }
+.score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.score-bar { height: 6px; border-radius: 3px; background: var(--card2); flex: 1; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 3px; }
+.score-fill.high   { background: linear-gradient(90deg,var(--green),#27ae60); }
+.score-fill.mid    { background: linear-gradient(90deg,var(--gold),var(--orange)); }
+.score-fill.low    { background: linear-gradient(90deg,var(--red),#c0392b); }
+.score-num { font-weight: 800; font-size: 13px; min-width: 28px; }
+.score-num.high { color: var(--green); }
+.score-num.mid  { color: var(--gold); }
+.score-num.low  { color: var(--red); }
+.strength-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.strength-buy   { background: rgba(46,204,113,0.15); color: var(--green); }
+.strength-neut  { background: rgba(246,201,14,0.12); color: var(--gold); }
+.strength-sell  { background: rgba(231,76,60,0.15);  color: var(--red); }
+
+/* ── STOCK CARDS ── */
+.stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+.stock-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.sc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.sc-ticker { font-size: 18px; font-weight: 900; color: #fff; }
+.sc-name   { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.sc-price  { text-align: right; }
+.sc-price-val { font-size: 20px; font-weight: 900; color: var(--gold); }
+.sc-price-chg { font-size: 12px; font-weight: 700; margin-top: 1px; }
+.sc-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.ma-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.ma5  { background: rgba(246,201,14,0.15); color: var(--gold); }
+.ma20 { background: rgba(59,130,246,0.15);  color: var(--blue); }
+.ma60 { background: rgba(167,139,250,0.15); color: var(--purple); }
+.rsi-badge { background: rgba(249,115,22,0.15); color: var(--orange); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.vol-badge { background: rgba(46,204,113,0.12); color: var(--green); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.sc-signals { margin-bottom: 10px; }
+.signal-item { font-size: 11px; color: var(--text); line-height: 1.6; }
+.sc-divider { border: none; border-top: 1px solid var(--border); margin: 10px 0; }
+.sc-ai-label { font-size: 10px; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.sc-ai-body  { font-size: 11px; color: var(--text); line-height: 1.6; }
+.sc-score-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+
+/* ── FOOTER ── */
+.footer { text-align: center; padding: 16px; color: var(--muted); font-size: 11px; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>📊 AI 股票監控系統</h1>
+    <div class="sub">每日技術面分析 · AI 市場判讀 · 信號評分</div>
+  </div>
+  <div class="header-right">
+    <div class="date-badge">2026/05/16</div>
+  </div>
+</div>
+
+<!-- MARKET OVERVIEW -->
+<div class="market-grid">
+
+  <div class="market-card down">
+    <div class="market-name">S&P 500</div>
+    <div class="market-price">739.17</div>
+    <div class="market-chg down">-1.20%</div>
+  </div>
+
+  <div class="market-card down">
+    <div class="market-name">納指 100</div>
+    <div class="market-price">708.93</div>
+    <div class="market-chg down">-1.51%</div>
+  </div>
+
+  <div class="market-card up">
+    <div class="market-name">VIX 恐慌</div>
+    <div class="market-price">18.43</div>
+    <div class="market-chg up">+6.78%</div>
+  </div>
+
+  <div class="market-card down">
+    <div class="market-name">黃金</div>
+    <div class="market-price">417.29</div>
+    <div class="market-chg down">-2.32%</div>
+  </div>
+
+  <div class="market-card up">
+    <div class="market-name">原油</div>
+    <div class="market-price">148.23</div>
+    <div class="market-chg up">+3.66%</div>
+  </div>
+
+  <div class="market-card down">
+    <div class="market-name">20Y 美債</div>
+    <div class="market-price">83.66</div>
+    <div class="market-chg down">-1.48%</div>
+  </div>
+
+  <div class="market-card up">
+    <div class="market-name">美元指數</div>
+    <div class="market-price">27.77</div>
+    <div class="market-chg up">+0.54%</div>
+  </div>
+
+  <div class="market-card down">
+    <div class="market-name">比特幣</div>
+    <div class="market-price">78366.77</div>
+    <div class="market-chg down">-0.88%</div>
+  </div>
+
+</div>
+
+<!-- MORNING BRIEF -->
+<div class="card">
+  <div class="card-title"><span class="icon">🌅</span>早盤市場簡報（F→G→H→I）</div>
+  <div class="brief-grid">
+    
+    <div class="brief-section">
+      <div class="brief-label">早盤分析</div>
+      <div class="brief-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 38.999575643s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '38s'}]}}]</div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- SIGNAL LEADERBOARD -->
+<div class="card">
+  <div class="card-title"><span class="icon">🏆</span>信號排行榜</div>
+  <table class="lb-table">
+    <thead>
+      <tr>
+        <th>股票</th>
+        <th>現價</th>
+        <th>漲跌</th>
+        <th>信號分數</th>
+        <th>強弱</th>
+        <th>RSI</th>
+        <th>MACD Hist</th>
+        <th>量比</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">APP</div>
+          <div class="name-cell">Applovin Corporation</div>
+        </td>
+        <td class="price-cell">$501.00</td>
+        <td class="chg-pos">+3.26%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill high" style="width:90%"></div></div>
+            <span class="score-num high">90</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-buy">強力做多 🔥</span></td>
+        <td>58.35</td>
+        <td>1.59</td>
+        <td>1.1×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">MSFT</div>
+          <div class="name-cell">Microsoft Corporation</div>
+        </td>
+        <td class="price-cell">$421.92</td>
+        <td class="chg-pos">+3.05%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill high" style="width:70%"></div></div>
+            <span class="score-num high">70</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-buy">偏多 📈</span></td>
+        <td>57.91</td>
+        <td>-1.32</td>
+        <td>1.5×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">NVDA</div>
+          <div class="name-cell">NVIDIA Corporation</div>
+        </td>
+        <td class="price-cell">$225.32</td>
+        <td class="chg-neg">-4.42%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill mid" style="width:54%"></div></div>
+            <span class="score-num mid">54</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
+        <td>64.67</td>
+        <td>1.85</td>
+        <td>1.2×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">GOOGL</div>
+          <div class="name-cell">Alphabet Inc.</div>
+        </td>
+        <td class="price-cell">$396.78</td>
+        <td class="chg-neg">-1.07%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill mid" style="width:52%"></div></div>
+            <span class="score-num mid">52</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
+        <td>70.24</td>
+        <td>0.39</td>
+        <td>0.7×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">NOW</div>
+          <div class="name-cell">ServiceNow, Inc.</div>
+        </td>
+        <td class="price-cell">$95.07</td>
+        <td class="chg-pos">+5.05%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill mid" style="width:50%"></div></div>
+            <span class="score-num mid">50</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
+        <td>52.04</td>
+        <td>0.75</td>
+        <td>1.2×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">AMD</div>
+          <div class="name-cell">Advanced Micro Devices, Inc.</div>
+        </td>
+        <td class="price-cell">$424.10</td>
+        <td class="chg-neg">-5.69%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill mid" style="width:44%"></div></div>
+            <span class="score-num mid">44</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
+        <td>67.29</td>
+        <td>3.46</td>
+        <td>0.6×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">TSLA</div>
+          <div class="name-cell">Tesla, Inc.</div>
+        </td>
+        <td class="price-cell">$422.24</td>
+        <td class="chg-neg">-4.75%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill mid" style="width:44%"></div></div>
+            <span class="score-num mid">44</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-neut">中性觀望 ⚖️</span></td>
+        <td>57.97</td>
+        <td>4.59</td>
+        <td>0.9×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">AVGO</div>
+          <div class="name-cell">Broadcom Inc.</div>
+        </td>
+        <td class="price-cell">$425.19</td>
+        <td class="chg-neg">-3.32%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill low" style="width:32%"></div></div>
+            <span class="score-num low">32</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-sell">偏空 📉</span></td>
+        <td>58.65</td>
+        <td>-2.12</td>
+        <td>1.0×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">PLTR</div>
+          <div class="name-cell">Palantir Technologies Inc.</div>
+        </td>
+        <td class="price-cell">$133.99</td>
+        <td class="chg-pos">+0.19%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill low" style="width:18%"></div></div>
+            <span class="score-num low">18</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-sell">強力做空 ❄️</span></td>
+        <td>43.48</td>
+        <td>-0.56</td>
+        <td>0.7×</td>
+      </tr>
+    
+      
+      
+      
+      
+      <tr>
+        <td>
+          <div class="ticker-cell">META</div>
+          <div class="name-cell">Meta Platforms, Inc.</div>
+        </td>
+        <td class="price-cell">$614.23</td>
+        <td class="chg-neg">-0.68%</td>
+        <td>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-fill low" style="width:8%"></div></div>
+            <span class="score-num low">8</span>
+          </div>
+        </td>
+        <td><span class="strength-badge strength-sell">強力做空 ❄️</span></td>
+        <td>45.6</td>
+        <td>-2.87</td>
+        <td>0.8×</td>
+      </tr>
+    
+    </tbody>
+  </table>
+</div>
+
+<!-- STOCK CARDS -->
+<div class="card">
+  <div class="card-title"><span class="icon">📈</span>個股詳情</div>
+  <div class="stock-grid">
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">APP</div>
+          <div class="sc-name">Applovin Corporation</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$501.00</div>
+          <div class="sc-price-chg chg-pos">+3.26%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill high" style="width:90%"></div></div>
+        <span class="score-num high">90/100</span>
+        <span class="strength-badge strength-buy">強力做多 🔥</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 481.76</span>
+        <span class="ma-badge ma20">MA20: 470.38</span>
+        <span class="ma-badge ma60">MA60: 446.0</span>
+        <span class="rsi-badge">RSI: 58.35</span>
+        <span class="vol-badge">量比: 1.1×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div>
+        
+        <div class="signal-item">✅ RSI 動能走強（58.3 ↑）</div>
+        
+        <div class="signal-item">✅ MACD 金叉且動能擴張</div>
+        
+        <div class="signal-item">🟡 量能正常（1.1× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 12.3%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 22.025285504s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '22s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">MSFT</div>
+          <div class="sc-name">Microsoft Corporation</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$421.92</div>
+          <div class="sc-price-chg chg-pos">+3.05%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill high" style="width:70%"></div></div>
+        <span class="score-num high">70/100</span>
+        <span class="strength-badge strength-buy">偏多 📈</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 411.4</span>
+        <span class="ma-badge ma20">MA20: 417.41</span>
+        <span class="ma-badge ma60">MA60: 398.96</span>
+        <span class="rsi-badge">RSI: 57.91</span>
+        <span class="vol-badge">量比: 1.5×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div>
+        
+        <div class="signal-item">✅ RSI 動能走強（57.9 ↑）</div>
+        
+        <div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div>
+        
+        <div class="signal-item">🟡 量能正常（1.5× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 5.8%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 20.194967762s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '20s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">NVDA</div>
+          <div class="sc-name">NVIDIA Corporation</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$225.32</div>
+          <div class="sc-price-chg chg-neg">-4.42%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:54%"></div></div>
+        <span class="score-num mid">54/100</span>
+        <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 225.42</span>
+        <span class="ma-badge ma20">MA20: 210.3</span>
+        <span class="ma-badge ma60">MA60: 191.9</span>
+        <span class="rsi-badge">RSI: 64.67</span>
+        <span class="vol-badge">量比: 1.2×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div>
+        
+        <div class="signal-item">RSI 中性（64.7）</div>
+        
+        <div class="signal-item">🟡 MACD 金叉（動能略收）</div>
+        
+        <div class="signal-item">🟡 量能正常（1.2× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 17.4%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 49.335952289s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '49s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">GOOGL</div>
+          <div class="sc-name">Alphabet Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$396.78</div>
+          <div class="sc-price-chg chg-neg">-1.07%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:52%"></div></div>
+        <span class="score-num mid">52/100</span>
+        <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 395.29</span>
+        <span class="ma-badge ma20">MA20: 372.89</span>
+        <span class="ma-badge ma60">MA60: 328.64</span>
+        <span class="rsi-badge">RSI: 70.24</span>
+        <span class="vol-badge">量比: 0.7×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div>
+        
+        <div class="signal-item">RSI 中性（70.2）</div>
+        
+        <div class="signal-item">🟡 MACD 金叉（動能略收）</div>
+        
+        <div class="signal-item">⚠️ 量能不足（0.7× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 20.7%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 40.784544202s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '40s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">NOW</div>
+          <div class="sc-name">ServiceNow, Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$95.07</div>
+          <div class="sc-price-chg chg-pos">+5.05%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:50%"></div></div>
+        <span class="score-num mid">50/100</span>
+        <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 90.62</span>
+        <span class="ma-badge ma20">MA20: 91.9</span>
+        <span class="ma-badge ma60">MA60: 101.21</span>
+        <span class="rsi-badge">RSI: 52.04</span>
+        <span class="vol-badge">量比: 1.2×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">❌ 空頭排列（價格低於 MA60）</div>
+        
+        <div class="signal-item">✅ RSI 動能走強（52.0 ↑）</div>
+        
+        <div class="signal-item">✅ MACD 金叉且動能擴張</div>
+        
+        <div class="signal-item">🟡 量能正常（1.2× 均量）</div>
+        
+        <div class="signal-item">❌ 跌破 MA60（-6.1%）</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 1.323540157s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '1s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">AMD</div>
+          <div class="sc-name">Advanced Micro Devices, Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$424.10</div>
+          <div class="sc-price-chg chg-neg">-5.69%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:44%"></div></div>
+        <span class="score-num mid">44/100</span>
+        <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 445.28</span>
+        <span class="ma-badge ma20">MA20: 371.71</span>
+        <span class="ma-badge ma60">MA60: 266.28</span>
+        <span class="rsi-badge">RSI: 67.29</span>
+        <span class="vol-badge">量比: 0.6×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div>
+        
+        <div class="signal-item">RSI 中性（67.3）</div>
+        
+        <div class="signal-item">🟡 MACD 金叉（動能略收）</div>
+        
+        <div class="signal-item">⚠️ 量能不足（0.6× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 59.3%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 59.630737848s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '59s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">TSLA</div>
+          <div class="sc-name">Tesla, Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$422.24</div>
+          <div class="sc-price-chg chg-neg">-4.75%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill mid" style="width:44%"></div></div>
+        <span class="score-num mid">44/100</span>
+        <span class="strength-badge strength-neut">中性觀望 ⚖️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 437.85</span>
+        <span class="ma-badge ma20">MA20: 401.32</span>
+        <span class="ma-badge ma60">MA60: 389.93</span>
+        <span class="rsi-badge">RSI: 57.97</span>
+        <span class="vol-badge">量比: 0.9×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div>
+        
+        <div class="signal-item">RSI 中性（58.0）</div>
+        
+        <div class="signal-item">🟡 MACD 金叉（動能略收）</div>
+        
+        <div class="signal-item">⚠️ 量能不足（0.9× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 8.3%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 11.715303249s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '11s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">AVGO</div>
+          <div class="sc-name">Broadcom Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$425.19</div>
+          <div class="sc-price-chg chg-neg">-3.32%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill low" style="width:32%"></div></div>
+        <span class="score-num low">32/100</span>
+        <span class="strength-badge strength-sell">偏空 📉</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 425.9</span>
+        <span class="ma-badge ma20">MA20: 418.54</span>
+        <span class="ma-badge ma60">MA60: 361.68</span>
+        <span class="rsi-badge">RSI: 58.65</span>
+        <span class="vol-badge">量比: 1.0×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div>
+        
+        <div class="signal-item">RSI 中性（58.7）</div>
+        
+        <div class="signal-item">❌ MACD 偏空</div>
+        
+        <div class="signal-item">⚠️ 量能不足（1.0× 均量）</div>
+        
+        <div class="signal-item">✅ 站穩 MA60 上方 17.6%</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 9.948110299s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '9s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">PLTR</div>
+          <div class="sc-name">Palantir Technologies Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$133.99</div>
+          <div class="sc-price-chg chg-pos">+0.19%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill low" style="width:18%"></div></div>
+        <span class="score-num low">18/100</span>
+        <span class="strength-badge strength-sell">強力做空 ❄️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 134.13</span>
+        <span class="ma-badge ma20">MA20: 139.79</span>
+        <span class="ma-badge ma60">MA60: 143.67</span>
+        <span class="rsi-badge">RSI: 43.48</span>
+        <span class="vol-badge">量比: 0.7×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">❌ 空頭排列（價格低於 MA60）</div>
+        
+        <div class="signal-item">🟡 RSI 低位回升（43.5）</div>
+        
+        <div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div>
+        
+        <div class="signal-item">⚠️ 量能不足（0.7× 均量）</div>
+        
+        <div class="signal-item">❌ 跌破 MA60（-6.7%）</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 51.019463049s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '51s'}]}}]</div>
+      
+    </div>
+  
+    
+    
+    
+    <div class="stock-card">
+      <div class="sc-header">
+        <div>
+          <div class="sc-ticker">META</div>
+          <div class="sc-name">Meta Platforms, Inc.</div>
+        </div>
+        <div class="sc-price">
+          <div class="sc-price-val">$614.23</div>
+          <div class="sc-price-chg chg-neg">-0.68%</div>
+        </div>
+      </div>
+
+      <div class="sc-score-row">
+        <div class="score-bar" style="flex:1"><div class="score-fill low" style="width:8%"></div></div>
+        <span class="score-num low">8/100</span>
+        <span class="strength-badge strength-sell">強力做空 ❄️</span>
+      </div>
+
+      <div class="sc-badges">
+        <span class="ma-badge ma5">MA5: 610.23</span>
+        <span class="ma-badge ma20">MA20: 634.71</span>
+        <span class="ma-badge ma60">MA60: 626.88</span>
+        <span class="rsi-badge">RSI: 45.6</span>
+        <span class="vol-badge">量比: 0.8×</span>
+      </div>
+
+      <div class="sc-signals">
+        
+        <div class="signal-item">❌ 空頭排列（價格低於 MA60）</div>
+        
+        <div class="signal-item">RSI 中性（45.6）</div>
+        
+        <div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div>
+        
+        <div class="signal-item">⚠️ 量能不足（0.8× 均量）</div>
+        
+        <div class="signal-item">❌ 跌破 MA60（-2.0%）</div>
+        
+      </div>
+
+      
+      <hr class="sc-divider">
+      <div class="sc-ai-label">🤖 AI 快速判讀</div>
+      <div class="sc-ai-body">[AI分析失敗: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\nPlease retry in 30.445854434s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '30s'}]}}]</div>
+      
+    </div>
+  
+  </div>
+</div>
+
+<div class="footer">⚠️ 本報告由 AI 自動生成，僅供參考，不構成投資建議。投資有風險，請審慎評估。</div>
+
+</body>
+</html>
