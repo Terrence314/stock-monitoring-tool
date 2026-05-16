@@ -10,7 +10,6 @@ def setup_gemini(api_key: str, model_name: str = "gemini-2.5-flash"):
 
 
 def _call(client, prompt: str, retries: int = 3) -> str:
-    time.sleep(4)
     for attempt in range(retries):
         try:
             response = client.models.generate_content(
@@ -25,6 +24,8 @@ def _call(client, prompt: str, retries: int = 3) -> str:
                 time.sleep(wait)
             else:
                 return f"[AI分析失敗: {e}]"
+        if attempt < retries - 1:
+            time.sleep(4)
     return "[AI分析失敗: 超過重試次數]"
 
 

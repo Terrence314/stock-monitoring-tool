@@ -69,35 +69,38 @@ def main():
 
     for ticker in cfg["watchlist"]:
         print(f"      {ticker}…", end=" ", flush=True)
-        data = fetch_stock_data(ticker, period=cfg.get("analysis", {}).get("history_period", "6mo"))
-        if not data:
-            print("跳過（無數據）")
-            continue
+        try:
+            data = fetch_stock_data(ticker, period=cfg.get("analysis", {}).get("history_period", "6mo"))
+            if not data:
+                print("跳過（無數據）")
+                continue
 
-        ta = calculate_indicators(data["history"])
-        ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
+            ta = calculate_indicators(data["history"])
+            ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
 
-        stock_results.append({
-            "ticker":           ticker,
-            "name":             data["name"],
-            "price":            data["current_price"],
-            "price_change_pct": data["price_change_pct"],
-            "volume":           data["volume"],
-            "score":            ta["score"],
-            "strength":         ta["strength"],
-            "strength_en":      ta["strength_en"],
-            "signals":          ta["signals"],
-            "ma5":              ta["ma5"],
-            "ma20":             ta["ma20"],
-            "ma60":             ta["ma60"],
-            "rsi":              ta["rsi"],
-            "macd":             ta["macd"],
-            "macd_hist":        ta["macd_hist"],
-            "vol_ratio":        ta["vol_ratio"],
-            "ai_view":          ai_view,
-        })
-        flag = " 🔥" if ta["score"] >= threshold else ""
-        print(f"信號 {ta['score']}/100{flag}")
+            stock_results.append({
+                "ticker":           ticker,
+                "name":             data["name"],
+                "price":            data["current_price"],
+                "price_change_pct": data["price_change_pct"],
+                "volume":           data["volume"],
+                "score":            ta["score"],
+                "strength":         ta["strength"],
+                "strength_en":      ta["strength_en"],
+                "signals":          ta["signals"],
+                "ma5":              ta["ma5"],
+                "ma20":             ta["ma20"],
+                "ma60":             ta["ma60"],
+                "rsi":              ta["rsi"],
+                "macd":             ta["macd"],
+                "macd_hist":        ta["macd_hist"],
+                "vol_ratio":        ta["vol_ratio"],
+                "ai_view":          ai_view,
+            })
+            flag = " 🔥" if ta["score"] >= threshold else ""
+            print(f"信號 {ta['score']}/100{flag}")
+        except Exception as e:
+            print(f"跳過（錯誤：{e}）")
 
     # ── 5. Generate report ───────────────────────────────────────────────────
     print("[5/5] 生成報告 + 推送 Telegram…")

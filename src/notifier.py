@@ -6,7 +6,7 @@ def send_telegram(bot_token: str, chat_id: str, message: str) -> bool:
     payload = {"chat_id": chat_id, "text": message, "parse_mode": "HTML"}
     try:
         r = requests.post(url, json=payload, timeout=15)
-        return r.ok
+        return r.json().get("ok", False)
     except Exception as e:
         print(f"  [notifier] Telegram error: {e}")
         return False
