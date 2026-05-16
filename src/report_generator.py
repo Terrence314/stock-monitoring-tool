@@ -163,6 +163,36 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .sc-entry-label { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
 .sc-entry-body { font-size: 11px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
 
+/* ── NEWS FEED ── */
+.sc-news { margin-bottom: 10px; }
+.sc-news-label { font-size: 10px; font-weight: 800; color: var(--purple); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.sc-news-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.sc-news-item { font-size: 10px; color: var(--text); line-height: 1.4; padding: 4px 6px; background: var(--card2); border-radius: 4px; }
+.sc-news-publisher { font-size: 9px; color: var(--muted); margin-top: 1px; }
+
+/* ── SENTIMENT BADGE ── */
+.sentiment-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.sentiment-pos  { background: rgba(46,204,113,0.2);  color: var(--green);  border: 1px solid rgba(46,204,113,0.4); }
+.sentiment-neg  { background: rgba(231,76,60,0.2);   color: var(--red);    border: 1px solid rgba(231,76,60,0.4); }
+.sentiment-neut { background: rgba(136,146,164,0.2); color: var(--muted);  border: 1px solid rgba(136,146,164,0.3); }
+.sc-sentiment-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.sc-sentiment-text { font-size: 11px; color: var(--text); line-height: 1.5; flex: 1; }
+.sc-sentiment-label { font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+/* ── ANALYST TARGET ── */
+.sc-analyst-row { font-size: 11px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.sc-analyst-row strong { color: var(--text); }
+
 /* ── COPY BUTTON ── */
 .copy-btn {
   display: block;
@@ -366,7 +396,33 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="score-bar" style="flex:1"><div class="score-fill {{ sc_class }}" style="width:{{ sc }}%"></div></div>
         <span class="score-num {{ sc_class }}">{{ sc }}/100</span>
         <span class="strength-badge {{ 'strength-buy' if sc >= 60 else ('strength-neut' if sc >= 40 else 'strength-sell') }}">{{ s.strength }}</span>
+        {% if s.get('sentiment') and s.sentiment.score is not none %}
+          {% set sent_score = s.sentiment.score %}
+          {% set sent_class = "sentiment-pos" if sent_score >= 3 else ("sentiment-neg" if sent_score <= -3 else "sentiment-neut") %}
+          {% set sent_sign = "+" if sent_score > 0 else "" %}
+          <span class="sentiment-circle {{ sent_class }}" title="新聞情緒：{{ sent_sign }}{{ sent_score }}">{{ sent_sign }}{{ sent_score }}</span>
+        {% endif %}
       </div>
+
+      {% if s.get('sentiment') and s.sentiment.score is not none %}
+      <div class="sc-sentiment-row">
+        <div>
+          <div class="sc-sentiment-label">新聞情緒分析</div>
+          <div class="sc-sentiment-text">{{ s.sentiment.summary }}</div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if s.get('analyst_recom') or s.get('target_price') %}
+      <div class="sc-analyst-row">
+        {% if s.target_price %}
+        <span>分析師目標價：<strong>${{ s.target_price }}</strong></span>
+        {% endif %}
+        {% if s.analyst_recom %}
+        <span>評級：<strong>{{ s.analyst_recom }}</strong></span>
+        {% endif %}
+      </div>
+      {% endif %}
 
       <div class="sc-badges">
         <span class="ma-badge ma5">MA5: {{ s.ma5 }}</span>
@@ -381,6 +437,23 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <div class="signal-item">{{ sig }}</div>
         {% endfor %}
       </div>
+
+      {% if s.get('news') and s.news %}
+      <hr class="sc-divider">
+      <div class="sc-news">
+        <div class="sc-news-label">📰 最新新聞</div>
+        <ul class="sc-news-list">
+          {% for item in s.news %}
+          <li class="sc-news-item">
+            {{ item.title }}
+            {% if item.publisher %}
+            <div class="sc-news-publisher">{{ item.publisher }}</div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
 
       {% if s.ai_view %}
       <hr class="sc-divider">

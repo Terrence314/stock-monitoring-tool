@@ -3,9 +3,9 @@ import json
 import sys
 from datetime import datetime, timedelta
 
-from data_fetcher import fetch_stock_data, fetch_market_overview
+from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finviz_data
 from technical_analysis import calculate_indicators
-from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view
+from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment
 from report_generator import generate_dashboard
 from notifier import send_telegram, format_daily_message
 
@@ -131,6 +131,33 @@ def main():
             ta = calculate_indicators(data["history"])
             ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
 
+            # ── Finviz: news + analyst ratings ─────────────────────────────
+            finviz = fetch_finviz_data(ticker)
+
+            # ── Combine and deduplicate headlines for sentiment ─────────────
+            yf_headlines = [item["title"] for item in data.get("news", [])]
+            fv_headlines = [item["title"] for item in finviz.get("news", [])]
+            seen = set()
+            combined_headlines = []
+            for h in yf_headlines + fv_headlines:
+                key = h.lower().strip()[:80]  # rough dedup by prefix
+                if key not in seen:
+                    seen.add(key)
+                    combined_headlines.append(h)
+
+            sentiment = run_news_sentiment(model, ticker, combined_headlines)
+
+            # ── Merge Finviz news into combined news list for display ───────
+            # Build full news list: yFinance items (with publisher) + Finviz items (with date)
+            combined_news = list(data.get("news", []))
+            fv_titles_lower = {item["title"].lower()[:80] for item in combined_news}
+            for fv_item in finviz.get("news", []):
+                if fv_item["title"].lower()[:80] not in fv_titles_lower:
+                    combined_news.append({
+                        "title":     fv_item["title"],
+                        "publisher": fv_item.get("date", "Finviz"),
+                    })
+
             stock_results.append({
                 "ticker":           ticker,
                 "name":             data["name"],
@@ -151,6 +178,10 @@ def main():
                 "ai_view":          ai_view,
                 "sector":           data.get("sector", "Unknown"),
                 "entry":            "",  # populated by deep dive if run; placeholder here
+                "news":             combined_news[:5],
+                "sentiment":        sentiment,
+                "analyst_recom":    finviz.get("analyst_recom", ""),
+                "target_price":     finviz.get("target_price", ""),
             })
             flag = " 🔥" if ta["score"] >= threshold else ""
             print(f"信號 {ta['score']}/100{flag}")

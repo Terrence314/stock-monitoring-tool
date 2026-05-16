@@ -114,3 +114,65 @@ RSI：{ta['rsi']} | MACD：{ta['macd']} | MACD Signal：{ta['macd_signal']}
         "risks":     _call(model, risk_prompt),
         "entry":     _call(model, entry_prompt),
     }
+
+
+def run_news_sentiment(model, ticker: str, headlines: list) -> dict:
+    """Score overall news sentiment for a ticker using Gemini.
+
+    Args:
+        model:     Gemini client returned by setup_gemini()
+        ticker:    Stock ticker symbol (for context)
+        headlines: List of headline strings (deduplicated, combined from all sources)
+
+    Returns:
+        {"score": int | None, "summary": str}
+        Score is -10 (extremely bearish) to +10 (extremely bullish), or None if unavailable.
+    """
+    if len(headlines) < 2:
+        return {"score": None, "summary": "無新聞數據"}
+
+    headlines_text = "\n".join(f"• {h}" for h in headlines)
+
+    prompt = f"""以下是 {ticker} 的最新新聞標題：
+
+{headlines_text}
+
+請以繁體中文完成以下兩件事：
+1. 根據上述新聞，給出整體情緒評分，範圍從 -10（極度看空）到 +10（極度看多），只輸出一個整數。
+2. 用一句話說明你的評分理由。
+
+輸出格式範例：
+評分：+5
+理由：公司財報優於預期，帶動市場樂觀情緒。
+
+請嚴格按此格式回答。"""
+
+    raw = _call(model, prompt)
+
+    # Extract numeric score from the response
+    score = None
+    summary = raw.strip()
+    try:
+        import re
+        # Match an integer between -10 and +10 preceded by "評分：" or similar
+        match = re.search(r"評分[：:]\s*([+-]?\d+)", raw)
+        if match:
+            candidate = int(match.group(1))
+            if -10 <= candidate <= 10:
+                score = candidate
+        else:
+            # Fallback: find any standalone integer in the range
+            for token in re.findall(r"[+-]?\d+", raw):
+                candidate = int(token)
+                if -10 <= candidate <= 10:
+                    score = candidate
+                    break
+
+        # Extract the one-sentence rationale
+        reason_match = re.search(r"理由[：:]\s*(.+)", raw)
+        if reason_match:
+            summary = reason_match.group(1).strip()
+    except Exception:
+        pass
+
+    return {"score": score, "summary": summary}
