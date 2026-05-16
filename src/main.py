@@ -1,13 +1,65 @@
 import os
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from data_fetcher import fetch_stock_data, fetch_market_overview
 from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view
 from report_generator import generate_dashboard
 from notifier import send_telegram, format_daily_message
+
+
+SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
+ALERT_HISTORY_FILE = os.path.join("outputs", "alert_history.json")
+HISTORY_KEEP_DAYS  = 30
+ALERT_KEEP_ENTRIES = 30
+
+
+def load_json_file(path: str, default):
+    """Load a JSON file, returning default if missing or corrupt."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return default
+
+
+def save_json_file(path: str, data) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+def update_score_history(today_str: str, stock_results: list) -> dict:
+    """Append today's scores; prune to last HISTORY_KEEP_DAYS days."""
+    history: dict = load_json_file(SCORE_HISTORY_FILE, {})
+    today_scores = {s["ticker"]: s["score"] for s in stock_results}
+    history[today_str] = today_scores
+
+    # Keep only recent days
+    cutoff = (datetime.now() - timedelta(days=HISTORY_KEEP_DAYS)).strftime("%Y-%m-%d")
+    history = {d: v for d, v in history.items() if d >= cutoff}
+
+    save_json_file(SCORE_HISTORY_FILE, history)
+    return history
+
+
+def update_alert_history(today_str: str, stock_results: list, threshold: int) -> list:
+    """Append high-signal stocks; keep last ALERT_KEEP_ENTRIES entries."""
+    alerts: list = load_json_file(ALERT_HISTORY_FILE, [])
+    for s in stock_results:
+        if s["score"] >= threshold:
+            alerts.append({
+                "date":     today_str,
+                "ticker":   s["ticker"],
+                "score":    s["score"],
+                "strength": s["strength"],
+            })
+    # Trim to most recent entries
+    alerts = alerts[-ALERT_KEEP_ENTRIES:]
+    save_json_file(ALERT_HISTORY_FILE, alerts)
+    return alerts
 
 
 def load_config(path: str = "config/config.json") -> dict:
@@ -39,7 +91,8 @@ def main():
     print("=" * 50)
 
     cfg = load_config()
-    today = datetime.now().strftime("%Y/%m/%d")
+    today        = datetime.now().strftime("%Y/%m/%d")
+    today_key    = datetime.now().strftime("%Y-%m-%d")
 
     errors = validate_config(cfg)
     if errors:
@@ -96,15 +149,24 @@ def main():
                 "macd_hist":        ta["macd_hist"],
                 "vol_ratio":        ta["vol_ratio"],
                 "ai_view":          ai_view,
+                "sector":           data.get("sector", "Unknown"),
+                "entry":            "",  # populated by deep dive if run; placeholder here
             })
             flag = " 🔥" if ta["score"] >= threshold else ""
             print(f"信號 {ta['score']}/100{flag}")
         except Exception as e:
             print(f"跳過（錯誤：{e}）")
 
-    # ── 5. Generate report ───────────────────────────────────────────────────
+    # ── 5. Persist history + generate report ────────────────────────────────
     print("[5/5] 生成報告 + 推送 Telegram…")
-    report_path = generate_dashboard(today, market, morning_brief, stock_results)
+    score_history = update_score_history(today_key, stock_results)
+    alert_history = update_alert_history(today_key, stock_results, threshold)
+
+    report_path = generate_dashboard(
+        today, market, morning_brief, stock_results,
+        score_history=score_history,
+        alert_history=alert_history,
+    )
     print(f"      報告已儲存：{report_path}")
 
     report_url = os.getenv("REPORT_URL", "")

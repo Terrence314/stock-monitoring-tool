@@ -38,6 +38,7 @@ def fetch_stock_data(ticker: str, period: str = "6mo") -> dict | None:
             "open":          float(hist["Open"].iloc[-1]),
             "name":          info.get("shortName", ticker),
             "market_cap":    info.get("marketCap"),
+            "sector":        info.get("sector", "Unknown"),
         }
     except Exception as e:
         print(f"  [data_fetcher] {ticker} error: {e}")
