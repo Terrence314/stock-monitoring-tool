@@ -3,7 +3,7 @@ import json
 import sys
 from datetime import datetime, timedelta
 
-from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finviz_data
+from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data
 from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment
 from report_generator import generate_dashboard
@@ -67,9 +67,10 @@ def load_config(path: str = "config/config.json") -> dict:
         cfg = json.load(f)
 
     # Env vars override config file — safe for GitHub Actions secrets
-    cfg["telegram"]["bot_token"] = os.getenv("TELEGRAM_BOT_TOKEN") or cfg["telegram"]["bot_token"]
-    cfg["telegram"]["chat_id"]   = os.getenv("TELEGRAM_CHAT_ID")   or cfg["telegram"]["chat_id"]
-    cfg["gemini"]["api_key"]     = os.getenv("GEMINI_API_KEY")      or cfg["gemini"]["api_key"]
+    cfg["telegram"]["bot_token"]     = os.getenv("TELEGRAM_BOT_TOKEN") or cfg["telegram"]["bot_token"]
+    cfg["telegram"]["chat_id"]       = os.getenv("TELEGRAM_CHAT_ID")   or cfg["telegram"]["chat_id"]
+    cfg["gemini"]["api_key"]         = os.getenv("GEMINI_API_KEY")      or cfg["gemini"]["api_key"]
+    cfg["gemini"]["finnhub_api_key"] = os.getenv("FINNHUB_API_KEY")     or cfg["gemini"].get("finnhub_api_key", "")
 
     return cfg
 
@@ -118,7 +119,8 @@ def main():
     # ── 4. Watchlist analysis ────────────────────────────────────────────────
     print(f"[4/5] 分析 {len(cfg['watchlist'])} 檔股票…")
     stock_results = []
-    threshold = cfg.get("analysis", {}).get("signal_threshold_alert", 70)
+    threshold    = cfg.get("analysis", {}).get("signal_threshold_alert", 70)
+    finnhub_key  = cfg["gemini"].get("finnhub_api_key", "")
 
     for ticker in cfg["watchlist"]:
         print(f"      {ticker}…", end=" ", flush=True)
@@ -131,31 +133,30 @@ def main():
             ta = calculate_indicators(data["history"])
             ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
 
-            # ── Finviz: news + analyst ratings ─────────────────────────────
-            finviz = fetch_finviz_data(ticker)
+            # ── Finnhub: news + analyst ratings + financials ───────────────
+            fh = fetch_finnhub_data(ticker, finnhub_key) if finnhub_key else {}
 
             # ── Combine and deduplicate headlines for sentiment ─────────────
             yf_headlines = [item["title"] for item in data.get("news", [])]
-            fv_headlines = [item["title"] for item in finviz.get("news", [])]
+            fh_headlines = [item["headline"] for item in fh.get("news", [])]
             seen = set()
             combined_headlines = []
-            for h in yf_headlines + fv_headlines:
-                key = h.lower().strip()[:80]  # rough dedup by prefix
+            for h in yf_headlines + fh_headlines:
+                key = h.lower().strip()[:80]
                 if key not in seen:
                     seen.add(key)
                     combined_headlines.append(h)
 
             sentiment = run_news_sentiment(model, ticker, combined_headlines)
 
-            # ── Merge Finviz news into combined news list for display ───────
-            # Build full news list: yFinance items (with publisher) + Finviz items (with date)
+            # ── Merge Finnhub news into combined news list for display ──────
             combined_news = list(data.get("news", []))
-            fv_titles_lower = {item["title"].lower()[:80] for item in combined_news}
-            for fv_item in finviz.get("news", []):
-                if fv_item["title"].lower()[:80] not in fv_titles_lower:
+            existing_lower = {item["title"].lower()[:80] for item in combined_news}
+            for fh_item in fh.get("news", []):
+                if fh_item["headline"].lower()[:80] not in existing_lower:
                     combined_news.append({
-                        "title":     fv_item["title"],
-                        "publisher": fv_item.get("date", "Finviz"),
+                        "title":     fh_item["headline"],
+                        "publisher": fh_item.get("source", "Finnhub"),
                     })
 
             stock_results.append({
@@ -180,8 +181,14 @@ def main():
                 "entry":            "",  # populated by deep dive if run; placeholder here
                 "news":             combined_news[:5],
                 "sentiment":        sentiment,
-                "analyst_recom":    finviz.get("analyst_recom", ""),
-                "target_price":     finviz.get("target_price", ""),
+                "analyst_buy":      fh.get("analyst_buy"),
+                "analyst_hold":     fh.get("analyst_hold"),
+                "analyst_sell":     fh.get("analyst_sell"),
+                "analyst_period":   fh.get("analyst_period", ""),
+                "pe_ratio":         fh.get("pe_ratio"),
+                "week52_high":      fh.get("week52_high"),
+                "week52_low":       fh.get("week52_low"),
+                "next_earnings":    fh.get("next_earnings"),
             })
             flag = " 🔥" if ta["score"] >= threshold else ""
             print(f"信號 {ta['score']}/100{flag}")

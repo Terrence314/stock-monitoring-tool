@@ -1,5 +1,12 @@
 {
-  "watchlist": ["NVDA", "AMD", "AVGO", "MSFT", "META", "GOOGL", "PLTR", "NOW", "TSLA", "APP"],
+  "watchlist": [
+    "NVDA", "AMD", "AVGO", "MSFT", "META", "GOOGL", "PLTR", "NOW", "TSLA", "APP",
+    "SPY", "QQQ", "IWM", "DIA", "VTI",
+    "XLK", "XLF", "XLE", "XLV", "XLY", "XLI", "XBI",
+    "SOXX", "ARKK", "CIBR", "BOTZ",
+    "TLT", "HYG",
+    "GLD", "USO"
+  ],
   "language": "zh-TW",
   "market": "US",
   "telegram": {
@@ -8,7 +15,8 @@
   },
   "gemini": {
     "api_key": "",
-    "model": "gemini-2.5-flash"
+    "model": "gemini-2.5-flash",
+    "finnhub_api_key": ""
   },
   "schedule": {
     "timezone": "Asia/Hong_Kong",

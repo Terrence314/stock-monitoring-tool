@@ -1,12 +1,12 @@
 import yfinance as yf
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 
 try:
-    from finvizfinance.quote import finvizfinance as fvf
-    _FINVIZ_AVAILABLE = True
+    import finnhub as _finnhub_module
+    _FINNHUB_AVAILABLE = True
 except ImportError:
-    _FINVIZ_AVAILABLE = False
+    _FINNHUB_AVAILABLE = False
 
 
 MARKET_INDICES = {
@@ -74,48 +74,101 @@ def fetch_stock_data(ticker: str, period: str = "6mo") -> dict | None:
         return None
 
 
-def fetch_finviz_data(ticker: str) -> dict:
-    """Fetch Finviz news and analyst data for a ticker.
+def fetch_finnhub_data(ticker: str, api_key: str) -> dict:
+    """Fetch Finnhub data: news, analyst recommendations, basic financials, earnings calendar.
 
-    Returns a dict with keys: news (list), analyst_recom (str), target_price (str).
-    Returns an empty dict silently on any failure (rate limit, unknown ticker, etc.).
+    Returns a dict with keys:
+        news          - list of {headline, source} (top 5)
+        analyst_buy   - int buy count from latest recommendation trend (or None)
+        analyst_hold  - int hold count (or None)
+        analyst_sell  - int sell count (or None)
+        analyst_period - str period label (or "")
+        pe_ratio      - float P/E (normalised annual) or None
+        week52_high   - float 52-week high or None
+        week52_low    - float 52-week low or None
+        next_earnings - str "YYYY-MM-DD" if within 30 days, else None
+
+    Each section is wrapped in its own try/except — partial failures return empty
+    for that field only.  ETF-specific fields (earnings, P/E) gracefully return None.
     """
-    if not _FINVIZ_AVAILABLE:
-        return {}
-    try:
-        stock = fvf(ticker)
-
-        # Latest 3 news items
-        news = []
-        try:
-            news_df = stock.ticker_news()
-            if news_df is not None and not news_df.empty:
-                for _, row in news_df.head(3).iterrows():
-                    title = str(row.get("Title") or row.get("title") or "")
-                    date  = str(row.get("Date")  or row.get("date")  or "")
-                    if title:
-                        news.append({"title": title, "date": date})
-        except Exception:
-            pass
-
-        # Fundamentals: analyst recommendation + target price
-        analyst_recom = ""
-        target_price  = ""
-        try:
-            fund = stock.ticker_fundament()
-            if fund:
-                analyst_recom = str(fund.get("Analyst Recom", "") or "")
-                target_price  = str(fund.get("Target Price",  "") or "")
-        except Exception:
-            pass
-
+    if not _FINNHUB_AVAILABLE or not api_key:
         return {
-            "news":          news,
-            "analyst_recom": analyst_recom,
-            "target_price":  target_price,
+            "news": [], "analyst_buy": None, "analyst_hold": None,
+            "analyst_sell": None, "analyst_period": "",
+            "pe_ratio": None, "week52_high": None, "week52_low": None,
+            "next_earnings": None,
         }
+
+    client = _finnhub_module.Client(api_key=api_key)
+    today = datetime.now().date()
+    seven_days_ago = (today - timedelta(days=7)).strftime("%Y-%m-%d")
+    today_str = today.strftime("%Y-%m-%d")
+    thirty_days_ahead = (today + timedelta(days=30)).strftime("%Y-%m-%d")
+
+    # ── News ─────────────────────────────────────────────────────────────────
+    news = []
+    try:
+        raw_news = client.company_news(ticker, _from=seven_days_ago, to=today_str)
+        for item in (raw_news or [])[:5]:
+            headline = item.get("headline", "").strip()
+            source   = item.get("source", "").strip()
+            if headline:
+                news.append({"headline": headline, "source": source})
     except Exception:
-        return {}
+        pass
+
+    # ── Analyst recommendations ───────────────────────────────────────────────
+    analyst_buy    = None
+    analyst_hold   = None
+    analyst_sell   = None
+    analyst_period = ""
+    try:
+        trends = client.recommendation_trends(ticker)
+        if trends:
+            latest = trends[0]
+            analyst_buy    = latest.get("buy")
+            analyst_hold   = latest.get("hold")
+            analyst_sell   = latest.get("sell")
+            analyst_period = latest.get("period", "")
+    except Exception:
+        pass
+
+    # ── Basic financials (52W range, P/E) ─────────────────────────────────────
+    pe_ratio    = None
+    week52_high = None
+    week52_low  = None
+    try:
+        fins = client.company_basic_financials(ticker, "all")
+        metrics = fins.get("metric", {}) if fins else {}
+        week52_high = metrics.get("52WeekHigh")
+        week52_low  = metrics.get("52WeekLow")
+        pe_ratio    = metrics.get("peNormalizedAnnual")
+    except Exception:
+        pass
+
+    # ── Earnings calendar ─────────────────────────────────────────────────────
+    next_earnings = None
+    try:
+        cal = client.earnings_calendar(
+            _from=today_str, to=thirty_days_ahead, symbol=ticker
+        )
+        earnings_list = (cal or {}).get("earningsCalendar", [])
+        if earnings_list:
+            next_earnings = earnings_list[0].get("date")
+    except Exception:
+        pass
+
+    return {
+        "news":           news,
+        "analyst_buy":    analyst_buy,
+        "analyst_hold":   analyst_hold,
+        "analyst_sell":   analyst_sell,
+        "analyst_period": analyst_period,
+        "pe_ratio":       pe_ratio,
+        "week52_high":    week52_high,
+        "week52_low":     week52_low,
+        "next_earnings":  next_earnings,
+    }
 
 
 def fetch_market_overview() -> dict:

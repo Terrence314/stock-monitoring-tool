@@ -189,9 +189,33 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
 .sc-sentiment-text { font-size: 11px; color: var(--text); line-height: 1.5; flex: 1; }
 .sc-sentiment-label { font-size: 9px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
 
-/* ── ANALYST TARGET ── */
-.sc-analyst-row { font-size: 11px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
-.sc-analyst-row strong { color: var(--text); }
+/* ── ANALYST RATING BAR ── */
+.sc-analyst-section { margin-bottom: 10px; }
+.sc-analyst-label { font-size: 10px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.sc-analyst-bar-wrap { display: flex; height: 8px; border-radius: 4px; overflow: hidden; width: 100%; gap: 1px; }
+.sc-analyst-bar-buy  { background: var(--green); }
+.sc-analyst-bar-hold { background: var(--gold); }
+.sc-analyst-bar-sell { background: var(--red); }
+.sc-analyst-counts { display: flex; gap: 10px; margin-top: 4px; font-size: 10px; font-weight: 700; }
+.sc-analyst-count-buy  { color: var(--green); }
+.sc-analyst-count-hold { color: var(--gold); }
+.sc-analyst-count-sell { color: var(--red); }
+.sc-analyst-period { font-size: 9px; color: var(--muted); margin-left: auto; }
+
+/* ── 52-WEEK RANGE ── */
+.sc-52w-section { margin-bottom: 10px; }
+.sc-52w-label { font-size: 10px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.sc-52w-track { height: 6px; border-radius: 3px; background: var(--card2); width: 100%; position: relative; margin-bottom: 3px; }
+.sc-52w-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--blue), var(--purple)); position: absolute; top: 0; left: 0; }
+.sc-52w-thumb { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); border: 1px solid var(--bg); position: absolute; top: -1px; transform: translateX(-50%); }
+.sc-52w-labels { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); }
+
+/* ── PE RATIO ── */
+.sc-pe-row { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.sc-pe-row strong { color: var(--text); }
+
+/* ── EARNINGS WARNING ── */
+.sc-earnings-warn { background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.4); border-radius: 5px; padding: 4px 8px; font-size: 11px; font-weight: 700; color: var(--orange); margin-bottom: 8px; }
 
 /* ── COPY BUTTON ── */
 .copy-btn {
@@ -413,15 +437,60 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
       </div>
       {% endif %}
 
-      {% if s.get('analyst_recom') or s.get('target_price') %}
-      <div class="sc-analyst-row">
-        {% if s.target_price %}
-        <span>分析師目標價：<strong>${{ s.target_price }}</strong></span>
+      {# ── Earnings warning ── #}
+      {% if s.get('next_earnings') %}
+      <div class="sc-earnings-warn">⚠️ 財報日: {{ s.next_earnings }}</div>
+      {% endif %}
+
+      {# ── Analyst rating bar ── #}
+      {% set ab = s.get('analyst_buy') %}
+      {% set ah = s.get('analyst_hold') %}
+      {% set as_ = s.get('analyst_sell') %}
+      {% if ab is not none and ah is not none and as_ is not none %}
+        {% set total = (ab + ah + as_) | int %}
+        {% if total > 0 %}
+        <div class="sc-analyst-section">
+          <div class="sc-analyst-label">分析師評級</div>
+          <div class="sc-analyst-bar-wrap">
+            <div class="sc-analyst-bar-buy"  style="width:{{ (ab / total * 100) | round(1) }}%"></div>
+            <div class="sc-analyst-bar-hold" style="width:{{ (ah / total * 100) | round(1) }}%"></div>
+            <div class="sc-analyst-bar-sell" style="width:{{ (as_ / total * 100) | round(1) }}%"></div>
+          </div>
+          <div class="sc-analyst-counts">
+            <span class="sc-analyst-count-buy">買入 {{ ab }}</span>
+            <span class="sc-analyst-count-hold">持有 {{ ah }}</span>
+            <span class="sc-analyst-count-sell">賣出 {{ as_ }}</span>
+            {% if s.get('analyst_period') %}
+            <span class="sc-analyst-period">{{ s.analyst_period }}</span>
+            {% endif %}
+          </div>
+        </div>
         {% endif %}
-        {% if s.analyst_recom %}
-        <span>評級：<strong>{{ s.analyst_recom }}</strong></span>
-        {% endif %}
-      </div>
+      {% endif %}
+
+      {# ── 52-week range ── #}
+      {% set w52h = s.get('week52_high') %}
+      {% set w52l = s.get('week52_low') %}
+      {% if w52h and w52l and w52h != w52l %}
+        {% set pct = ((s.price - w52l) / (w52h - w52l) * 100) | round(1) %}
+        {% set pct_clamp = [0, [pct, 100] | min] | max %}
+        <div class="sc-52w-section">
+          <div class="sc-52w-label">52週區間</div>
+          <div class="sc-52w-track">
+            <div class="sc-52w-fill" style="width:{{ pct_clamp }}%"></div>
+            <div class="sc-52w-thumb" style="left:{{ pct_clamp }}%"></div>
+          </div>
+          <div class="sc-52w-labels">
+            <span>低 ${{ "%.2f"|format(w52l) }}</span>
+            <span>現價 {{ pct_clamp }}%</span>
+            <span>高 ${{ "%.2f"|format(w52h) }}</span>
+          </div>
+        </div>
+      {% endif %}
+
+      {# ── P/E ratio ── #}
+      {% if s.get('pe_ratio') %}
+      <div class="sc-pe-row">市盈率 (P/E)：<strong>{{ "%.1f"|format(s.pe_ratio) }}</strong></div>
       {% endif %}
 
       <div class="sc-badges">
@@ -445,9 +514,10 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, Bl
         <ul class="sc-news-list">
           {% for item in s.news %}
           <li class="sc-news-item">
-            {{ item.title }}
-            {% if item.publisher %}
-            <div class="sc-news-publisher">{{ item.publisher }}</div>
+            {{ item.get('title') or item.get('headline') or '' }}
+            {% set src = item.get('publisher') or item.get('source') or '' %}
+            {% if src %}
+            <div class="sc-news-publisher">{{ src }}</div>
             {% endif %}
           </li>
           {% endfor %}
