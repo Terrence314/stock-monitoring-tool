@@ -1,0 +1,43 @@
+name: Daily Stock Analysis
+
+on:
+  schedule:
+    # 12:30 UTC = 8:30 PM HKT — runs before US market open Mon–Fri
+    - cron: "30 12 * * 1-5"
+  workflow_dispatch:
+    # Allows manual trigger from GitHub Actions tab for testing
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push report to gh-pages
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run analysis
+        env:
+          GEMINI_API_KEY:      ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:    ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_URL:          ${{ secrets.REPORT_URL }}
+        run: python src/main.py
+
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: success()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir:  ./outputs
+          keep_files:   true

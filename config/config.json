@@ -1,0 +1,21 @@
+{
+  "watchlist": ["NVDA", "AMD", "AVGO", "MSFT", "META", "GOOGL", "PLTR", "NOW", "TSLA", "APP"],
+  "language": "zh-TW",
+  "market": "US",
+  "telegram": {
+    "bot_token": "",
+    "chat_id": ""
+  },
+  "gemini": {
+    "api_key": "",
+    "model": "gemini-2.0-flash"
+  },
+  "schedule": {
+    "timezone": "Asia/Hong_Kong",
+    "cron_utc": "30 12 * * 1-5"
+  },
+  "analysis": {
+    "history_period": "6mo",
+    "signal_threshold_alert": 70
+  }
+}
