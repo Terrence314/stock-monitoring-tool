@@ -148,7 +148,7 @@ body {
 .page {
   max-width: 1480px; margin: 0 auto;
   padding: 18px 24px 48px;
-  display: grid; gap: 16px;
+  display: flex; flex-direction: column; gap: 16px;
 }
 
 /* ── CARDS ──────────────────────────────────────────────────────────── */
@@ -527,6 +527,45 @@ body {
   .nav-pills { display: none; }
   .searchbox { display: none; }
 }
+
+/* ── Page 2-col grid ────────────────────────────────────────────────── */
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 16px;
+  align-items: start;
+}
+.page-left  { display: flex; flex-direction: column; gap: 16px; }
+.page-right { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 72px; }
+.mid-row    { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 12px; }
+@media (max-width: 1280px) {
+  .page-grid { grid-template-columns: 1fr; }
+  .page-right { position: static; }
+}
+@media (max-width: 900px)  { .mid-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px)  { .mid-row { grid-template-columns: 1fr; } }
+
+/* ── Signal histogram ───────────────────────────────────────────────── */
+.hist-bar   { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+.hist-col   { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.hist-num   { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
+.hist-rect  { width: 100%; border-radius: 5px 5px 2px 2px; }
+.hist-label { font-family: var(--mono); font-size: 9px; color: var(--text-2); text-align: center; }
+
+/* ── Sector rotation compact ────────────────────────────────────────── */
+.sr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 10px; }
+.sr-cell { padding: 7px 8px; border-radius: 6px; }
+.sr-tick { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text); }
+.sr-val  { font-family: var(--mono); font-size: 10px; font-weight: 600; }
+
+/* ── Headlines feed ─────────────────────────────────────────────────── */
+.hl-list  { display: flex; flex-direction: column; }
+.hl-item  { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.hl-item:last-child { border-bottom: none; }
+.hl-meta  { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; margin-bottom: 5px; }
+.hl-ticker { color: var(--blue); font-weight: 700; padding: 2px 6px; background: rgba(122,162,255,0.10); border-radius: 4px; }
+.hl-src   { color: var(--text-2); }
+.hl-title { font-size: 12px; color: var(--text); line-height: 1.45; }
 </style>
 </head>
 <body>
@@ -593,7 +632,6 @@ body {
 
 <div class="page">
 
-<!-- ─── OVERVIEW KPIs ─────────────────────────────────────────────── -->
 {% set strong_n = (stocks_sorted | selectattr('score', '>=', 70) | list | length) %}
 {% set mid_n    = (stocks_sorted | selectattr('score', '>=', 50) | list | length) - strong_n %}
 {% set avg_score = (stocks_sorted | sum(attribute='score') / (stocks_sorted|length or 1)) | round(1) %}
@@ -602,74 +640,252 @@ body {
 {% set bias_class = 'up' if up_n > down_n else ('down' if down_n > up_n else 'amber') %}
 {% set bias_label = 'Risk On' if up_n > down_n else ('Risk Off' if down_n > up_n else 'Neutral') %}
 
-<section id="overview" class="kpi-strip">
-  <div class="kpi">
-    <div class="kpi-head">
-      <span class="kpi-label">Market bias</span>
-      <span class="badge {{ bias_class }}">{{ 'BULLISH' if up_n > down_n else ('BEARISH' if down_n > up_n else 'MIXED') }}</span>
-    </div>
-    <div class="kpi-val" style="color: var(--{{ bias_class }})">{{ bias_label }}</div>
-    <div class="kpi-sub">{{ up_n }} up · {{ down_n }} down</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-head">
-      <span class="kpi-label">Strong signals</span>
-      <span class="badge blue">≥ 70</span>
-    </div>
-    <div class="kpi-val">{{ strong_n }} / {{ stocks_sorted|length }}</div>
-    <div class="kpi-sub">mid-band (50-69): {{ mid_n }}</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-head">
-      <span class="kpi-label">Avg signal</span>
-    </div>
-    <div class="kpi-val">{{ avg_score }}</div>
-    <div class="kpi-sub">across {{ stocks_sorted|length }} names</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-head">
-      <span class="kpi-label">Top signal</span>
-    </div>
-    {% if stocks_sorted %}
-      {% set top = stocks_sorted[0] %}
-      <div class="kpi-val" style="color: var(--up); font-family: var(--mono)">{{ top.ticker }}</div>
-      <div class="kpi-sub">{{ top.score }} / 100 · {{ "%+.2f"|format(top.price_change_pct) }}%</div>
-    {% else %}
-      <div class="kpi-val">—</div>
-    {% endif %}
-  </div>
-  <div class="kpi">
-    <div class="kpi-head">
-      <span class="kpi-label">Alerts (7d)</span>
-      {% if alert_history %}<span class="badge amber">{{ alert_history|length }}</span>{% endif %}
-    </div>
-    <div class="kpi-val">{{ alert_history|length if alert_history else 0 }}</div>
-    <div class="kpi-sub">threshold 70+</div>
-  </div>
-</section>
+<div class="page-grid">
 
-<!-- ─── AI MORNING BRIEF ─────────────────────────────────────────── -->
-<section id="brief" class="card">
-  <div class="brief-head">
-    <div class="brief-icon">✦</div>
-    <div>
-      <div class="brief-title">AI Morning Brief</div>
-      <div class="brief-meta">{{ date }} · F · G · H · I</div>
-    </div>
-    <span class="badge {{ bias_class }}" style="margin-left:auto">{{ bias_label|upper }}</span>
-  </div>
-  <div class="brief-grid">
-    {% for section in brief_sections %}
-    <div class="brief-section">
-      <div class="brief-letter b{{ loop.index }}">{{ section.label[0] }}</div>
-      <div class="brief-body">
-        <div class="brief-label">{{ section.label }}</div>
-        <div class="brief-text">{{ section.body }}</div>
+  <!-- ─── LEFT COLUMN ───────────────────────────────────────────── -->
+  <div class="page-left">
+
+    <!-- KPI strip -->
+    <section id="overview" class="kpi-strip">
+      <div class="kpi">
+        <div class="kpi-head">
+          <span class="kpi-label">Market bias</span>
+          <span class="badge {{ bias_class }}">{{ 'BULLISH' if up_n > down_n else ('BEARISH' if down_n > up_n else 'MIXED') }}</span>
+        </div>
+        <div class="kpi-val" style="color: var(--{{ bias_class }})">{{ bias_label }}</div>
+        <div class="kpi-sub">{{ up_n }} up · {{ down_n }} down</div>
       </div>
-    </div>
-    {% endfor %}
-  </div>
-</section>
+      <div class="kpi">
+        <div class="kpi-head">
+          <span class="kpi-label">Strong signals</span>
+          <span class="badge blue">≥ 70</span>
+        </div>
+        <div class="kpi-val">{{ strong_n }} / {{ stocks_sorted|length }}</div>
+        <div class="kpi-sub">mid-band (50-69): {{ mid_n }}</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head">
+          <span class="kpi-label">Avg signal</span>
+        </div>
+        <div class="kpi-val">{{ avg_score }}</div>
+        <div class="kpi-sub">across {{ stocks_sorted|length }} names</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head">
+          <span class="kpi-label">Top signal</span>
+        </div>
+        {% if stocks_sorted %}
+          {% set top = stocks_sorted[0] %}
+          <div class="kpi-val" style="color: var(--up); font-family: var(--mono)">{{ top.ticker }}</div>
+          <div class="kpi-sub">{{ top.score }} / 100 · {{ "%+.2f"|format(top.price_change_pct) }}%</div>
+        {% else %}
+          <div class="kpi-val">—</div>
+        {% endif %}
+      </div>
+      <div class="kpi">
+        <div class="kpi-head">
+          <span class="kpi-label">Alerts (7d)</span>
+          {% if alert_history %}<span class="badge amber">{{ alert_history|length }}</span>{% endif %}
+        </div>
+        <div class="kpi-val">{{ alert_history|length if alert_history else 0 }}</div>
+        <div class="kpi-sub">threshold 70+</div>
+      </div>
+    </section>
+
+    <!-- Mid-row: SPY chart + Signal distribution + Sector rotation -->
+    <div class="mid-row">
+
+      <!-- SPY chart -->
+      <div class="card">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span style="font-size:13px;color:var(--text);font-weight:600">SPY</span>
+            <span style="font-size:11px;color:var(--text-2)">S&amp;P 500 ETF</span>
+            {% if market.get('SPY') %}
+            <span style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--text);margin-left:6px">{{ "%.2f"|format(market['SPY'].price) }}</span>
+            <span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--{{ market['SPY'].direction }})">{{ "%+.2f"|format(market['SPY'].change_pct) }}%</span>
+            {% endif %}
+          </div>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text-2)">Signal trend</span>
+        </div>
+        {{ spy_chart_svg | safe }}
+      </div>
+
+      <!-- Signal distribution histogram -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <span style="font-size:13px;color:var(--text);font-weight:600">Signal dist.</span>
+          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">{{ avg_score }}</b></span>
+        </div>
+        <div class="hist-bar">
+          {% for b in sig_buckets %}
+          <div class="hist-col">
+            <span class="hist-num">{{ b.n }}</span>
+            <div class="hist-rect" style="height:{{ [b.n * 14, 4]|max }}px;background:{{ b.color }};opacity:0.9"></div>
+          </div>
+          {% endfor %}
+        </div>
+        <div style="display:flex;margin-top:6px">
+          {% for b in sig_buckets %}
+          <span class="hist-label" style="flex:1">{{ b.range }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Sector rotation compact -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;color:var(--text);font-weight:600">Sector rotation</span>
+          <span style="font-size:11px;color:var(--text-2)">{{ sectors|length }} sectors</span>
+        </div>
+        <div class="sr-grid">
+          {% for sec in sectors[:9] %}
+            {% if sec.avg_score >= 60 %}
+              {% set bg = 'rgba(52,211,153,0.15)' %}{% set vc = 'var(--up)' %}
+            {% elif sec.avg_score >= 40 %}
+              {% set bg = 'rgba(245,185,66,0.12)' %}{% set vc = 'var(--amber)' %}
+            {% else %}
+              {% set bg = 'rgba(248,113,113,0.12)' %}{% set vc = 'var(--down)' %}
+            {% endif %}
+            <div class="sr-cell" style="background:{{ bg }}">
+              <div class="sr-tick">{{ sec.name[:6] }}</div>
+              <div class="sr-val" style="color:{{ vc }}">{{ sec.avg_score }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div><!-- /.mid-row -->
+
+    <!-- Watchlist table -->
+    <section id="watchlist" class="card card-pad-0">
+      <div class="card-head">
+        <div>
+          <span class="card-title">Watchlist</span>
+          <span class="card-sub" style="margin-left:8px">{{ stocks_sorted|length }} names · sorted by signal ↓</span>
+        </div>
+        <span class="card-sub">click ticker → jump to card</span>
+      </div>
+
+      <div class="wl-wrap">
+      <table class="wl">
+        <thead>
+          <tr>
+            <th class="first">Ticker</th>
+            <th class="first">Type</th>
+            <th>Last</th>
+            <th>Chg</th>
+            <th>RSI</th>
+            <th>MACD H</th>
+            <th>Vol×</th>
+            <th class="center">7d</th>
+            <th class="center">Signal</th>
+            <th class="center">Strength</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in stocks_sorted %}
+            {% set sc = s.score %}
+            {% set sc_class = 'high' if sc >= 60 else ('mid' if sc >= 40 else 'low') %}
+            {% set chg_class = 'up' if s.price_change_pct >= 0 else 'down' %}
+            {% set color = '#34d399' if sc >= 60 else ('#f5b942' if sc >= 40 else '#f87171') %}
+            {% set circ = 100.53 %}
+            {% set dash = circ * (sc / 100) %}
+            <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}">
+              <td>
+                <a href="#stock-{{ s.ticker }}" style="text-decoration:none;color:inherit">
+                  <div class="ticker-cell">
+                    <div class="ticker-tile">{{ s.ticker[:2] }}</div>
+                    <div class="ticker-meta">
+                      <div class="ticker-sym">{{ s.ticker }}</div>
+                      <div class="ticker-name">{{ s.name }}</div>
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <span class="tag {{ s.get('asset_type', 'stock') }}">{{ s.get('asset_type', 'stock') }}</span>
+              </td>
+              <td class="num lg">{{ "%.2f"|format(s.price) }}</td>
+              <td><span class="pct-chip {{ chg_class }}">{{ "%+.2f"|format(s.price_change_pct) }}%</span></td>
+              <td class="num">{{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</td>
+              <td class="num" style="color: {{ '#34d399' if s.macd_hist and s.macd_hist > 0 else '#f87171' }}">{{ ("%+.2f"|format(s.macd_hist)) if s.macd_hist is not none else '—' }}</td>
+              <td class="num">{{ "%.2f"|format(s.vol_ratio) }}×</td>
+              <td class="ring-cell">
+                {% if s.sparkline_svg %}{{ s.sparkline_svg | safe }}{% else %}<span style="color:var(--muted);font-family:var(--mono)">—</span>{% endif %}
+              </td>
+              <td class="ring-cell">
+                <div style="width:40px;height:40px;position:relative">
+                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
+                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
+                    <circle cx="20" cy="20" r="16" stroke="{{ color }}" stroke-width="2.5" fill="none"
+                      stroke-dasharray="{{ '%.2f'|format(dash) }} {{ '%.2f'|format(circ) }}" stroke-linecap="round"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">{{ sc }}</div>
+                </div>
+              </td>
+              <td class="center"><span class="strength-badge {{ sc_class }}">{{ s.strength }}</span></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+  </div><!-- /.page-left -->
+
+  <!-- ─── RIGHT SIDEBAR ─────────────────────────────────────────── -->
+  <div class="page-right">
+
+    <!-- AI Morning Brief -->
+    <section id="brief" class="card">
+      <div class="brief-head">
+        <div class="brief-icon">✦</div>
+        <div>
+          <div class="brief-title">AI Morning Brief</div>
+          <div class="brief-meta">{{ date }} · gemini-2.5-flash</div>
+        </div>
+        <span class="badge {{ bias_class }}" style="margin-left:auto">{{ bias_label|upper }}</span>
+      </div>
+      <div style="margin-top:4px">
+        {% for section in brief_sections %}
+        <div style="display:flex;gap:10px;padding-top:12px;padding-bottom:12px;{% if not loop.first %}border-top:1px solid var(--border);{% endif %}">
+          <div class="brief-letter b{{ loop.index }}">{{ section.label[0] }}</div>
+          <div class="brief-body">
+            <div class="brief-label">{{ section.label }}</div>
+            <div class="brief-text">{{ section.body }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Headlines -->
+    <section id="headlines" class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="card-title">Headlines</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text-2)">finnhub · yfinance</span>
+      </div>
+      <div class="hl-list">
+        {% if headlines %}
+          {% for h in headlines[:15] %}
+          <div class="hl-item">
+            <div class="hl-meta">
+              <span class="hl-ticker">{{ h.ticker }}</span>
+              {% if h.source %}<span class="hl-src">{{ h.source }}</span>{% endif %}
+            </div>
+            <div class="hl-title">{{ h.title }}</div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">// no news available</div>
+        {% endif %}
+      </div>
+    </section>
+
+  </div><!-- /.page-right -->
+
+</div><!-- /.page-grid -->
 
 <!-- ─── SECTOR HEATMAP ─────────────────────────────────────────────── -->
 <section id="sectors" class="card">
@@ -695,79 +911,6 @@ body {
         </div>
       </div>
     {% endfor %}
-  </div>
-</section>
-
-<!-- ─── WATCHLIST ────────────────────────────────────────────────── -->
-<section id="watchlist" class="card card-pad-0">
-  <div class="card-head">
-    <div>
-      <span class="card-title">Watchlist</span>
-      <span class="card-sub" style="margin-left:8px">{{ stocks_sorted|length }} names · sorted by signal ↓</span>
-    </div>
-    <span class="card-sub">click ticker → jump to card</span>
-  </div>
-
-  <div class="wl-wrap">
-  <table class="wl">
-    <thead>
-      <tr>
-        <th class="first">Ticker</th>
-        <th class="first">Sector</th>
-        <th>Last</th>
-        <th>Chg</th>
-        <th>RSI</th>
-        <th>MACD H</th>
-        <th>Vol×</th>
-        <th class="center">7d</th>
-        <th class="center">Signal</th>
-        <th class="center">Strength</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for s in stocks_sorted %}
-        {% set sc = s.score %}
-        {% set sc_class = 'high' if sc >= 60 else ('mid' if sc >= 40 else 'low') %}
-        {% set chg_class = 'up' if s.price_change_pct >= 0 else 'down' %}
-        {% set color = '#34d399' if sc >= 60 else ('#f5b942' if sc >= 40 else '#f87171') %}
-        {% set circ = 100.53 %}{# 2π * 16 #}
-        {% set dash = circ * (sc / 100) %}
-        <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}">
-          <td>
-            <a href="#stock-{{ s.ticker }}" style="text-decoration:none;color:inherit">
-              <div class="ticker-cell">
-                <div class="ticker-tile">{{ s.ticker[:2] }}</div>
-                <div class="ticker-meta">
-                  <div class="ticker-sym">{{ s.ticker }}</div>
-                  <div class="ticker-name">{{ s.name }}</div>
-                </div>
-              </div>
-            </a>
-          </td>
-          <td style="font-size:11px;color:var(--text-2)">{{ s.get('sector') or '—' }}</td>
-          <td class="num lg">{{ "%.2f"|format(s.price) }}</td>
-          <td><span class="pct-chip {{ chg_class }}">{{ "%+.2f"|format(s.price_change_pct) }}%</span></td>
-          <td class="num">{{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</td>
-          <td class="num" style="color: {{ '#34d399' if s.macd_hist and s.macd_hist > 0 else '#f87171' }}">{{ ("%+.2f"|format(s.macd_hist)) if s.macd_hist is not none else '—' }}</td>
-          <td class="num">{{ "%.2f"|format(s.vol_ratio) }}×</td>
-          <td class="ring-cell">
-            {% if s.sparkline_svg %}{{ s.sparkline_svg | safe }}{% else %}<span style="color:var(--muted);font-family:var(--mono)">—</span>{% endif %}
-          </td>
-          <td class="ring-cell">
-            <div style="width:40px;height:40px;position:relative">
-              <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
-                <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
-                <circle cx="20" cy="20" r="16" stroke="{{ color }}" stroke-width="2.5" fill="none"
-                  stroke-dasharray="{{ '%.2f'|format(dash) }} {{ '%.2f'|format(circ) }}" stroke-linecap="round"/>
-              </svg>
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">{{ sc }}</div>
-            </div>
-          </td>
-          <td class="center"><span class="strength-badge {{ sc_class }}">{{ s.strength }}</span></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
   </div>
 </section>
 
@@ -814,13 +957,12 @@ body {
     {% set chg_class = 'up' if s.price_change_pct >= 0 else 'down' %}
     {% set high = sc >= 70 %}
     {% set ring_color = '#34d399' if sc >= 60 else ('#f5b942' if sc >= 40 else '#f87171') %}
-    {% set ring_circ = 144.5 %}{# 2π * 23 — see svg below #}
+    {% set ring_circ = 144.5 %}
     {% set ring_dash = ring_circ * (sc / 100) %}
     {% set atype = s.get('asset_type', 'stock') %}
 
     <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}">
 
-      <!-- HEAD: id + price + ring -->
       <div class="scard-head">
         <div class="scard-id">
           <div class="scard-tile">{{ s.ticker[:2] }}</div>
@@ -849,7 +991,6 @@ body {
         </div>
       </div>
 
-      <!-- Strength + sentiment chip row -->
       <div class="scard-row">
         <span class="strength-badge {{ sc_class }}">{{ s.strength }}</span>
         {% if s.get('sentiment') and s.sentiment.score is not none %}
@@ -860,7 +1001,6 @@ body {
         {% endif %}
       </div>
 
-      <!-- Earnings strip -->
       {% if s.get('next_earnings') %}
       <div class="earnings">
         <span class="pulse"></span>
@@ -868,7 +1008,6 @@ body {
       </div>
       {% endif %}
 
-      <!-- Analyst -->
       {% set ab = s.get('analyst_buy') %}
       {% set ah = s.get('analyst_hold') %}
       {% set as_ = s.get('analyst_sell') %}
@@ -889,7 +1028,6 @@ body {
       </div>
       {% endif %}
 
-      <!-- 52-week range -->
       {% set w52h = s.get('week52_high') %}
       {% set w52l = s.get('week52_low') %}
       {% if w52h and w52l and w52h != w52l %}
@@ -908,7 +1046,6 @@ body {
         </div>
       {% endif %}
 
-      <!-- Indicator badges -->
       <div class="scard-row">
         <span class="ma-badge ma5">MA5 · {{ s.ma5 }}</span>
         <span class="ma-badge ma20">MA20 · {{ s.ma20 }}</span>
@@ -920,7 +1057,6 @@ body {
         {% endif %}
       </div>
 
-      <!-- Signals -->
       <div>
         <div class="scard-sub">Technical signals</div>
         <div class="signals">
@@ -928,7 +1064,6 @@ body {
         </div>
       </div>
 
-      <!-- News -->
       {% if s.get('news') and s.news %}
       <div>
         <div class="scard-sub">Latest news</div>
@@ -944,7 +1079,6 @@ body {
       </div>
       {% endif %}
 
-      <!-- AI view -->
       {% if s.ai_view %}
       <details class="ai-details" open>
         <summary>
@@ -955,7 +1089,6 @@ body {
       </details>
       {% endif %}
 
-      <!-- Entry -->
       {% if s.entry %}
       <div class="entry">
         <div class="entry-label">Entry timing</div>
@@ -1210,6 +1343,74 @@ def _build_sector_groups(stocks_sorted: list) -> list[dict]:
     return result
 
 
+def _build_area_svg(points: list[float], width: int = 560, height: int = 120) -> str:
+    """Return an SVG area chart for the given data points (score trend)."""
+    if len(points) < 2:
+        return (
+            f'<div style="height:{height}px;display:flex;align-items:center;'
+            f'justify-content:center;color:#52545e;font-size:11px;'
+            f'font-family:monospace">No trend data yet</div>'
+        )
+    mn, mx = min(points), max(points)
+    rng = mx - mn or 1
+    n = len(points)
+    step = (width - 4) / (n - 1)
+    xy = []
+    for i, v in enumerate(points):
+        x = 2 + i * step
+        y = (height - 4) - ((v - mn) / rng) * (height - 8)
+        xy.append((x, y))
+    color = "#34d399" if points[-1] >= points[0] else "#f87171"
+    line_d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in xy)
+    area_d = line_d + f" L {xy[-1][0]:.1f},{height} L {xy[0][0]:.1f},{height} Z"
+    return (
+        f'<svg width="100%" viewBox="0 0 {width} {height}" preserveAspectRatio="none" '
+        f'xmlns="http://www.w3.org/2000/svg" style="display:block;margin-top:4px">'
+        f'<path d="{area_d}" fill="{color}" fill-opacity="0.08"/>'
+        f'<path d="{line_d}" stroke="{color}" stroke-width="1.5" fill="none" stroke-linejoin="round"/>'
+        f'</svg>'
+    )
+
+
+def _build_sig_buckets(stocks: list) -> list[dict]:
+    """Return signal score distribution buckets for the histogram."""
+    buckets = [
+        {"range": "0–20",   "lo": 0,  "hi": 20,  "color": "#f87171", "n": 0},
+        {"range": "20–40",  "lo": 20, "hi": 40,  "color": "#ff8a4d", "n": 0},
+        {"range": "40–60",  "lo": 40, "hi": 60,  "color": "#f5b942", "n": 0},
+        {"range": "60–80",  "lo": 60, "hi": 80,  "color": "#80c97f", "n": 0},
+        {"range": "80–100", "lo": 80, "hi": 101, "color": "#34d399", "n": 0},
+    ]
+    for s in stocks:
+        sc = s.get("score", 0)
+        for b in buckets:
+            if b["lo"] <= sc < b["hi"]:
+                b["n"] += 1
+                break
+    return buckets
+
+
+def _collect_headlines(stocks: list) -> list[dict]:
+    """Collect deduplicated top headlines from all stocks."""
+    seen: set[str] = set()
+    headlines = []
+    for s in stocks:
+        news = s.get("news") or []
+        for item in news[:2]:
+            title = (item.get("title") or item.get("headline") or "").strip()
+            if not title or title in seen:
+                continue
+            seen.add(title)
+            headlines.append({
+                "ticker": s["ticker"],
+                "title": title,
+                "source": (item.get("publisher") or item.get("source") or "")[:25],
+            })
+        if len(headlines) >= 20:
+            break
+    return headlines
+
+
 def generate_dashboard(
     date: str,
     market_overview: dict,
@@ -1235,6 +1436,13 @@ def generate_dashboard(
     # Sector heatmap
     sectors = _build_sector_groups(stocks_sorted)
 
+    sig_buckets = _build_sig_buckets(stocks_sorted)
+    headlines = _collect_headlines(stocks_sorted)
+
+    spy_stock = next((s for s in stocks_sorted if s["ticker"] == "SPY"), None)
+    spy_pts = spy_stock.get("sparkline_points", []) if spy_stock else []
+    spy_chart_svg = _build_area_svg(spy_pts, width=560, height=120)
+
     html = Template(DASHBOARD_HTML).render(
         date=date,
         market=market_overview,
@@ -1242,6 +1450,9 @@ def generate_dashboard(
         stocks_sorted=stocks_sorted,
         sectors=sectors,
         alert_history=alert_history or [],
+        sig_buckets=sig_buckets,
+        headlines=headlines,
+        spy_chart_svg=spy_chart_svg,
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"
