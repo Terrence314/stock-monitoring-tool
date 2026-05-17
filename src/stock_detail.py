@@ -474,6 +474,150 @@ def _build_strategy(s: dict) -> list[dict]:
     ]
 
 
+# ── Pullback SVG ──────────────────────────────────────────────────────────────
+
+def _build_pullback_svg(ohlc: list, width: int = 440, height: int = 150) -> str:
+    """Area chart of close prices with peak + max-drawdown annotations."""
+    if not ohlc or len(ohlc) < 10:
+        return ""
+    closes = [b.get("c", 0) for b in ohlc]
+    n = len(closes)
+
+    # Running peak and drawdown at each bar
+    running_max = closes[0]
+    peak_idx = 0
+    drawdowns = []
+    for i, c in enumerate(closes):
+        if c > running_max:
+            running_max = c
+            peak_idx = i
+        drawdowns.append((c - running_max) / running_max * 100 if running_max else 0)
+
+    max_dd   = min(drawdowns)
+    trough_idx = drawdowns.index(max_dd)
+    cur_dd   = drawdowns[-1]
+
+    # Determine a secondary drawdown (another trough ≥ 5% besides the deepest)
+    sec_dd = 0.0
+    sec_idx = -1
+    for i, d in enumerate(drawdowns):
+        if d <= -5 and d != max_dd and abs(d - max_dd) > 3:
+            if d < sec_dd or sec_dd == 0.0:
+                sec_dd = d
+                sec_idx = i
+
+    mn = min(closes) * 0.97
+    mx = max(closes) * 1.03
+    rng = mx - mn or 1
+
+    pl, pr, pt, pb = 10, 10, 14, 18
+    cw = width - pl - pr
+    ch = height - pt - pb
+
+    def cx(i): return pl + (i / (n - 1)) * cw if n > 1 else pl
+    def cy(p): return pt + ch - ((p - mn) / rng) * ch
+
+    xy = [(cx(i), cy(closes[i])) for i in range(n)]
+    line_d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in xy)
+    area_d = (line_d + f" L {xy[-1][0]:.1f},{pt + ch}"
+              + f" L {xy[0][0]:.1f},{pt + ch} Z")
+
+    color = "#34d399" if closes[-1] >= closes[0] else "#f87171"
+    parts = [
+        f'<svg width="100%" viewBox="0 0 {width} {height}" '
+        f'preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'
+    ]
+
+    # Support zone shading (bottom 22% of chart area)
+    sz_y = pt + ch * 0.72
+    parts.append(
+        f'<rect x="{pl}" y="{sz_y:.1f}" width="{cw}" '
+        f'height="{pt + ch - sz_y:.1f}" fill="rgba(52,211,153,0.06)" rx="3"/>'
+    )
+
+    # Area + line
+    parts.append(f'<path d="{area_d}" fill="{color}" fill-opacity="0.10"/>')
+    parts.append(
+        f'<path d="{line_d}" stroke="{color}" stroke-width="1.5" '
+        f'fill="none" stroke-linejoin="round"/>'
+    )
+
+    # Peak marker
+    px_, py_ = xy[peak_idx]
+    parts.append(
+        f'<circle cx="{px_:.1f}" cy="{py_:.1f}" r="3.5" '
+        f'fill="#f5b942" stroke="#0b0c10" stroke-width="1.5"/>'
+    )
+    peak_price = closes[peak_idx]
+    parts.append(
+        f'<text x="{px_:.1f}" y="{py_ - 6:.1f}" text-anchor="middle" '
+        f'font-size="9" fill="#f5b942" font-family="JetBrains Mono,monospace" font-weight="700">'
+        f'{peak_price:.2f}</text>'
+    )
+
+    # Max drawdown annotation
+    if max_dd < -5:
+        tx, ty = xy[trough_idx]
+        mid_x = (px_ + tx) / 2
+        mid_y = (py_ + ty) / 2 - 6
+        parts.append(
+            f'<line x1="{px_:.1f}" y1="{py_:.1f}" x2="{tx:.1f}" y2="{ty:.1f}" '
+            f'stroke="#f87171" stroke-dasharray="2 2" stroke-width="1" stroke-opacity="0.7"/>'
+        )
+        parts.append(
+            f'<text x="{mid_x:.1f}" y="{mid_y:.1f}" text-anchor="middle" '
+            f'font-size="9" fill="#f87171" font-family="JetBrains Mono,monospace" font-weight="700">'
+            f'{max_dd:.0f}%</text>'
+        )
+
+    # Secondary drawdown annotation
+    if sec_dd <= -5 and sec_idx >= 0:
+        sx, sy = xy[sec_idx]
+        # Find the peak before this secondary trough
+        prev_peak = max(closes[:sec_idx + 1]) if sec_idx > 0 else closes[0]
+        prev_pk_y = cy(prev_peak)
+        prev_pk_x = cx(closes.index(prev_peak))
+        parts.append(
+            f'<text x="{sx:.1f}" y="{sy - 5:.1f}" text-anchor="middle" '
+            f'font-size="8" fill="#ff8a4d" font-family="JetBrains Mono,monospace" font-weight="600">'
+            f'{sec_dd:.0f}%</text>'
+        )
+
+    # Current drawdown (if meaningful)
+    if cur_dd < -5:
+        ex, ey = xy[-1]
+        parts.append(
+            f'<text x="{ex - 3:.1f}" y="{ey - 6:.1f}" text-anchor="end" '
+            f'font-size="9" fill="#f87171" font-family="JetBrains Mono,monospace">'
+            f'{cur_dd:.0f}%</text>'
+        )
+
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+# ── Core Bullet Parser ────────────────────────────────────────────────────────
+
+def _parse_core_bullets(ai_view: str, signals: list) -> list[str]:
+    """Extract 4–6 concise bullet points for the core thesis box."""
+    bullets = []
+    if ai_view:
+        for line in ai_view.split("\n"):
+            clean = line.strip().lstrip("•·－–-*›→「」【】").strip()
+            # Skip blank, very short, or header-like lines
+            if 15 < len(clean) < 120 and not clean.endswith("：") and not clean.endswith(":"):
+                bullets.append(clean)
+            if len(bullets) >= 5:
+                break
+    # Supplement with technical signals if fewer than 3 bullets
+    for sig in (signals or []):
+        if sig and len(sig) > 10 and sig not in bullets:
+            bullets.append(sig)
+        if len(bullets) >= 5:
+            break
+    return bullets[:5]
+
+
 # ── Verdict ───────────────────────────────────────────────────────────────────
 
 def _build_verdict(s: dict) -> dict:
@@ -842,6 +986,91 @@ body {
   50%      { box-shadow: 0 0 0 5px rgba(245,185,66,0); }
 }
 
+/* ── CORE THESIS BULLETS ──────────────────────────────────────────── */
+.core-bullets { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.core-bullet {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; line-height: 1.55; color: var(--text);
+  padding: 8px 10px; background: var(--elevated);
+  border-radius: 7px; border-left: 2px solid var(--blue);
+}
+.core-bullet::before {
+  content: '›'; color: var(--blue); font-size: 14px;
+  font-weight: 700; line-height: 1.4; flex-shrink: 0;
+}
+
+/* ── KEY LEVEL BOXES ──────────────────────────────────────────────── */
+.level-boxes { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.lbox {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px; border-radius: 8px;
+  font-size: 12px; font-weight: 600; border: 1px solid transparent;
+}
+.lbox-label { font-size: 12px; color: var(--text); }
+.lbox-val { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.lbox.resistance {
+  background: rgba(248,113,113,0.10); border-color: rgba(248,113,113,0.30);
+}
+.lbox.resistance .lbox-label { color: #fca5a5; }
+.lbox.resistance .lbox-val   { color: var(--down); }
+.lbox.support {
+  background: rgba(52,211,153,0.09); border-color: rgba(52,211,153,0.25);
+}
+.lbox.support .lbox-label { color: #6ee7b7; }
+.lbox.support .lbox-val   { color: var(--up); }
+.lbox.neutral {
+  background: rgba(122,162,255,0.09); border-color: rgba(122,162,255,0.25);
+}
+.lbox.neutral .lbox-label { color: #93c5fd; }
+.lbox.neutral .lbox-val   { color: var(--blue); }
+.lbox-tier-tag {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.04em; padding: 1px 6px; border-radius: 3px;
+  margin-left: 8px;
+}
+.lbox.resistance .lbox-tier-tag { background: rgba(248,113,113,0.15); color: var(--down); }
+.lbox.support    .lbox-tier-tag { background: rgba(52,211,153,0.12);  color: var(--up); }
+.lbox.neutral    .lbox-tier-tag { background: rgba(122,162,255,0.12); color: var(--blue); }
+
+/* ── SCENARIO CARDS (enhanced) ───────────────────────────────────── */
+.scen-cards { display: flex; flex-direction: column; gap: 8px; }
+.scen-card-v2 {
+  padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.scen-card-v2.up   { background: rgba(52,211,153,0.06); border-color: rgba(52,211,153,0.20); }
+.scen-card-v2.down { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.20); }
+.scen-card-v2.amber { background: rgba(245,185,66,0.06); border-color: rgba(245,185,66,0.20); }
+.scen-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.scen-icon-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+.scen-pct { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.scen-pbar { height: 4px; background: var(--elevated); border-radius: 2px; margin-bottom: 6px; }
+.scen-pfill { height: 100%; border-radius: 2px; }
+.scen-range { font-family: var(--mono); font-size: 11px; font-weight: 600; margin-top: 4px; }
+.scen-desc-v2 { font-size: 11px; color: var(--text-2); line-height: 1.4; }
+
+/* ── REPORT SUBTITLE BADGE ───────────────────────────────────────── */
+.report-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 10px;
+  background: linear-gradient(90deg, rgba(122,162,255,0.15), rgba(177,140,255,0.15));
+  border: 1px solid rgba(177,140,255,0.30);
+  color: var(--purple);
+}
+
+/* ── PULLBACK SECTION ANNOTATIONS ───────────────────────────────── */
+.pullback-stats {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+}
+.pb-stat {
+  padding: 6px 10px; border-radius: 7px; text-align: center;
+  background: var(--elevated); border: 1px solid var(--border);
+}
+.pb-stat-val { font-family: var(--mono); font-size: 14px; font-weight: 700; }
+.pb-stat-lbl { font-size: 10px; color: var(--text-2); margin-top: 2px; }
+
 /* ── Mobile ≤ 768px ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .page        { padding: 12px 12px 40px; }
@@ -901,6 +1130,9 @@ body {
         {% endif %}
         <span class="tag date">{{ date }}</span>
       </div>
+      <div style="margin-top:10px">
+        <span class="report-badge">✦ 綜合研判報告</span>
+      </div>
     </div>
     <div class="hero-price-block">
       <div class="hero-price">${{ "%.2f"|format(s.price) }}</div>
@@ -945,7 +1177,13 @@ body {
       <span class="sec-pill">一</span>
       <span class="sec-title">核心結論 Core Thesis</span>
     </div>
-    {% if s.ai_view %}
+    {% if core_bullets %}
+    <div class="core-bullets">
+      {% for b in core_bullets %}
+      <div class="core-bullet">{{ b }}</div>
+      {% endfor %}
+    </div>
+    {% elif s.ai_view %}
     <p style="font-size:13px;line-height:1.7;color:var(--text)">{{ s.ai_view }}</p>
     {% else %}
     <p style="font-size:12px;color:var(--text-2)">— 無 AI 分析資料 —</p>
@@ -953,12 +1191,12 @@ body {
     {% if s.sentiment and s.sentiment.score is not none %}
     {%- set ss = s.sentiment.score %}
     {%- set sn_cls = 'up' if ss >= 3 else ('down' if ss <= -3 else 'amber') %}
-    <div style="margin-top:14px;padding:10px 14px;border-radius:8px;background:var(--elevated);border:1px solid var(--border)">
+    <div style="margin-top:12px;padding:9px 12px;border-radius:8px;background:var(--elevated);border:1px solid var(--border);display:flex;align-items:center;gap:10px">
       <span style="font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em">新聞情緒</span>
-      <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--{{ sn_cls }});margin-left:10px">
+      <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--{{ sn_cls }})">
         {{ "+" if ss > 0 else "" }}{{ ss }}
       </span>
-      <span style="font-size:12px;color:var(--text);margin-left:8px">{{ s.sentiment.summary or '' }}</span>
+      <span style="font-size:12px;color:var(--text)">{{ s.sentiment.summary or '' }}</span>
     </div>
     {% endif %}
     {% if s.next_earnings %}
@@ -1163,20 +1401,19 @@ body {
       <span class="sec-pill">六</span>
       <span class="sec-title">關鍵價位 Key Levels</span>
     </div>
-    <table class="levels-table">
+    <div class="level-boxes">
       {% for lvl in key_levels %}
-      {%- set dot_color = '#f87171' if lvl.tier == 'resistance' else ('#34d399' if lvl.tier == 'support' else '#f5b942') %}
-      {%- set val_color = '#f87171' if lvl.tier == 'resistance' else ('#34d399' if lvl.tier == 'support' else '#f5b942') %}
-      <tr>
-        <td class="level-label">
-          <span class="level-dot" style="background:{{ dot_color }}"></span>{{ lvl.l }}
-        </td>
-        <td class="level-val" style="color:{{ val_color }}">${{ lvl.v }}</td>
-      </tr>
+      <div class="lbox {{ lvl.tier }}">
+        <span class="lbox-label">
+          {{ lvl.l }}
+          <span class="lbox-tier-tag">{{ '壓力' if lvl.tier == 'resistance' else ('支撐' if lvl.tier == 'support' else '關鍵') }}</span>
+        </span>
+        <span class="lbox-val">${{ lvl.v }}</span>
+      </div>
       {% else %}
-      <tr><td colspan="2" style="color:var(--muted);font-size:12px">— 無法計算 —</td></tr>
+      <div style="color:var(--muted);font-size:12px;padding:10px 0">— 無法計算 —</div>
       {% endfor %}
-    </table>
+    </div>
   </div>
 
   {# 七 Scenarios #}
@@ -1185,64 +1422,71 @@ body {
       <span class="sec-pill">七</span>
       <span class="sec-title">未來劇本 Scenarios</span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="scen-cards">
       {% for scen in scenarios %}
       {%- set bar_color = '#34d399' if scen.c == 'up' else ('#f87171' if scen.c == 'down' else '#f5b942') %}
-      <div class="scenario-card">
-        <div class="scen-top">
-          <span class="scen-title">{{ scen.i }} {{ scen.t }}</span>
-          <span class="prob-pct" style="color:{{ bar_color }}">{{ scen.p }}%</span>
+      <div class="scen-card-v2 {{ scen.c }}">
+        <div class="scen-head">
+          <div class="scen-icon-title">
+            <span>{{ scen.i }}</span>
+            <span style="color:{{ bar_color }}">{{ scen.t }}</span>
+          </div>
+          <span class="scen-pct" style="color:{{ bar_color }}">{{ scen.p }}%</span>
         </div>
-        <div class="prob-bar">
-          <div class="prob-fill" style="width:{{ scen.p }}%;background:{{ bar_color }}"></div>
+        <div class="scen-pbar">
+          <div class="scen-pfill" style="width:{{ scen.p }}%;background:{{ bar_color }}"></div>
         </div>
-        <div style="font-size:11px;color:var(--text-2)">{{ scen.desc }}</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--text);font-weight:600">{{ scen.range }}</div>
+        <div class="scen-desc-v2">{{ scen.desc }}</div>
+        <div class="scen-range" style="color:{{ bar_color }}">目標：{{ scen.range }}</div>
       </div>
       {% endfor %}
     </div>
   </div>
 
-  {# 五 Pullback / 52W stats (same slot as JSX 五) #}
+  {# 五 Pullback Stats #}
   <div class="card">
     <div class="sec-label">
       <span class="sec-pill">五</span>
-      <span class="sec-title">歷史回調 Pullback Stats</span>
+      <span class="sec-title">歷史回調統計（日線）</span>
     </div>
-    {%- set w52h = s.week52_high or 0 %}
-    {%- set w52l = s.week52_low or 0 %}
-    {% if w52h and w52l and w52h != w52l %}
-      {%- set rpct = ((s.price - w52l) / (w52h - w52l) * 100) | round(1) %}
-      {%- set rpct_c = [0, [rpct, 100] | min] | max %}
-      {%- set from_high_pct = ((s.price - w52h) / w52h * 100) | round(1) %}
-    <div style="margin-bottom:14px">
-      <div style="font-size:12px;color:var(--text-2);margin-bottom:8px">52 週位置</div>
-      <div class="range-bar">
-        <div class="range-fill" style="width:{{ rpct_c }}%"></div>
-        <div class="range-thumb" style="left:{{ rpct_c }}%"></div>
-      </div>
-      <div class="range-labels">
-        <span>L ${{ "%.2f"|format(w52l) }}</span>
-        <span>H ${{ "%.2f"|format(w52h) }}</span>
-      </div>
-      <div style="margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--text)">
-        距低點 <span style="color:var(--up)">+{{ rpct_c }}%</span> ·
-        距高點 <span style="color:var(--down)">{{ from_high_pct }}%</span>
-      </div>
-    </div>
-    {% else %}
-    <div style="color:var(--muted);font-size:12px">— 無 52W 數據 —</div>
+    {% if pullback_svg %}
+    {{ pullback_svg | safe }}
     {% endif %}
 
-    {# Support zone #}
-    <div style="padding:12px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.15);border-radius:8px;margin-top:10px">
-      <div style="font-family:var(--mono);font-size:10px;color:var(--up);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Support Zone</div>
-      {% for lvl in key_levels if lvl.tier == 'support' %}
+    {%- set w52h = s.week52_high or 0 %}
+    {%- set w52l = s.week52_low or 0 %}
+    <div class="pullback-stats">
+      {% if w52h %}
+      <div class="pb-stat">
+        <div class="pb-stat-val" style="color:var(--amber)">${{ "%.2f"|format(w52h) }}</div>
+        <div class="pb-stat-lbl">52W 高點</div>
+      </div>
+      {% endif %}
+      {% if w52l %}
+      <div class="pb-stat">
+        <div class="pb-stat-val" style="color:var(--down)">${{ "%.2f"|format(w52l) }}</div>
+        <div class="pb-stat-lbl">52W 低點</div>
+      </div>
+      {% endif %}
+      {% if w52h and w52l and w52h != w52l %}
+      {%- set from_high = ((s.price - w52h) / w52h * 100) | round(1) %}
+      <div class="pb-stat">
+        <div class="pb-stat-val" style="color:{{ 'var(--down)' if from_high < 0 else 'var(--up)' }}">{{ '%+.1f'|format(from_high) }}%</div>
+        <div class="pb-stat-lbl">距高點</div>
+      </div>
+      {% endif %}
+    </div>
+
+    {# Support zone tag #}
+    {% set supports = key_levels | selectattr('tier', 'equalto', 'support') | list %}
+    {% if supports %}
+    <div style="padding:10px 12px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);border-radius:8px;margin-top:10px">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--up);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">關鍵支撐帶</div>
+      {% for lvl in supports %}
       <div style="font-family:var(--mono);font-size:12px;color:var(--text)">{{ lvl.l }} · ${{ lvl.v }}</div>
-      {% else %}
-      <div style="font-size:11px;color:var(--text-2)">Based on MA & 52W data</div>
       {% endfor %}
     </div>
+    {% endif %}
   </div>
 
 </div><!-- /.row-3 -->
@@ -1320,16 +1564,25 @@ body {
 </div><!-- /.row-3 -->
 
 {# ── SUMMARY FOOTER CARD ───────────────────────────────────────────────────── #}
-<div class="summary-card">
-  <div class="summary-text">
-    <div class="summary-title">{{ s.ticker }} · 綜合分析摘要</div>
-    <div class="summary-body">
-      {{ s.ai_view or ('技術信號分數 ' ~ sc ~ '/100，強度評級：' ~ s.strength ~ '。') }}
+<div class="summary-card" style="
+  background: linear-gradient(135deg, var(--surface) 60%, var(--elevated));
+  border: 1px solid var(--border-hi);
+  border-radius: 14px; padding: 22px 28px;
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+">
+  <div class="summary-text" style="flex:1; min-width:200px">
+    <div class="summary-title" style="font-size:11px;font-family:var(--mono);color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">
+      ✦ {{ s.ticker }} · 綜合分析摘要
+    </div>
+    <div class="summary-body" style="font-size:13px;line-height:1.7;color:var(--text)">
+      {% for b in core_bullets[:2] %}{{ b }}{% if not loop.last %}　{% endif %}{% endfor %}
+      {% if not core_bullets %}{{ s.ai_view or ('技術信號分數 ' ~ sc ~ '/100，強度評級：' ~ s.strength ~ '。') }}{% endif %}
     </div>
   </div>
-  <div class="verdict-block">
-    <div class="verdict-label {{ verdict.cls }}">{{ verdict.label }}</div>
-    <div class="verdict-en">{{ verdict.en }}</div>
+  <div class="verdict-block" style="text-align:center;flex-shrink:0">
+    <div class="verdict-label {{ verdict.cls }}" style="font-size:20px;font-weight:800;letter-spacing:-0.01em">{{ verdict.label }}</div>
+    <div class="verdict-en" style="font-family:var(--mono);font-size:11px;color:var(--text-2);margin-top:4px">{{ verdict.en }}</div>
+    <div style="font-family:var(--mono);font-size:10px;margin-top:6px;color:var(--{{ verdict.cls }});opacity:0.7">信號 {{ sc }}/100</div>
   </div>
 </div>
 
@@ -1355,14 +1608,16 @@ def generate_stock_detail_page(s: dict, date: str, output_dir: str) -> str:
     Returns:
         Absolute path to the written HTML file.
     """
-    ohlc       = s.get("ohlc", [])
-    chart_svg  = _build_candle_svg(ohlc) if len(ohlc) >= 10 else ""
-    key_levels = _build_key_levels(s)
-    scenarios  = _build_scenarios(s)
-    bull_bear  = _build_bull_bear_targets(s)
-    risks      = _build_risks(s)
-    strategy   = _build_strategy(s)
-    verdict    = _build_verdict(s)
+    ohlc          = s.get("ohlc", [])
+    chart_svg     = _build_candle_svg(ohlc) if len(ohlc) >= 10 else ""
+    pullback_svg  = _build_pullback_svg(ohlc) if len(ohlc) >= 10 else ""
+    key_levels    = _build_key_levels(s)
+    scenarios     = _build_scenarios(s)
+    bull_bear     = _build_bull_bear_targets(s)
+    risks         = _build_risks(s)
+    strategy      = _build_strategy(s)
+    verdict       = _build_verdict(s)
+    core_bullets  = _parse_core_bullets(s.get("ai_view", ""), s.get("signals", []))
 
     from jinja2 import Environment
     env = Environment()
@@ -1371,12 +1626,14 @@ def generate_stock_detail_page(s: dict, date: str, output_dir: str) -> str:
         s=s,
         date=date,
         chart_svg=chart_svg,
+        pullback_svg=pullback_svg,
         key_levels=key_levels,
         scenarios=scenarios,
         bull_bear=bull_bear,
         risks=risks,
         strategy=strategy,
         verdict=verdict,
+        core_bullets=core_bullets,
         has_ohlc=bool(chart_svg),
         ohlc_count=len(ohlc),
     )
