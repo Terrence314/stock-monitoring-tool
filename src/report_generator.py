@@ -567,6 +567,33 @@ body {
 .hl-ticker { color: var(--blue); font-weight: 700; padding: 2px 6px; background: rgba(122,162,255,0.10); border-radius: 4px; }
 .hl-src   { color: var(--text-2); }
 .hl-title { font-size: 12px; color: var(--text); line-height: 1.45; }
+
+/* ── Mobile ≤ 768px ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .top-row { height: 52px; padding: 0 14px; }
+  .market-strip { padding: 8px 14px; gap: 14px; }
+  .filter-bar { padding: 8px 14px; gap: 5px; }
+  .filter-meta { display: none; }
+  .page { padding: 12px 12px 40px; }
+  .kpi-val { font-size: 20px; }
+  .mob-hide { display: none !important; }
+  .ticker-name { max-width: 110px; }
+  .wl th, .wl td { padding: 10px 8px; }
+  .brief-text { font-size: 11px; }
+  .scard-sym { font-size: 16px; }
+  .card { padding: 14px 14px; }
+  .bento { grid-template-columns: 1fr; }
+  .sector-grid { grid-template-columns: repeat(2, 1fr); }
+  .hist-bar { height: 80px; }
+}
+@media (max-width: 480px) {
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .mid-row { grid-template-columns: 1fr; }
+  .market-item { min-width: 72px; }
+  .market-price { font-size: 12px; }
+  .kpi-val { font-size: 18px; }
+  .filter-btn { font-size: 11px; padding: 4px 8px; }
+}
 </style>
 </head>
 <body>
@@ -589,6 +616,7 @@ body {
       <a class="nav-pill" href="#watchlist">Watchlist</a>
       <a class="nav-pill" href="#alerts">Alerts{% if alert_history %} <span class="nav-badge">{{ alert_history|length }}</span>{% endif %}</a>
       <a class="nav-pill" href="#stocks">Stocks</a>
+      <a class="nav-pill" href="./backtest.html">Backtest</a>
     </nav>
 
     <div class="spacer"></div>
@@ -707,7 +735,7 @@ body {
             <span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--{{ market['SPY'].direction }})">{{ "%+.2f"|format(market['SPY'].change_pct) }}%</span>
             {% endif %}
           </div>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--text-2)">Signal trend</span>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text-2)">Price · MA20 · MA60</span>
         </div>
         {{ spy_chart_svg | safe }}
       </div>
@@ -776,9 +804,9 @@ body {
             <th class="first">Type</th>
             <th>Last</th>
             <th>Chg</th>
-            <th>RSI</th>
-            <th>MACD H</th>
-            <th>Vol×</th>
+            <th class="mob-hide">RSI</th>
+            <th class="mob-hide">MACD H</th>
+            <th class="mob-hide">Vol×</th>
             <th class="center">7d</th>
             <th class="center">Signal</th>
             <th class="center">Strength</th>
@@ -809,9 +837,9 @@ body {
               </td>
               <td class="num lg">{{ "%.2f"|format(s.price) }}</td>
               <td><span class="pct-chip {{ chg_class }}">{{ "%+.2f"|format(s.price_change_pct) }}%</span></td>
-              <td class="num">{{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</td>
-              <td class="num" style="color: {{ '#34d399' if s.macd_hist and s.macd_hist > 0 else '#f87171' }}">{{ ("%+.2f"|format(s.macd_hist)) if s.macd_hist is not none else '—' }}</td>
-              <td class="num">{{ "%.2f"|format(s.vol_ratio) }}×</td>
+              <td class="num mob-hide">{{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</td>
+              <td class="num mob-hide" style="color: {{ '#34d399' if s.macd_hist and s.macd_hist > 0 else '#f87171' }}">{{ ("%+.2f"|format(s.macd_hist)) if s.macd_hist is not none else '—' }}</td>
+              <td class="num mob-hide">{{ "%.2f"|format(s.vol_ratio) }}×</td>
               <td class="ring-cell">
                 {% if s.sparkline_svg %}{{ s.sparkline_svg | safe }}{% else %}<span style="color:var(--muted);font-family:var(--mono)">—</span>{% endif %}
               </td>
@@ -1348,7 +1376,7 @@ def _build_sector_groups(stocks_sorted: list) -> list[dict]:
 
 
 def _build_area_svg(points: list[float], width: int = 560, height: int = 120) -> str:
-    """Return an SVG area chart for the given data points (score trend)."""
+    """Return an SVG area chart for the given data points (score trend fallback)."""
     if len(points) < 2:
         return (
             f'<div style="height:{height}px;display:flex;align-items:center;'
@@ -1374,6 +1402,121 @@ def _build_area_svg(points: list[float], width: int = 560, height: int = 120) ->
         f'<path d="{line_d}" stroke="{color}" stroke-width="1.5" fill="none" stroke-linejoin="round"/>'
         f'</svg>'
     )
+
+
+def _build_spy_price_svg(ohlc: list[dict], stock: dict, width: int = 560, height: int = 120) -> str:
+    """Return an SVG price-line chart for SPY using real OHLC close prices.
+
+    Shows the last 60 bars, with MA20 (blue dashed) and MA60 (purple dashed)
+    reference lines, and resistance/support labels at the right edge.
+    """
+    if not ohlc or len(ohlc) < 5:
+        spy_pts = stock.get("sparkline_points", []) if stock else []
+        return _build_area_svg(spy_pts, width, height)
+
+    bars = ohlc[-60:]  # last 60 trading days
+    closes = [b.get("c", 0) for b in bars]
+    n = len(closes)
+
+    # Moving averages
+    def _sma(data, period):
+        return [
+            sum(data[max(0, i - period + 1):i + 1]) / min(i + 1, period)
+            for i in range(len(data))
+        ]
+
+    ma20 = _sma(closes, 20)
+    ma60 = _sma(closes, 60)
+
+    # Price range with 4% padding
+    mn = min(closes)
+    mx = max(closes)
+    rng = mx - mn or mx * 0.01 or 1
+    mn -= rng * 0.04
+    mx += rng * 0.04
+    rng = mx - mn
+
+    pad_l, pad_r = 4, 54
+    chart_w = width - pad_l - pad_r
+
+    def cx(i):
+        return pad_l + (i / (n - 1)) * chart_w if n > 1 else pad_l
+
+    def cy(price):
+        return (height - 4) - ((price - mn) / rng) * (height - 8)
+
+    parts = [
+        f'<svg width="100%" viewBox="0 0 {width} {height}" preserveAspectRatio="none" '
+        f'xmlns="http://www.w3.org/2000/svg" style="display:block;margin-top:4px">'
+    ]
+
+    # Gridlines at 33% and 66%
+    for frac in (0.33, 0.66):
+        gy = 4 + frac * (height - 8)
+        price_at_line = mx - frac * rng
+        parts.append(
+            f'<line x1="{pad_l}" y1="{gy:.1f}" x2="{pad_l + chart_w}" y2="{gy:.1f}" '
+            f'stroke="#23252f" stroke-dasharray="2 4" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<text x="{pad_l + chart_w + 4}" y="{gy + 3:.1f}" '
+            f'font-size="9" fill="#52545e" font-family="JetBrains Mono,monospace">'
+            f'{price_at_line:.0f}</text>'
+        )
+
+    # MA60 line (purple, behind MA20)
+    ma60_pts = " ".join(f"{cx(i):.1f},{cy(ma60[i]):.1f}" for i in range(n))
+    parts.append(
+        f'<polyline points="{ma60_pts}" fill="none" stroke="#b18cff" '
+        f'stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.7"/>'
+    )
+
+    # MA20 line (blue)
+    ma20_pts = " ".join(f"{cx(i):.1f},{cy(ma20[i]):.1f}" for i in range(n))
+    parts.append(
+        f'<polyline points="{ma20_pts}" fill="none" stroke="#7aa2ff" '
+        f'stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.8"/>'
+    )
+
+    # Price area fill
+    price_xy = [(cx(i), cy(closes[i])) for i in range(n)]
+    line_d = "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in price_xy)
+    last_x, last_y = price_xy[-1]
+    first_x = price_xy[0][0]
+    area_d = line_d + f" L {last_x:.1f},{height} L {first_x:.1f},{height} Z"
+    color = "#34d399" if closes[-1] >= closes[0] else "#f87171"
+    parts.append(f'<path d="{area_d}" fill="{color}" fill-opacity="0.07"/>')
+    parts.append(
+        f'<path d="{line_d}" stroke="{color}" stroke-width="1.5" '
+        f'fill="none" stroke-linejoin="round"/>'
+    )
+
+    # Current price tag at right edge
+    cur_y = cy(closes[-1])
+    parts.append(
+        f'<rect x="{pad_l + chart_w + 2}" y="{cur_y - 7:.1f}" '
+        f'width="50" height="13" rx="3" fill="{color}" fill-opacity="0.18"/>'
+    )
+    parts.append(
+        f'<text x="{pad_l + chart_w + 4}" y="{cur_y + 3:.1f}" '
+        f'font-size="9" font-weight="700" fill="{color}" '
+        f'font-family="JetBrains Mono,monospace">{closes[-1]:.2f}</text>'
+    )
+
+    # MA labels at right edge
+    ma20_y = cy(ma20[-1])
+    parts.append(
+        f'<text x="{pad_l + chart_w + 4}" y="{ma20_y + 3:.1f}" '
+        f'font-size="8" fill="#7aa2ff" font-family="JetBrains Mono,monospace">M20</text>'
+    )
+    ma60_y = cy(ma60[-1])
+    parts.append(
+        f'<text x="{pad_l + chart_w + 4}" y="{ma60_y + 3:.1f}" '
+        f'font-size="8" fill="#b18cff" font-family="JetBrains Mono,monospace">M60</text>'
+    )
+
+    parts.append("</svg>")
+    return "".join(parts)
 
 
 def _build_sig_buckets(stocks: list) -> list[dict]:
@@ -1444,8 +1587,8 @@ def generate_dashboard(
     headlines = _collect_headlines(stocks_sorted)
 
     spy_stock = next((s for s in stocks_sorted if s["ticker"] == "SPY"), None)
-    spy_pts = spy_stock.get("sparkline_points", []) if spy_stock else []
-    spy_chart_svg = _build_area_svg(spy_pts, width=560, height=120)
+    spy_ohlc = spy_stock.get("ohlc", []) if spy_stock else []
+    spy_chart_svg = _build_spy_price_svg(spy_ohlc, spy_stock, width=560, height=120)
 
     html = Template(DASHBOARD_HTML).render(
         date=date,

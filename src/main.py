@@ -8,6 +8,7 @@ from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment
 from report_generator import generate_dashboard
 from notifier import send_telegram, format_daily_message
+from backtest import run_backtest
 
 
 SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
@@ -234,6 +235,9 @@ def main():
     message = format_daily_message(today, morning_brief, stock_results, report_url)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)
     print(f"      Telegram：{'✅ 成功' if ok else '❌ 失敗'}")
+
+    # ── Backtest ─────────────────────────────────────────────────────────────
+    run_backtest([item["ticker"] for item in cfg["watchlist"]])
 
     # Summary
     if stock_results:

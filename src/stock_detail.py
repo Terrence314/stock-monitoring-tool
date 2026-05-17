@@ -841,6 +841,27 @@ body {
   0%, 100% { box-shadow: 0 0 0 0 rgba(245,185,66,0.5); }
   50%      { box-shadow: 0 0 0 5px rgba(245,185,66,0); }
 }
+
+/* ── Mobile ≤ 768px ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .page        { padding: 12px 12px 40px; }
+  .hero-ticker { font-size: 24px !important; }
+  .hero-price  { font-size: 24px !important; }
+  .back-link   { font-size: 12px !important; padding: 8px 0 !important; }
+  .section-label { font-size: 9px !important; padding: 2px 7px !important; }
+  .card        { padding: 14px; }
+  .targets-tbl { font-size: 11px; }
+  .targets-tbl td { padding: 8px 8px; }
+  .chart-area  { overflow-x: auto; }
+  .chart-area svg { min-width: 560px; width: 760px !important; }
+  .hero-stats  { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .hero-ticker { font-size: 20px !important; }
+  .hero-price  { font-size: 20px !important; }
+  .hero-stats  { grid-template-columns: repeat(2, 1fr) !important; }
+  .badge-row   { gap: 4px; }
+}
 </style>
 </head>
 <body>
