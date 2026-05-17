@@ -40,7 +40,7 @@ body {
   font-size: 13px;
   line-height: 1.5;
   padding: 0 16px 32px;
-  padding-top: 112px; /* nav + ticker tape */
+  padding-top: 158px; /* nav + ticker tape + filter bar */
   min-height: 100vh;
 }
 
@@ -1011,6 +1011,57 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
   .lb-table-wrap { overflow-x: auto; }
 }
 
+/* ── FILTER BAR ── */
+.filter-bar {
+  position: sticky;
+  top: 88px;
+  z-index: 90;
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  backdrop-filter: blur(12px);
+}
+.filter-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-right: 8px;
+}
+.filter-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms;
+  margin-right: 6px;
+}
+.filter-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.filter-btn.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+.filter-group { display: flex; align-items: center; }
+.filter-summary { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+/* ── ASSET TYPE / MARKET BADGES ── */
+.asset-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.asset-badge-stock { background: rgba(77,158,247,0.12); color: var(--accent-blue); border: 1px solid rgba(77,158,247,0.25); }
+.asset-badge-etf   { background: rgba(155,109,255,0.12); color: var(--accent-purple); border: 1px solid rgba(155,109,255,0.25); }
+.asset-badge-market { background: rgba(136,136,168,0.08); color: var(--text-secondary); border: 1px solid var(--border); }
+
 /* ── HIGH-SIGNAL PULSE KEYFRAME ── */
 @keyframes pulse-green {
   0%, 100% { box-shadow: var(--glow-green), inset 0 0 0 1px rgba(0,212,160,0.12); }
@@ -1153,8 +1204,8 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       <div class="tape-item">
         <span class="tape-ticker">BTC-USD</span>
-        <span class="tape-price">77863.99</span>
-        <span class="tape-chg down">-1.52% ▼</span>
+        <span class="tape-price">77943.60</span>
+        <span class="tape-chg down">-1.42% ▼</span>
       </div>
       
       
@@ -1384,8 +1435,8 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       <div class="tape-item">
         <span class="tape-ticker">BTC-USD</span>
-        <span class="tape-price">77863.99</span>
-        <span class="tape-chg down">-1.52% ▼</span>
+        <span class="tape-price">77943.60</span>
+        <span class="tape-chg down">-1.42% ▼</span>
       </div>
       
       
@@ -1573,6 +1624,24 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
   </div>
 </nav>
 
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-group">
+    <span class="filter-label">TYPE</span>
+    <button class="filter-btn active" data-filter="type" data-value="all">ALL</button>
+    <button class="filter-btn" data-filter="type" data-value="stock">STOCKS</button>
+    <button class="filter-btn" data-filter="type" data-value="etf">ETFs</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">MARKET</span>
+    <button class="filter-btn active" data-filter="market" data-value="all">ALL</button>
+    <button class="filter-btn" data-filter="market" data-value="US">🇺🇸 US</button>
+  </div>
+  <div class="filter-summary">
+    <span id="filter-count">30 instruments</span>
+  </div>
+</div>
+
 <div class="section-wrap">
 
 <!-- MARKET OVERVIEW -->
@@ -1622,8 +1691,8 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
 
   <div class="market-card down">
     <div class="market-name">比特幣</div>
-    <div class="market-price">77863.99</div>
-    <div class="market-chg down">▼ -1.52%</div>
+    <div class="market-price">77943.60</div>
+    <div class="market-chg down">▼ -1.42%</div>
   </div>
 
 </div>
@@ -1638,23 +1707,28 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     <div class="brief-section">
       <div class="brief-label">F・市場消息整理</div>
-      <div class="brief-body">今日全球市場主要呈現避險情緒升溫。美股大盤 S&P 500 與納指 100 雙雙下挫，VIX 恐慌指數顯著上揚，顯示市場擔憂加劇。黃金作為傳統避險資產卻意外走跌，可能受到美元走強的影響。原油價格逆勢上漲，或反映市場對供應面緊張的預期，即便全球經濟前景承壓。比特幣與科技股同步下跌，顯示風險資產正普遍面臨拋售壓力。目前市場真正在交易的是對未來經濟前景的憂慮以及隨之而來的避險需求，儘管黃金表現異常。</div>
+      <div class="brief-body">今日全球市場呈現明顯的避險情緒。美股大盤SPY與科技納指QQQ均下跌超過1%，VIX恐慌指數大漲近7%，顯示市場波動性預期升高。黃金作為傳統避險資產卻意外下跌2.32%，而原油價格則逆勢上漲3.66%，可能反映出對供應面或通膨壓力的擔憂。美元指數走強0.54%，美債TLT下跌，顯示資金流向美元。比特幣也承壓下跌1.42%。整體來看，市場目前主要交易的是避險情緒升高下的資金重配置，以及對潛在通膨或地緣政治風險的擔憂。</div>
     </div>
     
     <div class="brief-section">
       <div class="brief-label">G・市場情緒判讀</div>
-      <div class="brief-body">目前市場情緒顯著偏向 Risk-Off。VIX 恐慌指數飆升，表明市場避險情緒濃厚。美元指數走強，反映資金流向美元資產尋求安全。20 年期美債價格下跌，可能由於利率預期上升或市場對流動性的需求。雖然沒有直接的 ETF 資金流向數據，但科技股和比特幣的同步下跌，以及避險資產如美元的走強，都指向資金正在從高風險資產撤離。綜合判斷，目前市場情緒明確偏向 Risk-Off。</div>
+      <div class="brief-body">市場情緒明顯偏向Risk-Off。VIX恐慌指數大幅飆升至18.43，顯示投資者不安。美元指數UUP走強，美債TLT下跌，表示資金流向避險貨幣並撤出相對安全的債市。雖然黃金意外下跌，但這可能只是短期獲利了結或部分資金轉向美元。在美股大盤和科技股同時承壓下，結合上述指標，可以判斷當前市場情緒偏向Risk-Off，投資者規避風險的意願較強。</div>
     </div>
     
     <div class="brief-section">
       <div class="brief-label">H・技術面關鍵價位</div>
-      <div class="brief-body">*   SPY (S&P 500): 今日重要支撐位可關注 730.00 附近，若跌破可能下探 720.00。上方壓力位則在 745.00，若能有效突破則有望挑戰 750.00。
-*   QQQ (納指 100): 今日重要支撐位在 700.00 心理關口，若跌破需留意 690.00。上方壓力位則位於 715.00，若能站穩則有機會回測 720.00。</div>
+      <div class="brief-body">*   SPY (S&P 500 ETF):
+    *   壓力：740.00，進一步壓力看745.00
+    *   支撐：735.00，關鍵支撐看730.00
+*   QQQ (納斯達克 100 ETF):
+    *   壓力：710.00，進一步壓力看715.00
+    *   支撐：705.00，關鍵支撐看700.00
+    目前兩者均跌破短期支撐位，需留意下方關鍵支撐的守穩情況。</div>
     </div>
     
     <div class="brief-section">
       <div class="brief-label">I・今日交易計畫</div>
-      <div class="brief-body">綜合消息面、情緒面與技術面，今日操作方向建議偏空。市場避險情緒濃厚，美股大盤與科技股技術面均偏弱。最值得關注的機會是順勢做空科技股或大盤，或配置部分美元避險資產。然而，必須警惕的風險事件是原油價格逆勢上漲可能預示著潛在的供應衝擊或地緣政治風險，這可能對全球經濟產生進一步的負面影響，並可能引發黃金等傳統避險資產的突然反彈。操作上應保持謹慎，嚴格控制風險。</div>
+      <div class="brief-body">綜合來看，今日操作方向偏偏空。市場避險情緒濃厚，美股技術面也跌破短期支撐。最值得關注的機會在於觀察大盤和科技股能否在關鍵支撐位730 (SPY) 和700 (QQQ) 附近企穩反彈，若跌破則可能加速下行。必須警惕的風險事件包括VIX持續飆升、美元指數進一步走強對全球資產價格的壓力，以及任何可能加劇地緣政治緊張或通膨預期的消息。操作上宜謹慎，可考慮逢高做空或在關鍵支撐位附近觀察是否有做多機會，但需嚴格控制風險。</div>
     </div>
     
   </div>
@@ -1832,7 +1906,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">APP</div>
           <div class="name-cell">Applovin Corporation</div>
@@ -1860,7 +1934,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">CIBR</div>
           <div class="name-cell">First Trust NASDAQ Cybersecurit</div>
@@ -1888,7 +1962,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">MSFT</div>
           <div class="name-cell">Microsoft Corporation</div>
@@ -1916,7 +1990,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">USO</div>
           <div class="name-cell">United States Oil Fund</div>
@@ -1944,7 +2018,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XLE</div>
           <div class="name-cell">State Street Energy Select Sect</div>
@@ -1972,7 +2046,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">NVDA</div>
           <div class="name-cell">NVIDIA Corporation</div>
@@ -2000,7 +2074,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">SPY</div>
           <div class="name-cell">State Street SPDR S&P 500 ETF T</div>
@@ -2028,7 +2102,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">QQQ</div>
           <div class="name-cell">Invesco QQQ Trust, Series 1</div>
@@ -2056,7 +2130,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">VTI</div>
           <div class="name-cell">Vanguard Total Stock Market ETF</div>
@@ -2084,7 +2158,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XLK</div>
           <div class="name-cell">State Street Technology Select </div>
@@ -2112,7 +2186,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">SOXX</div>
           <div class="name-cell">iShares PHLX SOX Semiconductor </div>
@@ -2140,7 +2214,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">GOOGL</div>
           <div class="name-cell">Alphabet Inc.</div>
@@ -2168,7 +2242,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">NOW</div>
           <div class="name-cell">ServiceNow, Inc.</div>
@@ -2196,7 +2270,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">AMD</div>
           <div class="name-cell">Advanced Micro Devices, Inc.</div>
@@ -2224,7 +2298,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">TSLA</div>
           <div class="name-cell">Tesla, Inc.</div>
@@ -2252,7 +2326,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">BOTZ</div>
           <div class="name-cell">Global X Robotics & Artificial </div>
@@ -2280,7 +2354,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">ARKK</div>
           <div class="name-cell">ARK Innovation ETF</div>
@@ -2308,7 +2382,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">HYG</div>
           <div class="name-cell">iShares iBoxx $ High Yield Corp</div>
@@ -2336,7 +2410,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">IWM</div>
           <div class="name-cell">iShares Russell 2000 Index Fund</div>
@@ -2364,7 +2438,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">DIA</div>
           <div class="name-cell">State Street SPDR Dow Jones Ind</div>
@@ -2392,7 +2466,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">AVGO</div>
           <div class="name-cell">Broadcom Inc.</div>
@@ -2420,7 +2494,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">GLD</div>
           <div class="name-cell">SPDR Gold Shares</div>
@@ -2448,7 +2522,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">TLT</div>
           <div class="name-cell">iShares 20+ Year Treasury Bond </div>
@@ -2476,7 +2550,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XLY</div>
           <div class="name-cell">State Street Consumer Discretio</div>
@@ -2504,7 +2578,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XBI</div>
           <div class="name-cell">State Street SPDR S&P Biotech E</div>
@@ -2532,7 +2606,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">PLTR</div>
           <div class="name-cell">Palantir Technologies Inc.</div>
@@ -2560,7 +2634,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XLF</div>
           <div class="name-cell">State Street Financial Select S</div>
@@ -2588,7 +2662,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XLI</div>
           <div class="name-cell">State Street Industrial Select </div>
@@ -2616,7 +2690,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="etf" data-market="US">
         <td>
           <div class="ticker-cell">XLV</div>
           <div class="name-cell">State Street Health Care Select</div>
@@ -2644,7 +2718,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       
       
       
-      <tr>
+      <tr class="lb-row" data-type="stock" data-market="US">
         <td>
           <div class="ticker-cell">META</div>
           <div class="name-cell">Meta Platforms, Inc.</div>
@@ -2729,13 +2803,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-APP" class="stock-card signal-high">
+    <div id="stock-APP" class="stock-card signal-high" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">APP</div>
           <div class="sc-name">Applovin Corporation</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -2767,7 +2846,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多篇報導指出AppLovin有強勁的獲利成長、分析師看好度提升，且目標價被調升，顯示極度正面的市場情緒。</div>
+          <div class="sc-sentiment-text">多篇新聞報導指出 AppLovin 具有出色的盈利成長潛力、分析師調高目標價，且內部人持股高，顯示市場對其前景極度看好。</div>
         </div>
       </div>
       
@@ -2868,9 +2947,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 目前盤面極強。
-② 關鍵價位：支撐481.76，阻力為前高點。
-③ 高機率劇本：股價在MA5上方強勢上攻，有望挑戰更高位，甚至再創歷史新高。</div>
+        <div class="sc-ai-body">①盤面強勁，漲勢強勁。
+②關鍵價位：MA20 ($470.38) 為支撐，前高 ($501.00) 為短期壓力。
+③高機率劇本：站穩MA20後，有望突破前高，挑戰更高點。</div>
       </details>
       
 
@@ -2891,13 +2970,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-CIBR" class="stock-card signal-high">
+    <div id="stock-CIBR" class="stock-card signal-high" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">CIBR</div>
           <div class="sc-name">First Trust NASDAQ Cybersecurit</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -2921,7 +3005,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +6">+6</span>
+          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +5">+5</span>
         
       </div>
 
@@ -2929,7 +3013,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">雖然有軟體股下跌的警訊，但多數新聞標題都強調了網路安全ETF在AI風險和整體市場韌性主題下的成長潛力和吸引力。</div>
+          <div class="sc-sentiment-text">市場對網路安全ETF的需求增加，尤其是在AI風險和數位韌性主題下，儘管軟體股下跌可能帶來警示。</div>
         </div>
       </div>
       
@@ -3030,9 +3114,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① **極強勢**，價格遠高於所有均線。
-② 關鍵阻力：無明顯阻力；關鍵支撐：MA5 ($76.71)。
-③ **高機率劇本：** 股價繼續上漲，但RSI過熱，短期可能出現小幅回調。</div>
+        <div class="sc-ai-body">① 目前盤面極強，多頭佔優。
+② 關鍵價位：上方看$80-$81壓力，下方支撐看MA5($76.71)。
+③ 高機率劇本：短線有望上攻$80-$81，但RSI過高需提防回調。</div>
       </details>
       
 
@@ -3053,13 +3137,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-MSFT" class="stock-card signal-high">
+    <div id="stock-MSFT" class="stock-card signal-high" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">MSFT</div>
           <div class="sc-name">Microsoft Corporation</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -3083,7 +3172,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +7">+7</span>
+          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +6">+6</span>
         
       </div>
 
@@ -3091,7 +3180,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">新聞揭示了微軟在AI領域的強勁擴張和獲得巨額投資，預示著公司光明前景。</div>
+          <div class="sc-sentiment-text">雖然有裁員和工資下降的背景，但新聞顯示微軟在AI領域有新的合作夥伴關係和投資者信心，AI支出也帶動GDP和股市。</div>
         </div>
       </div>
       
@@ -3142,6 +3231,14 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
         <ul class="sc-news-list">
           
           <li class="sc-news-item">
+            A quarter of recent layoffs has been attributed to AI
+            
+            
+            <span class="sc-news-publisher">Investing.com</span>
+            
+          </li>
+          
+          <li class="sc-news-item">
             OneStream (OS) Valuation Check After Expanded Microsoft AI Partnership News
             
             
@@ -3173,14 +3270,6 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
             
           </li>
           
-          <li class="sc-news-item">
-            NANC Traders Beat the Crowd by 33 Points and the Difference Keeps Growing
-            
-            
-            <span class="sc-news-publisher">24/7 Wall St.</span>
-            
-          </li>
-          
         </ul>
       </div>
       
@@ -3192,9 +3281,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面偏強，股價企穩於MA20之上。
-②關鍵價位：上方阻力約$425，下方支撐約$417。
-③高機率劇本：短期可能震盪向上，挑戰$425阻力。</div>
+        <div class="sc-ai-body">① **目前盤面強弱**：偏多📈
+② **關鍵價位**：支撐$417.41（MA20），壓力$421.92
+③ **高機率劇本**：若能站穩現價，有望繼續上攻；若跌破MA20，則需提防回調。</div>
       </details>
       
 
@@ -3215,13 +3304,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-USO" class="stock-card">
+    <div id="stock-USO" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">USO</div>
           <div class="sc-name">United States Oil Fund</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -3253,7 +3347,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題指向油價上漲、通膨擔憂、地緣政治不確定性及市場下跌，整體呈現負面情緒。</div>
+          <div class="sc-sentiment-text">多個新聞標題指向油價上漲、通脹擔憂、地緣政治不確定性及市場下跌，整體情緒偏向看空。</div>
         </div>
       </div>
       
@@ -3354,7 +3448,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面偏強，股價高於所有均線。②關鍵價位：支撐143.25（MA5），阻力前高約148-150。③高機率劇本：短線在MA5支撐上繼續上漲，目標前高，若突破則開啟新一波漲勢。</div>
+        <div class="sc-ai-body">①盤面強勢，價格位於各均線之上。
+②關鍵價位：支撐約143.25（MA5），阻力約150。
+③高機率劇本：若能站穩MA5，短期有望繼續上攻挑戰新高；若跌破MA5，則需留意回調風險。</div>
       </details>
       
 
@@ -3375,13 +3471,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XLE" class="stock-card">
+    <div id="stock-XLE" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XLE</div>
           <div class="sc-name">State Street Energy Select Sect</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -3405,7 +3506,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +7">+7</span>
+          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +8">+8</span>
         
       </div>
 
@@ -3413,7 +3514,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數標題顯示能源類股表現強勁，特別是本週作為最大贏家，呈現明顯看漲情緒。</div>
+          <div class="sc-sentiment-text">多數新聞標題顯示能源類股上漲，且能源產業是本週最大贏家，整體情緒偏向看好。</div>
         </div>
       </div>
       
@@ -3464,14 +3565,6 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
         <ul class="sc-news-list">
           
           <li class="sc-news-item">
-            Are Wall Street Analysts Predicting Diamondback Energy Stock Will Climb or Sink?
-            
-            
-            <span class="sc-news-publisher">Barchart</span>
-            
-          </li>
-          
-          <li class="sc-news-item">
             Sector Update: Energy Stocks Gain Late Afternoon
             
             
@@ -3503,6 +3596,14 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
             
           </li>
           
+          <li class="sc-news-item">
+            Sector Update: Energy Stocks Rise Pre-Bell Friday
+            
+            
+            <span class="sc-news-publisher">MT Newswires</span>
+            
+          </li>
+          
         </ul>
       </div>
       
@@ -3514,7 +3615,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面轉強，多方佔優。②關鍵價位：支撐57.50-58.00，壓力60.00-61.00。③高機率劇本：突破60.00，挑戰更高點。</div>
+        <div class="sc-ai-body">① **強勢上漲，突破多條均線**。
+② **支撐：MA5 ($57.98)；阻力：MA60 ($57.56) 已突破，短期無明顯阻力。**
+③ **高機率劇本：續漲或高位震盪。**</div>
       </details>
       
 
@@ -3535,13 +3638,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-NVDA" class="stock-card">
+    <div id="stock-NVDA" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">NVDA</div>
           <div class="sc-name">NVIDIA Corporation</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -3573,7 +3681,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題預測Nvidia股票將大幅上漲，且公司產品（RTX）表現優異，呈現極度看多的情緒。</div>
+          <div class="sc-sentiment-text">多數新聞標題預測 NVIDIA 股價將顯著上漲，並強調其產品表現強勁，整體情緒極為樂觀。</div>
         </div>
       </div>
       
@@ -3674,9 +3782,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面中性偏多，短線壓力仍在。
-②關鍵價位：支撐$225.42 (MA5)，壓力$230。
-③高機率劇本：若能站穩MA5，有望挑戰$230；否則可能回測$210 (MA20)。</div>
+        <div class="sc-ai-body">①盤面轉弱：現價跌破MA5。
+②關鍵價位：上方阻力225.42（MA5），下方支撐210.3（MA20）。
+③高機率劇本：若無法站回MA5，恐回測MA20支撐。</div>
       </details>
       
 
@@ -3697,13 +3805,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-SPY" class="stock-card">
+    <div id="stock-SPY" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">SPY</div>
           <div class="sc-name">State Street SPDR S&P 500 ETF T</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -3727,7 +3840,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +3">+3</span>
+          <span class="sentiment-circle sentiment-neut" title="News Sentiment: +2">+2</span>
         
       </div>
 
@@ -3735,7 +3848,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">新聞中多篇文章強調聰明投資、退休規劃和戰勝市場的方法，整體呈現正面和建設性的情緒，鼓勵長期投資和財務規劃。</div>
+          <div class="sc-sentiment-text">這些新聞標題提供多樣的投資建議和策略，涵蓋退休儲蓄、投資效率和市場表現，整體呈現中性偏向積極的自我提升和財務規劃建議，未明確指出SPY的短期看漲或看跌趨勢。</div>
         </div>
       </div>
       
@@ -3836,7 +3949,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">SPY盤面偏強，短線遇阻。關鍵價位：上方741.43 (MA5) 阻力，下方723.8 (MA20) 支撐。高機率劇本：若能突破MA5，有望續攻；若失守MA20，恐回檔。</div>
+        <div class="sc-ai-body">① 盤面強勢，股價位於均線之上。
+② 關鍵價位：MA5（741.43）為短線支撐，MA20（723.8）為中線支撐。
+③ 高機率劇本：若能守穩MA5，有望繼續上攻；若跌破MA5，則可能回測MA20。</div>
       </details>
       
 
@@ -3857,13 +3972,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-QQQ" class="stock-card">
+    <div id="stock-QQQ" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">QQQ</div>
           <div class="sc-name">Invesco QQQ Trust, Series 1</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -3895,7 +4015,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">新聞標題普遍提及股市下跌、通膨擔憂、債券殖利率上升以及S&P 500可能出現10%修正，顯示市場情緒偏向負面和謹慎。</div>
+          <div class="sc-sentiment-text">新聞標題多提及股市下跌、通膨擔憂、債券殖利率上升以及可能出現的市場修正，顯示市場情緒偏向負面和謹慎。</div>
         </div>
       </div>
       
@@ -3996,9 +4116,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">**盤面強弱：** 近期表現強勢，但RSI過熱，短期有回調壓力。
-**關鍵價位：** 支撐位：MA20 ($680.36)，壓力位：前高附近。
-**高機率劇本：** 短期可能盤整或小幅回調，若能守穩MA20，後市仍看漲。</div>
+        <div class="sc-ai-body">① **盤面強弱：** 短期強勢，但RSI過熱，有修正壓力。
+② **關鍵價位：** 上檔阻力712.79（MA5），下檔支撐680.36（MA20）。
+③ **高機率劇本：** 短線震盪盤整，若跌破MA5，可能回測MA20。</div>
       </details>
       
 
@@ -4019,13 +4139,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-VTI" class="stock-card">
+    <div id="stock-VTI" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">VTI</div>
           <div class="sc-name">Vanguard Total Stock Market ETF</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -4057,7 +4182,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">新聞標題多數強調 VTI 或其追蹤基金的卓越回報和作為財富創造工具的有效性，整體情緒極為正面。</div>
+          <div class="sc-sentiment-text">所有新聞標題都指向VTI或相關指數基金的強勁表現、優於專業經理人、以及協助個人實現財務獨立的成功案例，整體情緒極度樂觀。</div>
         </div>
       </div>
       
@@ -4158,9 +4283,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 目前盤面偏強，股價雖下跌，但仍位於MA20與MA60之上。
-② 關鍵價位：上方MA5壓力$364.25，下方MA20支撐$356.56。
-③ 高機率劇本：短期可能在MA5附近震盪，若能突破MA5，則有望繼續上攻；若跌破MA20，則需謹慎。</div>
+        <div class="sc-ai-body">① **盤面強弱：** 盤面近期偏強，但短期有回檔壓力。
+② **關鍵價位：** 支撐$356.56 (MA20)，壓力$364.25 (MA5)。
+③ **高機率劇本：** 若能守穩MA20，有望重拾漲勢；跌破則可能下探。</div>
       </details>
       
 
@@ -4181,13 +4306,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XLK" class="stock-card">
+    <div id="stock-XLK" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XLK</div>
           <div class="sc-name">State Street Technology Select </div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -4219,7 +4349,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題顯示科技股下跌、美國股市下跌以及受油價上漲、高收益率和地緣政治不確定性影響，表明整體看空情緒。</div>
+          <div class="sc-sentiment-text">多數新聞標題顯示科技股下跌、ETF走低，以及油價飆升、高收益和地緣政治不確定性等利空因素。</div>
         </div>
       </div>
       
@@ -4320,7 +4450,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面強勢。②關鍵價位：上方看177.14（MA5），下方支撐170-172。③高機率劇本：若能站穩MA5，短期有望續漲；若跌破170，則需提防回調。</div>
+        <div class="sc-ai-body">①目前盤面強勁。
+②關鍵價位：支撐177.14 (MA5)。
+③高機率劇本：若能守穩MA5，有望持續上攻。</div>
       </details>
       
 
@@ -4341,13 +4473,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-SOXX" class="stock-card">
+    <div id="stock-SOXX" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">SOXX</div>
           <div class="sc-name">iShares PHLX SOX Semiconductor </div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -4371,7 +4508,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-neut" title="News Sentiment: +2">+2</span>
+          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +3">+3</span>
         
       </div>
 
@@ -4379,7 +4516,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">雖然有晶片和光學股票看漲的正面消息，但同時也存在石油上漲、地緣政治不確定性以及大盤下跌的負面因素，整體情緒偏向中性略為樂觀。</div>
+          <div class="sc-sentiment-text">儘管有油價上漲和地緣政治不確定性等負面因素，但記憶體晶片和光學股的強勁表現，以及晶片股的整體熱潮，顯示出SOXX的正面潛力。</div>
         </div>
       </div>
       
@@ -4480,9 +4617,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①目前盤面強勁，但短期拉回。
-②關鍵支撐500美元，突破523美元則看多。
-③高機率劇本：短期回檔整理，若能守穩500美元，有望再次挑戰新高。</div>
+        <div class="sc-ai-body">①盤面偏強但見頂訊號浮現。
+②關鍵價位：上方阻力 $523.12 (MA5)，下方支撐 $476.19 (MA20)。
+③高機率劇本：短期可能回檔測試 $476.19 支撐，若守住則仍有上漲機會。</div>
       </details>
       
 
@@ -4503,13 +4640,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-GOOGL" class="stock-card">
+    <div id="stock-GOOGL" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">GOOGL</div>
           <div class="sc-name">Alphabet Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -4533,7 +4675,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-neut" title="News Sentiment: +2">+2</span>
+          <span class="sentiment-circle sentiment-neg" title="News Sentiment: -3">-3</span>
         
       </div>
 
@@ -4541,7 +4683,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">雖然有關於AI支出與GDP增長的正向新聞，但GOOGL並未直接被提及，且同時存在實際工資下降的背景，因此情緒偏向中性略帶樂觀。</div>
+          <div class="sc-sentiment-text">新聞中提到AI導致裁員、以及AI支出對GDP和股市的助益並未反映在實質工資上，顯示出潛在的負面社會經濟影響，雖然有提及其他公司股票消息，但並無直接對GOOGL的利好消息。</div>
         </div>
       </div>
       
@@ -4592,6 +4734,14 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
         <ul class="sc-news-list">
           
           <li class="sc-news-item">
+            A quarter of recent layoffs has been attributed to AI
+            
+            
+            <span class="sc-news-publisher">Investing.com</span>
+            
+          </li>
+          
+          <li class="sc-news-item">
             $800B in AI spending is juicing GDP and stocks — while real wages fall and Americans cut back on goods
             
             
@@ -4623,14 +4773,6 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
             
           </li>
           
-          <li class="sc-news-item">
-            NANC Traders Beat the Crowd by 33 Points and the Difference Keeps Growing
-            
-            
-            <span class="sc-news-publisher">24/7 Wall St.</span>
-            
-          </li>
-          
         </ul>
       </div>
       
@@ -4642,9 +4784,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①目前盤面偏強，股價高於各均線。
-②關鍵價位：支撐 $395.29 (MA5)，阻力 $400 關卡。
-③高機率劇本：若能站穩 $395.29，有機會挑戰 $400。若跌破，可能回測 $372.89 (MA20)。</div>
+        <div class="sc-ai-body">①盤面強勁，多頭佔優。②關鍵價位：支撐$395.29（MA5），阻力$400。③高機率劇本：突破$400有望續漲，跌破MA5則可能回檔。</div>
       </details>
       
 
@@ -4665,13 +4805,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-NOW" class="stock-card">
+    <div id="stock-NOW" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">NOW</div>
           <div class="sc-name">ServiceNow, Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -4703,7 +4848,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">新聞呈現出喜憂參半的局面，ServiceNow 在 AI 合作夥伴關係和客戶擴展方面有積極進展，但同時也面臨股價下跌的看空觀點。</div>
+          <div class="sc-sentiment-text">儘管有看跌的交易建議，但關於UiPath的現金流和ServiceNow的客戶擴張與AI夥伴關係的報導，總體上顯示出正向的成長潛力與策略彈性。</div>
         </div>
       </div>
       
@@ -4804,9 +4949,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面中性偏多。
-②關鍵價位：支撐$90.62，壓力$95.07。
-③高機率劇本：突破$95.07可望挑戰$101.21；跌破$90.62則需留意。</div>
+        <div class="sc-ai-body">① 強勢反彈 ② 支撐$90.62，壓力$95.07 ③ 若突破壓力，有望續漲至$101.21。</div>
       </details>
       
 
@@ -4827,13 +4970,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-AMD" class="stock-card">
+    <div id="stock-AMD" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">AMD</div>
           <div class="sc-name">Advanced Micro Devices, Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -4865,7 +5013,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">儘管有三則新聞直接利好Nvidia，但其中一則標題直接將AMD定位為潛力AI股，且整體內容缺乏直接看空AMD的資訊，故持謹慎樂觀態度。</div>
+          <div class="sc-sentiment-text">儘管大部分新聞圍繞Nvidia和一家AI新創公司，AMD被問及是否為頂級AI股，整體氣氛對半導體和AI產業偏向樂觀，但AMD本身並無明確利多或利空。</div>
         </div>
       </div>
       
@@ -4940,18 +5088,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           </li>
           
           <li class="sc-news-item">
-            Is AMD a Top Artificial Intelligence (AI) Stock to Buy?
+            Cerebras Is the Biggest IPO of the Year. If You Buy CBRS Stock Now, Brace Yourself for Volatility Ahead.
             
             
-            <span class="sc-news-publisher">Motley Fool</span>
+            <span class="sc-news-publisher">Barchart</span>
             
           </li>
           
           <li class="sc-news-item">
-            Dell Stock Just Had Its Best Week Since 2024. The Odds of Another Surge Are High.
+            Is AMD a Top Artificial Intelligence (AI) Stock to Buy?
             
             
-            <span class="sc-news-publisher">Barchart</span>
+            <span class="sc-news-publisher">Motley Fool</span>
             
           </li>
           
@@ -4966,7 +5114,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 強勢回檔。② 關鍵價位：支撐約 $371.71 (MA20)，壓力約 $445.28 (MA5)。③ 高機率劇本：短期可能在 MA5 和 MA20 之間震盪整理，觀察是否守住 MA20 支撐。</div>
+        <div class="sc-ai-body">① 目前盤面偏弱，有回調壓力。
+② 關鍵價位：上方 MA5 ($445.28)，下方 MA20 ($371.71)。
+③ 高機率劇本：短線可能測試 MA20 支撐，若能守住則有望反彈。</div>
       </details>
       
 
@@ -4987,13 +5137,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-TSLA" class="stock-card">
+    <div id="stock-TSLA" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">TSLA</div>
           <div class="sc-name">Tesla, Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5025,7 +5180,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">雖然有價格上漲的正面消息，但馬斯克對國家未來的悲觀言論、投資者對期權市場的複雜情緒以及地緣政治的不確定性（儘管中國市場開放看似利好，但過去的依賴問題仍被提及）綜合來看，短期內市場情緒偏向謹慎甚至略微看空。</div>
+          <div class="sc-sentiment-text">雖然有價格上漲的正面消息，但大部分新聞涉及馬斯克對美國政治的負面評論，以及投資者對短期交易的擔憂，綜合來看略偏負面。</div>
         </div>
       </div>
       
@@ -5126,9 +5281,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① **盤面強弱：** 短期疲弱，中期尚可。
-② **關鍵價位：** 支撐 $401.32 (MA20)，壓力 $437.85 (MA5)。
-③ **高機率劇本：** 盤整觀望，等待突破 MA5 或跌破 MA20。</div>
+        <div class="sc-ai-body">①盤面中性偏弱。
+②關鍵價位：上方437.85（MA5），下方401.32（MA20）。
+③高機率劇本：若能站穩MA5則有望續漲；若跌破MA20則可能回測MA60。</div>
       </details>
       
 
@@ -5149,13 +5304,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-BOTZ" class="stock-card">
+    <div id="stock-BOTZ" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">BOTZ</div>
           <div class="sc-name">Global X Robotics & Artificial </div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5179,7 +5339,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +6">+6</span>
+          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +7">+7</span>
         
       </div>
 
@@ -5187,7 +5347,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多篇報導指出人工智慧（AI）支出和發展趨勢，並強調BOTZ作為機器人ETF在AI晶片領域的投資，顯示出對未來增長的潛力。</div>
+          <div class="sc-sentiment-text">多數新聞標題強調AI、科技及特定產業的投資機會，顯示市場對BOTZ相關領域持積極態度，且未見顯著負面消息。</div>
         </div>
       </div>
       
@@ -5288,9 +5448,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 目前盤面中性，短期賣壓較大。
-② 關鍵價位：支撐位 $38.97 (MA20)，壓力位 $41.00 (MA5)。
-③ 高機率劇本：若能站穩 MA5，有望繼續上攻；反之，跌破 MA20 則有回調風險。</div>
+        <div class="sc-ai-body">① 目前盤面中性偏強。 ② 關鍵價位：支撐 $38.97 (MA20)，壓力 $41.0 (MA5)。 ③ 高機率劇本：短期可能在 $38.97 至 $41.0 之間盤整。</div>
       </details>
       
 
@@ -5311,13 +5469,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-ARKK" class="stock-card">
+    <div id="stock-ARKK" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">ARKK</div>
           <div class="sc-name">ARK Innovation ETF</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5349,7 +5512,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題顯示ARKK正在積極買入熱門AI股票，並獲得大量ETF資金流入，顯示出強勁的看多趨勢，儘管有部分賣出動作，但整體仍偏向正面。</div>
+          <div class="sc-sentiment-text">多數新聞標題顯示ARKK正在積極投資熱門AI領域，並在ETF資金流入方面表現強勁，整體情緒偏向樂觀。</div>
         </div>
       </div>
       
@@ -5450,9 +5613,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 目前盤面偏弱。
-② 關鍵價位：MA60 $73.42（支撐）、MA20 $77.4（阻力）。
-③ 高機率劇本：若無法站穩MA60，恐下探更低；若能突破MA20，則有望反彈。</div>
+        <div class="sc-ai-body">① 盤面偏弱，有進一步下跌風險。
+② 關鍵價位：上方阻力約 $77.4（MA20），下方支撐約 $73.4（MA60）。
+③ 高機率劇本：若未能站穩 $77.4，可能回測 $73.4，甚至更低。</div>
       </details>
       
 
@@ -5473,13 +5636,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-HYG" class="stock-card">
+    <div id="stock-HYG" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">HYG</div>
           <div class="sc-name">iShares iBoxx $ High Yield Corp</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5511,7 +5679,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題強調高收益、穩定股息、避險優勢及優於6%的收益，顯示對HYG及其相關產品的強烈樂觀情緒。</div>
+          <div class="sc-sentiment-text">多篇新聞強調HYG的高收益、穩定股息、低風險和優於其他債券基金的特點，顯示市場對其持強烈正面態度。</div>
         </div>
       </div>
       
@@ -5612,9 +5780,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①目前盤面偏弱。
+        <div class="sc-ai-body">①盤面偏弱，未能站穩短中期均線。
 ②關鍵價位：上方阻力79.81（MA5），下方支撐79.43（MA60）。
-③高機率劇本：跌破MA60後，可能進一步下探。</div>
+③高機率劇本：若無法突破MA5，可能進一步下探79.43甚至更低。</div>
       </details>
       
 
@@ -5635,13 +5803,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-IWM" class="stock-card">
+    <div id="stock-IWM" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">IWM</div>
           <div class="sc-name">iShares Russell 2000 Index Fund</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5673,7 +5846,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">新聞標題指出小型股表現不佳，與追蹤相同股票的VTWO相比，IWM的十年回報率差距甚大，且宏觀指標面臨十字路口，市場充滿不確定性。</div>
+          <div class="sc-sentiment-text">新聞標題顯示小型股表現不佳，且受多項宏觀因素影響，市場情緒偏向負面。</div>
         </div>
       </div>
       
@@ -5774,9 +5947,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面偏弱，短期均線下彎。
-②關鍵價位：上方279.36（MA20），下方277.60（現價）為支撐。
-③高機率劇本：若無法站穩MA20，可能持續下探；反之，突破MA20有機會反彈。</div>
+        <div class="sc-ai-body">① 盤面偏弱，短期均線死亡交叉。
+② 關鍵價位：上方阻力MA20 ($279.36)，下方支撐MA60 ($263.43)。
+③ 高機率劇本：短期可能震盪下探MA60支撐。</div>
       </details>
       
 
@@ -5797,13 +5970,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-DIA" class="stock-card">
+    <div id="stock-DIA" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">DIA</div>
           <div class="sc-name">State Street SPDR Dow Jones Ind</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5835,7 +6013,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">儘管有晶片股利多，但多數新聞標題指向通膨擔憂和市場下跌，整體偏向負面。</div>
+          <div class="sc-sentiment-text">儘管有晶片股利好，但多數新聞標題指向通膨擔憂和股市下跌，整體市場情緒偏向看空。</div>
         </div>
       </div>
       
@@ -5936,9 +6114,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 盤面偏弱，低於MA5但高於MA20，動能不足。
-② 關鍵價位：上方阻力 $497.44 (MA5)，下方支撐 $494.3 (MA20)。
-③ 高機率劇本：若未能站穩MA5，可能回測MA20甚至更低。</div>
+        <div class="sc-ai-body">①偏弱震盪 ②關鍵支撐494.3，關鍵阻力497.44 ③若跌破MA20，恐續探低點。</div>
       </details>
       
 
@@ -5959,13 +6135,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-AVGO" class="stock-card">
+    <div id="stock-AVGO" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">AVGO</div>
           <div class="sc-name">Broadcom Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -5989,7 +6170,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +7">+7</span>
+          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +5">+5</span>
         
       </div>
 
@@ -5997,7 +6178,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題指向 Broadcom (AVGO) 的積極發展，尤其是在 AI 領域的潛力，以及分析師上調目標價，顯示市場對其前景看好。</div>
+          <div class="sc-sentiment-text">新聞中分析師對 Broadcom 的目標價進行了調整，且公司發布了與 AI 相關的新產品，顯示其在關鍵領域的進展，儘管市場普遍預期 Nvidia 等大型科技公司即將公布財報，可能會對市場產生影響，但整體而言，這些消息對 AVGO 仍為正面。</div>
         </div>
       </div>
       
@@ -6072,18 +6253,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           </li>
           
           <li class="sc-news-item">
-            What Broadcom (AVGO)'s AI-Native VMware Cloud Foundation 9.1 Launch Means For Shareholders
+            Cerebras Is the Biggest IPO of the Year. If You Buy CBRS Stock Now, Brace Yourself for Volatility Ahead.
             
             
-            <span class="sc-news-publisher">Simply Wall St.</span>
+            <span class="sc-news-publisher">Barchart</span>
             
           </li>
           
           <li class="sc-news-item">
-            Broadcom Leads Five IBD 50 Stocks Near Buy Points; Most Are AI Plays
+            What Broadcom (AVGO)'s AI-Native VMware Cloud Foundation 9.1 Launch Means For Shareholders
             
             
-            <span class="sc-news-publisher">Investor's Business Daily</span>
+            <span class="sc-news-publisher">Simply Wall St.</span>
             
           </li>
           
@@ -6098,9 +6279,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面偏弱。
-②關鍵價位：$425.9（MA5），跌破易續跌；$418.54（MA20）為支撐。
-③高機率劇本：若無法站穩MA5，可能回測MA20，甚至更低。</div>
+        <div class="sc-ai-body">AVGO盤面偏弱，關注$418.54（MA20）支撐。若跌破，恐下探。上方壓力$425.9（MA5）。</div>
       </details>
       
 
@@ -6121,13 +6300,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-GLD" class="stock-card">
+    <div id="stock-GLD" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">GLD</div>
           <div class="sc-name">SPDR Gold Shares</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -6159,7 +6343,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數標題提及黃金下跌、美元和國債收益率飆升、股市下跌、通膨擔憂，整體呈現看空情緒。</div>
+          <div class="sc-sentiment-text">多篇新聞指出黃金下跌、美元和國債收益率飆升，以及股市下跌，顯示市場對通膨和經濟前景的擔憂情緒濃厚。</div>
         </div>
       </div>
       
@@ -6261,8 +6445,8 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
         <div class="sc-ai-body">① 盤面偏弱，處於下跌趨勢。
-② 關鍵價位：上方 MA20 ($427.96) 壓力，下方沒有明顯支撐。
-③ 高機率劇本：若無法突破 MA20，股價可能持續下探。</div>
+② 關鍵壓力：MA5 ($428.52)。
+③ 高機率劇本：續跌，若跌破前低則加速探底。</div>
       </details>
       
 
@@ -6283,13 +6467,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-TLT" class="stock-card">
+    <div id="stock-TLT" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">TLT</div>
           <div class="sc-name">iShares 20+ Year Treasury Bond </div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -6313,7 +6502,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-neut" title="News Sentiment: +2">+2</span>
+          <span class="sentiment-circle sentiment-neut" title="News Sentiment: -2">-2</span>
         
       </div>
 
@@ -6321,7 +6510,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">雖然就業報告強勁可能延遲降息，但季末債券利好因素正在匯聚，且市場對負面情緒是否為買入時機有所討論，整體情緒偏向謹慎樂觀。</div>
+          <div class="sc-sentiment-text">雖然有季節性順風和就業報告利好成長的報導，但聯準會保持降息觀望的立場以及對通膨的潛在擔憂，導致整體情緒偏向謹慎甚至略微看空。</div>
         </div>
       </div>
       
@@ -6422,9 +6611,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 盤面弱勢，短期均線皆向下。
-② 關鍵價位：上方壓力 $84.79 (MA5)，下方支撐暫無明顯。
-③ 高機率劇本：續跌探底，留意 $80 附近支撐。</div>
+        <div class="sc-ai-body">TLT偏空。①盤面疲弱，技術指標皆為空頭。②關鍵價位：上方84.79（MA5），下方無明顯支撐。③高機率劇本：續跌探底。</div>
       </details>
       
 
@@ -6445,13 +6632,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XLY" class="stock-card">
+    <div id="stock-XLY" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XLY</div>
           <div class="sc-name">State Street Consumer Discretio</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -6475,7 +6667,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-neg" title="News Sentiment: -7">-7</span>
+          <span class="sentiment-circle sentiment-neg" title="News Sentiment: -6">-6</span>
         
       </div>
 
@@ -6483,7 +6675,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題指向消費類股疲軟、油價上漲、地緣政治不確定性等負面因素，預示市場看跌情緒。</div>
+          <div class="sc-sentiment-text">多個標題指出股價下跌、市場不確定性以及分析師對部分股票看法分歧，顯示整體市場情緒偏向負面。</div>
         </div>
       </div>
       
@@ -6584,9 +6776,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 目前盤面偏弱。
-② 關鍵價位：MA60 ($114.65) 作為支撐，MA20 ($118.51) 作為壓力。
-③ 高機率劇本：若跌破 MA60，恐繼續探底；若能站穩 MA20，則有望反彈。</div>
+        <div class="sc-ai-body">①目前盤面偏弱，股價跌破MA5與MA20。
+②關鍵價位：上方阻力約118.5（MA20），下方支撐114.65（MA60）。
+③高機率劇本：若未能站穩MA60，可能進一步下探。</div>
       </details>
       
 
@@ -6607,13 +6799,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XBI" class="stock-card">
+    <div id="stock-XBI" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XBI</div>
           <div class="sc-name">State Street SPDR S&P Biotech E</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -6645,7 +6842,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">這些新聞標題普遍積極，預示著生物科技股票和ETF有上漲潛力，並提及一些具體股票可能大幅增長。</div>
+          <div class="sc-sentiment-text">多數新聞標題預測生技股和ETF將有顯著上漲潛力，並提及一些關鍵股票已突破重要水平，顯示出強烈的看漲情緒。</div>
         </div>
       </div>
       
@@ -6746,9 +6943,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①目前盤面偏弱。
-②關鍵價位：上方阻力133.93-134.21；下方支撐129.08。
-③高機率劇本：若未能站穩MA20/MA5，可能下探MA60支撐，甚至更低。</div>
+        <div class="sc-ai-body">**①目前盤面強弱：** 偏弱，短期均線下彎，股價跌破。
+**②關鍵價位：** 支撐 $129.08 (MA60)，阻力 $133.93 (MA20)。
+**③高機率劇本：** 若跌破 $129.08，可能續跌；若能站穩 $133.93，有望反彈。</div>
       </details>
       
 
@@ -6769,13 +6966,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-PLTR" class="stock-card">
+    <div id="stock-PLTR" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">PLTR</div>
           <div class="sc-name">Palantir Technologies Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -6799,7 +7001,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-pos" title="News Sentiment: +3">+3</span>
+          <span class="sentiment-circle sentiment-neut" title="News Sentiment: +2">+2</span>
         
       </div>
 
@@ -6807,7 +7009,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">正向消息（川普購入、AI 競爭力）與負向消息（員工仲裁、ESG 審查）並存，但整體趨勢展望偏正面，故評分略高於中性。</div>
+          <div class="sc-sentiment-text">雖然有法律訴訟和ESG審查的負面消息，但川普購入股票、對AI的預期以及五年展望等，帶來了部分正面情緒，整體略偏向樂觀。</div>
         </div>
       </div>
       
@@ -6908,9 +7110,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① **目前盤面強弱：** 弱勢，股價低於所有均線。
-② **關鍵價位：** 壓力134.13 (MA5)，支撐未明。
-③ **高機率劇本：** 股價可能繼續下跌，需觀察是否跌破短期支撐。</div>
+        <div class="sc-ai-body">PLTR盤面極弱，短期恐下探。關鍵價位：$134.13（MA5阻力），$133.00（重要支撐）。高機率劇本：若無法站穩MA5，可能跌破$133.00並進一步走低。</div>
       </details>
       
 
@@ -6931,13 +7131,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XLF" class="stock-card">
+    <div id="stock-XLF" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XLF</div>
           <div class="sc-name">State Street Financial Select S</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -6969,7 +7174,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">多數新聞標題指出金融股下跌、ETF 走低，且聯準會主席過渡期動盪，顯示出市場普遍的負面情緒和不確定性。</div>
+          <div class="sc-sentiment-text">多個標題指出金融類股下跌，且聯準會主席過渡期可能動盪，顯示出市場普遍的看空情緒。</div>
         </div>
       </div>
       
@@ -7070,9 +7275,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面：弱勢整理
-②關鍵價位：$51.23（短期壓力）
-③高機率劇本：若無法站穩$51.23，可能測試$50.71支撐。</div>
+        <div class="sc-ai-body">① 目前盤面：極弱。
+② 關鍵價位：$50.71 (MA60) 為支撐，上方阻力在 $51.23 (MA5)。
+③ 高機率劇本：若跌破 MA60，恐加速下跌。</div>
       </details>
       
 
@@ -7093,13 +7298,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XLI" class="stock-card">
+    <div id="stock-XLI" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XLI</div>
           <div class="sc-name">State Street Industrial Select </div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -7131,7 +7341,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">油價飆升、地緣政治不確定性以及較高殖利率導致ETF和股票期貨走低，儘管有中美會議的好消息，但整體情緒偏向謹慎甚至負面。</div>
+          <div class="sc-sentiment-text">油價飆升、地緣政治不確定性以及較高的收益導致多個新聞標題顯示股市和ETF在盤前下跌，儘管也有部分正面消息，但整體情緒略偏負面。</div>
         </div>
       </div>
       
@@ -7232,9 +7442,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">① 目前盤面較弱，呈空頭排列。
-② 關鍵價位：支撐 $170.13 (MA60)，阻力 $173.01 (MA20)。
-③ 高機率劇本：若未能站穩 MA60，恐有進一步下跌風險。</div>
+        <div class="sc-ai-body">**盤面強弱：** 弱勢，所有短期均線皆跌破，技術信號強烈看空。
+**關鍵價位：** 壓力：$173.01 (MA20)，支撐：$170.13 (MA60)。
+**高機率劇本：** 股價可能下探MA60支撐，若跌破恐進一步走弱。</div>
       </details>
       
 
@@ -7255,13 +7465,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-XLV" class="stock-card">
+    <div id="stock-XLV" class="stock-card" data-type="etf" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">XLV</div>
           <div class="sc-name">State Street Health Care Select</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-etf">ETF</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -7293,7 +7508,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">油價飆升、高收益率和地緣政治不確定性導致週五盤前市場下跌，儘管週四有所進展，整體情緒仍偏向謹慎和負面。</div>
+          <div class="sc-sentiment-text">油價飆升、高殖利率和地緣政治不確定性導致市場下跌，儘管有中美會議和對醫療保健ETF的興趣，但整體情緒偏向謹慎甚至看空。</div>
         </div>
       </div>
       
@@ -7394,9 +7609,9 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">①盤面弱勢，MA線空頭排列。
-②關鍵價位：上方阻力145.47（MA5），下方支撐145.12（MA20）。
-③高機率劇本：若跌破145.12，XLV恐續跌；反之，若能站穩MA5，則有機會反彈。</div>
+        <div class="sc-ai-body">①盤面非常弱。
+②關鍵支撐：$145.12 (MA20)，關鍵壓力：$145.47 (MA5)。
+③高機率劇本：跌破MA20後繼續探底。</div>
       </details>
       
 
@@ -7417,13 +7632,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     
     
     
-    <div id="stock-META" class="stock-card">
+    <div id="stock-META" class="stock-card" data-type="stock" data-market="US">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">META</div>
           <div class="sc-name">Meta Platforms, Inc.</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            
+            <span class="asset-badge asset-badge-stock">STOCK</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 US</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -7447,7 +7667,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           
           
           
-          <span class="sentiment-circle sentiment-neut" title="News Sentiment: 0">0</span>
+          <span class="sentiment-circle sentiment-neg" title="News Sentiment: -3">-3</span>
         
       </div>
 
@@ -7455,7 +7675,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       <div class="sc-sentiment-row">
         <div>
           <div class="sc-sentiment-label">NEWS SENTIMENT</div>
-          <div class="sc-sentiment-text">雖然有關於AI支出對經濟和股市的正面影響，以及行銷科技公司募資的消息，但同時也有AI晶片市場可能自我毀滅的擔憂，以及一篇不推薦投資SpaceX IPO的負面建議，整體新聞對META的直接影響不明顯且情緒互有抵銷。</div>
+          <div class="sc-sentiment-text">儘管AI支出和投資火熱，但新聞中提到AI晶片狂熱可能自我毀滅、實際工資下降以及非科技領域的消費緊縮，呈現出潛在的泡沫和經濟不平衡的擔憂。</div>
         </div>
       </div>
       
@@ -7556,7 +7776,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
           <span class="sc-ai-label">AI ANALYSIS</span>
           <span class="sc-collapsible-arrow">▼</span>
         </summary>
-        <div class="sc-ai-body">META盤面弱勢，MA線空頭排列。關鍵價位：$610（支撐）、$635（壓力）。高機率劇本：跌破$610後，續探低點。</div>
+        <div class="sc-ai-body">META現為**弱勢盤面**。關鍵價位：**支撐$610，壓力$635**。高機率劇本：**跌破$610，目標下探$600甚至更低**。</div>
       </details>
       
 
@@ -7662,6 +7882,44 @@ function copyTradeSetup(btn) {
     btn.innerHTML = "✗ FAILED";
     setTimeout(() => { btn.innerHTML = "⎘ COPY TRADE SETUP"; }, 2000);
   });
+}
+
+// Filter bar
+const activeFilters = { type: 'all', market: 'all' };
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filterGroup = btn.dataset.filter;
+    const value = btn.dataset.value;
+    activeFilters[filterGroup] = value;
+
+    document.querySelectorAll(`.filter-btn[data-filter="${filterGroup}"]`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    applyFilters();
+  });
+});
+
+function applyFilters() {
+  const cards = document.querySelectorAll('.stock-card');
+  const rows = document.querySelectorAll('.lb-row[data-type]');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const typeMatch = activeFilters.type === 'all' || card.dataset.type === activeFilters.type;
+    const marketMatch = activeFilters.market === 'all' || card.dataset.market === activeFilters.market;
+    const show = typeMatch && marketMatch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  rows.forEach(row => {
+    const typeMatch = activeFilters.type === 'all' || row.dataset.type === activeFilters.type;
+    const marketMatch = activeFilters.market === 'all' || row.dataset.market === activeFilters.market;
+    row.style.display = (typeMatch && marketMatch) ? '' : 'none';
+  });
+
+  document.getElementById('filter-count').textContent = `${visible} instruments`;
 }
 </script>
 </body>
