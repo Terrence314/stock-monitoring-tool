@@ -162,6 +162,19 @@ def main():
                         "publisher": fh_item.get("source", "Finnhub"),
                     })
 
+            # Extract OHLC history (last 100 bars) for candlestick chart
+            _hist = data.get("history")
+            _ohlc = []
+            if _hist is not None and not _hist.empty:
+                for _, row in _hist.tail(100).iterrows():
+                    _ohlc.append({
+                        "o": round(float(row.get("Open", 0)), 2),
+                        "h": round(float(row.get("High", 0)), 2),
+                        "l": round(float(row.get("Low", 0)), 2),
+                        "c": round(float(row.get("Close", 0)), 2),
+                        "v": round(float(row.get("Volume", 0)) / 1e6, 2),
+                    })
+
             stock_results.append({
                 "ticker":           ticker,
                 "asset_type":       asset_type,
@@ -194,6 +207,11 @@ def main():
                 "week52_high":      fh.get("week52_high"),
                 "week52_low":       fh.get("week52_low"),
                 "next_earnings":    fh.get("next_earnings"),
+                "ohlc":             _ohlc,
+                "open_price":       data.get("open", 0),
+                "high_price":       data.get("high", 0),
+                "low_price":        data.get("low", 0),
+                "prev_close":       data.get("prev_close", 0),
             })
             flag = " 🔥" if ta["score"] >= threshold else ""
             print(f"信號 {ta['score']}/100{flag}")

@@ -2,6 +2,7 @@ import os
 import re
 from datetime import datetime, timedelta
 from jinja2 import Template
+from stock_detail import generate_stock_detail_page
 
 DASHBOARD_HTML = """<!DOCTYPE html>
 <html lang="zh-TW">
@@ -793,7 +794,7 @@ body {
             {% set dash = circ * (sc / 100) %}
             <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}">
               <td>
-                <a href="#stock-{{ s.ticker }}" style="text-decoration:none;color:inherit">
+                <a href="./{{ s.ticker }}.html" style="text-decoration:none;color:inherit">
                   <div class="ticker-cell">
                     <div class="ticker-tile">{{ s.ticker[:2] }}</div>
                     <div class="ticker-meta">
@@ -1096,6 +1097,9 @@ body {
       </div>
       {% endif %}
 
+      <a href="./{{ s.ticker }}.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+        → 查看詳細分析
+      </a>
       <button class="copy-btn"
         data-ticker="{{ s.ticker }}"
         data-price="{{ "%.2f"|format(s.price) }}"
@@ -1464,5 +1468,12 @@ def generate_dashboard(
     latest_path = os.path.join(output_dir, "index.html")
     with open(latest_path, "w", encoding="utf-8") as f:
         f.write(html)
+
+    # Generate per-stock detail pages
+    for stk in stocks_sorted:
+        try:
+            generate_stock_detail_page(stk, date, output_dir)
+        except Exception as exc:
+            print(f"  [detail] {stk.get('ticker', '?')} skipped: {exc}")
 
     return path
