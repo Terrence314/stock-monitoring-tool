@@ -122,7 +122,10 @@ def main():
     threshold    = cfg.get("analysis", {}).get("signal_threshold_alert", 70)
     finnhub_key  = cfg["gemini"].get("finnhub_api_key", "")
 
-    for ticker in cfg["watchlist"]:
+    for item in cfg["watchlist"]:
+        ticker = item["ticker"]
+        asset_type = item.get("type", "stock")
+        asset_market = item.get("market", "US")
         print(f"      {ticker}…", end=" ", flush=True)
         try:
             data = fetch_stock_data(ticker, period=cfg.get("analysis", {}).get("history_period", "6mo"))
@@ -161,6 +164,8 @@ def main():
 
             stock_results.append({
                 "ticker":           ticker,
+                "asset_type":       asset_type,
+                "market":           asset_market,
                 "name":             data["name"],
                 "price":            data["current_price"],
                 "price_change_pct": data["price_change_pct"],

@@ -45,7 +45,7 @@ body {
   font-size: 13px;
   line-height: 1.5;
   padding: 0 16px 32px;
-  padding-top: 112px; /* nav + ticker tape */
+  padding-top: 158px; /* nav + ticker tape + filter bar */
   min-height: 100vh;
 }
 
@@ -1016,6 +1016,57 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
   .lb-table-wrap { overflow-x: auto; }
 }
 
+/* ── FILTER BAR ── */
+.filter-bar {
+  position: sticky;
+  top: 88px;
+  z-index: 90;
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  backdrop-filter: blur(12px);
+}
+.filter-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-right: 8px;
+}
+.filter-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms;
+  margin-right: 6px;
+}
+.filter-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.filter-btn.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+.filter-group { display: flex; align-items: center; }
+.filter-summary { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+/* ── ASSET TYPE / MARKET BADGES ── */
+.asset-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.asset-badge-stock { background: rgba(77,158,247,0.12); color: var(--accent-blue); border: 1px solid rgba(77,158,247,0.25); }
+.asset-badge-etf   { background: rgba(155,109,255,0.12); color: var(--accent-purple); border: 1px solid rgba(155,109,255,0.25); }
+.asset-badge-market { background: rgba(136,136,168,0.08); color: var(--text-secondary); border: 1px solid var(--border); }
+
 /* ── HIGH-SIGNAL PULSE KEYFRAME ── */
 @keyframes pulse-green {
   0%, 100% { box-shadow: var(--glow-green), inset 0 0 0 1px rgba(0,212,160,0.12); }
@@ -1087,6 +1138,24 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     </div>
   </div>
 </nav>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-group">
+    <span class="filter-label">TYPE</span>
+    <button class="filter-btn active" data-filter="type" data-value="all">ALL</button>
+    <button class="filter-btn" data-filter="type" data-value="stock">STOCKS</button>
+    <button class="filter-btn" data-filter="type" data-value="etf">ETFs</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">MARKET</span>
+    <button class="filter-btn active" data-filter="market" data-value="all">ALL</button>
+    <button class="filter-btn" data-filter="market" data-value="US">🇺🇸 US</button>
+  </div>
+  <div class="filter-summary">
+    <span id="filter-count">{{ stocks_sorted | length }} instruments</span>
+  </div>
+</div>
 
 <div class="section-wrap">
 
@@ -1169,7 +1238,7 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
       {% set sc_class = "high" if sc >= 60 else ("mid" if sc >= 40 else "low") %}
       {% set chg_class = "chg-pos" if s.price_change_pct >= 0 else "chg-neg" %}
       {% set str_class = "strength-buy" if sc >= 60 else ("strength-neut" if sc >= 40 else "strength-sell") %}
-      <tr>
+      <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}">
         <td>
           <div class="ticker-cell">{{ s.ticker }}</div>
           <div class="name-cell">{{ s.name }}</div>
@@ -1238,13 +1307,18 @@ details[open] .sc-collapsible-arrow { transform: rotate(180deg); }
     {% set badge_class = "score-high-badge" if sc >= 60 else ("score-mid-badge" if sc >= 40 else "score-low-badge") %}
     {% set chg_class = "chg-pos" if s.price_change_pct >= 0 else "chg-neg" %}
     {% set high_signal = sc >= 70 %}
-    <div id="stock-{{ s.ticker }}" class="stock-card{{ ' signal-high' if high_signal else '' }}">
+    <div id="stock-{{ s.ticker }}" class="stock-card{{ ' signal-high' if high_signal else '' }}" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}">
 
       <!-- Card header -->
       <div class="sc-header">
         <div>
           <div class="sc-ticker">{{ s.ticker }}</div>
           <div class="sc-name">{{ s.name }}</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            {% set atype = s.get('asset_type', 'stock') %}
+            <span class="asset-badge {{ 'asset-badge-stock' if atype == 'stock' else 'asset-badge-etf' }}">{{ atype | upper }}</span>
+            <span class="asset-badge asset-badge-market">🇺🇸 {{ s.get('market', 'US') }}</span>
+          </div>
         </div>
         <div class="sc-header-right">
           <div class="sc-price">
@@ -1489,6 +1563,44 @@ function copyTradeSetup(btn) {
     btn.innerHTML = "✗ FAILED";
     setTimeout(() => { btn.innerHTML = "⎘ COPY TRADE SETUP"; }, 2000);
   });
+}
+
+// Filter bar
+const activeFilters = { type: 'all', market: 'all' };
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filterGroup = btn.dataset.filter;
+    const value = btn.dataset.value;
+    activeFilters[filterGroup] = value;
+
+    document.querySelectorAll(`.filter-btn[data-filter="${filterGroup}"]`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    applyFilters();
+  });
+});
+
+function applyFilters() {
+  const cards = document.querySelectorAll('.stock-card');
+  const rows = document.querySelectorAll('.lb-row[data-type]');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const typeMatch = activeFilters.type === 'all' || card.dataset.type === activeFilters.type;
+    const marketMatch = activeFilters.market === 'all' || card.dataset.market === activeFilters.market;
+    const show = typeMatch && marketMatch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  rows.forEach(row => {
+    const typeMatch = activeFilters.type === 'all' || row.dataset.type === activeFilters.type;
+    const marketMatch = activeFilters.market === 'all' || row.dataset.market === activeFilters.market;
+    row.style.display = (typeMatch && marketMatch) ? '' : 'none';
+  });
+
+  document.getElementById('filter-count').textContent = `${visible} instruments`;
 }
 </script>
 </body>
