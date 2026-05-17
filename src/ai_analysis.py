@@ -1,4 +1,5 @@
 from google import genai
+from google.genai import types
 from datetime import datetime
 import time
 
@@ -15,6 +16,9 @@ def _call(client, prompt: str, retries: int = 3) -> str:
             response = client.models.generate_content(
                 model=client._model_name,
                 contents=prompt,
+                config=types.GenerateContentConfig(
+                    thinking_config=types.ThinkingConfig(thinking_budget=0)
+                ),
             )
             return response.text.strip()
         except Exception as e:
@@ -75,45 +79,46 @@ RSI：{ta['rsi']} | MACD Hist：{ta['macd_hist']} | 量比：{ta['vol_ratio']}×
 
 
 def run_stock_deep_dive(model, ticker: str, name: str, stock_data: dict, ta: dict) -> dict:
-    """Full per-stock analysis — maps to ezone Prompts 3, 7, 10 + btcreal Prompt D."""
+    """Full per-stock analysis — merged into 1 API call (was 3).
+
+    Returns the same dict structure: {"thesis": "...", "risks": "...", "entry": "..."}.
+    """
     price = stock_data["current_price"]
     change = stock_data["price_change_pct"]
 
-    base_context = f"""股票：{ticker}（{name}）
+    prompt = f"""股票：{ticker}（{name}）
 現價：${price:.2f}  漲跌：{change:+.2f}%
 MA5：{ta['ma5']} | MA20：{ta['ma20']} | MA60：{ta['ma60']}
 RSI：{ta['rsi']} | MACD：{ta['macd']} | MACD Signal：{ta['macd_signal']}
-技術信號分數：{ta['score']}/100（{ta['strength']}）"""
+技術信號分數：{ta['score']}/100（{ta['strength']}）
 
-    # Thesis + Catalysts (Prompt D style)
-    thesis_prompt = f"""{base_context}
+你是一位機構交易員，請以繁體中文分析 {ticker}，分三段回答：
 
-你是一位機構交易員，請以繁體中文分析 {ticker}：
-1. 投資核心論點：目前市場定價是否正確？有何 Variant Perception？
-2. 關鍵催化劑：未來 1–3 個月哪些事件會觸發股價移動？（列出 3 個）
-3. 目前偏多 / 偏空 / 中性，理由一句話。
-回答約 150 字。"""
+【核心論點】約150字：投資論點、Variant Perception、3個催化劑、目前偏多/偏空/中性
 
-    # Risk matrix (Prompt 3 style)
-    risk_prompt = f"""{base_context}
+【風險矩陣】約100字：3個風險（宏觀/行業/公司各一），每個附先行指標
 
-請以繁體中文列出 {ticker} 目前最重要的 3 個風險（宏觀 / 行業 / 公司層面各一），每個風險給出一個投資者應監測的先行指標。約 100 字。"""
+【擇時建議】約80字：建議買入區間、止損位及邏輯、第一/第二目標價、風險回報比"""
 
-    # Entry/Exit (Prompt 10 style)
-    entry_prompt = f"""{base_context}
+    raw = _call(model, prompt)
 
-請以繁體中文給出 {ticker} 的擇時建議：
-• 建議買入區間
-• 止損位（price level）及觸發邏輯
-• 第一目標價 / 第二目標價
-• 風險回報比估算
-約 80 字。"""
+    import re
 
-    return {
-        "thesis":    _call(model, thesis_prompt),
-        "risks":     _call(model, risk_prompt),
-        "entry":     _call(model, entry_prompt),
-    }
+    def extract_section(tag: str) -> str:
+        # Match text between this 【tag】 and the next 【 or end of string
+        pattern = rf"【{re.escape(tag)}】(.*?)(?=【|$)"
+        match = re.search(pattern, raw, re.DOTALL)
+        return match.group(1).strip() if match else ""
+
+    thesis = extract_section("核心論點")
+    risks  = extract_section("風險矩陣")
+    entry  = extract_section("擇時建議")
+
+    # Graceful fallback: if parsing completely failed, keep full response in thesis
+    if not thesis and not risks and not entry:
+        thesis = raw
+
+    return {"thesis": thesis, "risks": risks, "entry": entry}
 
 
 def run_news_sentiment(model, ticker: str, headlines: list) -> dict:
