@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal Backtest · 2026/05/18</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0c10; --surface:#13141b; --elevated:#1a1c25; --border:#23252f;
+  --border-hi:#33363f; --text:#e7e8ec; --text-2:#8a8c98; --muted:#52545e;
+  --up:#34d399; --down:#f87171; --amber:#f5b942; --blue:#7aa2ff; --purple:#b18cff;
+  --mono:'JetBrains Mono',monospace; --sans:'Inter',system-ui,sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans);
+  font-size:13px; line-height:1.55; min-height:100vh;
+  -webkit-font-smoothing:antialiased; }
+.top { position:sticky; top:0; z-index:50; background:var(--surface);
+  border-bottom:1px solid var(--border); backdrop-filter:blur(12px); }
+.top-row { display:flex; align-items:center; gap:16px; padding:0 24px; height:56px; }
+.brand-logo { width:26px; height:26px; border-radius:7px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:700; font-size:13px; font-family:var(--mono); }
+.brand-title { font-size:14px; font-weight:600; }
+.brand-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); }
+.back-btn { margin-left:auto; font-family:var(--mono); font-size:11px;
+  color:var(--blue); text-decoration:none; padding:5px 10px;
+  border:1px solid rgba(122,162,255,0.3); border-radius:6px; }
+.back-btn:hover { background:rgba(122,162,255,0.08); }
+.page { max-width:1100px; margin:0 auto; padding:20px 24px 60px;
+  display:flex; flex-direction:column; gap:16px; }
+.card { background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:18px 20px; }
+.card-title { font-size:14px; font-weight:600; letter-spacing:-0.005em; }
+.card-sub { font-size:11px; color:var(--text-2); }
+.section-pill {
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:9px; font-weight:700;
+  letter-spacing:0.06em; text-transform:uppercase;
+  padding:3px 9px; border-radius:10px;
+  background:rgba(122,162,255,0.10); color:var(--blue);
+  border:1px solid rgba(122,162,255,0.25); margin-bottom:14px;
+}
+.stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+@media (max-width:700px) { .stat-grid { grid-template-columns:1fr 1fr; } }
+.stat-box { background:var(--elevated); border:1px solid var(--border);
+  border-radius:10px; padding:14px 16px; }
+.stat-label { font-size:11px; color:var(--text-2); font-weight:500; }
+.stat-val { font-family:var(--mono); font-size:22px; font-weight:700;
+  letter-spacing:-0.02em; margin-top:6px; }
+.stat-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); margin-top:2px; }
+.stat-val.up { color:var(--up); }
+.stat-val.down { color:var(--down); }
+.stat-val.amber { color:var(--amber); }
+.fd-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
+@media (max-width:700px) { .fd-row { grid-template-columns:1fr; } }
+.fd-card { background:var(--bg); border:1px solid var(--border); border-radius:10px;
+  padding:14px 16px; }
+.fd-label { font-family:var(--mono); font-size:10px; font-weight:700;
+  color:var(--text-2); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; }
+.fd-metric { display:flex; justify-content:space-between; align-items:center;
+  padding:5px 0; border-bottom:1px solid var(--border); }
+.fd-metric:last-child { border-bottom:none; }
+.fd-metric-label { font-size:12px; color:var(--text-2); }
+.fd-metric-val { font-family:var(--mono); font-size:12px; font-weight:600; }
+tbl { width:100%; border-collapse:collapse; }
+table { width:100%; border-collapse:collapse; }
+thead tr { background:var(--bg); }
+th { padding:9px 12px; font-size:11px; font-weight:500; color:var(--text-2);
+  text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+th.first { text-align:left; }
+td { padding:11px 12px; border-bottom:1px solid var(--border);
+  vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:rgba(255,255,255,0.02); }
+.mono { font-family:var(--mono); font-size:12px; }
+.num { font-family:var(--mono); font-size:12px; text-align:right; }
+.chip { font-family:var(--mono); font-size:11px; font-weight:600;
+  padding:2px 8px; border-radius:4px; display:inline-block; }
+.chip.up   { color:var(--up);   background:rgba(52,211,153,0.10); }
+.chip.down { color:var(--down); background:rgba(248,113,113,0.10); }
+.chip.na   { color:var(--muted); background:rgba(255,255,255,0.03); }
+.ticker-tag { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--text);
+  background:var(--elevated); border:1px solid var(--border-hi);
+  padding:2px 8px; border-radius:4px; }
+.wr-bar { height:4px; border-radius:2px; background:var(--elevated); margin-top:4px; }
+.wr-fill { height:100%; border-radius:2px; }
+.empty { padding:40px; text-align:center; font-family:var(--mono);
+  font-size:12px; color:var(--text-2); }
+.footer { text-align:center; padding:24px; color:var(--muted);
+  font-family:var(--mono); font-size:10px; letter-spacing:0.06em; }
+@media (max-width:768px) {
+  .page { padding:12px 12px 40px; }
+  .mob-hide { display:none !important; }
+  th, td { padding:8px 8px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <div class="brand-logo">S</div>
+    <div>
+      <div class="brand-title">Backtest · Signal ≥ 70</div>
+      <div class="brand-sub">generated 2026/05/18 · 2 signal events · 2 tickers</div>
+    </div>
+    <a href="./index.html" class="back-btn">← 返回總覽</a>
+  </div>
+</header>
+
+<div class="page">
+
+
+
+<!-- ── OVERALL SUMMARY ── -->
+<div class="card">
+  <span class="section-pill">Overall Performance</span>
+  <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+    <div>
+      <div class="card-title">2 Signal Events · Score ≥ 70</div>
+      <div class="card-sub" style="margin-top:3px">2 tickers · dates from 2026-05-18 → 2026-05-18</div>
+    </div>
+  </div>
+
+  <div class="fd-row">
+    
+    
+    <div class="fd-card">
+      <div class="fd-label">+5 Trading Days</div>
+      
+      <div style="color:var(--muted);font-family:var(--mono);font-size:11px">Insufficient data</div>
+      
+    </div>
+    
+    
+    <div class="fd-card">
+      <div class="fd-label">+10 Trading Days</div>
+      
+      <div style="color:var(--muted);font-family:var(--mono);font-size:11px">Insufficient data</div>
+      
+    </div>
+    
+    
+    <div class="fd-card">
+      <div class="fd-label">+20 Trading Days</div>
+      
+      <div style="color:var(--muted);font-family:var(--mono);font-size:11px">Insufficient data</div>
+      
+    </div>
+    
+  </div>
+</div>
+
+<!-- ── PER-TICKER SUMMARY ── -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div class="card-title">Per-Ticker Statistics</div>
+      <div class="card-sub" style="margin-top:3px">sorted by +10d win rate</div>
+    </div>
+  </div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th class="first">Ticker</th>
+        <th class="first">Signals</th>
+        <th>+5d win%</th>
+        <th>+5d avg</th>
+        <th class="mob-hide">+10d win%</th>
+        <th class="mob-hide">+10d avg</th>
+        <th>+20d win%</th>
+        <th>+20d avg</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td><span class="ticker-tag">USO</span></td>
+        <td class="num">1</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">XLE</span></td>
+        <td class="num">1</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ── SIGNAL LOG ── -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+    <div class="card-title">Signal Log</div>
+    <div class="card-sub" style="margin-top:3px">all events · most recent first</div>
+  </div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th class="first">Signal date</th>
+        <th class="first">Ticker</th>
+        <th>Score</th>
+        <th>Entry $</th>
+        <th>+5d</th>
+        <th class="mob-hide">+10d</th>
+        <th>+20d</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-05-18</td>
+        <td><span class="ticker-tag">XLE</span></td>
+        <td class="num" style="color:var(--amber)">72</td>
+        <td class="num">60.28</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-05-18</td>
+        <td><span class="ticker-tag">USO</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">150.69</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+
+</div><!-- /.page -->
+<div class="footer">SIGNAL MONITOR · BACKTEST ENGINE · 2026/05/18</div>
+</body>
+</html>
