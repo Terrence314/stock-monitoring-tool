@@ -621,10 +621,11 @@ body {
 
     <div class="spacer"></div>
 
-    <div class="searchbox">
-      <span>⌕</span>
-      <span>Search ticker, sector…</span>
-      <span class="kbd">⌘K</span>
+    <div class="searchbox" style="padding:0 12px;cursor:text">
+      <span style="font-size:13px;color:var(--muted)">⌕</span>
+      <input id="ticker-search" type="text" placeholder="Search ticker…"
+        style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--sans);font-size:13px;padding:7px 0">
+      <span class="kbd" id="search-hint">/</span>
     </div>
 
     <div class="market-open">
@@ -990,7 +991,7 @@ body {
     {% set ring_dash = ring_circ * (sc / 100) %}
     {% set atype = s.get('asset_type', 'stock') %}
 
-    <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}">
+    <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-ticker="{{ s.ticker }}">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -1019,6 +1020,13 @@ body {
           </div>
         </div>
       </div>
+
+      {% if s.get('price_sparkline_svg') %}
+      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
+        {{ s.price_sparkline_svg | safe }}
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
+      </div>
+      {% endif %}
 
       <div class="scard-row">
         <span class="strength-badge {{ sc_class }}">{{ s.strength }}</span>
@@ -1144,6 +1152,63 @@ body {
 </div><!-- /.page -->
 
 <script>
+// Search + keyboard shortcuts
+(function() {
+  var searchInput = document.getElementById('ticker-search');
+  var searchHint  = document.getElementById('search-hint');
+
+  function applySearch(q) {
+    q = q.toLowerCase().trim();
+    var cards = document.querySelectorAll('.scard');
+    var rows  = document.querySelectorAll('.lb-row');
+    var visible = 0;
+    cards.forEach(function(c) {
+      var ticker = (c.dataset.ticker || '').toLowerCase();
+      var name   = (c.querySelector('.scard-name') || {}).textContent || '';
+      var show   = !q || ticker.includes(q) || name.toLowerCase().includes(q);
+      // also respect existing type/score filters
+      var t = activeFilters.type === 'all' || c.dataset.type === activeFilters.type;
+      var s = activeFilters.score === 0 || parseInt(c.dataset.score) >= activeFilters.score;
+      c.style.display = (show && t && s) ? '' : 'none';
+      if (show && t && s) visible++;
+    });
+    rows.forEach(function(r) {
+      var ticker = (r.querySelector('.ticker-sym') || {}).textContent || '';
+      var name   = (r.querySelector('.ticker-name') || {}).textContent || '';
+      var show   = !q || ticker.toLowerCase().includes(q) || name.toLowerCase().includes(q);
+      var t = activeFilters.type === 'all' || r.dataset.type === activeFilters.type;
+      var s = activeFilters.score === 0 || parseInt(r.dataset.score) >= activeFilters.score;
+      r.style.display = (show && t && s) ? '' : 'none';
+    });
+    var fc = document.getElementById('filter-count');
+    if (fc) fc.textContent = visible + ' instruments';
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function() { applySearch(this.value); });
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    // '/' — focus search
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      if (searchInput) { searchInput.focus(); searchInput.select(); }
+    }
+    // Escape — clear search
+    if (e.key === 'Escape' && document.activeElement === searchInput) {
+      searchInput.value = '';
+      applySearch('');
+      searchInput.blur();
+    }
+  });
+  if (searchHint) {
+    document.addEventListener('focusin', function(e) {
+      searchHint.textContent = e.target === searchInput ? 'ESC' : '/';
+    });
+  }
+})();
+
 // Live clock
 (function() {
   var el = document.getElementById('live-clock');
@@ -1198,22 +1263,31 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
   });
 });
 function applyFilters() {
+  var searchInput = document.getElementById('ticker-search');
+  var q = searchInput ? searchInput.value.toLowerCase().trim() : '';
   var cards = document.querySelectorAll('.scard');
   var rows  = document.querySelectorAll('.lb-row');
   var visible = 0;
   cards.forEach(function(c) {
     var t = activeFilters.type === 'all' || c.dataset.type === activeFilters.type;
     var s = activeFilters.score === 0 || parseInt(c.dataset.score) >= activeFilters.score;
-    var show = t && s;
+    var ticker = (c.dataset.ticker || '').toLowerCase();
+    var name   = (c.querySelector('.scard-name') || {}).textContent || '';
+    var sq = !q || ticker.includes(q) || name.toLowerCase().includes(q);
+    var show = t && s && sq;
     c.style.display = show ? '' : 'none';
     if (show) visible++;
   });
   rows.forEach(function(r) {
     var t = activeFilters.type === 'all' || r.dataset.type === activeFilters.type;
     var s = activeFilters.score === 0 || parseInt(r.dataset.score) >= activeFilters.score;
-    r.style.display = (t && s) ? '' : 'none';
+    var ticker = (r.querySelector('.ticker-sym') || {}).textContent || '';
+    var name   = (r.querySelector('.ticker-name') || {}).textContent || '';
+    var sq = !q || ticker.toLowerCase().includes(q) || name.toLowerCase().includes(q);
+    r.style.display = (t && s && sq) ? '' : 'none';
   });
-  document.getElementById('filter-count').textContent = visible + ' instruments';
+  var fc = document.getElementById('filter-count');
+  if (fc) fc.textContent = visible + ' instruments';
 }
 
 // Copy trade setup
@@ -1519,6 +1593,30 @@ def _build_spy_price_svg(ohlc: list[dict], stock: dict, width: int = 560, height
     return "".join(parts)
 
 
+def _build_price_sparkline_svg(ohlc: list, width: int = 80, height: int = 28) -> str:
+    """Tiny inline SVG showing close price trend for last 20 bars."""
+    bars = (ohlc or [])[-20:]
+    closes = [b.get("c", 0) for b in bars if b.get("c", 0) > 0]
+    if len(closes) < 2:
+        return ""
+    mn, mx = min(closes), max(closes)
+    rng = mx - mn or mn * 0.01 or 1
+    n = len(closes)
+    step = (width - 4) / (n - 1)
+    pts = " ".join(
+        f"{2 + i * step:.1f},{height - 4 - ((v - mn) / rng) * (height - 8):.1f}"
+        for i, v in enumerate(closes)
+    )
+    color = "#34d399" if closes[-1] >= closes[0] else "#f87171"
+    return (
+        f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
+        f'xmlns="http://www.w3.org/2000/svg">'
+        f'<polyline points="{pts}" fill="none" stroke="{color}" '
+        f'stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>'
+        f'</svg>'
+    )
+
+
 def _build_sig_buckets(stocks: list) -> list[dict]:
     """Return signal score distribution buckets for the histogram."""
     buckets = [
@@ -1586,6 +1684,10 @@ def generate_dashboard(
     sig_buckets = _build_sig_buckets(stocks_sorted)
     headlines = _collect_headlines(stocks_sorted)
 
+    # Attach price sparklines to each stock dict
+    for stk in stocks_sorted:
+        stk["price_sparkline_svg"] = _build_price_sparkline_svg(stk.get("ohlc", []))
+
     spy_stock = next((s for s in stocks_sorted if s["ticker"] == "SPY"), None)
     spy_ohlc = spy_stock.get("ohlc", []) if spy_stock else []
     spy_chart_svg = _build_spy_price_svg(spy_ohlc, spy_stock, width=560, height=120)
@@ -1613,9 +1715,10 @@ def generate_dashboard(
         f.write(html)
 
     # Generate per-stock detail pages
+    ticker_list = [s["ticker"] for s in stocks_sorted]
     for stk in stocks_sorted:
         try:
-            generate_stock_detail_page(stk, date, output_dir)
+            generate_stock_detail_page(stk, date, output_dir, ticker_list=ticker_list)
         except Exception as exc:
             print(f"  [detail] {stk.get('ticker', '?')} skipped: {exc}")
 

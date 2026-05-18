@@ -1097,10 +1097,16 @@ body {
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <a href="./index.html" class="back-link">← 返回總覽</a>
+  <a href="./index.html" class="back-link">← 返回</a>
+  {% if prev_ticker %}
+  <a href="./{{ prev_ticker }}.html" class="back-link" title="Previous: {{ prev_ticker }}" style="padding:5px 9px">‹ {{ prev_ticker }}</a>
+  {% endif %}
   <span class="topbar-ticker">{{ s.ticker }}</span>
-  <span class="topbar-name">{{ s.name }}</span>
+  <span class="topbar-name" style="display:none" id="topbar-fullname">{{ s.name }}</span>
   <div class="spacer"></div>
+  {% if next_ticker %}
+  <a href="./{{ next_ticker }}.html" class="back-link" title="Next: {{ next_ticker }}" style="padding:5px 9px">{{ next_ticker }} ›</a>
+  {% endif %}
   <span class="topbar-date">{{ date }}</span>
 </div>
 
@@ -1323,6 +1329,33 @@ body {
         {% else %}
         <div style="color:var(--muted);font-size:11px">— no signals —</div>
         {% endif %}
+      </div>
+
+      {# Score indicator breakdown #}
+      <div style="background:var(--elevated);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Score Breakdown</div>
+        {%- set rsi_v = s.rsi or 50 %}
+        {%- set rsi_s = 20 if rsi_v > 55 else (10 if rsi_v > 50 else (-10 if rsi_v < 30 else 0)) %}
+        {%- set macd_s = 20 if s.macd_hist and s.macd_hist > 0 else (-20 if s.macd_hist and s.macd_hist < 0 else 0) %}
+        {%- set vol_s = 15 if s.vol_ratio and s.vol_ratio > 1.5 else (8 if s.vol_ratio and s.vol_ratio > 1.0 else 0) %}
+        {%- set ma_s = 25 if s.ma5 and s.ma20 and s.ma5 > s.ma20 else 0 %}
+        {%- set items = [
+          ('RSI', rsi_s, 20),
+          ('MACD Hist', macd_s, 20),
+          ('Volume', vol_s, 15),
+          ('MA Stack', ma_s, 25),
+        ] %}
+        {% for label, pts, max_pts in items %}
+        {%- set pct = ([0, [pts, max_pts] | min] | max / max_pts * 100) | round %}
+        {%- set bar_c = '#34d399' if pts > 0 else ('#f87171' if pts < 0 else '#52545e') %}
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:60px">{{ label }}</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:{{ pct }}%;background:{{ bar_c }};border-radius:2px"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:{{ bar_c }};min-width:24px;text-align:right">{{ '%+d'|format(pts) }}</span>
+        </div>
+        {% endfor %}
       </div>
 
       {# MA badge row #}
@@ -1597,13 +1630,19 @@ body {
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
-def generate_stock_detail_page(s: dict, date: str, output_dir: str) -> str:
+def generate_stock_detail_page(
+    s: dict,
+    date: str,
+    output_dir: str,
+    ticker_list: list[str] | None = None,
+) -> str:
     """Generate a detail HTML page for a single stock.
 
     Args:
-        s:          Stock result dict (same shape as report_generator uses).
-        date:       Report date string e.g. "2024/11/14".
-        output_dir: Path to the outputs directory.
+        s:           Stock result dict (same shape as report_generator uses).
+        date:        Report date string e.g. "2024/11/14".
+        output_dir:  Path to the outputs directory.
+        ticker_list: Ordered list of all tickers (by score desc) for prev/next nav.
 
     Returns:
         Absolute path to the written HTML file.
@@ -1618,6 +1657,15 @@ def generate_stock_detail_page(s: dict, date: str, output_dir: str) -> str:
     strategy      = _build_strategy(s)
     verdict       = _build_verdict(s)
     core_bullets  = _parse_core_bullets(s.get("ai_view", ""), s.get("signals", []))
+
+    # Prev / next navigation
+    prev_ticker = next_ticker = None
+    if ticker_list and s["ticker"] in ticker_list:
+        idx = ticker_list.index(s["ticker"])
+        if idx > 0:
+            prev_ticker = ticker_list[idx - 1]
+        if idx < len(ticker_list) - 1:
+            next_ticker = ticker_list[idx + 1]
 
     from jinja2 import Environment
     env = Environment()
@@ -1636,6 +1684,8 @@ def generate_stock_detail_page(s: dict, date: str, output_dir: str) -> str:
         core_bullets=core_bullets,
         has_ohlc=bool(chart_svg),
         ohlc_count=len(ohlc),
+        prev_ticker=prev_ticker,
+        next_ticker=next_ticker,
     )
 
     os.makedirs(output_dir, exist_ok=True)
