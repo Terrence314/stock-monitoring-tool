@@ -144,6 +144,38 @@ body {
   border-color: var(--border-hi); font-weight: 600;
 }
 .filter-meta { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--text-2); }
+.filter-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
+
+/* ── SPY period tabs ────────────────────────────────────────────────── */
+.period-tabs { display: flex; gap: 3px; }
+.period-tab {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  padding: 3px 8px; border-radius: 5px; border: 1px solid transparent;
+  color: var(--text-2); background: none; cursor: pointer;
+}
+.period-tab:hover { color: var(--text); background: var(--elevated); }
+.period-tab.active { color: var(--blue); background: rgba(122,162,255,0.10); border-color: rgba(122,162,255,0.25); }
+
+/* ── Mobile bottom nav ──────────────────────────────────────────────── */
+.mob-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: var(--surface); border-top: 1px solid var(--border);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  padding: 6px 0 env(safe-area-inset-bottom, 8px);
+}
+.mob-nav-items { display: flex; justify-content: space-around; }
+.mob-nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 4px 10px; border-radius: 8px; text-decoration: none;
+  color: var(--text-2); font-size: 10px; font-weight: 500; min-width: 52px;
+}
+.mob-nav-item:hover, .mob-nav-item.active { color: var(--blue); }
+.mob-nav-item svg { width: 20px; height: 20px; }
+@media (max-width: 768px) {
+  .mob-nav { display: block; }
+  .page { padding-bottom: 80px !important; }
+}
 
 /* ── PAGE GRID ──────────────────────────────────────────────────────── */
 .page {
@@ -649,13 +681,16 @@ body {
 
   <!-- Filter bar -->
   <div class="filter-bar">
-    <span class="filter-label">Type</span>
     <button class="filter-btn active" data-filter="type" data-value="all">All · {{ stocks_sorted|length }}</button>
     <button class="filter-btn" data-filter="type" data-value="stock">Stocks</button>
     <button class="filter-btn" data-filter="type" data-value="etf">ETFs</button>
-    <span class="filter-label" style="margin-left:14px">Signal</span>
-    <button class="filter-btn" data-filter="score" data-value="70">≥ 70</button>
-    <button class="filter-btn" data-filter="score" data-value="60">≥ 60</button>
+    <button class="filter-btn" data-filter="score" data-value="70">Signal ≥70</button>
+    <button class="filter-btn" data-filter="special" data-value="breakout" class="mob-hide">Breakouts</button>
+    <button class="filter-btn mob-hide" data-filter="special" data-value="rsi5070">RSI 50–70</button>
+    <button class="filter-btn mob-hide" data-filter="special" data-value="newhigh">New highs</button>
+    <span class="filter-sep mob-hide"></span>
+    <button class="filter-btn mob-hide" id="sort-btn" data-sort="desc" title="Sort by signal">Signal ↓</button>
+    <button class="filter-btn mob-hide" id="view-btn" data-view="cards" title="Toggle view">⊞ Cards</button>
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
   </div>
 </header>
@@ -702,23 +737,33 @@ body {
       </div>
       <div class="kpi">
         <div class="kpi-head">
-          <span class="kpi-label">Top signal</span>
+          <span class="kpi-label">Fear &amp; Greed</span>
+          {% if fg_value is not none %}
+            {% if fg_value >= 75 %}
+              <span class="badge up">GREED</span>
+            {% elif fg_value >= 55 %}
+              <span class="badge amber">NEUTRAL+</span>
+            {% elif fg_value >= 45 %}
+              <span class="badge blue">NEUTRAL</span>
+            {% elif fg_value >= 25 %}
+              <span class="badge down">FEAR</span>
+            {% else %}
+              <span class="badge down">EXT FEAR</span>
+            {% endif %}
+          {% endif %}
         </div>
-        {% if stocks_sorted %}
-          {% set top = stocks_sorted[0] %}
-          <div class="kpi-val" style="color: var(--up); font-family: var(--mono)">{{ top.ticker }}</div>
-          <div class="kpi-sub">{{ top.score }} / 100 · {{ "%+.2f"|format(top.price_change_pct) }}%</div>
-        {% else %}
-          <div class="kpi-val">—</div>
-        {% endif %}
+        <div class="kpi-val" style="{% if fg_value is not none %}color:{% if fg_value >= 60 %}var(--up){% elif fg_value >= 40 %}var(--amber){% else %}var(--down){% endif %}{% endif %}">{{ fg_value if fg_value is not none else '—' }}</div>
+        <div class="kpi-sub">{{ fg_label if fg_label else 'CNN index · /100' }}</div>
       </div>
       <div class="kpi">
         <div class="kpi-head">
-          <span class="kpi-label">Alerts (7d)</span>
-          {% if alert_history %}<span class="badge amber">{{ alert_history|length }}</span>{% endif %}
+          <span class="kpi-label">F&amp;G change</span>
+          {% if fg_delta is not none %}
+            <span class="badge {{ 'up' if fg_delta >= 0 else 'down' }}">{{ '+' if fg_delta >= 0 else '' }}{{ fg_delta }}</span>
+          {% endif %}
         </div>
-        <div class="kpi-val">{{ alert_history|length if alert_history else 0 }}</div>
-        <div class="kpi-sub">threshold 70+</div>
+        <div class="kpi-val" style="{% if fg_delta is not none %}color:{% if fg_delta >= 0 %}var(--up){% else %}var(--down){% endif %}{% endif %}">{{ ('+' if fg_delta and fg_delta >= 0 else '') + (fg_delta|string) if fg_delta is not none else '—' }}</div>
+        <div class="kpi-sub">vs. past week</div>
       </div>
     </section>
 
@@ -727,18 +772,26 @@ body {
 
       <!-- SPY chart -->
       <div class="card">
-        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
-          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:baseline;gap:10px">
             <span style="font-size:13px;color:var(--text);font-weight:600">SPY</span>
             <span style="font-size:11px;color:var(--text-2)">S&amp;P 500 ETF</span>
             {% if market.get('SPY') %}
-            <span style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--text);margin-left:6px">{{ "%.2f"|format(market['SPY'].price) }}</span>
+            <span style="font-family:var(--mono);font-size:16px;font-weight:600;color:var(--text)">{{ "%.2f"|format(market['SPY'].price) }}</span>
             <span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--{{ market['SPY'].direction }})">{{ "%+.2f"|format(market['SPY'].change_pct) }}%</span>
             {% endif %}
           </div>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--text-2)">Price · MA20 · MA60</span>
+          <div class="period-tabs">
+            <button class="period-tab" data-period="1d">1D</button>
+            <button class="period-tab active" data-period="1m">1M</button>
+            <button class="period-tab" data-period="3m">3M</button>
+            <button class="period-tab" data-period="6m">6M</button>
+          </div>
         </div>
-        {{ spy_chart_svg | safe }}
+        <div id="spy-chart-1d" style="display:none">{{ spy_chart_1d | safe }}</div>
+        <div id="spy-chart-1m">{{ spy_chart_1m | safe }}</div>
+        <div id="spy-chart-3m" style="display:none">{{ spy_chart_3m | safe }}</div>
+        <div id="spy-chart-6m" style="display:none">{{ spy_chart_6m | safe }}</div>
       </div>
 
       <!-- Signal distribution histogram -->
@@ -821,7 +874,7 @@ body {
             {% set color = '#34d399' if sc >= 60 else ('#f5b942' if sc >= 40 else '#f87171') %}
             {% set circ = 100.53 %}
             {% set dash = circ * (sc / 100) %}
-            <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}">
+            <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-rsi="{{ s.rsi or 0 }}" data-price="{{ s.price or 0 }}" data-ma20="{{ s.ma20 or 0 }}" data-ma60="{{ s.ma60 or 0 }}">
               <td>
                 <a href="./{{ s.ticker }}.html" style="text-decoration:none;color:inherit">
                   <div class="ticker-cell">
@@ -991,7 +1044,7 @@ body {
     {% set ring_dash = ring_circ * (sc / 100) %}
     {% set atype = s.get('asset_type', 'stock') %}
 
-    <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-ticker="{{ s.ticker }}">
+    <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-ticker="{{ s.ticker }}" data-rsi="{{ s.rsi or 0 }}" data-price="{{ s.price or 0 }}" data-ma20="{{ s.ma20 or 0 }}" data-ma60="{{ s.ma60 or 0 }}">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -1151,6 +1204,32 @@ body {
 
 </div><!-- /.page -->
 
+<!-- ─── MOBILE BOTTOM NAV (≤768px) ─────────────────────────────────── -->
+<nav class="mob-nav">
+  <div class="mob-nav-items">
+    <a class="mob-nav-item active" href="#overview">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+      Overview
+    </a>
+    <a class="mob-nav-item" href="#watchlist">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+      Watchlist
+    </a>
+    <a class="mob-nav-item" href="#stocks">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,14 6,9 10,12 14,6 18,4"/></svg>
+      Signals
+    </a>
+    <a class="mob-nav-item" href="#brief">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg>
+      AI Brief
+    </a>
+    <a class="mob-nav-item" href="#sectors">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><path d="M10 2v8l5 5"/></svg>
+      More
+    </a>
+  </div>
+</nav>
+
 <script>
 // Search + keyboard shortcuts
 (function() {
@@ -1241,7 +1320,7 @@ body {
 })();
 
 // Filters
-var activeFilters = { type: 'all', score: 0 };
+var activeFilters = { type: 'all', score: 0, special: null };
 document.querySelectorAll('.filter-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var g = btn.dataset.filter, v = btn.dataset.value;
@@ -1262,6 +1341,18 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
     applyFilters();
   });
 });
+function passesSpecial(el, sp) {
+  if (!sp) return true;
+  var score = parseInt(el.dataset.score || 0);
+  var rsi   = parseFloat(el.dataset.rsi || 0);
+  var price = parseFloat(el.dataset.price || 0);
+  var ma20  = parseFloat(el.dataset.ma20 || 0);
+  var ma60  = parseFloat(el.dataset.ma60 || 0);
+  if (sp === 'breakout') return score >= 70 && price > 0 && ma20 > 0 && price > ma20;
+  if (sp === 'rsi5070')  return rsi >= 50 && rsi <= 70;
+  if (sp === 'newhigh')  return score >= 75;
+  return true;
+}
 function applyFilters() {
   var searchInput = document.getElementById('ticker-search');
   var q = searchInput ? searchInput.value.toLowerCase().trim() : '';
@@ -1271,24 +1362,120 @@ function applyFilters() {
   cards.forEach(function(c) {
     var t = activeFilters.type === 'all' || c.dataset.type === activeFilters.type;
     var s = activeFilters.score === 0 || parseInt(c.dataset.score) >= activeFilters.score;
+    var sp = passesSpecial(c, activeFilters.special);
     var ticker = (c.dataset.ticker || '').toLowerCase();
     var name   = (c.querySelector('.scard-name') || {}).textContent || '';
     var sq = !q || ticker.includes(q) || name.toLowerCase().includes(q);
-    var show = t && s && sq;
+    var show = t && s && sp && sq;
     c.style.display = show ? '' : 'none';
     if (show) visible++;
   });
   rows.forEach(function(r) {
     var t = activeFilters.type === 'all' || r.dataset.type === activeFilters.type;
     var s = activeFilters.score === 0 || parseInt(r.dataset.score) >= activeFilters.score;
+    var sp = passesSpecial(r, activeFilters.special);
     var ticker = (r.querySelector('.ticker-sym') || {}).textContent || '';
     var name   = (r.querySelector('.ticker-name') || {}).textContent || '';
     var sq = !q || ticker.toLowerCase().includes(q) || name.toLowerCase().includes(q);
-    r.style.display = (t && s && sq) ? '' : 'none';
+    r.style.display = (t && s && sp && sq) ? '' : 'none';
   });
   var fc = document.getElementById('filter-count');
   if (fc) fc.textContent = visible + ' instruments';
 }
+
+// SPY period tabs
+(function() {
+  document.querySelectorAll('.period-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.period-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      var p = tab.dataset.period;
+      ['1d','1m','3m','6m'].forEach(function(id) {
+        var el = document.getElementById('spy-chart-' + id);
+        if (el) el.style.display = id === p ? '' : 'none';
+      });
+    });
+  });
+})();
+
+// Sort toggle
+(function() {
+  var btn = document.getElementById('sort-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var asc = btn.dataset.sort === 'asc';
+    btn.dataset.sort = asc ? 'desc' : 'asc';
+    btn.textContent = 'Signal ' + (asc ? '↓' : '↑');
+    var bento = document.querySelector('.bento');
+    var tbody = document.querySelector('.wl tbody');
+    if (bento) {
+      var cards = Array.from(bento.children);
+      cards.sort(function(a,b) {
+        var sa = parseInt(a.dataset.score||0), sb = parseInt(b.dataset.score||0);
+        return asc ? sa-sb : sb-sa;
+      });
+      cards.forEach(function(c) { bento.appendChild(c); });
+    }
+    if (tbody) {
+      var rows = Array.from(tbody.querySelectorAll('.lb-row'));
+      rows.sort(function(a,b) {
+        var sa = parseInt(a.dataset.score||0), sb = parseInt(b.dataset.score||0);
+        return asc ? sa-sb : sb-sa;
+      });
+      rows.forEach(function(r) { tbody.appendChild(r); });
+    }
+  });
+})();
+
+// View toggle (cards ↔ table)
+(function() {
+  var btn = document.getElementById('view-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var showTable = btn.dataset.view === 'cards';
+    btn.dataset.view = showTable ? 'table' : 'cards';
+    btn.textContent = showTable ? '☰ Table' : '⊞ Cards';
+    var bento = document.querySelector('.bento');
+    var wlSection = document.getElementById('watchlist');
+    var stocksSection = document.getElementById('stocks');
+    if (bento) bento.style.display = showTable ? 'none' : '';
+    if (stocksSection) {
+      var header = stocksSection.querySelector('div');
+      if (header) header.style.display = showTable ? 'none' : '';
+    }
+    if (wlSection) wlSection.style.display = showTable ? '' : 'none';
+  });
+})();
+
+// Special filters: breakout, rsi5070, newhigh
+document.querySelectorAll('.filter-btn[data-filter="special"]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var isActive = btn.classList.contains('active');
+    document.querySelectorAll('.filter-btn[data-filter="special"]').forEach(function(b) { b.classList.remove('active'); });
+    if (!isActive) {
+      btn.classList.add('active');
+      activeFilters.special = btn.dataset.value;
+    } else {
+      activeFilters.special = null;
+    }
+    applyFilters();
+  });
+});
+
+// Mobile bottom nav active state on scroll
+(function() {
+  var navItems = document.querySelectorAll('.mob-nav-item');
+  var sections = ['overview','watchlist','stocks','brief','sectors'].map(function(id) {
+    return document.getElementById(id);
+  });
+  function onScroll() {
+    var y = window.scrollY + 160;
+    var activeIdx = 0;
+    sections.forEach(function(s, i) { if (s && s.offsetTop <= y) activeIdx = i; });
+    navItems.forEach(function(n, i) { n.classList.toggle('active', i === activeIdx); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
 
 // Copy trade setup
 function copyTradeSetup(btn) {
@@ -1664,6 +1851,7 @@ def generate_dashboard(
     output_dir: str = "outputs",
     score_history: dict | None = None,
     alert_history: list | None = None,
+    fear_greed: dict | None = None,
 ) -> str:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -1688,9 +1876,20 @@ def generate_dashboard(
     for stk in stocks_sorted:
         stk["price_sparkline_svg"] = _build_price_sparkline_svg(stk.get("ohlc", []))
 
+    # Fear & Greed
+    fg = fear_greed or {}
+    fg_value = fg.get("value")
+    fg_label = fg.get("label", "")
+    fg_prev  = fg.get("prev_week")
+    fg_delta = (fg_value - fg_prev) if (fg_value is not None and fg_prev is not None) else None
+
+    # SPY period charts (1D=5bars, 1M=22bars, 3M=66bars, 6M=all)
     spy_stock = next((s for s in stocks_sorted if s["ticker"] == "SPY"), None)
-    spy_ohlc = spy_stock.get("ohlc", []) if spy_stock else []
-    spy_chart_svg = _build_spy_price_svg(spy_ohlc, spy_stock, width=560, height=120)
+    spy_ohlc  = spy_stock.get("ohlc", []) if spy_stock else []
+    spy_chart_1d = _build_spy_price_svg(spy_ohlc[-5:]  if spy_ohlc else [], spy_stock, width=560, height=120)
+    spy_chart_1m = _build_spy_price_svg(spy_ohlc[-22:] if spy_ohlc else [], spy_stock, width=560, height=120)
+    spy_chart_3m = _build_spy_price_svg(spy_ohlc[-66:] if spy_ohlc else [], spy_stock, width=560, height=120)
+    spy_chart_6m = _build_spy_price_svg(spy_ohlc,                           spy_stock, width=560, height=120)
 
     html = Template(DASHBOARD_HTML).render(
         date=date,
@@ -1701,7 +1900,13 @@ def generate_dashboard(
         alert_history=alert_history or [],
         sig_buckets=sig_buckets,
         headlines=headlines,
-        spy_chart_svg=spy_chart_svg,
+        spy_chart_1d=spy_chart_1d,
+        spy_chart_1m=spy_chart_1m,
+        spy_chart_3m=spy_chart_3m,
+        spy_chart_6m=spy_chart_6m,
+        fg_value=fg_value,
+        fg_label=fg_label,
+        fg_delta=fg_delta,
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"

@@ -1,5 +1,7 @@
 import yfinance as yf
 import pandas as pd
+import urllib.request
+import json
 from datetime import datetime, timedelta
 
 try:
@@ -190,3 +192,23 @@ def fetch_market_overview() -> dict:
         except Exception as e:
             print(f"  [data_fetcher] market {ticker} error: {e}")
     return overview
+
+
+def fetch_fear_greed() -> dict:
+    """Fetch CNN Fear & Greed Index. Returns {value, label, prev_week} or empty dict."""
+    try:
+        url = "https://production.dataviz.cnn.io/index/fearandgreed/graphdata"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read())
+        fg = data.get("fear_and_greed", {})
+        value = round(float(fg.get("score", 0)))
+        rating = fg.get("rating", "").replace("_", " ").title()
+        prev = data.get("fear_and_greed_historical", {}).get("data", [])
+        prev_week_val = None
+        if prev and len(prev) >= 5:
+            prev_week_val = round(float(prev[-5].get("y", 0))) if isinstance(prev[-5], dict) else None
+        return {"value": value, "label": rating, "prev_week": prev_week_val}
+    except Exception as e:
+        print(f"  [data_fetcher] fear_greed error: {e}")
+        return {}

@@ -3,7 +3,7 @@ import json
 import sys
 from datetime import datetime, timedelta
 
-from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data
+from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data, fetch_fear_greed
 from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment
 from report_generator import generate_dashboard
@@ -111,7 +111,8 @@ def main():
     # ── 2. Market overview ───────────────────────────────────────────────────
     print("[2/5] 抓取大盤數據…")
     market = fetch_market_overview()
-    print(f"      取得 {len(market)} 個市場指標")
+    fear_greed = fetch_fear_greed()
+    print(f"      取得 {len(market)} 個市場指標 · F&G: {fear_greed.get('value', 'N/A')}")
 
     # ── 3. Morning brief ─────────────────────────────────────────────────────
     print("[3/5] 生成早盤簡報（F→G→H→I）…")
@@ -228,6 +229,7 @@ def main():
         today, market, morning_brief, stock_results,
         score_history=score_history,
         alert_history=alert_history,
+        fear_greed=fear_greed,
     )
     print(f"      報告已儲存：{report_path}")
 
