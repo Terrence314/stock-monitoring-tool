@@ -7,7 +7,7 @@ from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_
 from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment
 from report_generator import generate_dashboard
-from notifier import send_telegram, format_daily_message
+from notifier import send_telegram, send_health_alert, format_daily_message
 from backtest import run_backtest
 
 
@@ -92,9 +92,31 @@ def main():
     print(f"  AI 股票監控系統  |  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print("=" * 50)
 
-    cfg = load_config()
-    today        = datetime.now().strftime("%Y/%m/%d")
-    today_key    = datetime.now().strftime("%Y-%m-%d")
+    cfg = None
+    try:
+        cfg = load_config()
+    except Exception as e:
+        print(f"[FATAL] 無法載入設定：{e}")
+        sys.exit(1)
+
+    try:
+        _run(cfg)
+    except Exception as e:
+        print(f"\n[FATAL] Pipeline 崩潰：{type(e).__name__}: {e}")
+        try:
+            send_health_alert(
+                cfg["telegram"]["bot_token"],
+                cfg["telegram"]["chat_id"],
+                [f"🚨 Pipeline 完全崩潰，今日報告未生成\n錯誤：{type(e).__name__}: {e}"],
+            )
+        except Exception:
+            pass  # Don't mask the original error
+        sys.exit(1)
+
+
+def _run(cfg: dict) -> None:
+    today     = datetime.now().strftime("%Y/%m/%d")
+    today_key = datetime.now().strftime("%Y-%m-%d")
 
     errors = validate_config(cfg)
     if errors:
@@ -219,6 +241,27 @@ def main():
             print(f"信號 {ta['score']}/100{flag}")
         except Exception as e:
             print(f"跳過（錯誤：{e}）")
+
+    # ── Health Check ─────────────────────────────────────────────────────────
+    health_issues = []
+    scored_count = len(stock_results)
+    total_count  = len(cfg["watchlist"])
+    if scored_count < 10:
+        health_issues.append(
+            f"只有 {scored_count}/{total_count} 檔股票成功評分（數據源可能異常，yfinance 或 Finnhub）"
+        )
+    no_ai = sum(1 for s in stock_results if not s.get("ai_view", "").strip())
+    if no_ai > 5:
+        health_issues.append(
+            f"{no_ai} 檔股票缺少 AI 分析（Gemini API 可能受限或超出配額）"
+        )
+    if health_issues:
+        print(f"\n  ⚠️ 健康警告：{len(health_issues)} 個問題，發送 Telegram 通知…")
+        send_health_alert(
+            cfg["telegram"]["bot_token"],
+            cfg["telegram"]["chat_id"],
+            health_issues,
+        )
 
     # ── 5. Persist history + generate report ────────────────────────────────
     print("[5/5] 生成報告 + 推送 Telegram…")

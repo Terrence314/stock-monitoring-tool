@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 
 def send_telegram(bot_token: str, chat_id: str, message: str) -> bool:
@@ -10,6 +11,24 @@ def send_telegram(bot_token: str, chat_id: str, message: str) -> bool:
     except Exception as e:
         print(f"  [notifier] Telegram error: {e}")
         return False
+
+
+def send_health_alert(bot_token: str, chat_id: str, issues: list) -> bool:
+    """Send a pipeline degradation alert when the run is unhealthy."""
+    lines = [
+        "⚠️ <b>股票監控系統｜健康警告</b>",
+        f"🕐 {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+        "",
+        "今日報告品質可能受影響，請檢查以下問題：",
+        "",
+    ]
+    for i, issue in enumerate(issues, 1):
+        lines.append(f"{i}. {issue}")
+    lines += [
+        "",
+        "👉 請前往 GitHub Actions 查看完整日誌。",
+    ]
+    return send_telegram(bot_token, chat_id, "\n".join(lines))
 
 
 def format_daily_message(date: str, morning_brief: str, stocks: list, report_url: str = "") -> str:
