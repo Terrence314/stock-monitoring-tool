@@ -276,6 +276,22 @@ def _run(cfg: dict) -> None:
     )
     print(f"      報告已儲存：{report_path}")
 
+    # ── Cache analysis for 15-min price refresh ─────────────────────────────
+    # price_refresh.py reads this to preserve AI fields between daily runs.
+    # Exclude the large ohlc array — price_refresh regenerates it from fresh data.
+    cache_path = os.path.join("outputs", "last_analysis.json")
+    save_json_file(cache_path, {
+        "date":          today_key,
+        "morning_brief": morning_brief,
+        "market":        market,
+        "fear_greed":    fear_greed,
+        "stock_results": [
+            {k: v for k, v in s.items() if k != "ohlc"}
+            for s in stock_results
+        ],
+    })
+    print(f"      AI 快取已儲存：{cache_path}")
+
     report_url = os.getenv("REPORT_URL", "")
     message = format_daily_message(today, morning_brief, stock_results, report_url)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)

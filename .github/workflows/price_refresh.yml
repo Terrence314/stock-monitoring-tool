@@ -1,0 +1,55 @@
+name: Price Refresh (15-min)
+
+on:
+  schedule:
+    # Every 15 min during US market hours (9am–5pm ET)
+    # EDT (Apr–Oct): 13:00–21:00 UTC  |  EST (Nov–Mar): 14:00–21:00 UTC
+    # Range 13–21 UTC covers both seasons safely
+    - cron: "*/15 13-21 * * 1-5"
+  workflow_dispatch:
+    # Manual trigger for testing
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push updated report to gh-pages
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch last AI analysis cache from GitHub Pages
+        run: |
+          mkdir -p outputs
+          curl -f -s \
+            "https://terrence314.github.io/stock-monitoring-tool/last_analysis.json" \
+            -o outputs/last_analysis.json \
+            && echo "  ✅ AI cache loaded" \
+            || echo '{"stock_results":[],"morning_brief":"","market":{},"fear_greed":{},"date":""}' \
+               > outputs/last_analysis.json && echo "  ⚠️  No cache yet — using empty fallback"
+
+      - name: Run price refresh
+        # No GEMINI_API_KEY — this step calls yfinance only
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_URL:         ${{ secrets.REPORT_URL }}
+        run: python src/price_refresh.py
+
+      - name: Deploy updated report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: success()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir:  ./outputs
+          keep_files:   true
