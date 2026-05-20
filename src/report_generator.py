@@ -626,6 +626,37 @@ body {
   .kpi-val { font-size: 18px; }
   .filter-btn { font-size: 11px; padding: 4px 8px; }
 }
+
+/* ── EXPERT / BEGINNER TOGGLE ──────────────────────────────────────── */
+.beginner-only { display: none; }
+body.beginner-mode .expert-only  { display: none !important; }
+body.beginner-mode .beginner-only { display: block; }
+
+.beg-verdict {
+  padding: 10px 14px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; line-height: 1.4;
+}
+.beg-verdict.high { background: rgba(52,211,153,0.10); color: var(--up);   border: 1px solid rgba(52,211,153,0.22); }
+.beg-verdict.mid  { background: rgba(245,185,66,0.10); color: var(--amber); border: 1px solid rgba(245,185,66,0.22); }
+.beg-verdict.low  { background: rgba(248,113,113,0.10); color: var(--down); border: 1px solid rgba(248,113,113,0.22); }
+.beg-explain {
+  font-size: 11px; color: var(--text-2); margin-top: 6px; line-height: 1.55;
+  padding: 0 2px;
+}
+
+/* ── REFRESH BUTTON ────────────────────────────────────────────────── */
+.refresh-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; padding: 5px 11px; border-radius: 6px;
+  color: var(--text-2); background: transparent;
+  border: 1px solid var(--border); cursor: pointer;
+  font-family: inherit; font-weight: 500; transition: color .15s, border-color .15s;
+}
+.refresh-btn:hover { color: var(--blue); border-color: rgba(122,162,255,0.4); }
+.refresh-btn.spinning { opacity: 0.6; pointer-events: none; }
+.spin-icon { display: inline-block; font-style: normal; }
+.refresh-btn.spinning .spin-icon { animation: spin360 0.7s linear infinite; }
+@keyframes spin360 { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -691,7 +722,11 @@ body {
     <span class="filter-sep mob-hide"></span>
     <button class="filter-btn mob-hide" id="sort-btn" data-sort="desc" title="Sort by signal">Signal ↓</button>
     <button class="filter-btn mob-hide" id="view-btn" data-view="cards" title="Toggle view">⊞ Cards</button>
+    <span class="filter-sep mob-hide"></span>
+    <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
+    <button class="refresh-btn mob-hide" id="refresh-btn" onclick="doRefresh(this)" title="Reload page to get latest prices"><span class="spin-icon">↻</span> Refresh</button>
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
+    <span class="filter-meta mob-hide" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
   </div>
 </header>
 
@@ -1091,6 +1126,19 @@ body {
         {% endif %}
       </div>
 
+      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
+      <div class="beginner-only">
+        <div class="beg-verdict {{ sc_class }}">
+          {% if sc >= 80 %}🔥 Strong Buy — Very bullish technical setup ({{ sc }}/100)
+          {% elif sc >= 60 %}📈 Buy Signal — Most indicators are pointing up ({{ sc }}/100)
+          {% elif sc >= 40 %}⚖️ Mixed Signals — No clear direction ({{ sc }}/100)
+          {% elif sc >= 20 %}📉 Caution — More indicators are bearish ({{ sc }}/100)
+          {% else %}❄️ Avoid — Technical setup is bearish ({{ sc }}/100)
+          {% endif %}
+        </div>
+        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
+      </div>
+
       {% if s.get('next_earnings') %}
       <div class="earnings">
         <span class="pulse"></span>
@@ -1098,6 +1146,7 @@ body {
       </div>
       {% endif %}
 
+      <div class="expert-only">
       {% set ab = s.get('analyst_buy') %}
       {% set ah = s.get('analyst_hold') %}
       {% set as_ = s.get('analyst_sell') %}
@@ -1117,6 +1166,7 @@ body {
         </div>
       </div>
       {% endif %}
+      </div>
 
       {% set w52h = s.get('week52_high') %}
       {% set w52l = s.get('week52_low') %}
@@ -1136,21 +1186,22 @@ body {
         </div>
       {% endif %}
 
-      <div class="scard-row">
-        <span class="ma-badge ma5">MA5 · {{ s.ma5 }}</span>
-        <span class="ma-badge ma20">MA20 · {{ s.ma20 }}</span>
-        <span class="ma-badge ma60">MA60 · {{ s.ma60 }}</span>
-        <span class="rsi-badge">RSI · {{ s.rsi }}</span>
-        <span class="vol-badge">Vol · {{ "%.1f"|format(s.vol_ratio) if s.vol_ratio else "—" }}×</span>
-        {% if s.get('pe_ratio') %}
-        <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · {{ "%.1f"|format(s.pe_ratio) }}</span>
-        {% endif %}
-      </div>
-
-      <div>
-        <div class="scard-sub">Technical signals</div>
-        <div class="signals">
-          {% for sig in s.signals %}<div class="signal-item">{{ sig }}</div>{% endfor %}
+      <div class="expert-only">
+        <div class="scard-row">
+          <span class="ma-badge ma5">MA5 · {{ s.ma5 }}</span>
+          <span class="ma-badge ma20">MA20 · {{ s.ma20 }}</span>
+          <span class="ma-badge ma60">MA60 · {{ s.ma60 }}</span>
+          <span class="rsi-badge">RSI · {{ s.rsi }}</span>
+          <span class="vol-badge">Vol · {{ "%.1f"|format(s.vol_ratio) if s.vol_ratio else "—" }}×</span>
+          {% if s.get('pe_ratio') %}
+          <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · {{ "%.1f"|format(s.pe_ratio) }}</span>
+          {% endif %}
+        </div>
+        <div>
+          <div class="scard-sub">Technical signals</div>
+          <div class="signals">
+            {% for sig in s.signals %}<div class="signal-item">{{ sig }}</div>{% endfor %}
+          </div>
         </div>
       </div>
 
@@ -1426,6 +1477,35 @@ function applyFilters() {
     }
   });
 })();
+
+// ── Expert ↔ Simple mode toggle ─────────────────────────────────────
+function toggleMode() {
+  var btn  = document.getElementById('mode-toggle');
+  var body = document.body;
+  var isBeginner = body.classList.toggle('beginner-mode');
+  if (btn) btn.textContent = isBeginner ? '🔬 Expert' : '📖 Simple';
+  try { localStorage.setItem('signalViewMode', isBeginner ? 'beginner' : 'expert'); } catch(e) {}
+}
+// Restore saved mode on page load
+(function() {
+  try {
+    if (localStorage.getItem('signalViewMode') === 'beginner') {
+      document.body.classList.add('beginner-mode');
+      var btn = document.getElementById('mode-toggle');
+      if (btn) btn.textContent = '🔬 Expert';
+    }
+  } catch(e) {}
+})();
+
+// ── Manual refresh ───────────────────────────────────────────────────
+function doRefresh(btn) {
+  if (btn) {
+    btn.classList.add('spinning');
+    btn.disabled = true;
+  }
+  // Hard reload — bypasses browser cache, picks up latest GitHub Pages deploy
+  window.location.reload(true);
+}
 
 // View toggle (cards ↔ table)
 (function() {
@@ -1893,6 +1973,7 @@ def generate_dashboard(
 
     html = Template(DASHBOARD_HTML).render(
         date=date,
+        generated_at=datetime.now().strftime("%H:%M HKT"),
         market=market_overview,
         brief_sections=brief_sections,
         stocks_sorted=stocks_sorted,
