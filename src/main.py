@@ -298,7 +298,11 @@ def _run(cfg: dict) -> None:
     print(f"      Telegram：{'✅ 成功' if ok else '❌ 失敗'}")
 
     # ── Backtest ─────────────────────────────────────────────────────────────
-    run_backtest([item["ticker"] for item in cfg["watchlist"]])
+    # Isolated try/except: backtest failures must never block the report deploy
+    try:
+        run_backtest([item["ticker"] for item in cfg["watchlist"]])
+    except Exception as bt_err:
+        print(f"  [backtest] ⚠️ skipped due to error: {bt_err}")
 
     # Summary
     if stock_results:

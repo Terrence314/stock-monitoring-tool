@@ -45,12 +45,23 @@ def _fetch_price_series(tickers: list[str]) -> dict[str, dict[str, float]]:
     )
     prices: dict[str, dict[str, float]] = {}
 
+    def _ts_to_date_str(ts) -> str:
+        """Convert Timestamp or string index entry to YYYY-MM-DD string.
+
+        yfinance >= 0.2.x sometimes returns string-typed index values
+        depending on the download path; guard against AttributeError.
+        """
+        if hasattr(ts, "date"):
+            return str(ts.date())
+        s = str(ts)
+        return s[:10]  # Take YYYY-MM-DD prefix from any ISO-like string
+
     if len(tickers) == 1:
         # Single ticker: raw is a flat DataFrame with Close column
         ticker = tickers[0]
         if "Close" in raw.columns:
             prices[ticker] = {
-                str(ts.date()): float(v)
+                _ts_to_date_str(ts): float(v)
                 for ts, v in raw["Close"].dropna().items()
             }
     else:
@@ -58,7 +69,7 @@ def _fetch_price_series(tickers: list[str]) -> dict[str, dict[str, float]]:
         for ticker in tickers:
             if ticker in close.columns:
                 prices[ticker] = {
-                    str(ts.date()): float(v)
+                    _ts_to_date_str(ts): float(v)
                     for ts, v in close[ticker].dropna().items()
                 }
     return prices
