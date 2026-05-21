@@ -2,10 +2,10 @@ name: Price Refresh (15-min)
 
 on:
   schedule:
-    # Every 15 min during US market hours (9am–5pm ET)
+    # Every ~15 min during US market hours (9am–5pm ET), Mon–Fri
     # EDT (Apr–Oct): 13:00–21:00 UTC  |  EST (Nov–Mar): 14:00–21:00 UTC
-    # Range 13–21 UTC covers both seasons safely
-    - cron: "*/15 13-21 * * 1-5"
+    # Offset to :03/:18/:33/:48 to avoid GitHub's peak-load congestion at :00/:15/:30/:45
+    - cron: "3,18,33,48 13-21 * * 1-5"
   workflow_dispatch:
     # Manual trigger for testing
 

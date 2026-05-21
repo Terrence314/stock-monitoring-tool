@@ -1,6 +1,6 @@
 import os
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from jinja2 import Template
 from stock_detail import generate_stock_detail_page
 
@@ -1973,7 +1973,7 @@ def generate_dashboard(
 
     html = Template(DASHBOARD_HTML).render(
         date=date,
-        generated_at=datetime.now().strftime("%H:%M HKT"),
+        generated_at=datetime.now(tz=timezone(timedelta(hours=8))).strftime("%H:%M HKT"),
         market=market_overview,
         brief_sections=brief_sections,
         stocks_sorted=stocks_sorted,
