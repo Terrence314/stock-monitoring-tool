@@ -1,54 +1,54 @@
 {
-  "date": "2026-05-21",
-  "morning_brief": "好的，以下是您2026年5月21日星期四的早盤市場分析：\n\n**【F・市場消息整理】**\n\n今日全球市場焦點在於美股表現相對平穩，S&P 500 與納指100 微幅上漲。儘管VIX指數顯著下降，顯示恐慌情緒有所緩解，但黃金和原油小幅下跌，美元指數持平，可能暗示投資者仍在消化之前的消息，並觀望新的經濟數據。比特幣維持漲勢，資金流向加密貨幣的趨勢似乎仍在持續。目前市場真正在交易的是對經濟前景的謹慎樂觀以及對潛在通脹壓力的重新評估。\n\n**【G・市場情緒判讀】**\n\nVIX指數下跌近4%，表明市場恐慌情緒明顯降溫，傾向於偏貪婪。美元指數持平，而美債TLT上漲，顯示資金可能重新流入相對安全的資產，但幅度不大。結合美股的溫和上漲，以及比特幣的持續走強，整體市場情緒呈現一種「有選擇性的Risk-On」。投資者在風險資產中進行配置，但同時也對潛在的宏觀經濟風險保持警惕。\n\n**【H・技術面關鍵價位】**\n\n*   **S&P 500 (SPY):**\n    *   **壓力:** 743.50 (短期阻力)\n    *   **支撐:** 740.00 (短期支撐，若跌破需留意738.00)\n*   **納指 100 (QQQ):**\n    *   **壓力:** 715.00 (近期高點附近)\n    *   **支撐:** 712.00 (短期支撐，若跌破需留意710.00)\n\n**【I・今日交易計畫】**\n\n綜合來看，今日操作方向可偏向**中性偏多**。在VIX下降與美股微漲的背景下，市場情緒暫時穩定。最值得關注的機會是科技股與加密貨幣的輪動表現，但需警惕油價下跌可能暗示的需求放緩，以及美元走勢的突然變化。若SPY和QQQ能守穩支撐位，短線可偏多操作，但一旦跌破關鍵支撐，則需立即降低風險。今日無重大財經事件公佈，但仍應關注聯準會官員的潛在發言。",
+  "date": "2026-05-22",
+  "morning_brief": "好的，以下是您在 2026 年 5 月 22 日（星期五）的早盤分析：\n\n---\n\n**2026/05/22 Friday 早盤分析**\n\n**【F・市場消息整理】**\n\n今日市場主要交易的仍是科技股的強勁表現以及聯準會（Fed）未來的政策路徑。儘管通膨擔憂揮之不去，但科技巨頭的獲利動能與人工智慧題材持續推動納斯達克 100 指數走高。地緣政治消息方面相對平靜，黃金和原油在經歷近期波動後，呈現小幅回調。比特幣則在創下新高後出現技術性修正。整體來看，資金對成長型資產的追逐仍是當前市場的主旋律。\n\n**【G・市場情緒判讀】**\n\n目前市場情緒明顯偏向 Risk-On。雖然美元指數（UUP）略有走強，但美國 20 年期公債（TLT）小幅上漲，顯示資金並未全面流向避險資產。VIX 恐慌指數維持在低位，反映市場波動性預期不高。科技股和主要指數的強勁表現，以及比特幣在修正前的強勢，都暗示投資者對風險資產的接受度較高。ETF 資金流向很可能繼續青睞成長型股票。\n\n**【H・技術面關鍵價位】**\n\n*   **SPY (S&P 500)**\n    *   **壓力位：** 上方第一壓力在 750.00 關口，突破後可看向 753.50。\n    *   **支撐位：** 下方第一支撐在 745.00，跌破則需關注 742.50。\n*   **QQQ (納指 100)**\n    *   **壓力位：** 上方第一壓力在 723.00，突破後可看向 725.50。\n    *   **支撐位：** 下方第一支撐在 718.00，跌破則需關注 715.00。\n\n**【I・今日交易計畫】**\n\n綜合分析，今日操作方向偏向**偏多**。市場情緒偏 Risk-On，科技股領漲動能強勁。最值得關注的機會是逢低佈局科技龍頭股或相關 ETF（如 QQQ），尤其在回測關鍵支撐位後出現企穩訊號時。必須警惕的風險事件是任何關於 Fed 意外鷹派言論或地緣政治突發惡化，這可能迅速改變市場情緒。密切觀察 VIX 指數變化，若VIX快速走高，則需適度減持風險資產。",
   "market": {
     "SPY": {
       "name": "S&P 500",
-      "price": 742.719970703125,
-      "change_pct": 0.19830970699831366,
+      "price": 747.9099731445312,
+      "change_pct": 0.6987832084941691,
       "direction": "up"
     },
     "QQQ": {
       "name": "納指 100",
-      "price": 714.510009765625,
-      "change_pct": 0.19070115754113443,
+      "price": 721.1199951171875,
+      "change_pct": 0.9251074528306078,
       "direction": "up"
     },
     "^VIX": {
       "name": "VIX 恐慌",
-      "price": 16.760000228881836,
-      "change_pct": -3.8990841992684926,
+      "price": 16.600000381469727,
+      "change_pct": -0.9546530144813964,
       "direction": "down"
     },
     "GLD": {
       "name": "黃金",
-      "price": 416.989990234375,
-      "change_pct": -0.09822799906677918,
+      "price": 415.05999755859375,
+      "change_pct": -0.4628390899015276,
       "direction": "down"
     },
     "USO": {
       "name": "原油",
-      "price": 142.5399932861328,
-      "change_pct": -1.1991480800547527,
+      "price": 142.14999389648438,
+      "change_pct": -0.2736069931373984,
       "direction": "down"
     },
     "TLT": {
       "name": "20Y 美債",
-      "price": 84.22000122070312,
-      "change_pct": 0.3694405256398926,
+      "price": 84.29499816894531,
+      "change_pct": 0.0890488567503744,
       "direction": "up"
     },
     "UUP": {
       "name": "美元指數",
-      "price": 27.729999542236328,
-      "change_pct": 0.0,
+      "price": 27.78499984741211,
+      "change_pct": 0.19834225057237656,
       "direction": "up"
     },
     "BTC-USD": {
       "name": "比特幣",
-      "price": 77592.2265625,
-      "change_pct": 0.17358248118052225,
-      "direction": "up"
+      "price": 76864.15625,
+      "change_pct": -0.8705478904110362,
+      "direction": "down"
     }
   },
   "fear_greed": {},
@@ -58,32 +58,36 @@
       "asset_type": "stock",
       "market": "US",
       "name": "NVIDIA Corporation",
-      "price": 219.50999450683594,
-      "price_change_pct": -1.7720529342800742,
-      "volume": 200994166,
-      "score": 42,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 217.9600067138672,
+      "price_change_pct": -0.7061126289265524,
+      "volume": 70707950,
+      "score": 32,
+      "strength": "偏空 📉",
+      "strength_en": "Sell",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "RSI 中性（57.8）",
+        "RSI 中性（56.2）",
         "❌ MACD 偏空",
-        "🟡 量能正常（1.2× 均量）",
-        "✅ 站穩 MA60 上方 13.2%"
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 12.1%"
       ],
-      "ma5": 222.25,
-      "ma20": 214.39,
-      "ma60": 193.84,
-      "rsi": 57.76,
-      "macd": 7.79,
-      "macd_hist": -0.21,
-      "vol_ratio": 1.22,
-      "ai_view": "目前盤面偏弱，MA5下穿MA20，技術信號中性。關鍵價位：上方阻力222.25（MA5），下方支撐214.39（MA20）。高機率劇本：若無法站穩MA5，可能回測MA20。",
+      "ma5": 220.77,
+      "ma20": 214.88,
+      "ma60": 194.39,
+      "rsi": 56.19,
+      "macd": 7.12,
+      "macd_hist": -0.7,
+      "vol_ratio": 0.45,
+      "ai_view": "①目前盤面弱勢。\n②關鍵價位：上方阻力 $220.77 (MA5)，下方支撐 $214.88 (MA20)。\n③高機率劇本：可能回測MA20，若跌破則轉弱。",
       "sector": "Technology",
       "entry": "",
       "news": [
         {
-          "title": "Why Nvidia's stock is mispriced, and Wall Street is underestimating its earnings power",
+          "title": "Nvidia vs. AMD vs. Intel: Which is the best chip stock to own?",
+          "publisher": "Yahoo Finance Video"
+        },
+        {
+          "title": "US stocks rebound, cybersecurity sector surges to record highs",
           "publisher": "Yahoo Finance Video"
         },
         {
@@ -91,21 +95,17 @@
           "publisher": "Yahoo Finance"
         },
         {
-          "title": "Nvidia CFO on Blackwell's & Vera Rubin's trillion-dollar future",
-          "publisher": "Yahoo Finance Video"
+          "title": "Why Workday Stock Is Soaring Today",
+          "publisher": "Motley Fool"
         },
         {
-          "title": "Bank of America resets Nvidia stock price target after earnings",
-          "publisher": "TheStreet"
-        },
-        {
-          "title": "Dow Jones Sets Closing High As Oil Prices Fall; Amazon, Credo Lead AI Stocks In Buy Areas",
-          "publisher": "Investor's Business Daily"
+          "title": "Private Equity Prescribes a Delisting for Recordati",
+          "publisher": "Moby"
         }
       ],
       "sentiment": {
         "score": 8,
-        "summary": "多篇新聞報導指出Nvidia被低估的獲利能力、龐大的CPU營收預期以及其產品對未來發展的關鍵性，銀行也調高目標價，顯示市場對其前景極度看好。"
+        "summary": "Nvidia 的重要財務主管對其 CPU 營收預期樂觀，且網路安全產業表現強勁，整體市場呈現反彈。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -115,69 +115,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 222.1999969482422,
-      "high_price": 227.39990234375,
-      "low_price": 217.92999267578125,
-      "prev_close": 223.47000122070312,
+      "open_price": 220.9040069580078,
+      "high_price": 221.00999450683594,
+      "low_price": 215.16000366210938,
+      "prev_close": 219.50999450683594,
       "sparkline_points": [
-        42.0
+        32.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,18.0 6.0,13.8 10.0,15.5 14.0,17.5 18.0,22.4 22.0,23.0 26.0,23.0 30.0,24.0 34.0,18.2 38.0,16.4 42.0,14.5 46.0,12.3 50.0,11.6 54.0,9.1 58.0,4.0 62.0,9.3 66.0,10.8 70.0,11.7 74.0,10.3 78.0,12.3\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,13.8 6.0,15.5 10.0,17.5 14.0,22.4 18.0,23.0 22.0,23.0 26.0,24.0 30.0,18.2 34.0,16.4 38.0,14.5 42.0,12.3 46.0,11.6 50.0,9.1 54.0,4.0 58.0,9.3 62.0,10.8 66.0,11.7 70.0,10.3 74.0,12.3 78.0,13.1\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "AMD",
       "asset_type": "stock",
       "market": "US",
       "name": "Advanced Micro Devices, Inc.",
-      "price": 449.5899963378906,
-      "price_change_pct": 0.4490839237514626,
-      "volume": 26637269,
-      "score": 60,
-      "strength": "偏多 📈",
-      "strength_en": "Buy",
+      "price": 470.55999755859375,
+      "price_change_pct": 4.6642499591879405,
+      "volume": 18133751,
+      "score": 48,
+      "strength": "中性觀望 ⚖️",
+      "strength_en": "Neutral",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（69.9 ↑）",
-        "❌ MACD 偏空",
-        "⚠️ 量能不足（0.6× 均量）",
-        "✅ 站穩 MA60 上方 59.7%"
+        "RSI 中性（73.0）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 64.6%"
       ],
-      "ma5": 431.26,
-      "ma20": 399.91,
-      "ma60": 281.46,
-      "rsi": 69.91,
-      "macd": 42.93,
-      "macd_hist": -2.29,
-      "vol_ratio": 0.6,
-      "ai_view": "①盤面極強，多頭強勢。②關鍵價位：$431.26（MA5）作支撐，$449.59 作阻力。③高機率劇本：若能站穩 MA5，有望續創新高，反之則可能回調。",
+      "ma5": 440.55,
+      "ma20": 406.05,
+      "ma60": 285.91,
+      "rsi": 73.0,
+      "macd": 43.58,
+      "macd_hist": -1.31,
+      "vol_ratio": 0.44,
+      "ai_view": "AMD盤面強勢，股價遠高於均線。關鍵價位：上方470-475壓力，下方440-445支撐。高機率劇本：若突破475，有望挑戰更高點；若跌破440，可能回測406。",
       "sector": "Technology",
       "entry": "",
       "news": [
         {
-          "title": "2028 will be a more important earnings year for Nvidia: Analyst",
+          "title": "Nvidia vs. AMD vs. Intel: Which is the best chip stock to own?",
           "publisher": "Yahoo Finance Video"
         },
         {
-          "title": "Stocks to Watch Recap: Nvidia, Spotify Stellantis, Intuit",
-          "publisher": "The Wall Street Journal"
+          "title": "It might be time to start investing in housing-related stocks",
+          "publisher": "Yahoo Finance Video"
         },
         {
-          "title": "Nvidia Tells Skeptical Investors AI Is Ready to Go Mainstream",
-          "publisher": "Bloomberg"
+          "title": "Stock Market Today: Dow Holds Gain Despite Inflation Data Surprise; Dell Soars On This News (Live Coverage)",
+          "publisher": "Investor's Business Daily"
         },
         {
-          "title": "Amkor working with AMD on advanced packaging after acquiring more land in Arizona",
-          "publisher": "Reuters"
+          "title": "After a Q1 Blowout and a Soaring Share Price, Is AMD Stock Still a Buy?",
+          "publisher": "Motley Fool"
         },
         {
-          "title": "AMD makes a major $10 billion push in crucial tech hub",
-          "publisher": "TheStreet"
+          "title": "Melius Research Raises Qualcomm (QCOM) Price Target, Sees More Upside in AI Semiconductor Stocks",
+          "publisher": "Insider Monkey"
         }
       ],
       "sentiment": {
-        "score": 7,
-        "summary": "AMD 的新聞顯示其在先進封裝和關鍵技術中心的重大投資，預示著強勁的增長潛力，儘管部分新聞是關於Nvidia，但Amkor與AMD合作的消息仍具正面意義。"
+        "score": 6,
+        "summary": "雖然面臨競爭和整體市場不確定性，但有正面財報表現、股價上漲以及對AI半導體股的樂觀展望支撐。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -187,69 +187,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 441.989990234375,
-      "high_price": 451.1199951171875,
-      "low_price": 431.6199951171875,
-      "prev_close": 447.5799865722656,
+      "open_price": 469.8399963378906,
+      "high_price": 481.3699951171875,
+      "low_price": 461.7099914550781,
+      "prev_close": 449.5899963378906,
       "sparkline_points": [
-        60.0
+        48.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,20.4 6.0,22.3 10.0,24.0 14.0,21.9 18.0,19.4 22.0,18.5 26.0,21.3 30.0,19.3 34.0,9.5 38.0,11.4 42.0,4.5 46.0,4.0 50.0,5.5 54.0,6.0 58.0,5.3 62.0,9.1 66.0,9.6 70.0,10.6 74.0,5.7 78.0,5.4\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.4 6.0,24.0 10.0,22.1 14.0,19.8 18.0,18.9 22.0,21.5 26.0,19.6 30.0,10.7 34.0,12.4 38.0,6.1 42.0,5.6 46.0,7.0 50.0,7.4 54.0,6.8 58.0,10.3 62.0,10.7 66.0,11.7 70.0,7.1 74.0,6.8 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "AVGO",
       "asset_type": "stock",
       "market": "US",
       "name": "Broadcom Inc.",
-      "price": 414.57000732421875,
-      "price_change_pct": -0.7635968898018578,
-      "volume": 16328570,
-      "score": 25,
-      "strength": "偏空 📉",
-      "strength_en": "Sell",
+      "price": 415.0,
+      "price_change_pct": 0.10372016021047314,
+      "volume": 5511033,
+      "score": 45,
+      "strength": "中性觀望 ⚖️",
+      "strength_en": "Neutral",
       "signals": [
         "⚠️ 價格站上 MA60",
-        "RSI 中性（53.3）",
+        "✅ RSI 動能走強（53.5 ↑）",
         "❌ MACD 偏空",
-        "⚠️ 量能不足（0.9× 均量）",
-        "✅ 站穩 MA60 上方 12.8%"
+        "⚠️ 量能不足（0.3× 均量）",
+        "✅ 站穩 MA60 上方 12.5%"
       ],
-      "ma5": 417.86,
-      "ma20": 419.52,
-      "ma60": 367.45,
-      "rsi": 53.29,
-      "macd": 10.42,
-      "macd_hist": -4.08,
-      "vol_ratio": 0.86,
-      "ai_view": "①盤面偏弱。②關鍵價位：上方419.52（MA20），下方367.45（MA60）。③高機率劇本：短期可能震盪或回測支撐，若跌破MA60，趨勢轉弱。",
+      "ma5": 415.82,
+      "ma20": 419.13,
+      "ma60": 369.01,
+      "rsi": 53.48,
+      "macd": 9.35,
+      "macd_hist": -4.12,
+      "vol_ratio": 0.3,
+      "ai_view": "① **盤面偏弱**。股價在MA5、MA20之下，RSI中性，MACD負值，顯示短線動能不足。\n② **關鍵價位**：上方阻力約在MA20的$419.13；下方支撐約在MA60的$369.01。\n③ **高機率劇本**：AVGO短期可能在$415附近盤整，若未能突破MA20，則有回測MA60的風險。",
       "sector": "Technology",
       "entry": "",
       "news": [
+        {
+          "title": "US stocks rebound, cybersecurity sector surges to record highs",
+          "publisher": "Yahoo Finance Video"
+        },
         {
           "title": "Are investors more concerned with Iran than Nvidia's Q1 earnings?",
           "publisher": "Yahoo Finance Video"
         },
         {
-          "title": "Nvidia Tells Skeptical Investors AI Is Ready to Go Mainstream",
-          "publisher": "Bloomberg"
-        },
-        {
-          "title": "AMD makes a major $10 billion push in crucial tech hub",
-          "publisher": "TheStreet"
-        },
-        {
-          "title": "Is Broadcom Inc. (AVGO) a Solid Growth Stock? 3 Reasons to Think \"Yes\"",
-          "publisher": "Zacks"
-        },
-        {
-          "title": "The AI ETF Analysts Are Watching Closely Into June",
+          "title": "Broadcom's Secret Weapon Is About to Be Unleashed",
           "publisher": "Motley Fool"
+        },
+        {
+          "title": "Inflation Fears Weighed on Broadcom (AVGO) in Q1",
+          "publisher": "Insider Monkey"
+        },
+        {
+          "title": "This Will be Broadcom’s Stock Price In 2030",
+          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
         "score": 6,
-        "summary": "多數新聞標題暗示人工智慧領域的積極發展，對相關科技股形成利好，Broadcom作為其中一員也受惠於此。"
+        "summary": "雖然有通膨和地緣政治擔憂，但網路安全領域的增長、秘密武器的預期以及對2030年股價的樂觀預測，顯示出整體積極的情緒。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -259,69 +259,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 413.54998779296875,
-      "high_price": 422.239990234375,
-      "low_price": 410.5,
-      "prev_close": 417.760009765625,
+      "open_price": 417.489990234375,
+      "high_price": 419.9100036621094,
+      "low_price": 410.2099914550781,
+      "prev_close": 414.57000732421875,
       "sparkline_points": [
-        25.0
+        45.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,12.5 6.0,14.8 10.0,24.0 14.0,21.2 18.0,15.2 22.0,13.3 26.0,15.7 30.0,10.2 34.0,11.2 38.0,17.6 42.0,8.9 46.0,9.7 50.0,14.3 54.0,15.5 58.0,4.0 62.0,11.3 66.0,13.5 70.0,18.4 74.0,15.0 78.0,16.6\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,14.8 6.0,24.0 10.0,21.2 14.0,15.2 18.0,13.3 22.0,15.7 26.0,10.2 30.0,11.2 34.0,17.6 38.0,8.9 42.0,9.7 46.0,14.3 50.0,15.5 54.0,4.0 58.0,11.3 62.0,13.5 66.0,18.4 70.0,15.0 74.0,16.6 78.0,16.4\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "MSFT",
       "asset_type": "stock",
       "market": "US",
       "name": "Microsoft Corporation",
-      "price": 419.0899963378906,
-      "price_change_pct": -0.46786710495550793,
-      "volume": 31024851,
-      "score": 32,
-      "strength": "偏空 📉",
-      "strength_en": "Sell",
+      "price": 419.2699890136719,
+      "price_change_pct": 0.04294845435445117,
+      "volume": 9833079,
+      "score": 52,
+      "strength": "中性觀望 ⚖️",
+      "strength_en": "Neutral",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "RSI 中性（54.8）",
+        "✅ RSI 動能走強（55.7 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.9× 均量）",
-        "🟡 略高於 MA60（+4.6%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "🟡 略高於 MA60（+4.8%）"
       ],
-      "ma5": 420.61,
-      "ma20": 416.92,
-      "ma60": 400.79,
-      "rsi": 54.85,
-      "macd": 3.92,
-      "macd_hist": -0.32,
-      "vol_ratio": 0.9,
-      "ai_view": "①盤面偏弱。②關鍵支撐$416.92，關鍵壓力$420.61。③高機率向下測試支撐，若跌破恐進一步下探。",
+      "ma5": 419.53,
+      "ma20": 415.84,
+      "ma60": 400.24,
+      "rsi": 55.66,
+      "macd": 3.96,
+      "macd_hist": -0.24,
+      "vol_ratio": 0.29,
+      "ai_view": "① 目前盤面中性偏強。\n② 關鍵價位：上方419.53 (MA5)，下方415.84 (MA20)。\n③ 高機率劇本：若能站穩MA5，有望挑戰更高點；若跌破MA20，則需留意下探風險。",
       "sector": "Technology",
       "entry": "",
       "news": [
         {
-          "title": "Main Street can now bet on OpenAl, SpaceX through Polymarket",
-          "publisher": "TheStreet"
+          "title": "DocuSign AI-Backed Platform Increasingly Addressing Enterprise Needs, RBC Says",
+          "publisher": "MT Newswires"
         },
         {
-          "title": "Cummins CEO Explains How to Manage the AI Boom",
-          "publisher": "Barrons.com"
-        },
-        {
-          "title": "IBM Shares Soar on US Funding for $2 Billion Quantum Push",
-          "publisher": "Bloomberg"
-        },
-        {
-          "title": "Why Applied Digital Stock Soared Today",
-          "publisher": "Motley Fool"
+          "title": "Grok Could Undermine SpaceX IPO",
+          "publisher": "24/7 Wall St."
         },
         {
           "title": "As Meta Misfires And Apple Shines, Amazon Stock Has Wall Street Smiling. Here's Why.",
           "publisher": "Investor's Business Daily"
+        },
+        {
+          "title": "What's Happening With IBM Stock?",
+          "publisher": "Trefis"
+        },
+        {
+          "title": "IREN’s $3.4 Billion NVIDIA Deal Points To Something Big Around The Corner",
+          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
-        "score": 2,
-        "summary": "雖然有關於AI和量子計算的正面消息，但這些新聞主要是關於其他公司，對微軟的直接影響有限，整體情緒偏中性略帶樂觀。"
+        "score": 0,
+        "summary": "這些新聞標題都與微軟無關，因此無法從中判斷微軟的整體情緒。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -331,69 +331,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 424.82000732421875,
-      "high_price": 426.3399963378906,
-      "low_price": 415.7200012207031,
-      "prev_close": 421.05999755859375,
+      "open_price": 419.4800109863281,
+      "high_price": 424.3999938964844,
+      "low_price": 416.3399963378906,
+      "prev_close": 419.0899963378906,
       "sparkline_points": [
-        32.0
+        52.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,7.9 6.0,7.7 10.0,4.0 14.0,8.0 18.0,21.9 22.0,16.3 26.0,17.0 30.0,18.9 34.0,16.7 38.0,11.1 42.0,15.8 46.0,17.8 50.0,21.9 54.0,24.0 58.0,20.5 62.0,10.1 66.0,8.8 70.0,13.8 74.0,10.8 78.0,12.5\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,7.7 6.0,4.0 10.0,8.0 14.0,21.9 18.0,16.3 22.0,17.0 26.0,18.9 30.0,16.7 34.0,11.1 38.0,15.8 42.0,17.8 46.0,21.9 50.0,24.0 54.0,20.5 58.0,10.1 62.0,8.8 66.0,13.8 70.0,10.8 74.0,11.7 78.0,11.5\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "META",
       "asset_type": "stock",
       "market": "US",
       "name": "Meta Platforms, Inc.",
-      "price": 607.3800048828125,
-      "price_change_pct": 0.3834342600039563,
-      "volume": 12300310,
-      "score": 18,
-      "strength": "強力做空 ❄️",
-      "strength_en": "Strong Sell",
+      "price": 610.1571044921875,
+      "price_change_pct": 0.4572260507506848,
+      "volume": 4128712,
+      "score": 28,
+      "strength": "偏空 📉",
+      "strength_en": "Sell",
       "signals": [
         "❌ 空頭排列（價格低於 MA60）",
-        "🟡 RSI 低位回升（43.8）",
+        "✅ RSI 動能走強（45.3 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.8× 均量）",
-        "❌ 跌破 MA60（-2.7%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "❌ 跌破 MA60（-2.1%）"
       ],
-      "ma5": 608.1,
-      "ma20": 622.34,
-      "ma60": 624.25,
-      "rsi": 43.85,
-      "macd": -7.45,
-      "macd_hist": -1.66,
-      "vol_ratio": 0.76,
-      "ai_view": "①盤面極弱 ②關鍵價位：上方608.1 (MA5) 阻力，下方無明顯支撐。 ③高機率劇本：續跌，可能跌破600。",
+      "ma5": 607.28,
+      "ma20": 619.1,
+      "ma60": 623.48,
+      "rsi": 45.29,
+      "macd": -7.09,
+      "macd_hist": -1.04,
+      "vol_ratio": 0.26,
+      "ai_view": "①目前盤面偏弱。\n②關鍵價位：支撐607.28（MA5），阻力619.1（MA20）。\n③高機率劇本：跌破MA5後繼續向下探底，或於MA5附近盤整。",
       "sector": "Communication Services",
       "entry": "",
       "news": [
         {
-          "title": "Why SpaceX's IPO could be the biggest market opportunity in history",
+          "title": "Maybe investors can wait to buy SpaceX after IPO: Lee Munson",
           "publisher": "Yahoo Finance Video"
         },
         {
-          "title": "Cummins CEO Explains How to Manage the AI Boom",
-          "publisher": "Barrons.com"
-        },
-        {
-          "title": "Intuit Suffers Worst Plunge Since 2003 After Announcing Job Cuts",
-          "publisher": "Bloomberg"
+          "title": "Meta Settles As $400 Billion School Lawsuit Risk Looms",
+          "publisher": "GuruFocus.com"
         },
         {
           "title": "As Meta Misfires And Apple Shines, Amazon Stock Has Wall Street Smiling. Here's Why.",
           "publisher": "Investor's Business Daily"
         },
         {
-          "title": "Sector Update: Tech Stocks Rise Late Afternoon",
-          "publisher": "MT Newswires"
+          "title": "What's Happening With IBM Stock?",
+          "publisher": "Trefis"
+        },
+        {
+          "title": "Altria Is A Better Buy Than SpaceX",
+          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
-        "score": 3,
-        "summary": "儘管有Intuit的負面消息，但整體科技股上漲以及亞馬遜和蘋果的亮眼表現，使得市場情緒偏向樂觀。"
+        "score": -3,
+        "summary": "新聞標題顯示Meta面臨訴訟風險和經營不失，而競爭對手如Apple和Amazon表現強勁，整體呈現負面趨勢。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -403,69 +403,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 600.2000122070312,
-      "high_price": 609.5999755859375,
-      "low_price": 594.8082885742188,
-      "prev_close": 605.0599975585938,
+      "open_price": 607.489990234375,
+      "high_price": 614.8099975585938,
+      "low_price": 606.9550170898438,
+      "prev_close": 607.3800048828125,
       "sparkline_points": [
-        18.0
+        28.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,4.9 6.0,4.0 10.0,5.8 14.0,6.4 18.0,20.7 22.0,21.5 26.0,21.1 30.0,22.5 34.0,20.5 38.0,19.5 42.0,21.3 46.0,24.0 50.0,23.0 54.0,19.5 58.0,19.1 62.0,20.1 66.0,20.9 70.0,23.1 74.0,22.4 78.0,21.9\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,4.0 6.0,5.8 10.0,6.4 14.0,20.7 18.0,21.5 22.0,21.1 26.0,22.5 30.0,20.5 34.0,19.5 38.0,21.3 42.0,24.0 46.0,23.0 50.0,19.5 54.0,19.1 58.0,20.1 62.0,20.9 66.0,23.1 70.0,22.4 74.0,21.9 78.0,21.2\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "GOOGL",
       "asset_type": "stock",
       "market": "US",
       "name": "Alphabet Inc.",
-      "price": 387.6600036621094,
-      "price_change_pct": -0.3214111203696416,
-      "volume": 23459591,
+      "price": 386.93011474609375,
+      "price_change_pct": -0.18828068645735446,
+      "volume": 6243545,
       "score": 32,
       "strength": "偏空 📉",
       "strength_en": "Sell",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "RSI 中性（61.6）",
+        "RSI 中性（60.9）",
         "❌ MACD 偏空",
-        "⚠️ 量能不足（0.8× 均量）",
-        "✅ 站穩 MA60 上方 16.1%"
+        "⚠️ 量能不足（0.2× 均量）",
+        "✅ 站穩 MA60 上方 15.4%"
       ],
-      "ma5": 391.59,
-      "ma20": 383.55,
-      "ma60": 333.83,
-      "rsi": 61.59,
-      "macd": 15.2,
-      "macd_hist": -2.84,
-      "vol_ratio": 0.79,
-      "ai_view": "①盤面偏弱。\n②關鍵價位：上方壓力391.59 (MA5)，下方支撐383.55 (MA20)。\n③高機率劇本：短線可能向下修正，測試MA20支撐。",
+      "ma5": 389.62,
+      "ma20": 385.68,
+      "ma60": 335.16,
+      "rsi": 60.92,
+      "macd": 13.93,
+      "macd_hist": -3.28,
+      "vol_ratio": 0.22,
+      "ai_view": "① 盤面偏弱，受MA5壓制。② 關鍵價位：MA5 (389.62) 為壓力，MA20 (385.68) 為支撐。③ 高機率劇本：短線可能測試MA20支撐，若失守恐進一步回落。",
       "sector": "Communication Services",
       "entry": "",
       "news": [
+        {
+          "title": "Maybe investors can wait to buy SpaceX after IPO: Lee Munson",
+          "publisher": "Yahoo Finance Video"
+        },
         {
           "title": "Why SpaceX's IPO could be the biggest market opportunity in history",
           "publisher": "Yahoo Finance Video"
         },
         {
-          "title": "IBM Shares Soar on US Funding for $2 Billion Quantum Push",
-          "publisher": "Bloomberg"
+          "title": "Semtech's AI Business Ramp Likely to Lift Fiscal Q1 Results, Oppenheimer Says",
+          "publisher": "MT Newswires"
         },
         {
-          "title": "Why Applied Digital Stock Soared Today",
-          "publisher": "Motley Fool"
+          "title": "Meta Settles As $400 Billion School Lawsuit Risk Looms",
+          "publisher": "GuruFocus.com"
         },
         {
-          "title": "Nvidia Tells Skeptical Investors AI Is Ready to Go Mainstream",
-          "publisher": "Bloomberg"
-        },
-        {
-          "title": "Social-Media Companies Settle Youth-Harm Case Ahead of Wave of Trials",
-          "publisher": "The Wall Street Journal"
+          "title": "This Alphabet‑Heavy Fund Has a Front‑Row Seat to the AI Boom — and the Market Can See Why It’s Suddenly a Top Performer",
+          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
         "score": 6,
-        "summary": "多個正面消息顯示科技巨頭在人工智慧和量子計算等領域有顯著進展，且SpaceX的IPO潛力巨大，預期未來市場機會。"
+        "summary": "新聞標題顯示對AI發展的樂觀預期、SpaceX的潛力以及基金表現突出，這些正面因素抵銷了Meta的法律問題。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -475,69 +475,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 385.70001220703125,
-      "high_price": 392.5,
-      "low_price": 383.0199890136719,
-      "prev_close": 388.9100036621094,
+      "open_price": 387.3299865722656,
+      "high_price": 388.739990234375,
+      "low_price": 383.9800109863281,
+      "prev_close": 387.6600036621094,
       "sparkline_points": [
         32.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,24.0 6.0,22.0 10.0,22.2 14.0,22.1 18.0,10.1 22.0,9.8 26.0,10.7 30.0,8.9 34.0,5.6 38.0,5.6 42.0,4.6 46.0,8.8 50.0,9.2 54.0,4.0 58.0,4.5 62.0,6.0 66.0,6.0 70.0,9.1 74.0,8.7 78.0,9.1\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,23.8 6.0,24.0 10.0,23.9 14.0,10.7 18.0,10.4 22.0,11.3 26.0,9.4 30.0,5.7 34.0,5.8 38.0,4.7 42.0,9.3 46.0,9.8 50.0,4.0 54.0,4.6 58.0,6.2 62.0,6.1 66.0,9.7 70.0,9.2 74.0,9.7 78.0,9.9\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "PLTR",
       "asset_type": "stock",
       "market": "US",
       "name": "Palantir Technologies Inc.",
-      "price": 137.4149932861328,
-      "price_change_pct": 0.1932186667455844,
-      "volume": 23573461,
-      "score": 40,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 136.58999633789062,
+      "price_change_pct": -0.6003689470219126,
+      "volume": 13850772,
+      "score": 20,
+      "strength": "偏空 📉",
+      "strength_en": "Sell",
       "signals": [
         "❌ 空頭排列（價格低於 MA60）",
-        "✅ RSI 動能走強（48.3 ↑）",
+        "RSI 中性（47.1）",
         "✅ MACD 金叉且動能擴張",
-        "⚠️ 量能不足（0.6× 均量）",
-        "❌ 跌破 MA60（-4.5%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "❌ 跌破 MA60（-5.1%）"
       ],
-      "ma5": 135.79,
-      "ma20": 137.74,
-      "ma60": 143.94,
-      "rsi": 48.25,
-      "macd": -2.03,
-      "macd_hist": 0.27,
-      "vol_ratio": 0.57,
-      "ai_view": "PLTR盤面偏弱，受MA20壓抑。關鍵價位：上方$137.74（MA20），下方$135.79（MA5）。高機率劇本：短期可能在MA5與MA20之間震盪。",
+      "ma5": 136.31,
+      "ma20": 137.41,
+      "ma60": 143.95,
+      "rsi": 47.09,
+      "macd": -1.87,
+      "macd_hist": 0.35,
+      "vol_ratio": 0.35,
+      "ai_view": "① 盤面偏弱，股價位於均線下方。\n② 關鍵價位：上方 MA20 ($137.41)，下方 MA5 ($136.31)。\n③ 高機率劇本：短期可能在 $136-$137 之間震盪，若跌破 MA5 有機會下探。",
       "sector": "Technology",
       "entry": "",
       "news": [
         {
-          "title": "Palantir (PLTR): One of the AI Stocks That Are About to Explode?",
-          "publisher": "Insider Monkey"
-        },
-        {
-          "title": "Amazon.com Shareholders Back Board as Jassy Touts AI, AWS Growth at Annual Meeting",
-          "publisher": "MarketBeat"
-        },
-        {
-          "title": "Innodata vs. Palantir: Which AI Data Stock Is the Better Buy?",
+          "title": "Should You Invest in Palantir Technologies (PLTR) Based on Bullish Wall Street Views?",
           "publisher": "Zacks"
         },
         {
-          "title": "Palantir Makes Case for DIA Data Upgrade",
-          "publisher": "GuruFocus.com"
+          "title": "Palantir Technologies Inc. (PLTR) Is a Trending Stock: Facts to Know Before Betting on It",
+          "publisher": "Zacks"
         },
         {
-          "title": "US Equity Futures Edge Lower Pre-Bell as Nvidia Stock Flat Despite Earnings Beat, Middle East Peace Talks Drag",
-          "publisher": "MT Newswires"
+          "title": "High Growth Tech Stocks To Watch In The US May 2026",
+          "publisher": "Simply Wall St."
+        },
+        {
+          "title": "SpaceX Will Change the IPO Game Forever. Play at Your Own Risk.",
+          "publisher": "Barrons.com"
+        },
+        {
+          "title": "Palantir (PLTR): One of the AI Stocks That Are About to Explode?",
+          "publisher": "Insider Monkey"
         }
       ],
       "sentiment": {
-        "score": 5,
-        "summary": "新聞多數圍繞Palantir在AI領域的潛力與應用，甚至將其與亞馬遜及Innodata比較，顯示市場對其前景抱持樂觀態度，但受限於Nvidia股價影響，整體情緒未達極度看好。"
+        "score": 7,
+        "summary": "多數新聞標題強調PLTR的成長潛力、華爾街看漲觀點及作為AI股票的爆炸性潛力，整體情緒偏向積極。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -547,45 +547,49 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 135.8000030517578,
-      "high_price": 138.5500030517578,
-      "low_price": 135.43060302734375,
-      "prev_close": 137.14999389648438,
+      "open_price": 137.44000244140625,
+      "high_price": 139.02000427246094,
+      "low_price": 134.3000030517578,
+      "prev_close": 137.4149932861328,
       "sparkline_points": [
-        40.0
+        20.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,7.7 6.0,7.7 10.0,10.1 14.0,14.1 18.0,12.7 22.0,6.5 26.0,4.0 30.0,16.7 34.0,19.3 38.0,15.2 42.0,14.3 46.0,15.4 50.0,16.6 54.0,24.0 58.0,19.4 62.0,19.1 66.0,17.6 70.0,17.5 74.0,15.1 78.0,14.8\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,7.7 6.0,10.1 10.0,14.1 14.0,12.7 18.0,6.5 22.0,4.0 26.0,16.7 30.0,19.3 34.0,15.2 38.0,14.3 42.0,15.4 46.0,16.6 50.0,24.0 54.0,19.4 58.0,19.1 62.0,17.6 66.0,17.5 70.0,15.1 74.0,14.8 78.0,15.8\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "NOW",
       "asset_type": "stock",
       "market": "US",
       "name": "ServiceNow, Inc.",
-      "price": 99.69000244140625,
-      "price_change_pct": -3.494676189450638,
-      "volume": 23455910,
-      "score": 12,
-      "strength": "強力做空 ❄️",
-      "strength_en": "Strong Sell",
+      "price": 101.61000061035156,
+      "price_change_pct": 1.9259686246610435,
+      "volume": 12688260,
+      "score": 49,
+      "strength": "中性觀望 ⚖️",
+      "strength_en": "Neutral",
       "signals": [
-        "❌ 空頭排列（價格低於 MA60）",
-        "RSI 中性（55.0）",
+        "⚠️ 價格站上 MA60",
+        "✅ RSI 動能走強（57.1 ↑）",
         "🟡 MACD 金叉（動能略收）",
-        "⚠️ 量能不足（0.8× 均量）",
-        "❌ 跌破 MA60（-1.4%）"
+        "⚠️ 量能不足（0.5× 均量）",
+        "🟡 略高於 MA60（+0.6%）"
       ],
-      "ma5": 100.66,
-      "ma20": 92.93,
-      "ma60": 101.15,
-      "rsi": 55.03,
-      "macd": 0.81,
-      "macd_hist": 1.82,
-      "vol_ratio": 0.83,
-      "ai_view": "①盤面轉弱。②關鍵價位：上方阻力100.66（MA5），下方支撐92.93（MA20）。③高機率劇本：可能持續回調，宜密切關注是否跌破MA20。",
+      "ma5": 101.97,
+      "ma20": 93.5,
+      "ma60": 101.03,
+      "rsi": 57.12,
+      "macd": 1.16,
+      "macd_hist": 1.74,
+      "vol_ratio": 0.47,
+      "ai_view": "NOW目前盤面中性偏強。關鍵價位：上方101.97 (MA5)，下方101.03 (MA60)。高機率劇本：若能站穩MA5，有望挑戰更高點；若跌破MA60，則需留意下行風險。",
       "sector": "Technology",
       "entry": "",
       "news": [
+        {
+          "title": "Cloud AI Update - CAI Boosts Multicloud Integration With AWS And Microsoft Partnerships",
+          "publisher": "Simply Wall St."
+        },
         {
           "title": "Why ServiceNow (NOW) Is Still an AI Workflow Recovery Bet",
           "publisher": "Insider Monkey"
@@ -601,15 +605,11 @@
         {
           "title": "Stocks Fall on Doubts Over a US-Iran Peace Deal",
           "publisher": "Barchart"
-        },
-        {
-          "title": "Jim Cramer froze on live TV after seeing Trump's 3,700 stock trades — here's what's in the president's portfolio",
-          "publisher": "Moneywise"
         }
       ],
       "sentiment": {
-        "score": 3,
-        "summary": "ServiceNow的AI策略和市場反彈顯示樂觀，但股市對地緣政治和特朗普股票交易的擔憂帶來不確定性，整體情緒偏向正面但有波動。"
+        "score": 5,
+        "summary": "NOW 在雲端 AI 方面有重大更新，並與 AWS 和微軟建立合作關係，展現強勁的 AI 策略，儘管大盤漲跌互見，但仍被視為 AI 工作流程復甦的賭注。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -619,69 +619,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 100.98999786376953,
-      "high_price": 101.58999633789062,
-      "low_price": 98.11000061035156,
-      "prev_close": 103.30000305175781,
+      "open_price": 102.18000030517578,
+      "high_price": 104.58999633789062,
+      "low_price": 99.43280029296875,
+      "prev_close": 99.69000244140625,
       "sparkline_points": [
-        12.0
+        49.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,20.2 6.0,19.8 10.0,19.8 14.0,21.8 18.0,22.5 22.0,19.0 26.0,18.0 30.0,17.9 34.0,21.6 38.0,16.0 42.0,19.0 46.0,18.6 50.0,21.6 54.0,24.0 58.0,19.8 62.0,14.2 66.0,4.0 70.0,5.9 74.0,4.1 78.0,8.6\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,19.8 6.0,19.8 10.0,21.8 14.0,22.5 18.0,19.0 22.0,18.0 26.0,17.9 30.0,21.6 34.0,16.0 38.0,19.0 42.0,18.6 46.0,21.6 50.0,24.0 54.0,19.8 58.0,14.2 62.0,4.0 66.0,5.9 70.0,4.1 74.0,8.6 78.0,6.2\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "TSLA",
       "asset_type": "stock",
       "market": "US",
       "name": "Tesla, Inc.",
-      "price": 417.8500061035156,
-      "price_change_pct": 0.14139776735902057,
-      "volume": 42321926,
-      "score": 60,
+      "price": 428.57000732421875,
+      "price_change_pct": 2.5655141950739657,
+      "volume": 20709234,
+      "score": 68,
       "strength": "偏多 📈",
       "strength_en": "Buy",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（55.4 ↑）",
-        "❌ MACD 偏空",
-        "⚠️ 量能不足（0.8× 均量）",
-        "✅ 站穩 MA60 上方 7.1%"
+        "✅ RSI 動能走強（59.1 ↑）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 9.8%"
       ],
-      "ma5": 414.29,
-      "ma20": 406.77,
-      "ma60": 390.11,
-      "rsi": 55.38,
-      "macd": 10.12,
-      "macd_hist": -0.86,
-      "vol_ratio": 0.76,
-      "ai_view": "① 目前盤面偏強。\n② 關鍵價位：MA5 ($414.29)、現價 ($417.85)。\n③ 高機率劇本：若守穩MA5，有望持續挑戰上方壓力。",
+      "ma5": 415.56,
+      "ma20": 409.39,
+      "ma60": 390.44,
+      "rsi": 59.14,
+      "macd": 10.38,
+      "macd_hist": -0.49,
+      "vol_ratio": 0.39,
+      "ai_view": "目前盤面強勁。關鍵價位：上方430，下方415。高機率劇本：若能站穩430，有望續漲；跌破415則需留意回調風險。",
       "sector": "Consumer Cyclical",
       "entry": "",
       "news": [
+        {
+          "title": "AI mania is fueling bubble-like concentration in the S&P 500",
+          "publisher": "Yahoo Finance"
+        },
         {
           "title": "Why SpaceX's IPO could be the biggest market opportunity in history",
           "publisher": "Yahoo Finance Video"
         },
         {
-          "title": "SpaceX IPO plans include unusually large voting share for Elon Musk",
-          "publisher": "Yahoo Finance Video"
+          "title": "SpaceX Targets $75 Billion IPO at Up to $2 Trillion Valuation",
+          "publisher": "GuruFocus.com"
         },
         {
-          "title": "Stock Market Today, May 21: Nio Stock Pared Early Gains After Revenue Surges and Adjusted Profit Returns",
-          "publisher": "Motley Fool"
+          "title": "12 Zeros and 1 Musk: The Trillionaire Era Officially Begins.",
+          "publisher": "Barrons.com"
         },
         {
-          "title": "Main Street can now bet on OpenAl, SpaceX through Polymarket",
-          "publisher": "TheStreet"
-        },
-        {
-          "title": "Why Tesla Stock Is Up After the SpaceX IPO Filing",
+          "title": "Why the SpaceX Hype Isn’t Boosting Tesla Stock",
           "publisher": "Barrons.com"
         }
       ],
       "sentiment": {
-        "score": 7,
-        "summary": "多則新聞預期 SpaceX IPO 將帶來巨大的市場機會，且對 Tesla 股價產生正面影響，顯示整體市場情緒偏樂觀。"
+        "score": -3,
+        "summary": "儘管 SpaceX 有著巨大的潛在價值和 IPO 預期，但投資者對 AI 泡沫化的擔憂以及 SpaceX 的利好消息未能提振 Tesla 股價，顯示市場對 Tesla 本身的情緒偏向負面。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -691,45 +691,53 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 422.2449951171875,
-      "high_price": 426.95001220703125,
-      "low_price": 412.8999938964844,
-      "prev_close": 417.260009765625,
+      "open_price": 422.6650085449219,
+      "high_price": 430.8299865722656,
+      "low_price": 420.510009765625,
+      "prev_close": 417.8500061035156,
       "sparkline_points": [
-        60.0
+        68.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,23.0 6.0,22.4 10.0,23.1 14.0,24.0 18.0,21.6 22.0,19.0 26.0,18.6 30.0,19.4 34.0,16.8 38.0,13.2 42.0,8.7 46.0,4.1 50.0,7.3 54.0,4.0 58.0,4.5 62.0,10.4 66.0,13.7 70.0,15.4 74.0,11.7 78.0,11.6\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.4 6.0,23.1 10.0,24.0 14.0,21.6 18.0,19.0 22.0,18.6 26.0,19.4 30.0,16.8 34.0,13.2 38.0,8.7 42.0,4.1 46.0,7.3 50.0,4.0 54.0,4.5 58.0,10.4 62.0,13.7 66.0,15.4 70.0,11.7 74.0,11.6 78.0,8.6\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "APP",
       "asset_type": "stock",
       "market": "US",
       "name": "Applovin Corporation",
-      "price": 485.8900146484375,
-      "price_change_pct": 0.7485311184950584,
-      "volume": 3137384,
-      "score": 52,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 488.8804931640625,
+      "price_change_pct": 0.6154640814729937,
+      "volume": 923319,
+      "score": 60,
+      "strength": "偏多 📈",
+      "strength_en": "Buy",
       "signals": [
-        "🟡 中多頭（價格 > MA20 > MA60）",
-        "✅ RSI 動能走強（54.4 ↑）",
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "✅ RSI 動能走強（55.1 ↑）",
         "❌ MACD 偏空",
-        "⚠️ 量能不足（0.7× 均量）",
-        "✅ 站穩 MA60 上方 7.6%"
+        "⚠️ 量能不足（0.2× 均量）",
+        "✅ 站穩 MA60 上方 8.1%"
       ],
-      "ma5": 487.69,
-      "ma20": 472.15,
-      "ma60": 451.39,
-      "rsi": 54.38,
-      "macd": 10.39,
-      "macd_hist": -0.21,
-      "vol_ratio": 0.67,
-      "ai_view": "①目前盤面偏強，但短期均線壓力顯現。\n②關鍵價位：上方 MA5 ($487.69) 具阻力，下方 MA20 ($472.15) 為支撐。\n③高機率劇本：可能在 MA5 附近震盪，若能突破有望挑戰前高。若跌破 MA20 則需注意回檔風險。",
+      "ma5": 485.27,
+      "ma20": 474.18,
+      "ma60": 452.12,
+      "rsi": 55.07,
+      "macd": 10.33,
+      "macd_hist": -0.22,
+      "vol_ratio": 0.21,
+      "ai_view": "① 偏多，盤勢穩健 ② 關鍵價位：MA5 (485.27) ③ 高機率劇本：站穩MA5，挑戰近期高點。",
       "sector": "Communication Services",
       "entry": "",
       "news": [
+        {
+          "title": "AppLovin Corporation (APP) Is a Trending Stock: Facts to Know Before Betting on It",
+          "publisher": "Zacks"
+        },
+        {
+          "title": "3 Growth Companies With High Insider Ownership And 15% Revenue Growth",
+          "publisher": "Simply Wall St."
+        },
         {
           "title": "3 Growth Companies With High Insider Ownership And 79% Revenue Growth",
           "publisher": "Simply Wall St."
@@ -741,19 +749,11 @@
         {
           "title": "May 2026's Leading Growth Companies With Insider Ownership",
           "publisher": "Simply Wall St."
-        },
-        {
-          "title": "1 of Wall Street’s Favorite Stock Worth Your Attention and 2 We Avoid",
-          "publisher": "StockStory"
-        },
-        {
-          "title": "AppFolio And 2 Other High Growth Companies With Strong Insider Ownership",
-          "publisher": "Simply Wall St."
         }
       ],
       "sentiment": {
-        "score": 3,
-        "summary": "儘管有新聞提及股價下跌，但整體而言，多數標題強調高成長、內部人持股以及受華爾街關注的潛力股，顯示市場對AppLovin的前景抱持謹慎樂觀態度。"
+        "score": -3,
+        "summary": "儘管有幾篇新聞指出高成長及內部人持股，但「AppLovin Shares Plummet」的標題暗示了近期股價下跌，且有「Facts to Know Before Betting on It」的警示，整體情緒趨向謹慎。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -763,69 +763,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 479.0799865722656,
-      "high_price": 498.260009765625,
-      "low_price": 473.0849914550781,
-      "prev_close": 482.2799987792969,
+      "open_price": 485.0,
+      "high_price": 494.44000244140625,
+      "low_price": 480.0,
+      "prev_close": 485.8900146484375,
       "sparkline_points": [
-        52.0
+        60.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.3 6.0,18.1 10.0,22.1 14.0,24.0 18.0,23.0 22.0,18.2 26.0,13.0 30.0,12.0 34.0,15.2 38.0,4.7 42.0,15.3 46.0,11.8 50.0,7.6 54.0,20.5 58.0,9.5 62.0,4.0 66.0,7.0 70.0,12.4 74.0,10.5 78.0,9.2\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,18.1 6.0,22.1 10.0,24.0 14.0,23.0 18.0,18.2 22.0,13.0 26.0,12.0 30.0,15.2 34.0,4.7 38.0,15.3 42.0,11.8 46.0,7.6 50.0,20.5 54.0,9.5 58.0,4.0 62.0,7.0 66.0,12.4 70.0,10.5 74.0,9.2 78.0,8.2\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "SPY",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street SPDR S&P 500 ETF T",
-      "price": 742.719970703125,
-      "price_change_pct": 0.19830970699831366,
-      "volume": 41547232,
-      "score": 60,
-      "strength": "偏多 📈",
-      "strength_en": "Buy",
+      "price": 748.0,
+      "price_change_pct": 0.7109044465138662,
+      "volume": 10309795,
+      "score": 48,
+      "strength": "中性觀望 ⚖️",
+      "strength_en": "Neutral",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（67.3 ↑）",
-        "❌ MACD 偏空",
-        "⚠️ 量能不足（0.9× 均量）",
-        "✅ 站穩 MA60 上方 7.3%"
+        "RSI 中性（70.0）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.2× 均量）",
+        "✅ 站穩 MA60 上方 7.9%"
       ],
-      "ma5": 739.1,
-      "ma20": 730.0,
-      "ma60": 692.29,
-      "rsi": 67.29,
-      "macd": 12.58,
-      "macd_hist": -1.06,
-      "vol_ratio": 0.87,
-      "ai_view": "①強勢，多方佔優。\n②關鍵價位：支撐 $739.1（MA5），壓力 $742.72（現價）之上。\n③高機率劇本：SPY短期偏多，有望繼續上攻，突破後續看漲，但需注意RSI相對高檔。",
+      "ma5": 740.87,
+      "ma20": 731.7,
+      "ma60": 693.3,
+      "rsi": 70.02,
+      "macd": 12.6,
+      "macd_hist": -0.83,
+      "vol_ratio": 0.22,
+      "ai_view": "SPY目前盤面偏強。關鍵價位：上方看748-750區間壓力，下方支撐看740。高機率劇本：若能站穩748，有望向上測試。若跌破740，則可能回檔修正。",
       "sector": "Unknown",
       "entry": "",
       "news": [
         {
-          "title": "CONY’s Dreamy Yield Hides a Track Record That Should Concern Long Term Holders",
+          "title": "Vanguard S&P 500 ETF Offers Lower Fees Than SPDR Rival",
+          "publisher": "Motley Fool"
+        },
+        {
+          "title": "Apple Stock at 52-Week High: Buy, Sell or Hold?",
           "publisher": "24/7 Wall St."
         },
         {
-          "title": "An Investor’s Field Guide to ETF Structures",
-          "publisher": "etf.com"
-        },
-        {
-          "title": "Fed’s Long-Term Inflation Forecast Hits 19-Year High",
+          "title": "The Buffett Paradox: Why the World’s Greatest Stock Picker Tells You Not to Pick Stocks",
           "publisher": "24/7 Wall St."
         },
         {
-          "title": "Stocks Indexes Turn Green in Afternoon Trade as Oil Prices Retreat",
-          "publisher": "Barchart"
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
         },
         {
-          "title": "Stocks Fall on Doubts Over a US-Iran Peace Deal",
-          "publisher": "Barchart"
+          "title": "Dave Ramsey to Young Couple: $281k Income Means You Can Eliminate $207k Debt in 12 Months",
+          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
-        "score": -2,
-        "summary": "雖然下午股市上漲且油價回落，但通膨預期創19年新高、一項投資產品的歷史表現令人擔憂，以及美國與伊朗和平協議的疑慮，整體情緒偏向謹慎和負面。"
+        "score": 5,
+        "summary": "ETF市場競爭激烈，有助投資人降低成本，加上強勁的企業財報預期，為市場帶來正面情緒。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -835,69 +835,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 738.6400146484375,
-      "high_price": 744.8699951171875,
-      "low_price": 737.030029296875,
-      "prev_close": 741.25,
+      "open_price": 746.239990234375,
+      "high_price": 748.1599731445312,
+      "low_price": 744.47998046875,
+      "prev_close": 742.719970703125,
       "sparkline_points": [
-        60.0
+        48.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.7 6.0,22.0 10.0,23.9 14.0,24.0 18.0,20.1 22.0,19.0 26.0,20.5 30.0,17.3 34.0,11.8 38.0,13.1 42.0,9.8 46.0,8.8 50.0,9.5 54.0,7.2 58.0,4.0 62.0,8.9 66.0,9.2 70.0,11.9 74.0,7.8 78.0,7.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.0 6.0,23.9 10.0,24.0 14.0,20.1 18.0,19.0 22.0,20.5 26.0,17.3 30.0,11.8 34.0,13.1 38.0,9.8 42.0,8.8 46.0,9.5 50.0,7.2 54.0,4.0 58.0,8.9 62.0,9.2 66.0,11.9 70.0,7.8 74.0,7.0 78.0,4.1\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "QQQ",
       "asset_type": "etf",
       "market": "US",
       "name": "Invesco QQQ Trust, Series 1",
-      "price": 714.510009765625,
-      "price_change_pct": 0.19070115754113443,
-      "volume": 35994921,
-      "score": 40,
+      "price": 721.1751708984375,
+      "price_change_pct": 0.932829637334097,
+      "volume": 12044240,
+      "score": 48,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "RSI 中性（70.3）",
-        "❌ MACD 偏空",
-        "⚠️ 量能不足（0.9× 均量）",
-        "✅ 站穩 MA60 上方 12.7%"
+        "RSI 中性（72.5）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.3× 均量）",
+        "✅ 站穩 MA60 上方 13.4%"
       ],
-      "ma5": 708.8,
-      "ma20": 692.23,
-      "ma60": 634.01,
-      "rsi": 70.33,
-      "macd": 20.86,
-      "macd_hist": -1.29,
-      "vol_ratio": 0.9,
-      "ai_view": "① **目前盤面強弱：** 盤面偏強，短中長期均線多頭排列。\n② **關鍵價位：** 支撐約708.8 (MA5)，阻力約718。\n③ **高機率劇本：** 短線可能在708.8-718區間震盪，若突破718有望續漲。",
+      "ma5": 711.25,
+      "ma20": 695.09,
+      "ma60": 635.89,
+      "rsi": 72.55,
+      "macd": 20.75,
+      "macd_hist": -1.13,
+      "vol_ratio": 0.31,
+      "ai_view": "盤面偏強，RSI高檔，有超買疑慮。\n關鍵價位：上方阻力 $725，下方支撐 $711 (MA5)。\n高機率劇本：短期可能在高檔震盪，留意回檔風險，或突破 $725 繼續上攻。",
       "sector": "Unknown",
       "entry": "",
       "news": [
         {
-          "title": "Market Crosscurrents: Bulls in Control, Macro Headwinds Loom",
-          "publisher": "Zacks"
+          "title": "Is the VanEck Semiconductor ETF the Right ETF to Own as We Head Into June?",
+          "publisher": "Motley Fool"
         },
         {
-          "title": "Space Stocks Surge as SpaceX IPO Frenzy Builds",
-          "publisher": "Zacks"
-        },
-        {
-          "title": "Exchange-Traded Funds Mixed, US Equities Decline After Midday",
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
           "publisher": "MT Newswires"
         },
         {
-          "title": "Stocks Indexes Turn Green in Afternoon Trade as Oil Prices Retreat",
-          "publisher": "Barchart"
+          "title": "Zacks Investment Ideas feature highlights: NVIDIA, QQQ, Micron, SanDisk, Cipher Mining and USO",
+          "publisher": "Zacks"
         },
         {
-          "title": "Stocks Fall on Doubts Over a US-Iran Peace Deal",
-          "publisher": "Barchart"
+          "title": "Nasdaq, S&P 500, Dow Futures Climb As Trump's $2B Quantum Computing Bet Outweighs Iran Jitters: RKLB, IBM, RGTI, NIO In Focus",
+          "publisher": "Stocktwits"
+        },
+        {
+          "title": "Dow Hits Record Highs, S&P 500 And Nasdaq Climb Amid Hopes Of Diplomatic Resolution Between US and Iran— IBM, STLA, SPOT, FCEL, EL In Focus",
+          "publisher": "Stocktwits"
         }
       ],
       "sentiment": {
-        "score": -2,
-        "summary": "雖然有盤中上漲及特定產業利多，但總體經濟逆風及對美伊協議的疑慮仍導致美股下跌，整體情緒偏向謹慎和微幅看空。"
+        "score": 8,
+        "summary": "多數標題顯示企業財報強勁、指數期貨上漲、股市攀升並創歷史新高，市場對科技股及外交解決方案抱持樂觀態度。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -907,45 +907,53 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 709.0,
-      "high_price": 717.1195068359375,
-      "low_price": 706.77001953125,
-      "prev_close": 713.1500244140625,
+      "open_price": 718.0599975585938,
+      "high_price": 721.3300170898438,
+      "low_price": 715.969970703125,
+      "prev_close": 714.510009765625,
       "sparkline_points": [
-        40.0
+        48.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.0 6.0,21.9 10.0,24.0 14.0,22.7 18.0,20.7 22.0,18.7 26.0,19.1 30.0,16.3 34.0,11.7 38.0,12.0 42.0,6.8 46.0,6.1 50.0,8.0 54.0,5.6 58.0,4.0 62.0,7.5 66.0,8.5 70.0,9.9 74.0,6.1 78.0,5.7\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,21.9 6.0,24.0 10.0,22.7 14.0,20.8 18.0,18.8 22.0,19.2 26.0,16.4 30.0,12.0 34.0,12.2 38.0,7.1 42.0,6.5 46.0,8.4 50.0,6.0 54.0,4.4 58.0,7.9 62.0,8.8 66.0,10.2 70.0,6.5 74.0,6.1 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "IWM",
       "asset_type": "etf",
       "market": "US",
       "name": "iShares Russell 2000 Index Fund",
-      "price": 282.489990234375,
-      "price_change_pct": 0.9361471979482662,
-      "volume": 31386557,
-      "score": 70,
+      "price": 284.95001220703125,
+      "price_change_pct": 0.870835094232978,
+      "volume": 9009836,
+      "score": 60,
       "strength": "偏多 📈",
       "strength_en": "Buy",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "✅ RSI 動能走強（58.2 ↑）",
+        "✅ RSI 動能走強（60.7 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "🟡 量能正常（1.2× 均量）",
-        "✅ 站穩 MA60 上方 6.8%"
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 7.6%"
       ],
-      "ma5": 277.79,
-      "ma20": 279.73,
-      "ma60": 264.44,
-      "rsi": 58.21,
-      "macd": 3.2,
-      "macd_hist": -1.17,
-      "vol_ratio": 1.19,
-      "ai_view": "**IWM分析**\n\n1. **目前盤面強弱：** 偏強，股價高於均線，RSI健康，但MACD歷史柱狀圖仍為負值，需注意。\n2. **關鍵價位：** 支撐位：$279.73 (MA20)，壓力位：$283.00 (初步估計)\n3. **高機率劇本：** 若能站穩MA20支撐，盤勢有機會延續上漲。若跌破MA20，則可能回測MA5 ($277.79)。",
+      "ma5": 279.26,
+      "ma20": 280.15,
+      "ma60": 264.76,
+      "rsi": 60.7,
+      "macd": 3.39,
+      "macd_hist": -0.78,
+      "vol_ratio": 0.35,
+      "ai_view": "①目前盤面偏強，短線多頭趨勢確立。\n②關鍵價位：支撐 $280-$282，壓力 $285-$288。\n③高機率劇本：若能站穩 $285，有望挑戰 $288-$290。跌破 $280 則需留意回檔風險。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Dollar Holds Firm Amid Iran Deal Uncertainty: ETFs to Win/ Lose",
+          "publisher": "Zacks"
+        },
         {
           "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
           "publisher": "MT Newswires"
@@ -957,19 +965,11 @@
         {
           "title": "Exchange-Traded Funds, Equity Futures Advance Pre-Bell Wednesday Ahead of Nvidia Earnings Report",
           "publisher": "MT Newswires"
-        },
-        {
-          "title": "The Russell 2000 Is Up 31% and These 2 Small Cap Stocks Under $30 Have the Fundamentals to Keep Running",
-          "publisher": "24/7 Wall St."
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Edge Lower Pre-Bell Tuesday Amid Uncertainty Surrounding US-Iran Talks",
-          "publisher": "MT Newswires"
         }
       ],
       "sentiment": {
-        "score": 0,
-        "summary": "新聞標題在看漲和看跌情緒之間交替出現，且反覆提及美國-伊朗談判的不確定性，未能顯示出明確的整體趨勢。"
+        "score": 2,
+        "summary": "近期IWM受到公司財報和小型股反彈的提振，但美伊談判的不確定性帶來一些下行壓力，整體呈現輕微樂觀。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -979,45 +979,53 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 278.6600036621094,
-      "high_price": 283.6700134277344,
-      "low_price": 277.1499938964844,
-      "prev_close": 279.8699951171875,
+      "open_price": 284.1000061035156,
+      "high_price": 285.6700134277344,
+      "low_price": 283.6700134277344,
+      "prev_close": 282.489990234375,
       "sparkline_points": [
-        70.0
+        60.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,17.8 6.0,17.1 10.0,21.5 14.0,24.0 18.0,16.0 22.0,14.2 26.0,16.1 30.0,9.8 34.0,4.0 38.0,10.2 42.0,7.6 46.0,6.0 50.0,9.7 54.0,9.6 58.0,7.2 62.0,16.5 66.0,18.7 70.0,22.7 74.0,13.4 78.0,9.9\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,17.1 6.0,21.5 10.0,24.0 14.0,16.0 18.0,14.2 22.0,16.1 26.0,9.8 30.0,4.0 34.0,10.2 38.0,7.6 42.0,6.0 46.0,9.7 50.0,9.6 54.0,7.2 58.0,16.5 62.0,18.7 66.0,22.7 70.0,13.4 74.0,9.9 78.0,6.5\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "DIA",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street SPDR Dow Jones Ind",
-      "price": 503.1099853515625,
-      "price_change_pct": 0.5737236472923396,
-      "volume": 6278211,
-      "score": 70,
-      "strength": "偏多 📈",
-      "strength_en": "Buy",
+      "price": 507.4949951171875,
+      "price_change_pct": 0.8715807464168792,
+      "volume": 1982542,
+      "score": 80,
+      "strength": "強力做多 🔥",
+      "strength_en": "Strong Buy",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（62.9 ↑）",
-        "🟡 MACD 死叉收斂（底部跡象）",
-        "🟡 量能正常（1.4× 均量）",
-        "🟡 略高於 MA60（+4.5%）"
+        "✅ RSI 動能走強（66.5 ↑）",
+        "✅ MACD 金叉且動能擴張",
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 5.4%"
       ],
-      "ma5": 497.94,
-      "ma20": 495.4,
-      "ma60": 481.4,
-      "rsi": 62.89,
-      "macd": 4.22,
-      "macd_hist": -0.2,
-      "vol_ratio": 1.4,
-      "ai_view": "①盤面強勢。②關鍵價位：支撐$497.94，壓力$503.11。③高機率劇本：站穩$503.11有望續漲。",
+      "ma5": 500.37,
+      "ma20": 496.18,
+      "ma60": 481.63,
+      "rsi": 66.54,
+      "macd": 4.72,
+      "macd_hist": 0.25,
+      "vol_ratio": 0.45,
+      "ai_view": "①盤面強勁，多頭佔優。\n②關鍵價位：支撐500.37（MA5），阻力前高約508。\n③高機率劇本：突破508後，有望繼續上漲。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Nasdaq, S&P 500, Dow Futures Climb As Trump's $2B Quantum Computing Bet Outweighs Iran Jitters: RKLB, IBM, RGTI, NIO In Focus",
+          "publisher": "Stocktwits"
+        },
+        {
+          "title": "Stocks Rebound as Crude Oil Falls on Hopes for a US-Iran Deal",
+          "publisher": "Barchart"
+        },
         {
           "title": "Stocks Indexes Turn Green in Afternoon Trade as Oil Prices Retreat",
           "publisher": "Barchart"
@@ -1029,19 +1037,11 @@
         {
           "title": "Stocks Finish Sharply Higher on Iran Hopes",
           "publisher": "Barchart"
-        },
-        {
-          "title": "Stocks Rally as Crude Oil and Bond Yields Slump",
-          "publisher": "Barchart"
-        },
-        {
-          "title": "DIA and VOO Track Almost the Same Market Yet VOO Returned 318.99% While DIA Made 176.86% Over Ten Years",
-          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
         "score": 3,
-        "summary": "市場對油價下跌和伊朗和談抱持希望，但兩者仍存在不確定性，且DIA長期績效顯著落後VOO，因此整體情緒謹慎樂觀。"
+        "summary": "新聞標題顯示，儘管美國與伊朗的局勢造成市場波動，但對雙邊協議的希望及油價下跌等因素仍多次推動股市上漲，整體呈現略偏樂觀的趨勢。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1051,42 +1051,42 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 498.7799987792969,
-      "high_price": 504.0350036621094,
-      "low_price": 497.2099914550781,
-      "prev_close": 500.239990234375,
+      "open_price": 507.010009765625,
+      "high_price": 507.6000061035156,
+      "low_price": 505.7200012207031,
+      "prev_close": 503.1099853515625,
       "sparkline_points": [
-        70.0
+        80.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,19.2 6.0,19.7 10.0,20.3 14.0,24.0 18.0,13.2 22.0,15.4 26.0,22.8 30.0,18.2 34.0,9.9 38.0,14.2 42.0,13.9 46.0,12.5 50.0,11.5 54.0,12.5 58.0,7.5 62.0,14.5 66.0,12.3 70.0,16.4 74.0,7.9 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,20.7 6.0,21.1 10.0,24.0 14.0,15.6 18.0,17.3 22.0,23.1 26.0,19.5 30.0,13.1 34.0,16.4 38.0,16.2 42.0,15.2 46.0,14.3 50.0,15.1 54.0,11.3 58.0,16.7 62.0,15.0 66.0,18.2 70.0,11.6 74.0,8.6 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "VTI",
       "asset_type": "etf",
       "market": "US",
       "name": "Vanguard Total Stock Market ETF",
-      "price": 365.0899963378906,
-      "price_change_pct": 0.24712207651256796,
-      "volume": 2758629,
+      "price": 367.7300109863281,
+      "price_change_pct": 0.7231133898268107,
+      "volume": 1090831,
       "score": 68,
       "strength": "偏多 📈",
       "strength_en": "Buy",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（66.0 ↑）",
+        "✅ RSI 動能走強（68.8 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.9× 均量）",
-        "✅ 站穩 MA60 上方 7.0%"
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 7.6%"
       ],
-      "ma5": 362.89,
-      "ma20": 359.19,
-      "ma60": 341.17,
-      "rsi": 65.98,
-      "macd": 5.78,
-      "macd_hist": -0.58,
-      "vol_ratio": 0.88,
-      "ai_view": "①盤面強勢，股價位於均線上方。\n②關鍵支撐 $362.89 (MA5)，關鍵阻力尚不明顯。\n③高機率續漲，若回落至 $362.89 有機會反彈。",
+      "ma5": 363.89,
+      "ma20": 359.97,
+      "ma60": 341.64,
+      "rsi": 68.76,
+      "macd": 5.82,
+      "macd_hist": -0.43,
+      "vol_ratio": 0.36,
+      "ai_view": "① 盤面偏多，漲勢強勁。② 關鍵價位：支撐 $360，壓力 $370。③ 高機率劇本：續漲測試 $370，若突破則開啟新一波漲勢。",
       "sector": "Unknown",
       "entry": "",
       "news": [
@@ -1113,7 +1113,7 @@
       ],
       "sentiment": {
         "score": 3,
-        "summary": "新聞標題顯示對VTI的投資前景持正面看法，尤其是知名人士的看好以及潛在的SpaceX IPO的納入，但同時也有投資策略討論和稅務問題的提醒，因此整體情緒偏向輕微樂觀。"
+        "summary": "新聞標題顯示對VTI的投資前景持正面態度，特別是提到Vanguard Total Stock Market Index Fund ETF Shares (VTI) 仍受看好，並探討其與其他ETF的比較，儘管也有稅務和舊建議的討論，但整體未見明顯負面情緒。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1123,45 +1123,49 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 362.79998779296875,
-      "high_price": 366.07000732421875,
-      "low_price": 362.1300048828125,
-      "prev_close": 364.19000244140625,
+      "open_price": 366.80999755859375,
+      "high_price": 367.80999755859375,
+      "low_price": 366.1099853515625,
+      "prev_close": 365.0899963378906,
       "sparkline_points": [
         68.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,21.9 6.0,21.3 10.0,23.5 14.0,24.0 18.0,19.4 22.0,18.1 26.0,19.6 30.0,16.1 34.0,10.4 38.0,12.4 42.0,9.3 46.0,8.4 50.0,9.4 54.0,7.1 58.0,4.0 62.0,9.4 66.0,9.9 70.0,12.5 74.0,7.7 78.0,6.7\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,21.4 6.0,23.5 10.0,24.0 14.0,19.5 18.0,18.2 22.0,19.7 26.0,16.3 30.0,10.7 34.0,12.6 38.0,9.5 42.0,8.7 46.0,9.6 50.0,7.4 54.0,4.4 58.0,9.7 62.0,10.1 66.0,12.8 70.0,8.0 74.0,7.0 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XLK",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street Technology Select ",
-      "price": 178.60000610351562,
-      "price_change_pct": 0.8242106350331772,
-      "volume": 10823083,
-      "score": 40,
+      "price": 181.4149932861328,
+      "price_change_pct": 1.5761405858998885,
+      "volume": 3867677,
+      "score": 48,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "RSI 中性（71.2）",
-        "❌ MACD 偏空",
-        "⚠️ 量能不足（0.9× 均量）",
-        "✅ 站穩 MA60 上方 18.7%"
+        "RSI 中性（73.8）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.3× 均量）",
+        "✅ 站穩 MA60 上方 20.1%"
       ],
-      "ma5": 175.92,
-      "ma20": 169.55,
-      "ma60": 150.41,
-      "rsi": 71.25,
-      "macd": 7.16,
-      "macd_hist": -0.24,
-      "vol_ratio": 0.94,
-      "ai_view": "①盤面強勁，短期多頭排列，但RSI過熱。\n②關鍵價位：支撐175.92（MA5），阻力178.60（現價）上方。\n③高機率劇本：短線可能因RSI過高而回檔整理，若能守穩175.92，則有望繼續上攻。",
+      "ma5": 176.95,
+      "ma20": 170.61,
+      "ma60": 151.08,
+      "rsi": 73.77,
+      "macd": 7.24,
+      "macd_hist": -0.13,
+      "vol_ratio": 0.35,
+      "ai_view": "① **盤面強弱：** 強勢上漲，突破所有均線。\n② **關鍵價位：** 支撐 $176.95 (MA5)，阻力 $185 附近。\n③ **高機率劇本：** 短線趨勢強勁，有望繼續上攻，但RSI過熱，需留意回調風險。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
         {
           "title": "Sector Update: Tech Stocks Advance Thursday Afternoon",
           "publisher": "MT Newswires"
@@ -1177,15 +1181,11 @@
         {
           "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
           "publisher": "MT Newswires"
-        },
-        {
-          "title": "VGT Looks Like a Diversified Tech Bet Until You Realize Three Stocks Are 43 Percent of It",
-          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
-        "score": -1,
-        "summary": "部分新聞顯示科技股上漲和分析師對 Qnity 的估計與評級，但更多新聞提及 ETF 漲跌互見、美股下跌、以及美伊談判的不確定性，整體情緒偏向謹慎。"
+        "score": 2,
+        "summary": "正面消息如企業財報良好和科技股上漲與負面消息如美股下跌和美伊談判不確定性並存，整體略偏樂觀。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1195,45 +1195,57 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 175.8300018310547,
-      "high_price": 178.97999572753906,
-      "low_price": 175.8300018310547,
-      "prev_close": 177.13999938964844,
+      "open_price": 180.02999877929688,
+      "high_price": 181.4199981689453,
+      "low_price": 179.55999755859375,
+      "prev_close": 178.60000610351562,
       "sparkline_points": [
-        40.0
+        48.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,21.8 6.0,21.5 10.0,24.0 14.0,22.8 18.0,22.5 22.0,20.3 26.0,20.1 30.0,16.8 34.0,12.7 38.0,13.1 42.0,7.7 46.0,5.5 50.0,8.0 54.0,6.4 58.0,4.0 62.0,7.0 66.0,8.7 70.0,9.8 74.0,6.2 78.0,4.8\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,21.7 6.0,24.0 10.0,22.9 14.0,22.6 18.0,20.6 22.0,20.4 26.0,17.4 30.0,13.7 34.0,13.9 38.0,9.0 42.0,7.0 46.0,9.3 50.0,7.9 54.0,5.6 58.0,8.4 62.0,10.0 66.0,10.9 70.0,7.6 74.0,6.4 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XLF",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street Financial Select S",
-      "price": 51.72999954223633,
-      "price_change_pct": 0.13550076467475128,
-      "volume": 29500531,
-      "score": 52,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 52.0,
+      "price_change_pct": 0.521941736232228,
+      "volume": 9571193,
+      "score": 60,
+      "strength": "偏多 📈",
+      "strength_en": "Buy",
       "signals": [
-        "🟡 中多頭（價格 > MA20 > MA60）",
-        "✅ RSI 動能走強（53.7 ↑）",
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "✅ RSI 動能走強（56.3 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.9× 均量）",
-        "🟡 略高於 MA60（+2.0%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "🟡 略高於 MA60（+2.5%）"
       ],
-      "ma5": 51.47,
-      "ma20": 51.56,
+      "ma5": 51.65,
+      "ma20": 51.59,
       "ma60": 50.73,
-      "rsi": 53.67,
-      "macd": 0.07,
-      "macd_hist": -0.04,
-      "vol_ratio": 0.89,
-      "ai_view": "①盤面中性偏多，現價高於各均線。\n②關鍵支撐$51.56（MA20），關鍵阻力$52。\n③若能站穩$52，有望進一步上漲。",
+      "rsi": 56.34,
+      "macd": 0.11,
+      "macd_hist": -0.0,
+      "vol_ratio": 0.29,
+      "ai_view": "① 盤面偏多，現價高於MA5、MA20、MA60，多頭排列。\n② 關鍵價位：上方阻力約 $52.50 (前高)，下方支撐約 $51.60 (MA5/MA20)。\n③ 高機率劇本：突破 $52.50 上看更高，若跌破 $51.60 則可能回測 $50.70。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Sector Update: Financial Stocks Edge Higher Pre-Bell Friday",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "What Are Wall Street Analysts' Target Price for Prudential Financial Stock?",
+          "publisher": "Barchart"
+        },
         {
           "title": "Sector Update: Financial Stocks Higher Late Afternoon",
           "publisher": "MT Newswires"
@@ -1241,23 +1253,11 @@
         {
           "title": "Sector Update: Financial Stocks Mixed Thursday Afternoon",
           "publisher": "MT Newswires"
-        },
-        {
-          "title": "Exchange-Traded Funds Mixed, US Equities Decline After Midday",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Are Wall Street Analysts Predicting Brown & Brown Stock Will Climb or Sink?",
-          "publisher": "Barchart"
         }
       ],
       "sentiment": {
-        "score": -2,
-        "summary": "儘管有金融股上漲的消息，但整體標題中存在「混合」、「下跌」、「不確定性」等詞語，特別是關於美伊談判的不確定性，導致情緒偏向謹慎或輕微看空。"
+        "score": 7,
+        "summary": "多數新聞標題顯示金融股和ETF在企業財報利好下走高，市場情緒樂觀。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1267,45 +1267,53 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 51.459999084472656,
-      "high_price": 51.83000183105469,
-      "low_price": 51.209999084472656,
-      "prev_close": 51.65999984741211,
+      "open_price": 51.900001525878906,
+      "high_price": 52.16999816894531,
+      "low_price": 51.84000015258789,
+      "prev_close": 51.72999954223633,
       "sparkline_points": [
-        52.0
+        60.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,16.5 6.0,9.6 10.0,8.9 14.0,7.7 18.0,4.0 22.0,7.7 26.0,13.6 30.0,13.5 34.0,9.1 38.0,14.2 42.0,19.6 46.0,20.7 50.0,13.6 54.0,24.0 58.0,18.7 62.0,22.1 66.0,10.8 70.0,22.1 74.0,12.2 78.0,11.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,9.6 6.0,8.9 10.0,7.7 14.0,4.0 18.0,7.7 22.0,13.6 26.0,13.5 30.0,9.1 34.0,14.2 38.0,19.6 42.0,20.7 46.0,13.6 50.0,24.0 54.0,18.7 58.0,22.1 62.0,10.8 66.0,22.1 70.0,12.2 74.0,11.0 78.0,6.3\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XLE",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street Energy Select Sect",
-      "price": 59.130001068115234,
-      "price_change_pct": -1.1203982901225302,
-      "volume": 43302627,
-      "score": 46,
+      "price": 59.16999816894531,
+      "price_change_pct": 0.06764265196613674,
+      "volume": 9897848,
+      "score": 56,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "RSI 中性（53.9）",
+        "✅ RSI 動能走強（54.1 ↑）",
         "🟡 MACD 金叉（動能略收）",
-        "🟡 量能正常（1.2× 均量）",
-        "🟡 略高於 MA60（+2.1%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "🟡 略高於 MA60（+2.0%）"
       ],
-      "ma5": 60.05,
-      "ma20": 58.35,
-      "ma60": 57.93,
-      "rsi": 53.93,
-      "macd": 0.59,
-      "macd_hist": 0.25,
-      "vol_ratio": 1.15,
-      "ai_view": "①目前盤面弱勢整理。\n②關鍵價位：MA20 $58.35 (支撐), MA5 $60.05 (阻力)。\n③高機率劇本：若跌破 MA20，可能向下測試 MA60 $57.93；若能站穩 MA5，則有望挑戰上方壓力。",
+      "ma5": 59.99,
+      "ma20": 58.47,
+      "ma60": 58.0,
+      "rsi": 54.1,
+      "macd": 0.57,
+      "macd_hist": 0.18,
+      "vol_ratio": 0.27,
+      "ai_view": "**①目前盤面強弱：** 短期疲弱，長期偏多。\n**②關鍵價位：** 支撐 $58.47 (MA20)，壓力 $59.99 (MA5)。\n**③高機率劇本：** 若能站穩 MA20 並突破 MA5，有機會上攻；否則可能回測。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Sector Update: Energy Stocks Advance Premarket Friday",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
         {
           "title": "Sector Update: Energy Stocks Decline Late Afternoon",
           "publisher": "MT Newswires"
@@ -1317,19 +1325,11 @@
         {
           "title": "Exchange-Traded Funds Mixed, US Equities Decline After Midday",
           "publisher": "MT Newswires"
-        },
-        {
-          "title": "Sector Update: Energy Stocks Advance Pre-Bell Thursday",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
-          "publisher": "MT Newswires"
         }
       ],
       "sentiment": {
-        "score": -6,
-        "summary": "多數報導顯示能源股下跌，且市場對美伊會談的不確定性感到擔憂。"
+        "score": -3,
+        "summary": "儘管盤前能源股和ETF有所上漲，但隨後出現多個「下跌」和「下降」的標題，表明近期整體情緒偏向負面。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1339,69 +1339,69 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 60.47999954223633,
-      "high_price": 60.58000183105469,
-      "low_price": 58.71500015258789,
-      "prev_close": 59.79999923706055,
+      "open_price": 58.9900016784668,
+      "high_price": 59.54999923706055,
+      "low_price": 58.83000183105469,
+      "prev_close": 59.130001068115234,
       "sparkline_points": [
-        46.0
+        56.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,19.8 6.0,20.2 10.0,16.8 14.0,12.1 18.0,9.9 22.0,12.7 26.0,10.8 30.0,10.6 34.0,19.3 38.0,23.1 42.0,24.0 46.0,18.7 50.0,17.3 54.0,17.1 58.0,15.5 62.0,10.6 66.0,6.5 70.0,4.0 74.0,9.3 78.0,11.7\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,20.2 6.0,16.8 10.0,12.1 14.0,9.9 18.0,12.7 22.0,10.8 26.0,10.6 30.0,19.3 34.0,23.1 38.0,24.0 42.0,18.7 46.0,17.3 50.0,17.1 54.0,15.5 58.0,10.6 62.0,6.5 66.0,4.0 70.0,9.3 74.0,11.7 78.0,11.6\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XLV",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street Health Care Select",
-      "price": 148.14999389648438,
-      "price_change_pct": 0.6932569699051431,
-      "volume": 6726080,
+      "price": 149.67999267578125,
+      "price_change_pct": 1.0327363093689483,
+      "volume": 3270077,
       "score": 57,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
         "⚠️ 價格站上 MA60",
-        "✅ RSI 動能走強（57.4 ↑）",
+        "✅ RSI 動能走強（61.8 ↑）",
         "✅ MACD 金叉且動能擴張",
-        "⚠️ 量能不足（0.7× 均量）",
-        "🟡 略高於 MA60（+0.3%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "🟡 略高於 MA60（+1.4%）"
       ],
-      "ma5": 146.68,
-      "ma20": 145.24,
-      "ma60": 147.76,
-      "rsi": 57.39,
-      "macd": 0.07,
-      "macd_hist": 0.48,
-      "vol_ratio": 0.69,
-      "ai_view": "①盤面偏強，短線多頭排列。\n②關鍵價位：MA60壓力$147.76、MA5支撐$146.68。\n③高機率劇本：若能站穩MA60，有望續漲挑戰新高；若跌破MA5，恐回測MA20。",
+      "ma5": 147.6,
+      "ma20": 145.51,
+      "ma60": 147.64,
+      "rsi": 61.83,
+      "macd": 0.34,
+      "macd_hist": 0.6,
+      "vol_ratio": 0.34,
+      "ai_view": "①盤面偏強。\n②關鍵價位：支撐147.6 (MA5)；壓力150。\n③高機率劇本：站穩150有機會上攻。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Are Wall Street Analysts Bullish on Intuitive Surgical Stock?",
+          "publisher": "Barchart"
+        },
         {
           "title": "HCA Healthcare Stock Outlook: Is Wall Street Bullish or Bearish?",
           "publisher": "Barchart"
         },
         {
-          "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Agilent Stock: Is Wall Street Bullish or Bearish?",
+          "title": "Are Wall Street Analysts Predicting IQVIA Holdings Stock Will Climb or Sink?",
           "publisher": "Barchart"
         },
         {
-          "title": "Sector Update: Healthcare Stocks Mixed Late Afternoon",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Advance Pre-Bell Wednesday Ahead of Nvidia Earnings Report",
+          "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
           "publisher": "MT Newswires"
         }
       ],
       "sentiment": {
-        "score": -1,
-        "summary": "儘管有部分正面消息，但市場普遍存在不確定性，且醫療保健類股表現不一，整體情緒偏向謹慎。"
+        "score": 2,
+        "summary": "雖然有關於美國-伊朗談判的不確定性導致市場下跌，但強勁的公司財報和分析師對醫療保健及生物科技公司的看好預期提供了支撐。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1411,45 +1411,53 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 146.89999389648438,
-      "high_price": 148.3000030517578,
-      "low_price": 145.8699951171875,
-      "prev_close": 147.1300048828125,
+      "open_price": 149.08999633789062,
+      "high_price": 150.32000732421875,
+      "low_price": 149.0,
+      "prev_close": 148.14999389648438,
       "sparkline_points": [
         57.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,19.0 6.0,21.7 10.0,20.2 14.0,24.0 18.0,12.1 22.0,15.3 26.0,16.9 30.0,14.7 34.0,14.4 38.0,16.9 42.0,21.6 46.0,23.2 50.0,12.7 54.0,9.4 58.0,9.7 62.0,15.5 66.0,13.2 70.0,7.1 74.0,7.8 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.2 6.0,21.1 10.0,24.0 14.0,14.8 18.0,17.2 22.0,18.5 26.0,16.8 30.0,16.5 34.0,18.5 38.0,22.1 42.0,23.4 46.0,15.2 50.0,12.7 54.0,12.9 58.0,17.4 62.0,15.6 66.0,10.9 70.0,11.5 74.0,8.5 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XLY",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street Consumer Discretio",
-      "price": 118.69999694824219,
-      "price_change_pct": 0.6443907843850607,
-      "volume": 6774754,
+      "price": 119.51000213623047,
+      "price_change_pct": 0.6823969745689842,
+      "volume": 1972869,
       "score": 52,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "✅ RSI 動能走強（55.4 ↑）",
+        "✅ RSI 動能走強（57.9 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.8× 均量）",
-        "🟡 略高於 MA60（+3.5%）"
+        "⚠️ 量能不足（0.2× 均量）",
+        "🟡 略高於 MA60（+4.2%）"
       ],
-      "ma5": 116.9,
-      "ma20": 118.13,
-      "ma60": 114.7,
-      "rsi": 55.37,
-      "macd": 0.49,
-      "macd_hist": -0.35,
-      "vol_ratio": 0.83,
-      "ai_view": "①盤面中性偏強。②關鍵價位：支撐118.13、壓力118.70。③高機率劇本：若能站穩118.70，有望測試更高點；若跌破118.13，則可能回檔。",
+      "ma5": 117.5,
+      "ma20": 118.17,
+      "ma60": 114.74,
+      "rsi": 57.87,
+      "macd": 0.59,
+      "macd_hist": -0.2,
+      "vol_ratio": 0.25,
+      "ai_view": "① **強勢**：股價位於所有均線之上。\n② **關鍵價位**：支撐位 $118.17 (MA20)，阻力位 $120 附近。\n③ **高機率劇本**：有望挑戰 $120，若突破則繼續上漲；跌破 MA20 則轉弱。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Stock Market News for May 22, 2026",
+          "publisher": "Zacks"
+        },
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
         {
           "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
           "publisher": "MT Newswires"
@@ -1461,19 +1469,11 @@
         {
           "title": "Authentic Brands Is Finally Going Public",
           "publisher": "Moby"
-        },
-        {
-          "title": "Are Wall Street Analysts Predicting Tractor Supply Company Stock Will Climb or Sink?",
-          "publisher": "Barchart"
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Advance Pre-Bell Wednesday Ahead of Nvidia Earnings Report",
-          "publisher": "MT Newswires"
         }
       ],
       "sentiment": {
-        "score": -1,
-        "summary": "市場對於美伊會談的不確定性以及美國消費者的分歧造成看空情緒，儘管有Nvidia財報的利好預期，但整體情緒仍偏向謹慎與悲觀。"
+        "score": 2,
+        "summary": "雖然有企業財報利多和IPO消息，但美國消費分歧及美伊談判不確定性帶來負面影響，整體情緒偏向謹慎樂觀。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1483,45 +1483,49 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 117.58999633789062,
-      "high_price": 119.21499633789062,
-      "low_price": 116.81999969482422,
-      "prev_close": 117.94000244140625,
+      "open_price": 119.16000366210938,
+      "high_price": 119.58999633789062,
+      "low_price": 119.04000091552734,
+      "prev_close": 118.69999694824219,
       "sparkline_points": [
         52.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,9.8 6.0,13.1 10.0,16.3 14.0,17.0 18.0,11.2 22.0,10.1 26.0,13.6 30.0,12.2 34.0,5.3 38.0,5.2 42.0,4.0 46.0,7.2 50.0,11.4 54.0,9.7 58.0,9.9 62.0,18.2 66.0,19.0 70.0,24.0 74.0,12.7 78.0,9.8\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,13.1 6.0,16.3 10.0,17.0 14.0,11.2 18.0,10.1 22.0,13.6 26.0,12.2 30.0,5.3 34.0,5.2 38.0,4.0 42.0,7.2 46.0,11.4 50.0,9.7 54.0,9.9 58.0,18.2 62.0,19.0 66.0,24.0 70.0,12.7 74.0,9.8 78.0,6.7\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XLI",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street Industrial Select ",
-      "price": 170.52999877929688,
-      "price_change_pct": -0.11714224403856623,
-      "volume": 8298421,
-      "score": 35,
-      "strength": "偏空 📉",
-      "strength_en": "Sell",
+      "price": 171.97999572753906,
+      "price_change_pct": 0.8502884880206918,
+      "volume": 2923000,
+      "score": 45,
+      "strength": "中性觀望 ⚖️",
+      "strength_en": "Neutral",
       "signals": [
         "⚠️ 價格站上 MA60",
-        "RSI 中性（47.5）",
+        "✅ RSI 動能走強（50.8 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "🟡 量能正常（1.0× 均量）",
-        "🟡 略高於 MA60（+0.4%）"
+        "⚠️ 量能不足（0.4× 均量）",
+        "🟡 略高於 MA60（+1.3%）"
       ],
-      "ma5": 170.43,
-      "ma20": 172.53,
-      "ma60": 169.77,
-      "rsi": 47.48,
+      "ma5": 170.55,
+      "ma20": 172.5,
+      "ma60": 169.7,
+      "rsi": 50.79,
       "macd": 0.13,
-      "macd_hist": -0.63,
-      "vol_ratio": 1.02,
-      "ai_view": "①盤面偏弱。\n②關鍵價位：$170.43 (MA5)；$172.53 (MA20)。\n③高機率劇本：若無法站穩MA5，短期可能繼續下探。",
+      "macd_hist": -0.5,
+      "vol_ratio": 0.37,
+      "ai_view": "①盤面中性偏弱，反彈遇阻。②關鍵價位：上方172.5（MA20），下方170.55（MA5）。③高機率劇本：若無法突破MA20，恐回測MA5；跌破MA5則可能續探MA60。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
         {
           "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
           "publisher": "MT Newswires"
@@ -1537,15 +1541,11 @@
         {
           "title": "Sterling, Ameresco, and Enphase Shares Plummet, What You Need To Know",
           "publisher": "StockStory"
-        },
-        {
-          "title": "Vertiv, Nextpower, and Array Shares Plummet, What You Need To Know",
-          "publisher": "StockStory"
         }
       ],
       "sentiment": {
-        "score": -8,
-        "summary": "多數新聞標題都顯示股價下跌或市場不確定性，整體情緒偏向看空。"
+        "score": -1,
+        "summary": "雖然有企業財報利好，但市場仍受美伊談判不確定性及部分個股重挫影響，整體情緒偏向謹慎。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1555,42 +1555,42 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 169.80999755859375,
-      "high_price": 171.3000030517578,
-      "low_price": 168.9199981689453,
-      "prev_close": 170.72999572753906,
+      "open_price": 171.75,
+      "high_price": 172.0399932861328,
+      "low_price": 170.41600036621094,
+      "prev_close": 170.52999877929688,
       "sparkline_points": [
-        35.0
+        45.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,14.8 6.0,14.7 10.0,18.5 14.0,21.1 18.0,9.6 22.0,13.6 26.0,18.5 30.0,15.0 34.0,4.0 38.0,11.1 42.0,13.0 46.0,8.5 50.0,10.2 54.0,12.0 58.0,9.8 62.0,17.5 66.0,19.1 70.0,24.0 74.0,19.1 78.0,19.6\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,14.7 6.0,18.5 10.0,21.1 14.0,9.6 18.0,13.6 22.0,18.5 26.0,15.0 30.0,4.0 34.0,11.1 38.0,13.0 42.0,8.5 46.0,10.2 50.0,12.0 54.0,9.8 58.0,17.5 62.0,19.1 66.0,24.0 70.0,19.1 74.0,19.6 78.0,16.0\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "XBI",
       "asset_type": "etf",
       "market": "US",
       "name": "State Street SPDR S&P Biotech E",
-      "price": 132.77999877929688,
-      "price_change_pct": 0.8123847930204627,
-      "volume": 6830946,
-      "score": 52,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 132.52999877929688,
+      "price_change_pct": -0.18828136940680565,
+      "volume": 2013543,
+      "score": 25,
+      "strength": "偏空 📉",
+      "strength_en": "Sell",
       "signals": [
-        "🟡 中多頭（價格 > MA20 > MA60）",
-        "✅ RSI 動能走強（51.5 ↑）",
+        "⚠️ 價格站上 MA60",
+        "RSI 中性（51.0）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.8× 均量）",
-        "🟡 略高於 MA60（+2.7%）"
+        "⚠️ 量能不足（0.2× 均量）",
+        "🟡 略高於 MA60（+2.5%）"
       ],
-      "ma5": 129.93,
-      "ma20": 132.57,
-      "ma60": 129.24,
-      "rsi": 51.45,
-      "macd": -0.06,
-      "macd_hist": -0.59,
-      "vol_ratio": 0.81,
-      "ai_view": "① 盤面中性偏多。\n② 關鍵價位：支撐129.93 (MA5)，壓力132.57 (MA20)。\n③ 高機率劇本：若守穩MA5，有望挑戰MA20，突破則轉強。",
+      "ma5": 130.3,
+      "ma20": 132.54,
+      "ma60": 129.33,
+      "rsi": 50.95,
+      "macd": -0.01,
+      "macd_hist": -0.44,
+      "vol_ratio": 0.24,
+      "ai_view": "①盤面偏弱。 ②關鍵價位：上方阻力132.54（MA20），下方支撐130.3（MA5）。 ③高機率劇本：若無法突破MA20，短期可能回測MA5，甚至下探MA60。",
       "sector": "Unknown",
       "entry": "",
       "news": [
@@ -1617,7 +1617,7 @@
       ],
       "sentiment": {
         "score": 6,
-        "summary": "雖然有標題提及虧損，但更多標題指出特定股票或ETF進入買入區間，預期有上漲潛力，整體情緒偏向樂觀。"
+        "summary": "雖然有標題提及持有該 ETF 正在虧損，但更多標題強調其重新進入買入區間、有可能進一步上漲以及為更好的交易創造空間，整體情緒偏向看好。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1627,45 +1627,53 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 130.63999938964844,
-      "high_price": 133.42999267578125,
-      "low_price": 129.69500732421875,
-      "prev_close": 131.7100067138672,
+      "open_price": 132.49000549316406,
+      "high_price": 134.27000427246094,
+      "low_price": 132.0800018310547,
+      "prev_close": 132.77999877929688,
       "sparkline_points": [
-        52.0
+        25.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,12.1 6.0,12.5 10.0,16.0 14.0,20.1 18.0,15.7 22.0,17.3 26.0,11.7 30.0,11.1 34.0,4.0 38.0,11.4 42.0,9.5 46.0,9.4 50.0,9.1 54.0,7.4 58.0,9.2 62.0,16.8 66.0,22.4 70.0,24.0 74.0,15.0 78.0,13.0\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,12.5 6.0,16.0 10.0,20.1 14.0,15.7 18.0,17.3 22.0,11.7 26.0,11.1 30.0,4.0 34.0,11.4 38.0,9.5 42.0,9.4 46.0,9.1 50.0,7.4 54.0,9.2 58.0,16.8 62.0,22.4 66.0,24.0 70.0,15.0 74.0,13.0 78.0,13.5\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "SOXX",
       "asset_type": "etf",
       "market": "US",
       "name": "iShares PHLX SOX Semiconductor ",
-      "price": 524.7100219726562,
-      "price_change_pct": 0.8456544050101593,
-      "volume": 6463790,
+      "price": 539.6055908203125,
+      "price_change_pct": 2.8388191999184818,
+      "volume": 3296398,
       "score": 68,
       "strength": "偏多 📈",
       "strength_en": "Buy",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（66.6 ↑）",
+        "✅ RSI 動能走強（69.6 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.8× 均量）",
-        "✅ 站穩 MA60 上方 30.3%"
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 33.0%"
       ],
-      "ma5": 509.23,
-      "ma20": 492.52,
-      "ma60": 402.71,
-      "rsi": 66.57,
-      "macd": 29.37,
-      "macd_hist": -2.75,
-      "vol_ratio": 0.78,
-      "ai_view": "① **極強**。現價遠超各均線，RSI高檔，顯示強勁買盤。\n② **關鍵價位**：支撐$509.23（MA5），若跌破則看$492.52（MA20）。\n③ **高機率劇本**：若能站穩MA5，有望繼續挑戰新高。",
+      "ma5": 515.45,
+      "ma20": 496.42,
+      "ma60": 405.76,
+      "rsi": 69.55,
+      "macd": 29.9,
+      "macd_hist": -1.78,
+      "vol_ratio": 0.41,
+      "ai_view": "①目前盤面強勢。②關鍵價位：支撐$515.45 (MA5)，阻力未知，應關注前高點。③高機率劇本：若能守穩MA5，有望持續上攻。但RSI偏高，需留意短線回檔風險。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "MoneyMasters Podcast 5-21-26- US-China Insights  the NEW Balanced Portfolio",
+          "publisher": "MoneyShow"
+        },
         {
           "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
           "publisher": "MT Newswires"
@@ -1677,19 +1685,11 @@
         {
           "title": "Exchange-Traded Funds, Equity Futures Advance Pre-Bell Wednesday Ahead of Nvidia Earnings Report",
           "publisher": "MT Newswires"
-        },
-        {
-          "title": "Your Portfolio Isn’t Invested in the Right Kind of AI Unless You Hold This ETF",
-          "publisher": "24/7 Wall St."
-        },
-        {
-          "title": "These 3 AI ETFs Could Be the First to Kill the Stock Market Rally",
-          "publisher": "Barchart"
         }
       ],
       "sentiment": {
         "score": 3,
-        "summary": "儘管市場存在不確定性，但 Nvidia 財報預期和 AI ETF 的關注度為 SOXX 帶來正面動能。"
+        "summary": "市場對Nvidia財報抱有期待，儘管有地緣政治不確定性，整體情緒仍偏向樂觀。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1699,42 +1699,42 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 517.7999877929688,
-      "high_price": 526.780029296875,
-      "low_price": 515.010009765625,
-      "prev_close": 520.3099975585938,
+      "open_price": 531.8125,
+      "high_price": 539.719970703125,
+      "low_price": 530.1699829101562,
+      "prev_close": 524.7100219726562,
       "sparkline_points": [
         68.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,19.1 6.0,20.4 10.0,24.0 14.0,21.6 18.0,19.2 22.0,18.2 26.0,19.0 30.0,14.6 34.0,9.5 38.0,12.6 42.0,6.6 46.0,4.0 50.0,7.6 54.0,5.0 58.0,4.6 62.0,9.2 66.0,11.8 70.0,11.7 74.0,6.6 78.0,5.7\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,20.7 6.0,24.0 10.0,21.8 14.0,19.5 18.0,18.6 22.0,19.4 26.0,15.3 30.0,10.5 34.0,13.4 38.0,7.8 42.0,5.4 46.0,8.7 50.0,6.2 54.0,5.9 58.0,10.2 62.0,12.7 66.0,12.5 70.0,7.8 74.0,7.0 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "ARKK",
       "asset_type": "etf",
       "market": "US",
       "name": "ARK Innovation ETF",
-      "price": 76.62000274658203,
-      "price_change_pct": 1.02848951259997,
-      "volume": 5416123,
-      "score": 45,
+      "price": 76.87999725341797,
+      "price_change_pct": 0.33932980620721226,
+      "volume": 1731348,
+      "score": 52,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
-        "⚠️ 價格站上 MA60",
-        "✅ RSI 動能走強（51.9 ↑）",
+        "🟡 中多頭（價格 > MA20 > MA60）",
+        "✅ RSI 動能走強（52.6 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.7× 均量）",
-        "🟡 略高於 MA60（+4.0%）"
+        "⚠️ 量能不足（0.2× 均量）",
+        "🟡 略高於 MA60（+4.3%）"
       ],
-      "ma5": 75.14,
-      "ma20": 76.81,
-      "ma60": 73.65,
-      "rsi": 51.87,
-      "macd": 0.38,
-      "macd_hist": -0.49,
-      "vol_ratio": 0.7,
-      "ai_view": "① 盤面中性偏弱，MACD負值，RSI接近50。\n② 關鍵價位：上方壓力76.81（MA20），下方支撐75.14（MA5）。\n③ 高機率劇本：短期內可能在MA5和MA20之間震盪，等待明確方向。",
+      "ma5": 75.54,
+      "ma20": 76.83,
+      "ma60": 73.68,
+      "rsi": 52.59,
+      "macd": 0.39,
+      "macd_hist": -0.38,
+      "vol_ratio": 0.23,
+      "ai_view": "①目前盤面中性偏弱。\n②關鍵價位：上方阻力 $76.83 (MA20)，下方支撐 $75.54 (MA5)。\n③高機率劇本：可能在 $75.54 至 $76.83 區間震盪整理。",
       "sector": "Unknown",
       "entry": "",
       "news": [
@@ -1761,7 +1761,7 @@
       ],
       "sentiment": {
         "score": 8,
-        "summary": "Cerebras被快速納入S&P 500以及Cathie Wood大舉投資AI晶片股，顯示市場對新興科技和ARKK相關持股的強烈看好。"
+        "summary": "多則新聞報導ARKK買進被快速納入S&P 500的AI晶片股Cerebras，顯示市場對AI和其投資策略持高度樂觀態度。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1771,45 +1771,49 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 75.27999877929688,
-      "high_price": 76.90499877929688,
-      "low_price": 74.91000366210938,
-      "prev_close": 75.83999633789062,
+      "open_price": 76.94999694824219,
+      "high_price": 77.77799987792969,
+      "low_price": 76.33999633789062,
+      "prev_close": 76.62000274658203,
       "sparkline_points": [
-        45.0
+        52.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,14.9 6.0,14.7 10.0,18.1 14.0,24.0 18.0,16.9 22.0,13.6 26.0,9.5 30.0,14.6 34.0,5.4 38.0,10.5 42.0,6.8 46.0,4.0 50.0,9.6 54.0,10.1 58.0,10.2 62.0,19.8 66.0,21.0 70.0,23.0 74.0,16.9 78.0,14.5\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,14.7 6.0,18.1 10.0,24.0 14.0,16.9 18.0,13.6 22.0,9.5 26.0,14.6 30.0,5.4 34.0,10.5 38.0,6.8 42.0,4.0 46.0,9.6 50.0,10.1 54.0,10.2 58.0,19.8 62.0,21.0 66.0,23.0 70.0,16.9 74.0,14.5 78.0,13.7\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "CIBR",
       "asset_type": "etf",
       "market": "US",
       "name": "First Trust NASDAQ Cybersecurit",
-      "price": 82.1500015258789,
-      "price_change_pct": 0.6000463406749669,
-      "volume": 746690,
-      "score": 57,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 83.94999694824219,
+      "price_change_pct": 2.191108203201002,
+      "volume": 578802,
+      "score": 65,
+      "strength": "偏多 📈",
+      "strength_en": "Buy",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "⚠️ RSI 超買（80.7）— 注意回調",
-        "🟡 MACD 金叉（動能略收）",
-        "⚠️ 量能不足（0.5× 均量）",
-        "✅ 站穩 MA60 上方 21.6%"
+        "⚠️ RSI 超買（82.8）— 注意回調",
+        "✅ MACD 金叉且動能擴張",
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 23.7%"
       ],
-      "ma5": 80.84,
-      "ma20": 73.7,
-      "ma60": 67.55,
-      "rsi": 80.67,
-      "macd": 4.0,
-      "macd_hist": 0.8,
-      "vol_ratio": 0.51,
-      "ai_view": "①目前盤面強勁。②關鍵價位：支撐80.84（MA5），阻力82.15。③高機率劇本：若能站穩82.15，可望持續上攻，但RSI過高需注意回檔風險。",
+      "ma5": 81.82,
+      "ma20": 74.53,
+      "ma60": 67.88,
+      "rsi": 82.84,
+      "macd": 4.21,
+      "macd_hist": 0.81,
+      "vol_ratio": 0.4,
+      "ai_view": "① 強勢上漲。\n② 關鍵價位：支撐81.82（MA5），阻力前高約84。\n③ 短期可能繼續衝高，但RSI過熱，回檔風險增。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Cybersecurity stocks are hitting records again as chips play catch-up: Chart of the Day",
+          "publisher": "Yahoo Finance"
+        },
         {
           "title": "Hack-Proof Your Portfolio: The Bull Case for Cybersecurity ETFs",
           "publisher": "Zacks"
@@ -1825,15 +1829,11 @@
         {
           "title": "Top Thematic ETFs: Best Funds for Theme Investing in 2026",
           "publisher": "etf.com"
-        },
-        {
-          "title": "Software stocks are plunging. Why that's a warning sign for the entire market: Chart of the Day",
-          "publisher": "Yahoo Finance"
         }
       ],
       "sentiment": {
-        "score": 6,
-        "summary": "雖然有軟體股下跌的警訊，但多數新聞都強調網路安全ETF因AI風險和韌性需求而受到推崇，顯示出看好網路安全產業的趨勢。"
+        "score": 8,
+        "summary": "新聞標題普遍強調網絡安全股票的成長潛力、投資吸引力以及其在應對新興風險（如AI）中的關鍵作用，整體情緒極度看多。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1843,42 +1843,42 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 81.05750274658203,
-      "high_price": 82.26499938964844,
-      "low_price": 80.80999755859375,
-      "prev_close": 81.66000366210938,
+      "open_price": 82.54000091552734,
+      "high_price": 84.0199966430664,
+      "low_price": 82.54000091552734,
+      "prev_close": 82.1500015258789,
       "sparkline_points": [
-        57.0
+        65.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,23.9 6.0,23.5 10.0,24.0 14.0,23.0 18.0,23.6 22.0,21.9 26.0,20.5 30.0,19.0 34.0,20.0 38.0,16.0 42.0,13.1 46.0,13.0 50.0,13.7 54.0,12.4 58.0,9.1 62.0,8.1 66.0,5.6 70.0,6.3 74.0,4.7 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,23.5 6.0,24.0 10.0,23.1 14.0,23.6 18.0,22.1 22.0,20.9 26.0,19.6 30.0,20.4 34.0,16.9 38.0,14.3 42.0,14.1 46.0,14.8 50.0,13.6 54.0,10.7 58.0,9.8 62.0,7.6 66.0,8.2 70.0,6.7 74.0,6.1 78.0,4.0\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "BOTZ",
       "asset_type": "etf",
       "market": "US",
       "name": "Global X Robotics & Artificial ",
-      "price": 39.650001525878906,
-      "price_change_pct": 1.019112167844347,
-      "volume": 883951,
-      "score": 60,
+      "price": 40.369998931884766,
+      "price_change_pct": 1.8158824168920367,
+      "volume": 457535,
+      "score": 68,
       "strength": "偏多 📈",
       "strength_en": "Buy",
       "signals": [
         "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
-        "✅ RSI 動能走強（55.2 ↑）",
-        "❌ MACD 偏空",
-        "⚠️ 量能不足（0.8× 均量）",
-        "✅ 站穩 MA60 上方 7.6%"
+        "✅ RSI 動能走強（59.0 ↑）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 9.5%"
       ],
-      "ma5": 39.57,
-      "ma20": 39.44,
-      "ma60": 36.84,
-      "rsi": 55.21,
-      "macd": 0.83,
-      "macd_hist": -0.22,
-      "vol_ratio": 0.78,
-      "ai_view": "①盤面偏強，短線多頭排列。②關鍵價位：支撐$39.44（MA20），阻力$40.00。③高機率劇本：站穩MA20，有望上攻$40，若跌破則回測$39.00。",
+      "ma5": 39.6,
+      "ma20": 39.59,
+      "ma60": 36.85,
+      "rsi": 58.99,
+      "macd": 0.82,
+      "macd_hist": -0.19,
+      "vol_ratio": 0.41,
+      "ai_view": "①盤面偏強，短線回升。②關鍵支撐 $39.59~$39.6，關鍵壓力 $40.5。③高機率劇本：若守穩支撐，有望挑戰前高或再上攻。",
       "sector": "Unknown",
       "entry": "",
       "news": [
@@ -1904,8 +1904,8 @@
         }
       ],
       "sentiment": {
-        "score": 7,
-        "summary": "新聞標題強調機器人、人工智慧（AI）和嵌入式AI的快速發展以及潛在的投資機會，整體呈現積極正面的展望。"
+        "score": 8,
+        "summary": "新聞標題顯示對量子計算、機器人、人工智慧等新興技術抱持高度樂觀態度，且特別提及Nvidia與AI新浪潮的投資機會。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1915,45 +1915,49 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 39.185001373291016,
-      "high_price": 39.790000915527344,
-      "low_price": 39.13999938964844,
-      "prev_close": 39.25,
+      "open_price": 40.209999084472656,
+      "high_price": 40.38999938964844,
+      "low_price": 40.150001525878906,
+      "prev_close": 39.650001525878906,
       "sparkline_points": [
-        60.0
+        68.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,23.9 6.0,18.6 10.0,22.5 14.0,24.0 18.0,18.8 22.0,18.1 26.0,19.1 30.0,17.4 34.0,12.1 38.0,12.4 42.0,4.8 46.0,5.5 50.0,8.2 54.0,4.0 58.0,6.4 62.0,10.5 66.0,12.4 70.0,16.7 74.0,15.1 78.0,13.2\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,18.6 6.0,22.5 10.0,24.0 14.0,18.8 18.0,18.1 22.0,19.1 26.0,17.4 30.0,12.1 34.0,12.4 38.0,4.8 42.0,5.5 46.0,8.2 50.0,4.0 54.0,6.4 58.0,10.5 62.0,12.4 66.0,16.7 70.0,15.1 74.0,13.2 78.0,9.9\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "TLT",
       "asset_type": "etf",
       "market": "US",
       "name": "iShares 20+ Year Treasury Bond ",
-      "price": 84.22000122070312,
-      "price_change_pct": 0.3694405256398926,
-      "volume": 24634890,
+      "price": 84.30000305175781,
+      "price_change_pct": 0.09499148645823255,
+      "volume": 6727400,
       "score": 18,
       "strength": "強力做空 ❄️",
       "strength_en": "Strong Sell",
       "signals": [
         "❌ 空頭排列（價格低於 MA60）",
-        "🟡 RSI 低位回升（42.2）",
+        "🟡 RSI 低位回升（43.0）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.9× 均量）",
-        "❌ 跌破 MA60（-2.3%）"
+        "⚠️ 量能不足（0.3× 均量）",
+        "❌ 跌破 MA60（-2.1%）"
       ],
-      "ma5": 83.67,
-      "ma20": 85.08,
-      "ma60": 86.19,
-      "rsi": 42.19,
-      "macd": -0.64,
-      "macd_hist": -0.14,
-      "vol_ratio": 0.92,
-      "ai_view": "① 盤面極弱。\n② 關鍵阻力：MA20 ($85.08)；關鍵支撐：暫無明顯支撐。\n③ 高機率劇本：續跌探底。",
+      "ma5": 83.8,
+      "ma20": 84.97,
+      "ma60": 86.11,
+      "rsi": 42.96,
+      "macd": -0.61,
+      "macd_hist": -0.09,
+      "vol_ratio": 0.26,
+      "ai_view": "TLT目前盤面弱勢。關鍵價位：上方阻力84.97 (MA20)，下方支撐83.8 (MA5)。高機率劇本為測試MA5，若跌破可能續探低點。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "MoneyMasters Podcast 5-21-26- US-China Insights  the NEW Balanced Portfolio",
+          "publisher": "MoneyShow"
+        },
         {
           "title": "The 30-year Treasury yield is pushing a major bond ETF back toward 2007 levels: Chart of the Day",
           "publisher": "Yahoo Finance"
@@ -1963,21 +1967,17 @@
           "publisher": "Barrons.com"
         },
         {
+          "title": "Market Minute 5-20-26- Nvidia Earnings, Meta Cuts on Market Radar",
+          "publisher": "MoneyShow"
+        },
+        {
           "title": "Daily ETF Flows: TLT, MUU Picks Up Assets",
           "publisher": "etf.com"
-        },
-        {
-          "title": "Treasury ETF Falls. A Record Low Looms.",
-          "publisher": "Barrons.com"
-        },
-        {
-          "title": "Treasury Yields Are Soaring. Don’t Miss Out and Buy This ETF Today",
-          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
-        "score": -8,
-        "summary": "大部分新聞標題都指向30年期美國國債收益率上升對TLT的負面影響，甚至預示其將跌向歷史低點。"
+        "score": -3,
+        "summary": "新聞內容顯示美國30年期國債殖利率上升，將TLT推回2007年水平，暗示債券市場面臨壓力，儘管有少量資金流入，但整體情緒偏向負面。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -1987,45 +1987,49 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 83.62069702148438,
-      "high_price": 84.25749969482422,
-      "low_price": 83.32499694824219,
-      "prev_close": 83.91000366210938,
+      "open_price": 84.6050033569336,
+      "high_price": 84.63999938964844,
+      "low_price": 84.13500213623047,
+      "prev_close": 84.22000122070312,
       "sparkline_points": [
         18.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,4.0 6.0,6.6 10.0,6.0 14.0,10.0 18.0,10.4 22.0,8.6 26.0,12.5 30.0,9.7 34.0,5.8 38.0,8.4 42.0,5.8 46.0,8.9 50.0,12.3 54.0,13.4 58.0,12.7 62.0,20.2 66.0,20.8 70.0,24.0 74.0,18.7 78.0,16.9\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,4.8 6.0,4.2 10.0,8.6 14.0,9.0 18.0,7.1 22.0,11.3 26.0,8.2 30.0,4.0 34.0,6.8 38.0,4.0 42.0,7.4 46.0,11.1 50.0,12.4 54.0,11.6 58.0,19.8 62.0,20.5 66.0,24.0 70.0,18.2 74.0,16.2 78.0,15.6\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "HYG",
       "asset_type": "etf",
       "market": "US",
       "name": "iShares iBoxx $ High Yield Corp",
-      "price": 79.9000015258789,
-      "price_change_pct": 0.05008879942602802,
-      "volume": 37467478,
+      "price": 79.91500091552734,
+      "price_change_pct": 0.01877270258071188,
+      "volume": 7750298,
       "score": 52,
       "strength": "中性觀望 ⚖️",
       "strength_en": "Neutral",
       "signals": [
         "🟡 中多頭（價格 > MA20 > MA60）",
-        "✅ RSI 動能走強（52.8 ↑）",
+        "✅ RSI 動能走強（53.1 ↑）",
         "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（1.0× 均量）",
+        "⚠️ 量能不足（0.2× 均量）",
         "🟡 略高於 MA60（+0.6%）"
       ],
-      "ma5": 79.62,
+      "ma5": 79.71,
       "ma20": 79.87,
       "ma60": 79.43,
-      "rsi": 52.78,
-      "macd": 0.02,
-      "macd_hist": -0.05,
-      "vol_ratio": 0.95,
-      "ai_view": "①目前盤面偏強，但動能不足。\n②關鍵價位：上方阻力 $79.90 (現價)，下方支撐 $79.87 (MA20)。\n③高機率劇本：若能突破 $79.90，有望上攻；若跌破 $79.87，恐回測 $79.62。",
+      "rsi": 53.06,
+      "macd": 0.03,
+      "macd_hist": -0.03,
+      "vol_ratio": 0.2,
+      "ai_view": "① 盤面中性偏強。\n② 關鍵價位：支撐 79.87 (MA20)，壓力 79.92 (現價附近)。\n③ 高機率劇本：若能守穩 79.87，有機會向上挑戰 80.00。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "A 62-Year-Old Engineer’s $1.1 Million Portfolio That Pays $5,800 a Month and Drops to $3,400 When Social Security Kicks In at 67",
+          "publisher": "24/7 Wall St."
+        },
         {
           "title": "A $2.2 Million Dividend Portfolio That Quietly Pays $13,200 a Month Without a Single MLP Tax Headache",
           "publisher": "24/7 Wall St."
@@ -2041,15 +2045,11 @@
         {
           "title": "HYG Investors Collect 10% Gains Plus Stable Dividends This Year",
           "publisher": "24/7 Wall St."
-        },
-        {
-          "title": "6.7% yield with short duration gives HYG an edge over riskier bond funds",
-          "publisher": "24/7 Wall St."
         }
       ],
       "sentiment": {
-        "score": 8,
-        "summary": "多數新聞標題強調高收益、穩定股息、避稅優勢及優於市場的表現，整體呈現強烈看好情緒。"
+        "score": 7,
+        "summary": "新聞標題強調高股息、穩定收益、免稅優勢以及超越6%的企業債券收益，對投資者而言多為正面消息。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -2059,45 +2059,57 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 79.75,
-      "high_price": 79.98999786376953,
-      "low_price": 79.6449966430664,
-      "prev_close": 79.86000061035156,
+      "open_price": 80.01000213623047,
+      "high_price": 80.0199966430664,
+      "low_price": 79.84500122070312,
+      "prev_close": 79.9000015258789,
       "sparkline_points": [
         52.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,6.5 6.0,5.7 10.0,8.4 14.0,15.1 18.0,8.9 22.0,6.5 26.0,12.9 30.0,9.9 34.0,4.0 38.0,11.4 42.0,4.5 46.0,8.4 50.0,11.2 54.0,10.2 58.0,11.7 62.0,21.3 66.0,19.3 70.0,24.0 74.0,11.4 78.0,10.4\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,5.7 6.0,8.4 10.0,15.1 14.0,8.9 18.0,6.5 22.0,12.9 26.0,9.9 30.0,4.0 34.0,11.4 38.0,4.5 42.0,8.4 46.0,11.2 50.0,10.2 54.0,11.7 58.0,21.3 62.0,19.3 66.0,24.0 70.0,11.4 74.0,10.4 78.0,9.9\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "GLD",
       "asset_type": "etf",
       "market": "US",
       "name": "SPDR Gold Shares",
-      "price": 416.989990234375,
-      "price_change_pct": -0.09822799906677918,
-      "volume": 4650783,
-      "score": 18,
+      "price": 414.94000244140625,
+      "price_change_pct": -0.491615588138345,
+      "volume": 1892218,
+      "score": 10,
       "strength": "強力做空 ❄️",
       "strength_en": "Strong Sell",
       "signals": [
         "❌ 空頭排列（價格低於 MA60）",
-        "🟡 RSI 低位回升（42.1）",
-        "🟡 MACD 死叉收斂（底部跡象）",
-        "⚠️ 量能不足（0.8× 均量）",
-        "❌ 跌破 MA60（-4.7%）"
+        "🟡 RSI 低位回升（40.7）",
+        "❌ MACD 偏空",
+        "⚠️ 量能不足（0.3× 均量）",
+        "❌ 跌破 MA60（-4.9%）"
       ],
-      "ma5": 416.32,
-      "ma20": 424.28,
-      "ma60": 437.35,
-      "rsi": 42.11,
-      "macd": -4.21,
+      "ma5": 415.85,
+      "ma20": 423.36,
+      "ma60": 436.3,
+      "rsi": 40.71,
+      "macd": -4.46,
       "macd_hist": -0.96,
-      "vol_ratio": 0.77,
-      "ai_view": "① 盤面極弱，空頭強勢。\n② 關鍵價位：MA5 (416.32) 為壓力位，MA20 (424.28) 為強阻力。\n③ 高機率劇本：續跌，下測支撐。",
+      "vol_ratio": 0.32,
+      "ai_view": "①盤面極弱 ②近期支撐約 $414.94，若跌破恐下探$410 ③高機率續跌，可考慮做空或觀望。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Gold Edges Lower as USD and Treasury Yields Steady",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Dollar Holds Firm Amid Iran Deal Uncertainty: ETFs to Win/ Lose",
+          "publisher": "Zacks"
+        },
         {
           "title": "An Investor’s Field Guide to ETF Structures",
           "publisher": "etf.com"
@@ -2105,23 +2117,11 @@
         {
           "title": "Update: Gold Rises as the Dollar and Yields Moderate as Iran Considers a Fresh U.S. Peace Offer",
           "publisher": "MT Newswires"
-        },
-        {
-          "title": "Gold Trading Lower as USD and Yields Climb While Iran Considers a Fresh U.S. Peace Offer",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Update: Gold Trading Higher as Yields and the Dollar Decline",
-          "publisher": "MT Newswires"
         }
       ],
       "sentiment": {
-        "score": 0,
-        "summary": "新聞標題顯示黃金價格在漲跌之間波動，主要受美元、殖利率以及美國與伊朗談判的不確定性影響，整體情緒呈中性。"
+        "score": 3,
+        "summary": "黃金價格波動受美元和殖利率影響，但企業財報強勁支撐了整體市場情緒，伊朗協議的不確定性則帶來一些觀望。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -2131,45 +2131,57 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 413.1400146484375,
-      "high_price": 418.4100036621094,
-      "low_price": 411.95001220703125,
-      "prev_close": 417.3999938964844,
+      "open_price": 415.1700134277344,
+      "high_price": 415.5889892578125,
+      "low_price": 412.1650085449219,
+      "prev_close": 416.989990234375,
       "sparkline_points": [
-        18.0
+        10.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,5.2 6.0,8.1 10.0,15.0 14.0,18.9 18.0,13.5 22.0,13.9 26.0,21.2 30.0,18.2 34.0,7.2 38.0,6.6 42.0,4.8 46.0,4.0 50.0,5.5 54.0,7.6 58.0,10.4 62.0,19.0 66.0,18.0 70.0,24.0 74.0,18.9 78.0,19.3\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,8.1 6.0,15.0 10.0,18.9 14.0,13.5 18.0,13.9 22.0,21.2 26.0,18.2 30.0,7.2 34.0,6.6 38.0,4.8 42.0,4.0 46.0,5.5 50.0,7.6 54.0,10.4 58.0,19.0 62.0,18.0 66.0,24.0 70.0,18.9 74.0,19.3 78.0,21.0\" fill=\"none\" stroke=\"#f87171\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     },
     {
       "ticker": "USO",
       "asset_type": "etf",
       "market": "US",
       "name": "United States Oil Fund",
-      "price": 142.5399932861328,
-      "price_change_pct": -1.1991480800547527,
-      "volume": 10047580,
-      "score": 42,
-      "strength": "中性觀望 ⚖️",
-      "strength_en": "Neutral",
+      "price": 142.22000122070312,
+      "price_change_pct": -0.22449283043485196,
+      "volume": 2377842,
+      "score": 25,
+      "strength": "偏空 📉",
+      "strength_en": "Sell",
       "signals": [
-        "🟡 中多頭（價格 > MA20 > MA60）",
-        "RSI 中性（53.9）",
+        "⚠️ 價格站上 MA60",
+        "RSI 中性（53.5）",
         "❌ MACD 偏空",
-        "🟡 量能正常（1.0× 均量）",
-        "✅ 站穩 MA60 上方 13.8%"
+        "⚠️ 量能不足（0.3× 均量）",
+        "✅ 站穩 MA60 上方 12.6%"
       ],
-      "ma5": 147.46,
-      "ma20": 142.34,
-      "ma60": 125.27,
-      "rsi": 53.86,
-      "macd": 4.96,
-      "macd_hist": -0.41,
-      "vol_ratio": 1.02,
-      "ai_view": "①盤面偏弱。②關鍵價位：上方 MA5 ($147.46)，下方 MA20 ($142.34)。③高機率劇本：若跌破 MA20 恐續跌，若能站穩並反彈突破 MA5 則有機會轉強。",
+      "ma5": 146.26,
+      "ma20": 142.83,
+      "ma60": 126.31,
+      "rsi": 53.54,
+      "macd": 4.47,
+      "macd_hist": -0.72,
+      "vol_ratio": 0.26,
+      "ai_view": "① 盤面偏弱，MA5下穿MA20，短線有壓力。\n② 關鍵價位：上方 MA20 ($142.83) 為壓力，下方 MA60 ($126.31) 為支撐。\n③ 高機率劇本：若無法站穩MA20，可能回測MA60。",
       "sector": "Unknown",
       "entry": "",
       "news": [
+        {
+          "title": "Sector Update: Energy Stocks Advance Premarket Friday",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season",
+          "publisher": "MT Newswires"
+        },
+        {
+          "title": "Zacks Investment Ideas feature highlights: NVIDIA, QQQ, Micron, SanDisk, Cipher Mining and USO",
+          "publisher": "Zacks"
+        },
         {
           "title": "An Investor’s Field Guide to ETF Structures",
           "publisher": "etf.com"
@@ -2177,23 +2189,11 @@
         {
           "title": "Market Crosscurrents: Bulls in Control, Macro Headwinds Loom",
           "publisher": "Zacks"
-        },
-        {
-          "title": "Zacks Investment Ideas feature highlights: USO, Arm, Astera Labs and NVIDIA",
-          "publisher": "Zacks"
-        },
-        {
-          "title": "Sector Update: Energy Stocks Advance Pre-Bell Thursday",
-          "publisher": "MT Newswires"
-        },
-        {
-          "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Thursday Amid Uncertainty Surrounding US-Iran Talks",
-          "publisher": "MT Newswires"
         }
       ],
       "sentiment": {
-        "score": -3,
-        "summary": "儘管能源股上漲，但市場整體因美國與伊朗談判的不確定性以及宏觀經濟逆風而呈現看跌情緒。"
+        "score": 7,
+        "summary": "能源股上漲，企業財報強勁，整體市場情緒偏樂觀，儘管存在宏觀逆風。"
       },
       "analyst_buy": null,
       "analyst_hold": null,
@@ -2203,15 +2203,15 @@
       "week52_high": null,
       "week52_low": null,
       "next_earnings": null,
-      "open_price": 149.27000427246094,
-      "high_price": 150.2550048828125,
-      "low_price": 140.24000549316406,
-      "prev_close": 144.27000427246094,
+      "open_price": 141.42999267578125,
+      "high_price": 143.7779998779297,
+      "low_price": 141.16000366210938,
+      "prev_close": 142.5399932861328,
       "sparkline_points": [
-        42.0
+        25.0
       ],
       "sparkline_svg": "",
-      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,24.0 6.0,21.7 10.0,17.0 14.0,6.3 18.0,9.7 22.0,13.9 26.0,9.2 30.0,12.6 34.0,22.5 38.0,21.5 42.0,22.8 46.0,17.9 50.0,12.4 54.0,14.6 58.0,13.7 62.0,8.6 66.0,7.6 70.0,4.0 74.0,12.5 78.0,14.1\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
+      "price_sparkline_svg": "<svg width=\"80\" height=\"28\" viewBox=\"0 0 80 28\" xmlns=\"http://www.w3.org/2000/svg\"><polyline points=\"2.0,22.8 6.0,17.8 10.0,6.4 14.0,10.1 18.0,14.5 22.0,9.5 26.0,13.1 30.0,23.6 34.0,22.6 38.0,24.0 42.0,18.8 46.0,12.9 50.0,15.3 54.0,14.3 58.0,8.9 62.0,7.8 66.0,4.0 70.0,13.0 74.0,14.8 78.0,15.1\" fill=\"none\" stroke=\"#34d399\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>"
     }
   ]
 }
