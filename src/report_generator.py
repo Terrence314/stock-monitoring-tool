@@ -680,6 +680,7 @@ body.beginner-mode .beginner-only { display: block; }
       <a class="nav-pill" href="#alerts">Alerts{% if alert_history %} <span class="nav-badge">{{ alert_history|length }}</span>{% endif %}</a>
       <a class="nav-pill" href="#stocks">Stocks</a>
       <a class="nav-pill" href="./backtest.html">Backtest</a>
+      <a class="nav-pill" href="./paper_trading.html">📋 Paper Trade</a>
     </nav>
 
     <div class="spacer"></div>

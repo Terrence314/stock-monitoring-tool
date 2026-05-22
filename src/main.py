@@ -9,6 +9,7 @@ from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, r
 from report_generator import generate_dashboard
 from notifier import send_telegram, send_health_alert, format_daily_message
 from backtest import run_backtest
+from paper_trading import run_paper_trading
 
 
 SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
@@ -303,6 +304,14 @@ def _run(cfg: dict) -> None:
         run_backtest([item["ticker"] for item in cfg["watchlist"]])
     except Exception as bt_err:
         print(f"  [backtest] ⚠️ skipped due to error: {bt_err}")
+
+    # ── Paper trading ─────────────────────────────────────────────────────────
+    # Isolated try/except: same isolation principle as backtest
+    try:
+        today_scores = {s["ticker"]: s["score"] for s in stock_results}
+        run_paper_trading(today_key, today_scores, stock_results)
+    except Exception as pt_err:
+        print(f"  [paper_trading] ⚠️ skipped due to error: {pt_err}")
 
     # Summary
     if stock_results:
