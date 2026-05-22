@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paper Trading · Long &amp; Short · 2026-05-22</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0c10; --surface:#13141b; --elevated:#1a1c25; --border:#23252f;
+  --border-hi:#33363f; --text:#e7e8ec; --text-2:#8a8c98; --muted:#52545e;
+  --up:#34d399; --down:#f87171; --amber:#f5b942; --blue:#7aa2ff; --purple:#b18cff;
+  --cyan:#22d3ee;
+  --mono:'JetBrains Mono',monospace; --sans:'Inter',system-ui,sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans);
+  font-size:13px; line-height:1.55; min-height:100vh; -webkit-font-smoothing:antialiased; }
+.top { position:sticky; top:0; z-index:50; background:var(--surface);
+  border-bottom:1px solid var(--border); backdrop-filter:blur(12px); }
+.top-row { display:flex; align-items:center; gap:16px; padding:0 24px; height:56px; }
+.brand-logo { width:26px; height:26px; border-radius:7px;
+  background:linear-gradient(135deg,var(--up),var(--cyan));
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:700; font-size:12px; font-family:var(--mono); }
+.brand-title { font-size:14px; font-weight:600; }
+.brand-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); }
+.back-btn { margin-left:auto; font-family:var(--mono); font-size:11px;
+  color:var(--blue); text-decoration:none; padding:5px 10px;
+  border:1px solid rgba(122,162,255,0.3); border-radius:6px; }
+.back-btn:hover { background:rgba(122,162,255,0.08); }
+.page { max-width:1100px; margin:0 auto; padding:20px 24px 60px; display:flex; flex-direction:column; gap:16px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; }
+.card-title { font-size:14px; font-weight:600; letter-spacing:-0.005em; }
+.card-sub { font-size:11px; color:var(--text-2); }
+.section-pill { display:inline-flex; align-items:center; font-family:var(--mono); font-size:9px;
+  font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:3px 9px;
+  border-radius:10px; background:rgba(52,211,153,0.10); color:var(--up);
+  border:1px solid rgba(52,211,153,0.25); margin-bottom:14px; }
+.section-pill.open-pill { background:rgba(122,162,255,0.10); color:var(--blue);
+  border:1px solid rgba(122,162,255,0.25); }
+.section-pill.closed-pill { background:rgba(245,185,66,0.10); color:var(--amber);
+  border:1px solid rgba(245,185,66,0.25); }
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media (max-width:700px) { .kpi-grid { grid-template-columns:1fr 1fr; } }
+.kpi { background:var(--elevated); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+.kpi-label { font-size:11px; color:var(--text-2); font-weight:500; }
+.kpi-val { font-family:var(--mono); font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-top:6px; }
+.kpi-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); margin-top:2px; }
+.kpi-val.up { color:var(--up); }
+.kpi-val.down { color:var(--down); }
+.kpi-val.amber { color:var(--amber); }
+.kpi-val.blue { color:var(--blue); }
+.kpi-val.neutral { color:var(--text); }
+table { width:100%; border-collapse:collapse; }
+thead tr { background:var(--bg); }
+th { padding:9px 12px; font-size:11px; font-weight:500; color:var(--text-2);
+  text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+th.left { text-align:left; }
+td { padding:11px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:rgba(255,255,255,0.02); }
+.mono { font-family:var(--mono); font-size:12px; }
+.num { font-family:var(--mono); font-size:12px; text-align:right; }
+.chip { font-family:var(--mono); font-size:11px; font-weight:600;
+  padding:2px 8px; border-radius:4px; display:inline-block; }
+.chip.up   { color:var(--up);   background:rgba(52,211,153,0.10); }
+.chip.down { color:var(--down); background:rgba(248,113,113,0.10); }
+.chip.na    { color:var(--muted); background:rgba(255,255,255,0.03); }
+.chip.open  { color:var(--blue);  background:rgba(122,162,255,0.10); }
+.chip.long  { color:var(--up);    background:rgba(52,211,153,0.10); border:1px solid rgba(52,211,153,0.2); }
+.chip.short { color:var(--down);  background:rgba(248,113,113,0.10); border:1px solid rgba(248,113,113,0.2); }
+.ticker-tag { font-family:var(--mono); font-size:11px; font-weight:700;
+  background:var(--elevated); border:1px solid var(--border-hi);
+  padding:2px 8px; border-radius:4px; color:var(--text); }
+.status-dot { display:inline-block; width:7px; height:7px; border-radius:50%;
+  margin-right:5px; vertical-align:middle; }
+.status-dot.open   { background:var(--blue); box-shadow:0 0 4px var(--blue); }
+.status-dot.closed { background:var(--muted); }
+.chart-wrap { margin-top:14px; }
+.chart-label { font-family:var(--mono); font-size:9px; color:var(--text-2);
+  text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+.empty { padding:32px; text-align:center; font-family:var(--mono);
+  font-size:12px; color:var(--text-2); }
+.note-box { background:rgba(122,162,255,0.06); border:1px solid rgba(122,162,255,0.2);
+  border-radius:8px; padding:12px 16px; font-size:12px; color:var(--text-2);
+  font-family:var(--mono); line-height:1.6; }
+.days-bar { background:var(--elevated); border-radius:4px; height:4px; width:80px;
+  display:inline-block; vertical-align:middle; overflow:hidden; }
+.days-fill { height:100%; border-radius:4px; background:var(--blue); }
+.footer { text-align:center; padding:24px; color:var(--muted);
+  font-family:var(--mono); font-size:10px; letter-spacing:0.06em; }
+@media (max-width:768px) {
+  .page { padding:12px 12px 40px; }
+  .mob-hide { display:none !important; }
+  th, td { padding:8px 8px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-row">
+    <div class="brand-logo">P</div>
+    <div>
+      <div class="brand-title">Paper Trading · $1000/trade · 10d hold</div>
+      <div class="brand-sub">updated 2026-05-22 · 2 long · 10 short · buy ≥70 / sell ≤30</div>
+    </div>
+    <a href="./index.html" class="back-btn">← 返回總覽</a>
+  </div>
+</header>
+
+<div class="page">
+
+<!-- ── KPI CARDS ── -->
+<div class="card">
+  <span class="section-pill">Portfolio Summary</span>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Capital Deployed</div>
+      <div class="kpi-val neutral">$12000</div>
+      <div class="kpi-sub">12 × $1000</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Realized P&L</div>
+      <div class="kpi-val up">
+        +0.00
+      </div>
+      <div class="kpi-sub">0 closed trades</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Win Rate</div>
+      
+      <div class="kpi-val neutral">—</div>
+      <div class="kpi-sub">awaiting closures</div>
+      
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg Return / Trade</div>
+      
+      <div class="kpi-val neutral">—</div>
+      
+      <div class="kpi-sub">closed trades only</div>
+    </div>
+  </div>
+
+  <!-- Long vs Short breakdown (shown once there are closed trades) -->
+  
+</div>
+
+<!-- ── FLOATING P&L OPEN ── -->
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+    <span class="section-pill open-pill">Open Positions · 12</span>
+  </div>
+  <div class="card-sub" style="margin-bottom:12px">
+    Floating unrealized: <span style="font-family:var(--mono);color:var(--up)">+0.00</span>
+    · Closes at +10 trading days from entry
+  </div>
+  
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th class="left">Ticker</th>
+        <th class="left mob-hide">Dir</th>
+        <th class="left mob-hide">Entry Date</th>
+        <th>Score</th>
+        <th>Entry $</th>
+        <th>Current $</th>
+        <th>Float P&L</th>
+        <th>Float %</th>
+        <th class="mob-hide">Days Held</th>
+        <th class="mob-hide">Days Left</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">AVGO</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">25</td>
+      <td class="num">414.14</td>
+      <td class="num">414.14</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">MSFT</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">24</td>
+      <td class="num">418.57</td>
+      <td class="num">418.57</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">META</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">28</td>
+      <td class="num">610.26</td>
+      <td class="num">610.26</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">GOOGL</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">25</td>
+      <td class="num">382.97</td>
+      <td class="num">382.97</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">PLTR</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">20</td>
+      <td class="num">136.88</td>
+      <td class="num">136.88</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">DIA</span></td>
+      <td class="mob-hide"><span class="chip long">↑ LONG</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">90</td>
+      <td class="num">506.12</td>
+      <td class="num">506.12</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">XBI</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">25</td>
+      <td class="num">131.66</td>
+      <td class="num">131.66</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">ARKK</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">25</td>
+      <td class="num">76.40</td>
+      <td class="num">76.40</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">CIBR</span></td>
+      <td class="mob-hide"><span class="chip long">↑ LONG</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">75</td>
+      <td class="num">84.28</td>
+      <td class="num">84.28</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">TLT</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">28</td>
+      <td class="num">84.68</td>
+      <td class="num">84.68</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">GLD</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">10</td>
+      <td class="num">413.82</td>
+      <td class="num">413.82</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="status-dot open"></span><span class="ticker-tag">USO</span></td>
+      <td class="mob-hide"><span class="chip short">↓ SHORT</span></td>
+      <td class="mono mob-hide" style="color:var(--text-2)">2026-05-22</td>
+      <td class="num" style="color:var(--amber)">25</td>
+      <td class="num">140.92</td>
+      <td class="num">140.92</td>
+      <td class="num">
+        <span class="chip up">$+0.00</span>
+      </td>
+      <td class="num">
+        <span class="chip up">+0.00%</span>
+      </td>
+      <td class="num mob-hide">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
+          0/10
+          <div class="days-bar"><div class="days-fill" style="width:0%"></div></div>
+        </div>
+      </td>
+      <td class="num mob-hide">
+        
+        <span style="color:var(--text-2)">10d</span>
+        
+      </td>
+    </tr>
+    
+    </tbody>
+  </table>
+  </div>
+  
+</div>
+
+
+<!-- ── CLOSED TRADES ── -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <span class="section-pill closed-pill">Closed Trades · 0</span>
+    
+    <span style="font-size:12px;color:var(--text-2)">First close in ~10 trading days from first signal</span>
+    
+  </div>
+  
+  <div class="empty">
+    No closed trades yet. Positions auto-close after 10 trading days.<br>
+    <span style="color:var(--muted)">First closures expected ~—</span>
+  </div>
+  
+</div>
+
+<!-- ── HOW THIS WORKS ── -->
+<div class="note-box">
+  <strong style="color:var(--text)">How paper trading works:</strong><br>
+  <span style="color:var(--up)">↑ LONG</span> — score ≥ 70: simulates buying $1000 at that day's close. Profit when price rises over the next 10 trading days.<br>
+  <span style="color:var(--down)">↓ SHORT</span> — score ≤ 30: simulates shorting $1000 at that day's close. Profit when price falls over the next 10 trading days.<br>
+  All positions close automatically at +10 trading days. No real money, no commissions, no slippage.
+  Purpose: test whether signal ≥ 70 reliably predicts up moves, and signal ≤ 30 reliably predicts down moves.
+</div>
+
+</div><!-- /.page -->
+<div class="footer">SIGNAL MONITOR · PAPER TRADING · 2026-05-22</div>
+</body>
+</html>
