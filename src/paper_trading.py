@@ -1,13 +1,15 @@
-"""paper_trading.py — Paper trading simulator.
+"""paper_trading.py — Paper trading simulator (long + short).
 
 On every daily run, this module:
-  1. Opens new $1,000 virtual positions for any ticker scoring >= SIGNAL_THRESHOLD
-  2. Updates floating P&L for open positions using today's fresh prices
-  3. Auto-closes positions that have been held for HOLD_DAYS trading days
-  4. Renders outputs/paper_trading.html
+  1. Opens LONG $1,000 positions for tickers scoring >= BUY_THRESHOLD (≥70)
+  2. Opens SHORT $1,000 positions for tickers scoring <= SELL_THRESHOLD (≤30)
+  3. Updates floating P&L for all open positions using today's fresh prices
+  4. Auto-closes positions held for HOLD_DAYS trading days
+  5. Renders outputs/paper_trading.html
 
-Portfolio state persists in outputs/paper_portfolio.json, which is deployed
-to GitHub Pages and fetched back at the start of each pipeline run via curl.
+Short P&L is inverted: profit when price falls (sell high → buy back low).
+Portfolio state persists in outputs/paper_portfolio.json, deployed to
+GitHub Pages and restored via curl before each pipeline run.
 """
 
 import os
@@ -17,7 +19,9 @@ import yfinance as yf
 from jinja2 import Template
 
 PORTFOLIO_FILE   = os.path.join("outputs", "paper_portfolio.json")
-SIGNAL_THRESHOLD = 70
+BUY_THRESHOLD    = 70       # score >= this → LONG signal
+SELL_THRESHOLD   = 30       # score <= this → SHORT signal
+SIGNAL_THRESHOLD = BUY_THRESHOLD   # kept for backtest compat
 NOTIONAL         = 1000.0   # USD virtual capital per trade
 HOLD_DAYS        = 10       # trading days before auto-close
 
@@ -103,18 +107,30 @@ def _get_exit_price(ticker: str, exit_date: str, series: dict) -> float | None:
 # ── Stats helpers ──────────────────────────────────────────────────────────────
 
 def _float_pnl(trade: dict) -> tuple:
-    """Return (pnl_dollars, pnl_pct) for an open position using current_price."""
+    """Return (pnl_dollars, pnl_pct) for an open position using current_price.
+
+    For LONG:  profit when price rises   → (current - entry) * shares
+    For SHORT: profit when price falls   → (entry - current) * shares
+    """
     cp = trade.get("current_price") or trade["entry_price"]
     ep = trade["entry_price"]
     shares = trade["shares"]
-    pnl = round((cp - ep) * shares, 2)
-    pct = round((cp - ep) / ep * 100, 2) if ep > 0 else 0.0
+    is_short = trade.get("direction", "long") == "short"
+    if is_short:
+        pnl = round((ep - cp) * shares, 2)
+        pct = round((ep - cp) / ep * 100, 2) if ep > 0 else 0.0
+    else:
+        pnl = round((cp - ep) * shares, 2)
+        pct = round((cp - ep) / ep * 100, 2) if ep > 0 else 0.0
     return pnl, pct
 
 
 def _build_stats(trades: list) -> dict:
     closed = [t for t in trades if t["status"] == "closed"]
     open_t = [t for t in trades if t["status"] == "open"]
+
+    longs  = [t for t in trades if t.get("direction", "long") == "long"]
+    shorts = [t for t in trades if t.get("direction", "long") == "short"]
 
     realized_pnl = round(sum(t["pnl"] or 0 for t in closed), 2)
 
@@ -130,15 +146,33 @@ def _build_stats(trades: list) -> dict:
     pnl_pcts = [t["pnl_pct"] for t in closed if t.get("pnl_pct") is not None]
     avg_return = round(sum(pnl_pcts) / len(pnl_pcts), 2) if pnl_pcts else None
 
+    # Per-side closed stats
+    def _side_stats(side_trades: list) -> dict:
+        side_closed = [t for t in side_trades if t["status"] == "closed"]
+        if not side_closed:
+            return {"n": 0, "win_rate": None, "avg": None, "pnl": 0.0}
+        side_wins = sum(1 for t in side_closed if (t["pnl"] or 0) > 0)
+        side_pcts = [t["pnl_pct"] for t in side_closed if t.get("pnl_pct") is not None]
+        return {
+            "n":        len(side_closed),
+            "win_rate": round(side_wins / len(side_closed) * 100, 1),
+            "avg":      round(sum(side_pcts) / len(side_pcts), 2) if side_pcts else None,
+            "pnl":      round(sum(t["pnl"] or 0 for t in side_closed), 2),
+        }
+
     return {
         "n_open":          len(open_t),
         "n_closed":        len(closed),
+        "n_long":          len(longs),
+        "n_short":         len(shorts),
         "total_trades":    len(trades),
         "realized_pnl":    realized_pnl,
         "float_pnl":       float_pnl_total,
         "win_rate":        win_rate,
         "avg_return":      avg_return,
         "total_notional":  len(trades) * NOTIONAL,
+        "long_stats":      _side_stats(longs),
+        "short_stats":     _side_stats(shorts),
     }
 
 
@@ -187,7 +221,7 @@ PAPER_HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paper Trading · {{ date }}</title>
+<title>Paper Trading · Long &amp; Short · {{ date }}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -251,8 +285,10 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
   padding:2px 8px; border-radius:4px; display:inline-block; }
 .chip.up   { color:var(--up);   background:rgba(52,211,153,0.10); }
 .chip.down { color:var(--down); background:rgba(248,113,113,0.10); }
-.chip.na   { color:var(--muted); background:rgba(255,255,255,0.03); }
-.chip.open { color:var(--blue);  background:rgba(122,162,255,0.10); }
+.chip.na    { color:var(--muted); background:rgba(255,255,255,0.03); }
+.chip.open  { color:var(--blue);  background:rgba(122,162,255,0.10); }
+.chip.long  { color:var(--up);    background:rgba(52,211,153,0.10); border:1px solid rgba(52,211,153,0.2); }
+.chip.short { color:var(--down);  background:rgba(248,113,113,0.10); border:1px solid rgba(248,113,113,0.2); }
 .ticker-tag { font-family:var(--mono); font-size:11px; font-weight:700;
   background:var(--elevated); border:1px solid var(--border-hi);
   padding:2px 8px; border-radius:4px; color:var(--text); }
@@ -286,7 +322,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <div class="brand-logo">P</div>
     <div>
       <div class="brand-title">Paper Trading · ${{ notional|int }}/trade · {{ hold_days }}d hold</div>
-      <div class="brand-sub">updated {{ date }} · {{ stats.total_trades }} trades · threshold ≥ {{ threshold }}</div>
+      <div class="brand-sub">updated {{ date }} · {{ stats.n_long }} long · {{ stats.n_short }} short · buy ≥{{ buy_threshold }} / sell ≤{{ sell_threshold }}</div>
     </div>
     <a href="./index.html" class="back-btn">← 返回總覽</a>
   </div>
@@ -334,6 +370,28 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       <div class="kpi-sub">closed trades only</div>
     </div>
   </div>
+
+  <!-- Long vs Short breakdown (shown once there are closed trades) -->
+  {% if stats.n_closed > 0 %}
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:8px;padding:12px 14px">
+      <div style="font-size:11px;color:var(--up);font-weight:600;margin-bottom:6px">📈 LONG  (score ≥ {{ buy_threshold }})</div>
+      {% if stats.long_stats.n > 0 %}
+      <span class="mono" style="font-size:12px">{{ stats.long_stats.n }} closed · win rate <strong>{{ stats.long_stats.win_rate }}%</strong> · avg <strong style="color:{{ 'var(--up)' if stats.long_stats.avg >= 0 else 'var(--down)' }}">{{ '%+.2f'|format(stats.long_stats.avg) if stats.long_stats.avg is not none else '—' }}%</strong></span>
+      {% else %}
+      <span class="mono" style="font-size:11px;color:var(--muted)">no closed longs yet</span>
+      {% endif %}
+    </div>
+    <div style="background:rgba(248,113,113,0.05);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:12px 14px">
+      <div style="font-size:11px;color:var(--down);font-weight:600;margin-bottom:6px">📉 SHORT  (score ≤ {{ sell_threshold }})</div>
+      {% if stats.short_stats.n > 0 %}
+      <span class="mono" style="font-size:12px">{{ stats.short_stats.n }} closed · win rate <strong>{{ stats.short_stats.win_rate }}%</strong> · avg <strong style="color:{{ 'var(--up)' if stats.short_stats.avg >= 0 else 'var(--down)' }}">{{ '%+.2f'|format(stats.short_stats.avg) if stats.short_stats.avg is not none else '—' }}%</strong></span>
+      {% else %}
+      <span class="mono" style="font-size:11px;color:var(--muted)">no closed shorts yet</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 
 <!-- ── FLOATING P&L OPEN ── -->
@@ -352,6 +410,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <thead>
       <tr>
         <th class="left">Ticker</th>
+        <th class="left mob-hide">Dir</th>
         <th class="left mob-hide">Entry Date</th>
         <th>Score</th>
         <th>Entry $</th>
@@ -366,6 +425,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     {% for p in open_positions %}
     <tr>
       <td><span class="status-dot open"></span><span class="ticker-tag">{{ p.ticker }}</span></td>
+      <td class="mob-hide"><span class="chip {{ p.direction }}">{{ '↑ LONG' if p.direction == 'long' else '↓ SHORT' }}</span></td>
       <td class="mono mob-hide" style="color:var(--text-2)">{{ p.signal_date }}</td>
       <td class="num" style="color:var(--amber)">{{ p.score }}</td>
       <td class="num">{{ '%.2f'|format(p.entry_price) }}</td>
@@ -414,6 +474,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <thead>
       <tr>
         <th class="left">Ticker</th>
+        <th class="left mob-hide">Dir</th>
         <th class="left mob-hide">Entry Date</th>
         <th class="mob-hide">Exit Date</th>
         <th>Score</th>
@@ -427,6 +488,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     {% for t in closed_trades %}
     <tr>
       <td><span class="status-dot closed"></span><span class="ticker-tag">{{ t.ticker }}</span></td>
+      <td class="mob-hide"><span class="chip {{ t.direction }}">{{ '↑ LONG' if t.direction == 'long' else '↓ SHORT' }}</span></td>
       <td class="mono mob-hide" style="color:var(--text-2)">{{ t.signal_date }}</td>
       <td class="mono mob-hide" style="color:var(--text-2)">{{ t.exit_date }}</td>
       <td class="num" style="color:var(--amber)">{{ t.score }}</td>
@@ -461,9 +523,10 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
 <!-- ── HOW THIS WORKS ── -->
 <div class="note-box">
   <strong style="color:var(--text)">How paper trading works:</strong><br>
-  Every time a ticker scores ≥ {{ threshold }}/100, this tracker simulates a ${{ notional|int }} virtual buy at that day's closing price.
-  The position is automatically closed {{ hold_days }} trading days later. P&L is calculated against the closing price on exit day.
-  No real money, no commissions. Purpose: measure whether signal ≥ {{ threshold }} actually predicts positive returns over the next ~2 trading weeks.
+  <span style="color:var(--up)">↑ LONG</span> — score ≥ {{ buy_threshold }}: simulates buying ${{ notional|int }} at that day's close. Profit when price rises over the next {{ hold_days }} trading days.<br>
+  <span style="color:var(--down)">↓ SHORT</span> — score ≤ {{ sell_threshold }}: simulates shorting ${{ notional|int }} at that day's close. Profit when price falls over the next {{ hold_days }} trading days.<br>
+  All positions close automatically at +{{ hold_days }} trading days. No real money, no commissions, no slippage.
+  Purpose: test whether signal ≥ {{ buy_threshold }} reliably predicts up moves, and signal ≤ {{ sell_threshold }} reliably predicts down moves.
 </div>
 
 </div><!-- /.page -->
@@ -516,6 +579,8 @@ def _render_html(today_str: str, trades: list, calendar: list) -> str:
     return Template(PAPER_HTML).render(
         date=today_str,
         threshold=SIGNAL_THRESHOLD,
+        buy_threshold=BUY_THRESHOLD,
+        sell_threshold=SELL_THRESHOLD,
         notional=NOTIONAL,
         hold_days=HOLD_DAYS,
         stats=stats,
@@ -551,19 +616,18 @@ def run_paper_trading(
 
     # ── 1. Open new positions ──────────────────────────────────────────────────
     new_count = 0
-    for ticker, score in today_scores.items():
-        if score < SIGNAL_THRESHOLD:
-            continue
-        trade_id = f"{ticker}-{today_str}"
+
+    def _open_trade(ticker: str, score: int, direction: str, entry_price: float) -> None:
+        nonlocal new_count
+        suffix = "" if direction == "long" else "-S"
+        trade_id = f"{ticker}{suffix}-{today_str}"
         if trade_id in existing_ids:
-            continue
-        entry_price = price_map.get(ticker)
-        if not entry_price:
-            continue
+            return
         shares = round(NOTIONAL / entry_price, 6)
         trades.append({
             "id":            trade_id,
             "ticker":        ticker,
+            "direction":     direction,
             "signal_date":   today_str,
             "entry_price":   round(entry_price, 2),
             "shares":        shares,
@@ -578,6 +642,15 @@ def run_paper_trading(
             "pnl_pct":       None,
         })
         new_count += 1
+
+    for ticker, score in today_scores.items():
+        entry_price = price_map.get(ticker)
+        if not entry_price or entry_price <= 0:
+            continue
+        if score >= BUY_THRESHOLD:
+            _open_trade(ticker, score, "long", entry_price)
+        elif score <= SELL_THRESHOLD:
+            _open_trade(ticker, score, "short", entry_price)
 
     if not trades:
         print("  [paper_trading] no trades yet — skipping")
@@ -631,8 +704,14 @@ def run_paper_trading(
         if not exit_price or exit_price <= 0:
             continue
 
-        pnl     = round((exit_price - trade["entry_price"]) * trade["shares"], 2)
-        pnl_pct = round((exit_price - trade["entry_price"]) / trade["entry_price"] * 100, 2)
+        ep = trade["entry_price"]
+        if trade.get("direction", "long") == "short":
+            # Short: profit when price falls (sold high, buy back low)
+            pnl     = round((ep - exit_price) * trade["shares"], 2)
+            pnl_pct = round((ep - exit_price) / ep * 100, 2)
+        else:
+            pnl     = round((exit_price - ep) * trade["shares"], 2)
+            pnl_pct = round((exit_price - ep) / ep * 100, 2)
         trade.update({
             "status":     "closed",
             "exit_date":  exit_date,
