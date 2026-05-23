@@ -726,9 +726,10 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="filter-btn mob-hide" id="view-btn" data-view="cards" title="Toggle view">⊞ Cards</button>
     <span class="filter-sep mob-hide"></span>
     <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
-    <button class="refresh-btn mob-hide" id="refresh-btn" onclick="doRefresh(this)" title="Reload page to get latest prices"><span class="spin-icon">↻</span> Refresh</button>
+    <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page to get latest prices"><span class="spin-icon">↻</span> Refresh</button>
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
     <span class="filter-meta mob-hide" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
+    <span class="filter-meta mob-hide" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
 
@@ -1567,6 +1568,28 @@ function doRefresh(btn) {
   // Hard reload — bypasses browser cache, picks up latest GitHub Pages deploy
   window.location.reload(true);
 }
+
+// ── Auto-refresh every 10 min with countdown display ─────────────────
+(function() {
+  var AUTO_REFRESH_MS = 10 * 60 * 1000;  // 10 minutes
+  var deadline = Date.now() + AUTO_REFRESH_MS;
+  var countdownEl = document.getElementById('auto-refresh-countdown');
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function tick() {
+    var remaining = Math.max(0, deadline - Date.now());
+    var mins = Math.floor(remaining / 60000);
+    var secs = Math.floor((remaining % 60000) / 1000);
+    if (countdownEl) countdownEl.textContent = '· auto ↻ ' + pad(mins) + ':' + pad(secs);
+    if (remaining <= 0) {
+      window.location.reload(true);
+    }
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
 
 // View toggle (cards ↔ table)
 (function() {
