@@ -57,6 +57,8 @@ def main():
     cache = load_json_file(LAST_ANALYSIS_CACHE, {})
     cached_stocks  = {s["ticker"]: s for s in cache.get("stock_results", [])}
     morning_brief  = cache.get("morning_brief", "（等待今日早盤簡報…）")
+    hk_brief       = cache.get("hk_brief", "")
+    hk_data        = cache.get("hk_data", {})
     cached_date    = cache.get("date", "未知")
     print(f"  AI 快取：{len(cached_stocks)} 檔（最後完整分析：{cached_date}）")
 
@@ -171,6 +173,8 @@ def main():
         score_history=score_history,
         alert_history=alert_history,
         fear_greed=fear_greed,
+        hk_brief=hk_brief,
+        hk_data=hk_data,
     )
     print(f"  報告已更新：{report_path}")
     print("\n  完成 ✅")

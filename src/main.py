@@ -3,9 +3,9 @@ import json
 import sys
 from datetime import datetime, timedelta
 
-from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data, fetch_fear_greed
+from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data, fetch_fear_greed, fetch_hk_indicators
 from technical_analysis import calculate_indicators
-from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment
+from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment, run_hk_morning_brief
 from report_generator import generate_dashboard
 from notifier import send_telegram, send_health_alert, format_daily_message
 from backtest import run_backtest
@@ -137,9 +137,17 @@ def _run(cfg: dict) -> None:
     fear_greed = fetch_fear_greed()
     print(f"      取得 {len(market)} 個市場指標 · F&G: {fear_greed.get('value', 'N/A')}")
 
+    # ── 2b. HK indicators ────────────────────────────────────────────────────
+    print("      抓取港股風向指標（TCEHY / BABA / ^HSI / EWH / ^TNX）…")
+    hk_data = fetch_hk_indicators()
+    print(f"      取得 {sum(1 for v in hk_data.values() if v.get('price'))} 個港股指標")
+
     # ── 3. Morning brief ─────────────────────────────────────────────────────
     print("[3/5] 生成早盤簡報（F→G→H→I）…")
     morning_brief = run_morning_brief(model, market)
+
+    print("      生成港股盤前分析…")
+    hk_brief = run_hk_morning_brief(model, hk_data, market)
 
     # ── 4. Watchlist analysis ────────────────────────────────────────────────
     print(f"[4/5] 分析 {len(cfg['watchlist'])} 檔股票…")
@@ -274,6 +282,8 @@ def _run(cfg: dict) -> None:
         score_history=score_history,
         alert_history=alert_history,
         fear_greed=fear_greed,
+        hk_brief=hk_brief,
+        hk_data=hk_data,
     )
     print(f"      報告已儲存：{report_path}")
 
@@ -284,6 +294,8 @@ def _run(cfg: dict) -> None:
     save_json_file(cache_path, {
         "date":          today_key,
         "morning_brief": morning_brief,
+        "hk_brief":      hk_brief,
+        "hk_data":       hk_data,
         "market":        market,
         "fear_greed":    fear_greed,
         "stock_results": [

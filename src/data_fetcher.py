@@ -212,3 +212,58 @@ def fetch_fear_greed() -> dict:
     except Exception as e:
         print(f"  [data_fetcher] fear_greed error: {e}")
         return {}
+
+
+def fetch_hk_indicators() -> dict:
+    """Fetch HK-relevant pre-market indicators via yfinance (all free, no API key).
+
+    Returns a dict with price, change_pct, and label for each indicator.
+    Used by the HK Morning Brief Gemini prompt.
+
+    Tickers fetched:
+      TCEHY  — Tencent ADR (OTC US, proxy for 0700.HK)
+      BABA   — Alibaba US (proxy for 9988.HK)
+      ^HSI   — Hang Seng Index (delayed)
+      EWH    — iShares MSCI Hong Kong ETF (US-listed)
+      ^TNX   — US 10-Year Treasury Yield
+      ^VIX   — VIX Fear Index (already in market overview, included here for context)
+      ^GSPC  — S&P 500 Index
+      ^IXIC  — Nasdaq Composite
+      ^SOX   — Philadelphia Semiconductor Index
+      ^DJI   — Dow Jones Industrial Average
+    """
+    HK_TICKERS = {
+        "TCEHY":  "騰訊 ADR",
+        "BABA":   "阿里巴巴 US",
+        "^HSI":   "恒生指數",
+        "EWH":    "港股 ETF (EWH)",
+        "^TNX":   "美國10年債息",
+        "^VIX":   "VIX 恐慌指數",
+        "^GSPC":  "S&P 500",
+        "^IXIC":  "納斯達克",
+        "^SOX":   "費城半導體 SOX",
+        "^DJI":   "道瓊斯",
+    }
+
+    result = {}
+    for ticker, label in HK_TICKERS.items():
+        try:
+            t = yf.Ticker(ticker)
+            hist = t.history(period="5d")
+            if hist.empty or len(hist) < 2:
+                result[ticker] = {"label": label, "price": None, "prev": None, "change_pct": None}
+                continue
+            price = round(float(hist["Close"].iloc[-1]), 2)
+            prev  = round(float(hist["Close"].iloc[-2]), 2)
+            chg   = round((price - prev) / prev * 100, 2) if prev else None
+            result[ticker] = {
+                "label":      label,
+                "price":      price,
+                "prev":       prev,
+                "change_pct": chg,
+            }
+        except Exception as e:
+            result[ticker] = {"label": label, "price": None, "prev": None, "change_pct": None}
+            print(f"  [hk_indicators] {ticker} error: {e}")
+
+    return result

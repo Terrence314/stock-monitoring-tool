@@ -181,3 +181,57 @@ def run_news_sentiment(model, ticker: str, headlines: list) -> dict:
         pass
 
     return {"score": score, "summary": summary}
+
+
+
+def run_hk_morning_brief(model, hk_data: dict, market_data: dict) -> str:
+    """Generate a HK pre-market brief in Traditional Chinese using Gemini.
+
+    hk_data: output of fetch_hk_indicators()
+    market_data: output of fetch_market_overview() — US indices context
+
+    Returns a markdown string suitable for rendering in the HK tab of the dashboard.
+    """
+
+    def _fmt(item: dict) -> str:
+        if item.get("price") is None:
+            return "無數據"
+        chg = item.get("change_pct")
+        arrow = "▲" if (chg or 0) >= 0 else "▼"
+        chg_str = f"{arrow}{abs(chg):.2f}%" if chg is not None else ""
+        return f"{item['price']:,.2f} {chg_str}"
+
+    lines = ["【美股及港股風向指標（最新數據）】"]
+    for ticker, info in hk_data.items():
+        lines.append(f"- {info['label']} ({ticker}): {_fmt(info)}")
+
+    data_block = "\n".join(lines)
+
+    prompt = f"""你是香港財經分析師，請用繁體中文（香港財經用語）撰寫一份簡潔的港股盤前分析。
+
+{data_block}
+
+請輸出以下格式（使用 Markdown，每節不超過150字）：
+
+## 🌍 昨夜美股概況
+（用1-2句說明美股整體走勢、強弱板塊）
+
+## 📊 港股開盤預測
+（根據上述數據，判斷今日港股偏多/偏空/中性，港指預計高開/平開/低開，給出明確結論）
+
+## 🔍 重點關注
+（列出3項今日最值得注意的市場信號或板塊，每項一行，附簡短白話解釋）
+
+## ⚠️ 風險提示
+（1-2句，今日最大的不確定因素）
+
+## 💡 新手小提示
+（1句，用最簡單的話告訴新手今天應持什麼態度：積極/保守/觀望）
+
+注意：
+- 上漲用「↑紅」，下跌用「↓綠」描述（文字描述，非HTML顏色）
+- 所有分析必須基於上方提供的真實數據
+- 每個技術術語第一次出現時附白話解釋
+- 必須給出明確結論，不可模糊"""
+
+    return _call(model, prompt)
