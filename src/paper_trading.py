@@ -23,7 +23,9 @@ BUY_THRESHOLD    = 70       # score >= this → LONG signal
 SELL_THRESHOLD   = 30       # score <= this → SHORT signal
 SIGNAL_THRESHOLD = BUY_THRESHOLD   # kept for backtest compat
 NOTIONAL         = 1000.0   # USD virtual capital per trade
-HOLD_DAYS        = 10       # trading days before auto-close
+HOLD_DAYS        = 10       # trading days before auto-close (fallback)
+TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% / SHORT at -12% price move
+STOP_LOSS_PCT    = 8.0      # close LONG at -8%  / SHORT at +8%  price move
 
 
 # ── Persistence ────────────────────────────────────────────────────────────────
@@ -412,6 +414,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <th class="left">Ticker</th>
         <th class="left mob-hide">Dir</th>
         <th class="left mob-hide">Entry Date</th>
+        <th class="left mob-hide">Patterns</th>
         <th>Score</th>
         <th>Entry $</th>
         <th>Current $</th>
@@ -427,6 +430,15 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       <td><span class="status-dot open"></span><span class="ticker-tag">{{ p.ticker }}</span></td>
       <td class="mob-hide"><span class="chip {{ p.direction }}">{{ '↑ LONG' if p.direction == 'long' else '↓ SHORT' }}</span></td>
       <td class="mono mob-hide" style="color:var(--text-2)">{{ p.signal_date }}</td>
+      <td class="mob-hide" style="max-width:200px">
+        {% for pname in (p.patterns_triggered or []) %}
+        <span style="font-family:var(--mono);font-size:9px;background:rgba(122,162,255,0.08);
+          border:1px solid rgba(122,162,255,0.2);color:var(--blue);padding:1px 5px;
+          border-radius:3px;display:inline-block;margin:1px 1px 1px 0">{{ pname }}</span>
+        {% else %}
+        <span style="color:var(--muted);font-size:11px">—</span>
+        {% endfor %}
+      </td>
       <td class="num" style="color:var(--amber)">{{ p.score }}</td>
       <td class="num">{{ '%.2f'|format(p.entry_price) }}</td>
       <td class="num">{{ '%.2f'|format(p.current_price) }}</td>
@@ -477,6 +489,8 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <th class="left mob-hide">Dir</th>
         <th class="left mob-hide">Entry Date</th>
         <th class="mob-hide">Exit Date</th>
+        <th class="mob-hide">Close Reason</th>
+        <th class="left mob-hide">Patterns</th>
         <th>Score</th>
         <th>Entry $</th>
         <th>Exit $</th>
@@ -491,6 +505,25 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       <td class="mob-hide"><span class="chip {{ t.direction }}">{{ '↑ LONG' if t.direction == 'long' else '↓ SHORT' }}</span></td>
       <td class="mono mob-hide" style="color:var(--text-2)">{{ t.signal_date }}</td>
       <td class="mono mob-hide" style="color:var(--text-2)">{{ t.exit_date }}</td>
+      <td class="mob-hide">
+        {% set r = t.exit_reason or 'hold_period' %}
+        {% if r == 'take_profit' %}
+        <span style="font-family:var(--mono);font-size:10px;color:var(--up);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);padding:2px 7px;border-radius:4px">✅ TP +{{ take_profit_pct }}%</span>
+        {% elif r == 'stop_loss' %}
+        <span style="font-family:var(--mono);font-size:10px;color:var(--down);background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);padding:2px 7px;border-radius:4px">🛑 SL -{{ stop_loss_pct }}%</span>
+        {% else %}
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text-2);background:var(--elevated);border:1px solid var(--border);padding:2px 7px;border-radius:4px">⏱ {{ hold_days }}d hold</span>
+        {% endif %}
+      </td>
+      <td class="mob-hide" style="max-width:200px">
+        {% for pname in (t.patterns_triggered or []) %}
+        <span style="font-family:var(--mono);font-size:9px;background:rgba(122,162,255,0.08);
+          border:1px solid rgba(122,162,255,0.2);color:var(--blue);padding:1px 5px;
+          border-radius:3px;display:inline-block;margin:1px 1px 1px 0">{{ pname }}</span>
+        {% else %}
+        <span style="color:var(--muted);font-size:11px">—</span>
+        {% endfor %}
+      </td>
       <td class="num" style="color:var(--amber)">{{ t.score }}</td>
       <td class="num">{{ '%.2f'|format(t.entry_price) }}</td>
       <td class="num">{{ '%.2f'|format(t.exit_price) }}</td>
@@ -525,8 +558,8 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
   <strong style="color:var(--text)">How paper trading works:</strong><br>
   <span style="color:var(--up)">↑ LONG</span> — score ≥ {{ buy_threshold }}: simulates buying ${{ notional|int }} at that day's close. Profit when price rises over the next {{ hold_days }} trading days.<br>
   <span style="color:var(--down)">↓ SHORT</span> — score ≤ {{ sell_threshold }}: simulates shorting ${{ notional|int }} at that day's close. Profit when price falls over the next {{ hold_days }} trading days.<br>
-  All positions close automatically at +{{ hold_days }} trading days. No real money, no commissions, no slippage.
-  Purpose: test whether signal ≥ {{ buy_threshold }} reliably predicts up moves, and signal ≤ {{ sell_threshold }} reliably predicts down moves.
+  Positions close when: <span style="color:var(--up)">Take Profit +{{ take_profit_pct }}%</span> reached · <span style="color:var(--down)">Stop Loss -{{ stop_loss_pct }}%</span> hit · or after <span style="color:var(--amber)">{{ hold_days }} trading days</span> (whichever comes first).<br>
+  No real money, no commissions, no slippage. Purpose: test whether signals reliably predict moves before going live.
 </div>
 
 </div><!-- /.page -->
@@ -583,6 +616,8 @@ def _render_html(today_str: str, trades: list, calendar: list) -> str:
         sell_threshold=SELL_THRESHOLD,
         notional=NOTIONAL,
         hold_days=HOLD_DAYS,
+        take_profit_pct=TAKE_PROFIT_PCT,
+        stop_loss_pct=STOP_LOSS_PCT,
         stats=stats,
         open_positions=open_positions,
         closed_trades=closed_trades,
@@ -595,9 +630,10 @@ def _render_html(today_str: str, trades: list, calendar: list) -> str:
 
 def run_paper_trading(
     today_str: str,
-    today_scores: dict,       # {ticker: score} for today
-    stock_results: list,      # today's full stock results (has live prices)
+    today_scores: dict,         # {ticker: score} for today
+    stock_results: list,        # today's full stock results (has live prices)
     output_dir: str = "outputs",
+    active_patterns: dict = None,  # {ticker: [{name,...}]} from pattern_engine
 ) -> str | None:
     """Run paper trading update and generate paper_trading.html.
 
@@ -624,22 +660,29 @@ def run_paper_trading(
         if trade_id in existing_ids:
             return
         shares = round(NOTIONAL / entry_price, 6)
+        # Attach active pattern names at trade open for attribution
+        patterns_triggered = []
+        if active_patterns:
+            for p in active_patterns.get(ticker, []):
+                patterns_triggered.append(p["name"])
         trades.append({
-            "id":            trade_id,
-            "ticker":        ticker,
-            "direction":     direction,
-            "signal_date":   today_str,
-            "entry_price":   round(entry_price, 2),
-            "shares":        shares,
-            "notional":      NOTIONAL,
-            "score":         score,
-            "status":        "open",
-            "exit_date":     None,
-            "exit_price":    None,
-            "current_price": round(entry_price, 2),
-            "current_date":  today_str,
-            "pnl":           None,
-            "pnl_pct":       None,
+            "id":                trade_id,
+            "ticker":            ticker,
+            "direction":         direction,
+            "signal_date":       today_str,
+            "entry_price":       round(entry_price, 2),
+            "shares":            shares,
+            "notional":          NOTIONAL,
+            "score":             score,
+            "status":            "open",
+            "exit_date":         None,
+            "exit_price":        None,
+            "exit_reason":       None,
+            "current_price":     round(entry_price, 2),
+            "current_date":      today_str,
+            "pnl":               None,
+            "pnl_pct":           None,
+            "patterns_triggered": patterns_triggered,
         })
         new_count += 1
 
@@ -669,7 +712,37 @@ def run_paper_trading(
             trade["current_price"] = round(cp, 2)
             trade["current_date"] = today_str
 
-    # ── 4. Identify positions ready to close ──────────────────────────────────
+    # ── 4a. Check Take-Profit / Stop-Loss on open positions ───────────────────
+    for trade in open_trades:
+        cp = trade.get("current_price") or trade["entry_price"]
+        ep = trade["entry_price"]
+        if ep <= 0:
+            continue
+        is_short = trade.get("direction", "long") == "short"
+        if is_short:
+            pct = (ep - cp) / ep * 100   # short profits when price falls
+        else:
+            pct = (cp - ep) / ep * 100   # long profits when price rises
+
+        if pct >= TAKE_PROFIT_PCT:
+            trade["status"]      = "closed"
+            trade["exit_date"]   = today_str
+            trade["exit_price"]  = round(cp, 2)
+            trade["exit_reason"] = "take_profit"
+            trade["pnl"]         = round((cp - ep if not is_short else ep - cp) * trade["shares"], 2)
+            trade["pnl_pct"]     = round(pct, 2)
+        elif pct <= -STOP_LOSS_PCT:
+            trade["status"]      = "closed"
+            trade["exit_date"]   = today_str
+            trade["exit_price"]  = round(cp, 2)
+            trade["exit_reason"] = "stop_loss"
+            trade["pnl"]         = round((cp - ep if not is_short else ep - cp) * trade["shares"], 2)
+            trade["pnl_pct"]     = round(pct, 2)
+
+    # Re-filter open trades after TP/SL check
+    open_trades = [t for t in trades if t["status"] == "open"]
+
+    # ── 4b. Identify positions ready to close by hold period ──────────────────
     need_hist: dict = {}   # {ticker: earliest_exit_date}
     to_close = []
     for trade in open_trades:
@@ -713,11 +786,12 @@ def run_paper_trading(
             pnl     = round((exit_price - ep) * trade["shares"], 2)
             pnl_pct = round((exit_price - ep) / ep * 100, 2)
         trade.update({
-            "status":     "closed",
-            "exit_date":  exit_date,
-            "exit_price": round(exit_price, 2),
-            "pnl":        pnl,
-            "pnl_pct":    pnl_pct,
+            "status":      "closed",
+            "exit_date":   exit_date,
+            "exit_price":  round(exit_price, 2),
+            "exit_reason": trade.get("exit_reason") or "hold_period",
+            "pnl":         pnl,
+            "pnl_pct":     pnl_pct,
         })
 
     portfolio["trades"] = trades
