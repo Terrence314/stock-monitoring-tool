@@ -606,6 +606,7 @@ body {
   .market-strip { padding: 8px 14px; gap: 14px; }
   .filter-bar { padding: 8px 14px; gap: 5px; }
   .filter-meta { display: none; }
+  #update-stamp, #auto-refresh-countdown { display: inline !important; font-size: 10px; }
   .page { padding: 12px 12px 40px; }
   .kpi-val { font-size: 20px; }
   .mob-hide { display: none !important; }
@@ -681,6 +682,8 @@ body.beginner-mode .beginner-only { display: block; }
       <a class="nav-pill" href="#stocks">Stocks</a>
       <a class="nav-pill" href="./backtest.html">Backtest</a>
       <a class="nav-pill" href="./paper_trading.html">📋 Paper Trade</a>
+      <a class="nav-pill" href="./pattern_backtest.html">🔬 Patterns</a>
+      <a class="nav-pill" href="./portfolio.html">💼 Portfolio</a>
       <a class="nav-pill" href="#hkbrief">🇭🇰 港股</a>
     </nav>
 
@@ -728,8 +731,8 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page to get latest prices"><span class="spin-icon">↻</span> Refresh</button>
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
-    <span class="filter-meta mob-hide" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
-    <span class="filter-meta mob-hide" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
+    <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
 
