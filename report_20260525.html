@@ -771,8 +771,8 @@ body.beginner-mode .beginner-only { display: block; }
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">77,143.66</span>
-        <span class="pct up">+0.61%</span>
+        <span class="market-price">77,239.02</span>
+        <span class="pct up">+0.34%</span>
       </div>
     </div>
     
@@ -793,9 +793,11 @@ body.beginner-mode .beginner-only { display: block; }
     <span class="filter-sep mob-hide"></span>
     <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
-    <a class="run-btn" href="https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml" target="_blank" rel="noopener" title="Trigger a fresh price fetch on GitHub Actions (opens in new tab)">▶ Run Now</a>
+    
+    <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
+    
     <span class="filter-meta" id="filter-count">30 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated May 25 14:25 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated May 25 15:14 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -7582,6 +7584,51 @@ function toggleMode() {
 
   updateMarketStatus();
   setInterval(updateMarketStatus, 60000);  // re-check every minute
+})();
+
+// ── Run Now — trigger GitHub Actions workflow_dispatch ───────────────
+(function() {
+  var TOKEN = "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";
+  var API   = "https://api.github.com/repos/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml/dispatches";
+
+  window.triggerRefresh = function(btn) {
+    if (!TOKEN) return;
+    btn.disabled    = true;
+    btn.textContent = "⏳ Triggering…";
+
+    fetch(API, {
+      method:  "POST",
+      headers: {
+        "Authorization": "Bearer " + TOKEN,
+        "Accept":        "application/vnd.github+json",
+        "Content-Type":  "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({ ref: "main" }),
+    })
+    .then(function(r) {
+      if (r.status === 204) {
+        btn.textContent = "✅ Running…";
+        btn.style.color = "var(--up)";
+        // Auto-reload page after ~90s to pick up fresh data
+        setTimeout(function() { window.location.reload(true); }, 90000);
+        // Countdown on the button
+        var secs = 90;
+        var iv = setInterval(function() {
+          secs--;
+          if (secs <= 0) { clearInterval(iv); return; }
+          btn.textContent = "✅ Refreshing in " + secs + "s…";
+        }, 1000);
+      } else {
+        btn.textContent = "❌ Failed (" + r.status + ")";
+        btn.disabled = false;
+      }
+    })
+    .catch(function(e) {
+      btn.textContent = "❌ Error";
+      btn.disabled = false;
+    });
+  };
 })();
 
 // ── Manual refresh ───────────────────────────────────────────────────
