@@ -267,6 +267,7 @@ def main():
         fear_greed=fear_greed,
         hk_brief=hk_brief,
         hk_data=hk_data,
+        dispatch_token=os.getenv("DISPATCH_TOKEN", ""),
     )
     print(f"  報告已更新：{report_path}")
     print("\n  完成 ✅")

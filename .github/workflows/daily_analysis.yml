@@ -43,6 +43,7 @@ jobs:
           TELEGRAM_BOT_TOKEN:  ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:    ${{ secrets.TELEGRAM_CHAT_ID }}
           REPORT_URL:          ${{ secrets.REPORT_URL }}
+          DISPATCH_TOKEN:      ${{ secrets.DISPATCH_TOKEN }}
         run: python src/main.py
 
       - name: Deploy report to GitHub Pages

@@ -743,7 +743,9 @@ body.beginner-mode .beginner-only { display: block; }
     <span class="filter-sep mob-hide"></span>
     <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
-    <a class="run-btn" href="https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml" target="_blank" rel="noopener" title="Trigger a fresh price fetch on GitHub Actions (opens in new tab)">▶ Run Now</a>
+    {% if dispatch_token %}
+    <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
+    {% endif %}
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
     <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
@@ -1611,6 +1613,51 @@ function toggleMode() {
   setInterval(updateMarketStatus, 60000);  // re-check every minute
 })();
 
+// ── Run Now — trigger GitHub Actions workflow_dispatch ───────────────
+(function() {
+  var TOKEN = "{{ dispatch_token }}";
+  var API   = "https://api.github.com/repos/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml/dispatches";
+
+  window.triggerRefresh = function(btn) {
+    if (!TOKEN) return;
+    btn.disabled    = true;
+    btn.textContent = "⏳ Triggering…";
+
+    fetch(API, {
+      method:  "POST",
+      headers: {
+        "Authorization": "Bearer " + TOKEN,
+        "Accept":        "application/vnd.github+json",
+        "Content-Type":  "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({ ref: "main" }),
+    })
+    .then(function(r) {
+      if (r.status === 204) {
+        btn.textContent = "✅ Running…";
+        btn.style.color = "var(--up)";
+        // Auto-reload page after ~90s to pick up fresh data
+        setTimeout(function() { window.location.reload(true); }, 90000);
+        // Countdown on the button
+        var secs = 90;
+        var iv = setInterval(function() {
+          secs--;
+          if (secs <= 0) { clearInterval(iv); return; }
+          btn.textContent = "✅ Refreshing in " + secs + "s…";
+        }, 1000);
+      } else {
+        btn.textContent = "❌ Failed (" + r.status + ")";
+        btn.disabled = false;
+      }
+    })
+    .catch(function(e) {
+      btn.textContent = "❌ Error";
+      btn.disabled = false;
+    });
+  };
+})();
+
 // ── Manual refresh ───────────────────────────────────────────────────
 function doRefresh(btn) {
   if (btn) {
@@ -2070,6 +2117,7 @@ def generate_dashboard(
     fear_greed: dict | None = None,
     hk_brief: str = "",
     hk_data: dict | None = None,
+    dispatch_token: str = "",
 ) -> str:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -2128,6 +2176,7 @@ def generate_dashboard(
         fg_delta=fg_delta,
         hk_brief=hk_brief,
         hk_data=hk_data or {},
+        dispatch_token=dispatch_token,
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"
