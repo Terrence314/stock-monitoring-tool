@@ -289,7 +289,6 @@ def _run(cfg: dict) -> None:
         fear_greed=fear_greed,
         hk_brief=hk_brief,
         hk_data=hk_data,
-        dispatch_token=os.getenv("DISPATCH_TOKEN", ""),
     )
     print(f"      報告已儲存：{report_path}")
 
