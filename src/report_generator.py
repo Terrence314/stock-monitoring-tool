@@ -108,8 +108,12 @@ body {
   padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600;
   background: rgba(52,211,153,0.10); color: var(--up);
   border: 1px solid rgba(52,211,153,0.25);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
-.market-open .dot { width: 6px; height: 6px; border-radius: 3px; background: var(--up); }
+.market-open .dot { width: 6px; height: 6px; border-radius: 3px; background: var(--up); animation: pulse 2s infinite; }
+.market-open.closed { background: rgba(148,163,184,0.08); color: var(--muted); border-color: rgba(148,163,184,0.2); }
+.market-open.closed .dot { background: var(--muted); animation: none; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 /* market strip */
 .market-strip {
@@ -696,9 +700,9 @@ body.beginner-mode .beginner-only { display: block; }
       <span class="kbd" id="search-hint">/</span>
     </div>
 
-    <div class="market-open">
+    <div class="market-open closed" id="market-status">
       <span class="dot"></span>
-      Market Open
+      <span id="market-label">Checking…</span>
     </div>
   </div>
 
@@ -1560,6 +1564,41 @@ function toggleMode() {
       if (btn) btn.textContent = '🔬 Expert';
     }
   } catch(e) {}
+})();
+
+// ── Market open/closed badge ─────────────────────────────────────────
+(function() {
+  function updateMarketStatus() {
+    var el    = document.getElementById('market-status');
+    var label = document.getElementById('market-label');
+    if (!el || !label) return;
+
+    // Use America/New_York to handle EDT/EST automatically
+    var now   = new Date();
+    var parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: false
+    }).formatToParts(now);
+
+    var day  = '';
+    var hour = 0;
+    var min  = 0;
+    parts.forEach(function(p) {
+      if (p.type === 'weekday') day  = p.value;           // 'Mon'–'Sun'
+      if (p.type === 'hour')   hour = parseInt(p.value);
+      if (p.type === 'minute') min  = parseInt(p.value);
+    });
+
+    var isWeekday = ['Mon','Tue','Wed','Thu','Fri'].indexOf(day) >= 0;
+    var mins      = hour * 60 + min;
+    var isOpen    = isWeekday && mins >= 570 && mins < 960;  // 9:30–16:00 ET
+
+    el.classList.toggle('closed', !isOpen);
+    label.textContent = isOpen ? 'Market Open' : 'Market Closed';
+  }
+
+  updateMarketStatus();
+  setInterval(updateMarketStatus, 60000);  // re-check every minute
 })();
 
 // ── Manual refresh ───────────────────────────────────────────────────
