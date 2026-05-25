@@ -662,6 +662,15 @@ body.beginner-mode .beginner-only { display: block; }
 .spin-icon { display: inline-block; font-style: normal; }
 .refresh-btn.spinning .spin-icon { animation: spin360 0.7s linear infinite; }
 @keyframes spin360 { to { transform: rotate(360deg); } }
+.run-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; padding: 5px 11px; border-radius: 6px;
+  color: var(--up); background: rgba(52,211,153,0.07);
+  border: 1px solid rgba(52,211,153,0.25); cursor: pointer;
+  font-family: inherit; font-weight: 500; transition: background .15s, border-color .15s;
+  text-decoration: none;
+}
+.run-btn:hover { background: rgba(52,211,153,0.14); border-color: rgba(52,211,153,0.45); }
 </style>
 </head>
 <body>
@@ -733,7 +742,8 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="filter-btn mob-hide" id="view-btn" data-view="cards" title="Toggle view">⊞ Cards</button>
     <span class="filter-sep mob-hide"></span>
     <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
-    <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page to get latest prices"><span class="spin-icon">↻</span> Refresh</button>
+    <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
+    <a class="run-btn mob-hide" href="https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml" target="_blank" rel="noopener" title="Trigger a fresh price fetch on GitHub Actions (opens in new tab)">▶ Run Now</a>
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
     <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
