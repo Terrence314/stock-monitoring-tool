@@ -643,6 +643,12 @@ def run_paper_trading(
     trades: list = portfolio.get("trades", [])
     existing_ids = {t["id"] for t in trades}
 
+    # Build per-direction open-position sets to prevent re-opening the same
+    # ticker while a position is already live (the trade_id check only blocks
+    # same-day duplicates; this blocks multi-day ones too).
+    open_long_tickers  = {t["ticker"] for t in trades if t["status"] == "open" and t.get("direction", "long") == "long"}
+    open_short_tickers = {t["ticker"] for t in trades if t["status"] == "open" and t.get("direction", "long") == "short"}
+
     # Current price lookup from today's stock results (free — already fetched)
     price_map = {
         s["ticker"]: float(s["price"])
@@ -655,9 +661,15 @@ def run_paper_trading(
 
     def _open_trade(ticker: str, score: int, direction: str, entry_price: float) -> None:
         nonlocal new_count
+        # Block same-day re-open (date-based ID check)
         suffix = "" if direction == "long" else "-S"
         trade_id = f"{ticker}{suffix}-{today_str}"
         if trade_id in existing_ids:
+            return
+        # Block multi-day re-open while a position is already open
+        if direction == "long"  and ticker in open_long_tickers:
+            return
+        if direction == "short" and ticker in open_short_tickers:
             return
         shares = round(NOTIONAL / entry_price, 6)
         # Attach active pattern names at trade open for attribution
