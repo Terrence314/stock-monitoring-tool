@@ -29,15 +29,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Fetch last AI analysis cache from GitHub Pages
+      - name: Fetch persisted data from GitHub Pages
         run: |
           mkdir -p outputs
-          curl -f -s \
-            "https://terrence314.github.io/stock-monitoring-tool/last_analysis.json" \
-            -o outputs/last_analysis.json \
+          BASE="https://terrence314.github.io/stock-monitoring-tool"
+          # AI analysis cache (required — provides previous scores for exit alert detection)
+          curl -f -s "$BASE/last_analysis.json" -o outputs/last_analysis.json \
             && echo "  ✅ AI cache loaded" \
             || echo '{"stock_results":[],"morning_brief":"","market":{},"fear_greed":{},"date":""}' \
-               > outputs/last_analysis.json && echo "  ⚠️  No cache yet — using empty fallback"
+               > outputs/last_analysis.json && echo "  ⚠️  No AI cache — using empty fallback"
+          # Exit alert cooldown history (optional — prevents duplicate alerts)
+          curl -f -s "$BASE/exit_alert_history.json" -o outputs/exit_alert_history.json \
+            && echo "  ✅ Exit alert history loaded" \
+            || echo "{}" > outputs/exit_alert_history.json \
+            && echo "  ⚠️  No exit alert history — starting fresh"
 
       - name: Run price refresh
         # No GEMINI_API_KEY — this step calls yfinance only

@@ -31,6 +31,42 @@ def send_health_alert(bot_token: str, chat_id: str, issues: list) -> bool:
     return send_telegram(bot_token, chat_id, "\n".join(lines))
 
 
+def send_exit_alert(bot_token: str, chat_id: str, alerts: list, report_url: str = "") -> bool:
+    """Send score-drop exit trigger alerts during price refresh.
+
+    Each alert dict must contain: ticker, prev_score, curr_score, drop,
+    price, price_change_pct, strength, prev_strength.
+    """
+    if not alerts:
+        return True
+
+    lines = [
+        "🚨 <b>Exit Alert｜信號轉弱</b>",
+        f"🕐 {datetime.now().strftime('%H:%M HKT')}",
+        "",
+    ]
+
+    for a in alerts:
+        chg  = a.get("price_change_pct", 0)
+        arrow = "▲" if chg >= 0 else "▼"
+        lines += [
+            f"⚠️ <b>{a['ticker']}</b>  ${a['price']:.2f}  {arrow}{abs(chg):.2f}%",
+            f"   信號：{a['prev_score']} → <b>{a['curr_score']}</b>  （↓{a['drop']} pts）",
+            f"   {a.get('prev_strength', '')} → {a.get('strength', '')}",
+            "",
+        ]
+
+    lines += [
+        "━━━━━━━━━━━━━━━━━",
+        "📌 如持有以上倉位，請審視退出策略",
+    ]
+    if report_url:
+        lines.append(f"📄 <a href=\"{report_url}\">查看報告</a>")
+    lines.append("\n⚠️ 僅供參考，不構成投資建議")
+
+    return send_telegram(bot_token, chat_id, "\n".join(lines))
+
+
 def format_daily_message(date: str, morning_brief: str, stocks: list, report_url: str = "") -> str:
     sorted_stocks = sorted(stocks, key=lambda x: x["score"], reverse=True)
     top = sorted_stocks[:5]

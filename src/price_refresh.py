@@ -8,16 +8,24 @@ from the last full daily run via outputs/last_analysis.json.
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 from data_fetcher import fetch_fear_greed, fetch_market_overview, fetch_stock_data
+from notifier import send_exit_alert
 from report_generator import generate_dashboard
 from technical_analysis import calculate_indicators
 
 
-LAST_ANALYSIS_CACHE = os.path.join("outputs", "last_analysis.json")
-SCORE_HISTORY_FILE  = os.path.join("outputs", "score_history.json")
-ALERT_HISTORY_FILE  = os.path.join("outputs", "alert_history.json")
+LAST_ANALYSIS_CACHE  = os.path.join("outputs", "last_analysis.json")
+SCORE_HISTORY_FILE   = os.path.join("outputs", "score_history.json")
+ALERT_HISTORY_FILE   = os.path.join("outputs", "alert_history.json")
+EXIT_ALERT_FILE      = os.path.join("outputs", "exit_alert_history.json")
+
+# Exit alert thresholds
+EXIT_PREV_MIN   = 70   # previous score must have been >= this (was a long signal)
+EXIT_CURR_MAX   = 50   # current score must be <= this (momentum faded)
+EXIT_DROP_MIN   = 20   # score must drop by at least this many points
+EXIT_COOLDOWN_H = 20   # hours before re-alerting the same ticker
 
 # 3 months gives enough history for MA60, RSI, MACD without over-fetching
 REFRESH_PERIOD = "3mo"
@@ -38,6 +46,69 @@ def load_config(path: str = "config/config.json") -> dict:
     cfg["telegram"]["bot_token"] = os.getenv("TELEGRAM_BOT_TOKEN") or cfg["telegram"]["bot_token"]
     cfg["telegram"]["chat_id"]   = os.getenv("TELEGRAM_CHAT_ID")   or cfg["telegram"]["chat_id"]
     return cfg
+
+
+def _detect_exit_alerts(stock_results: list, cached_stocks: dict) -> list:
+    """Compare fresh scores against last daily-run scores.
+
+    Returns alerts for tickers that were a long signal (score >= EXIT_PREV_MIN)
+    in the last daily run but have now dropped to <= EXIT_CURR_MAX with a fall
+    of at least EXIT_DROP_MIN points — indicating momentum has faded.
+    """
+    alerts = []
+    for stock in stock_results:
+        ticker     = stock["ticker"]
+        prev       = cached_stocks.get(ticker, {})
+        prev_score = prev.get("score", 0)
+        curr_score = stock["score"]
+        drop       = prev_score - curr_score
+        if (
+            prev_score >= EXIT_PREV_MIN
+            and curr_score <= EXIT_CURR_MAX
+            and drop >= EXIT_DROP_MIN
+        ):
+            alerts.append({
+                "ticker":          ticker,
+                "prev_score":      prev_score,
+                "curr_score":      curr_score,
+                "drop":            drop,
+                "price":           stock["price"],
+                "price_change_pct": stock.get("price_change_pct", 0),
+                "strength":        stock.get("strength", ""),
+                "prev_strength":   prev.get("strength", ""),
+            })
+    return alerts
+
+
+def _filter_exit_cooldown(alerts: list) -> list:
+    """Drop tickers already alerted within EXIT_COOLDOWN_H hours."""
+    history = load_json_file(EXIT_ALERT_FILE, {})
+    now     = datetime.now(timezone.utc)
+    fresh   = []
+    for a in alerts:
+        last_iso = history.get(a["ticker"])
+        if last_iso:
+            last_dt  = datetime.fromisoformat(last_iso)
+            # Ensure last_dt is offset-aware for comparison
+            if last_dt.tzinfo is None:
+                last_dt = last_dt.replace(tzinfo=timezone.utc)
+            elapsed_h = (now - last_dt).total_seconds() / 3600
+            if elapsed_h < EXIT_COOLDOWN_H:
+                print(f"    [{a['ticker']}] exit alert suppressed (cooldown {elapsed_h:.1f}h < {EXIT_COOLDOWN_H}h)")
+                continue
+        fresh.append(a)
+    return fresh
+
+
+def _save_exit_alert_history(alerts: list) -> None:
+    """Record send time for each alerted ticker."""
+    history = load_json_file(EXIT_ALERT_FILE, {})
+    now_iso = datetime.now(timezone.utc).isoformat()
+    for a in alerts:
+        history[a["ticker"]] = now_iso
+    os.makedirs(os.path.dirname(EXIT_ALERT_FILE) or ".", exist_ok=True)
+    with open(EXIT_ALERT_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, ensure_ascii=False, indent=2)
 
 
 def main():
@@ -160,6 +231,27 @@ def main():
     if scored == 0:
         print("  ⚠️ 無任何股票數據 — 中止，不覆蓋現有報告")
         sys.exit(1)
+
+    # ── Exit alert detection ─────────────────────────────────────────────────
+    bot_token  = cfg["telegram"].get("bot_token", "")
+    chat_id    = cfg["telegram"].get("chat_id", "")
+    report_url = os.getenv("REPORT_URL", "")
+
+    raw_exits  = _detect_exit_alerts(stock_results, cached_stocks)
+    exits      = _filter_exit_cooldown(raw_exits)
+
+    if exits:
+        tickers_str = ", ".join(a["ticker"] for a in exits)
+        print(f"\n  🚨 Exit alerts: {tickers_str}")
+        if bot_token and chat_id:
+            ok = send_exit_alert(bot_token, chat_id, exits, report_url)
+            print(f"  Telegram exit alert: {'✅' if ok else '❌'}")
+            if ok:
+                _save_exit_alert_history(exits)
+        else:
+            print("  ⚠️  Telegram not configured — skipping alert send")
+    else:
+        print(f"\n  ✅ No exit alerts triggered (checked {scored} tickers)")
 
     # ── Regenerate dashboard with fresh prices ───────────────────────────────
     score_history = load_json_file(SCORE_HISTORY_FILE, {})

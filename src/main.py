@@ -10,6 +10,9 @@ from report_generator import generate_dashboard
 from notifier import send_telegram, send_health_alert, format_daily_message
 from backtest import run_backtest
 from paper_trading import run_paper_trading
+from pattern_engine import run_pattern_scan, format_pattern_alert, get_todays_new_events
+from pattern_backtest import run_pattern_backtest
+from portfolio import run_portfolio
 
 
 SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
@@ -152,6 +155,7 @@ def _run(cfg: dict) -> None:
     # ── 4. Watchlist analysis ────────────────────────────────────────────────
     print(f"[4/5] 分析 {len(cfg['watchlist'])} 檔股票…")
     stock_results = []
+    ta_dfs: dict   = {}   # {ticker: DataFrame} — fed to pattern_engine after the loop
     threshold    = cfg.get("analysis", {}).get("signal_threshold_alert", 70)
     finnhub_key  = cfg["gemini"].get("finnhub_api_key", "")
 
@@ -167,6 +171,7 @@ def _run(cfg: dict) -> None:
                 continue
 
             ta = calculate_indicators(data["history"])
+            ta_dfs[ticker] = ta["df"]   # stash for pattern_engine
             ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
 
             # ── Finnhub: news + analyst ratings + financials ───────────────
@@ -310,6 +315,15 @@ def _run(cfg: dict) -> None:
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)
     print(f"      Telegram：{'✅ 成功' if ok else '❌ 失敗'}")
 
+    # ── Pattern scan ─────────────────────────────────────────────────────────
+    # Detects active named patterns per ticker; updates pattern_history.json
+    active_patterns: dict = {}
+    try:
+        active_patterns = run_pattern_scan(stock_results, ta_dfs, today_key)
+        print(f"      Pattern scan: {sum(len(v) for v in active_patterns.values())} active patterns across {len(active_patterns)} tickers")
+    except Exception as pe_err:
+        print(f"  [pattern_engine] ⚠️ skipped due to error: {pe_err}")
+
     # ── Backtest ─────────────────────────────────────────────────────────────
     # Isolated try/except: backtest failures must never block the report deploy
     try:
@@ -321,9 +335,37 @@ def _run(cfg: dict) -> None:
     # Isolated try/except: same isolation principle as backtest
     try:
         today_scores = {s["ticker"]: s["score"] for s in stock_results}
-        run_paper_trading(today_key, today_scores, stock_results)
+        run_paper_trading(today_key, today_scores, stock_results, active_patterns=active_patterns)
     except Exception as pt_err:
         print(f"  [paper_trading] ⚠️ skipped due to error: {pt_err}")
+
+    # ── Pattern backtest ──────────────────────────────────────────────────────
+    try:
+        pb_path = run_pattern_backtest()
+        if pb_path:
+            print(f"      Pattern backtest: {pb_path}")
+    except Exception as pb_err:
+        print(f"  [pattern_backtest] ⚠️ skipped due to error: {pb_err}")
+
+    # ── Portfolio ─────────────────────────────────────────────────────────────
+    try:
+        pf_path = run_portfolio()
+        if pf_path:
+            print(f"      Portfolio: {pf_path}")
+    except Exception as pf_err:
+        print(f"  [portfolio] ⚠️ skipped due to error: {pf_err}")
+
+    # ── Pattern Telegram alert (new start events only) ────────────────────────
+    try:
+        new_events  = get_todays_new_events(today_key)
+        pattern_msg = format_pattern_alert(new_events, today_key)
+        if pattern_msg:
+            ok_p = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], pattern_msg)
+            print(f"      Pattern alert Telegram：{'✅ 成功' if ok_p else '❌ 失敗'}")
+        else:
+            print("      Pattern alert：no new patterns today")
+    except Exception as pa_err:
+        print(f"  [pattern_alert] ⚠️ skipped due to error: {pa_err}")
 
     # Summary
     if stock_results:
