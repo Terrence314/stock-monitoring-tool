@@ -743,7 +743,7 @@ body.beginner-mode .beginner-only { display: block; }
     <span class="filter-sep mob-hide"></span>
     <button class="filter-btn mob-hide" id="mode-toggle" onclick="toggleMode()" title="Switch between Expert and Simple view">📖 Simple</button>
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
-    <a class="run-btn mob-hide" href="https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml" target="_blank" rel="noopener" title="Trigger a fresh price fetch on GitHub Actions (opens in new tab)">▶ Run Now</a>
+    <a class="run-btn" href="https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml" target="_blank" rel="noopener" title="Trigger a fresh price fetch on GitHub Actions (opens in new tab)">▶ Run Now</a>
     <span class="filter-meta" id="filter-count">{{ stocks_sorted|length }} instruments</span>
     <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated {{ generated_at }}</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
