@@ -241,6 +241,11 @@ def _run(cfg: dict) -> None:
                 "bb_squeeze_breakout_down": ta.get("bb_squeeze_breakout_down", False),
                 "bb_walking_up":            ta.get("bb_walking_up", False),
                 "bb_walking_down":          ta.get("bb_walking_down", False),
+                "kd_k":                     ta.get("kd_k"),
+                "kd_d":                     ta.get("kd_d"),
+                "kd_golden_cross_low":      ta.get("kd_golden_cross_low", False),
+                "kd_death_cross_high":      ta.get("kd_death_cross_high", False),
+                "kd_oversold":              ta.get("kd_oversold", False),
                 "ai_view":          ai_view,
                 "sector":           data.get("sector", "Unknown"),
                 "entry":            "",  # populated by deep dive if run; placeholder here

@@ -30,6 +30,17 @@ def _bollinger(series: pd.Series, period: int = 20, std_dev: float = 2.0):
     return upper, mid, lower, pct_b
 
 
+
+def _stochastic(high: pd.Series, low: pd.Series, close: pd.Series,
+                k_period: int = 9, k_smooth: int = 3, d_smooth: int = 3):
+    """Slow Stochastic KD(k_period, k_smooth, d_smooth) — standard Taiwan KD(9,3,3)."""
+    low_min  = low.rolling(k_period).min()
+    high_max = high.rolling(k_period).max()
+    raw_k    = 100 * (close - low_min) / (high_max - low_min).replace(0, float("nan"))
+    slow_k   = raw_k.rolling(k_smooth).mean()
+    slow_d   = slow_k.rolling(d_smooth).mean()
+    return slow_k, slow_d
+
 def calculate_indicators(history: pd.DataFrame) -> dict:
     df = history.copy()
 
@@ -53,8 +64,38 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
     df["BB_bw"]     = (df["BB_upper"] - df["BB_lower"]) / df["BB_mid"].replace(0, float("nan"))
     df["BB_bw_avg"] = df["BB_bw"].rolling(20).mean()
 
+
+    # ── KD Stochastic (9,3,3) ─────────────────────────────────────────────────
+    df["KD_K"], df["KD_D"] = _stochastic(df["High"], df["Low"], df["Close"])
+
     latest = df.iloc[-1]
     prev   = df.iloc[-2]
+
+
+    # ── KD values ─────────────────────────────────────────────────────────────
+    kd_k      = float(latest["KD_K"])  if not pd.isna(latest["KD_K"])  else None
+    kd_d      = float(latest["KD_D"])  if not pd.isna(latest["KD_D"])  else None
+    prev_kd_k = float(prev["KD_K"])    if not pd.isna(prev["KD_K"])    else None
+    prev_kd_d = float(prev["KD_D"])    if not pd.isna(prev["KD_D"])    else None
+
+    kd_oversold = (
+        kd_k is not None and kd_d is not None
+        and kd_k < 20 and kd_d < 20
+    )
+    # K crossed above D while still in low zone (< 30) — classic bottom reversal
+    kd_golden_cross_low = (
+        kd_k is not None and kd_d is not None
+        and prev_kd_k is not None and prev_kd_d is not None
+        and kd_k > kd_d and prev_kd_k <= prev_kd_d
+        and kd_k < 30
+    )
+    # K crossed below D while still in high zone (> 70) — top reversal warning
+    kd_death_cross_high = (
+        kd_k is not None and kd_d is not None
+        and prev_kd_k is not None and prev_kd_d is not None
+        and kd_k < kd_d and prev_kd_k >= prev_kd_d
+        and kd_k > 70
+    )
 
     # ── Signal Scoring (0–100, 5 factors × 20 pts each) ──────────────────────
     score   = 0
@@ -138,6 +179,20 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
             score += 0
             signals.append(f"❌ 跌破 MA60（{dist:.1f}%）")
 
+
+    # KD Stochastic signal (informational — does not affect 5-factor score)
+    if kd_golden_cross_low:
+        signals.append(f"✅ KD 底部金叉（K={kd_k:.1f} ↑ D={kd_d:.1f}）底部反轉訊號")
+    elif kd_death_cross_high:
+        signals.append(f"❌ KD 高位死叉（K={kd_k:.1f} ↓ D={kd_d:.1f}）高位回落")
+    elif kd_oversold:
+        signals.append(f"🔵 KD 超賣（K={kd_k:.1f} · D={kd_d:.1f}）等待金叉確認")
+    elif kd_k is not None and kd_d is not None:
+        if kd_k > 80 and kd_d > 80:
+            signals.append(f"⚠️ KD 超買（K={kd_k:.1f} · D={kd_d:.1f}）")
+        else:
+            signals.append(f"KD 中性（K={kd_k:.1f} · D={kd_d:.1f}）")
+
     # ── Strength Label ────────────────────────────────────────────────────────
     if score >= 80:
         strength = "強力做多 🔥"
@@ -216,5 +271,10 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         "bb_squeeze_breakout_down": bb_squeeze_breakout_down,
         "bb_walking_up":            bb_walking_up,
         "bb_walking_down":          bb_walking_down,
+        "kd_k":                     round(kd_k, 1) if kd_k is not None else None,
+        "kd_d":                     round(kd_d, 1) if kd_d is not None else None,
+        "kd_golden_cross_low":      kd_golden_cross_low,
+        "kd_death_cross_high":      kd_death_cross_high,
+        "kd_oversold":              kd_oversold,
         "df":                       df,
     }

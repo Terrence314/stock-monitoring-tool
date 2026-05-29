@@ -2256,6 +2256,7 @@ def _entry_verdict(
     bb_squeeze_breakout_down: bool = False,
     bb_walking_up: bool = False,
     bb_walking_down: bool = False,
+    kd_golden_cross_low: bool = False,
 ) -> dict | None:
     """Synthesise score + BB + RSI + pattern flags into a single entry verdict chip.
 
@@ -2265,7 +2266,8 @@ def _entry_verdict(
       3. BB walking up         → RIDING ↑     (trend continuation, hold existing)
       4. BB walking down       → FALLING ↓    (downtrend in progress, avoid)
       5. BB squeeze active     → WATCH ⚡     (energy building, no direction yet)
-      6. Score < 75            → None         (not strong enough to label)
+      6. KD golden cross low  → BOTTOM 🎯    (early reversal signal, score ≥ 45)
+      7. Score < 75            → None         (not strong enough to label)
       7. Overbought + extended → SKIP / WAIT  (entry timing poor)
       8. Clean setup           → GO ✅
     """
@@ -2316,6 +2318,15 @@ def _entry_verdict(
             "bg": "rgba(245,158,11,0.12)",
             "border": "rgba(245,158,11,0.30)",
             "reason": "BB squeeze — big move building, wait for direction",
+        }
+    if kd_golden_cross_low and score >= 45:
+        return {
+            "label": "BOTTOM",
+            "emoji": "🎯",
+            "color": "#2dd4bf",
+            "bg": "rgba(45,212,191,0.12)",
+            "border": "rgba(45,212,191,0.30)",
+            "reason": f"KD golden cross from oversold zone — early reversal, score {score}",
         }
     if score < 75:
         return None
@@ -2398,6 +2409,7 @@ def generate_dashboard(
             bb_squeeze_breakout_down=stk.get("bb_squeeze_breakout_down", False),
             bb_walking_up=stk.get("bb_walking_up", False),
             bb_walking_down=stk.get("bb_walking_down", False),
+            kd_golden_cross_low=stk.get("kd_golden_cross_low", False),
         )
 
     # Fear & Greed
