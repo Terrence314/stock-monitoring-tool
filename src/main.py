@@ -232,6 +232,11 @@ def _run(cfg: dict) -> None:
                 "macd":             ta["macd"],
                 "macd_hist":        ta["macd_hist"],
                 "vol_ratio":        ta["vol_ratio"],
+                "bb_upper":         ta.get("bb_upper"),
+                "bb_mid":           ta.get("bb_mid"),
+                "bb_lower":         ta.get("bb_lower"),
+                "bb_pct":           ta.get("bb_pct"),
+                "bb_squeeze":       ta.get("bb_squeeze", False),
                 "ai_view":          ai_view,
                 "sector":           data.get("sector", "Unknown"),
                 "entry":            "",  # populated by deep dive if run; placeholder here

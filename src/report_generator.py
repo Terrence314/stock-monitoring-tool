@@ -443,6 +443,7 @@ body {
 .ma-badge.ma60 { background: rgba(177,140,255,0.10); color: var(--purple); border: 1px solid rgba(177,140,255,0.20); }
 .rsi-badge { background: rgba(248,113,113,0.08); color: var(--down); border: 1px solid rgba(248,113,113,0.18); font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
 .vol-badge { background: rgba(52,211,153,0.08); color: var(--up); border: 1px solid rgba(52,211,153,0.20); font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
+.bb-badge  { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
 
 .scard-sub {
   font-family: var(--mono); font-size: 10px; font-weight: 600;
@@ -1213,6 +1214,11 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ma-badge ma60">MA60 · {{ s.ma60 }}</span>
           <span class="rsi-badge">RSI · {{ s.rsi }}</span>
           <span class="vol-badge">Vol · {{ "%.1f"|format(s.vol_ratio) if s.vol_ratio else "—" }}×</span>
+          {% if s.get('bb_pct') is not none and s.bb_pct is not none %}
+          {% set _bp = s.bb_pct %}
+          {% set _bc = '#60a5fa' if _bp < 0.20 else ('#34d399' if _bp <= 0.60 else ('#fb923c' if _bp <= 0.85 else '#f87171')) %}
+          <span class="bb-badge" style="color:{{ _bc }};background:{{ _bc }}14;border:1px solid {{ _bc }}33" title="Bollinger %B: 0=lower band, 1=upper band">BB {{ "%.2f"|format(_bp) }}{% if s.get('bb_squeeze') %} ⚡{% endif %}</span>
+          {% endif %}
           {% if s.get('pe_ratio') %}
           <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · {{ "%.1f"|format(s.pe_ratio) }}</span>
           {% endif %}

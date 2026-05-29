@@ -20,6 +20,16 @@ def _macd(series: pd.Series, fast=12, slow=26, signal=9):
     return macd_line, signal_line, histogram
 
 
+def _bollinger(series: pd.Series, period: int = 20, std_dev: float = 2.0):
+    mid        = series.rolling(period).mean()
+    std        = series.rolling(period).std()
+    upper      = mid + std_dev * std
+    lower      = mid - std_dev * std
+    band_range = (upper - lower).replace(0, float("nan"))
+    pct_b      = (series - lower) / band_range  # 0 = at lower band, 1 = at upper
+    return upper, mid, lower, pct_b
+
+
 def calculate_indicators(history: pd.DataFrame) -> dict:
     df = history.copy()
 
@@ -37,6 +47,11 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
     # ── Volume Ratio ─────────────────────────────────────────────────────────
     df["Vol_MA20"]  = df["Volume"].rolling(20).mean()
     df["Vol_ratio"] = df["Volume"] / df["Vol_MA20"]
+
+    # ── Bollinger Bands (display — not included in score) ────────────────────
+    df["BB_upper"], df["BB_mid"], df["BB_lower"], df["BB_pct"] = _bollinger(df["Close"])
+    df["BB_bw"]     = (df["BB_upper"] - df["BB_lower"]) / df["BB_mid"].replace(0, float("nan"))
+    df["BB_bw_avg"] = df["BB_bw"].rolling(20).mean()
 
     latest = df.iloc[-1]
     prev   = df.iloc[-2]
@@ -140,6 +155,13 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         strength = "強力做空 ❄️"
         strength_en = "Strong Sell"
 
+    # ── BB squeeze: current bandwidth < 75% of 20-bar average ──────────────
+    bb_squeeze = (
+        not pd.isna(latest["BB_bw"])
+        and not pd.isna(latest["BB_bw_avg"])
+        and float(latest["BB_bw"]) < float(latest["BB_bw_avg"]) * 0.75
+    )
+
     def _safe(val):
         return round(float(val), 2) if not pd.isna(val) else None
 
@@ -156,5 +178,10 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         "macd_signal":  _safe(latest["MACD_signal"]),
         "macd_hist":    _safe(latest["MACD_hist"]),
         "vol_ratio":    _safe(vol_ratio),
+        "bb_upper":     _safe(latest["BB_upper"]),
+        "bb_mid":       _safe(latest["BB_mid"]),
+        "bb_lower":     _safe(latest["BB_lower"]),
+        "bb_pct":       _safe(latest["BB_pct"]),
+        "bb_squeeze":   bb_squeeze,
         "df":           df,
     }
