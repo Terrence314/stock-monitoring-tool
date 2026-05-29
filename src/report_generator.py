@@ -445,6 +445,67 @@ body {
 .vol-badge { background: rgba(52,211,153,0.08); color: var(--up); border: 1px solid rgba(52,211,153,0.20); font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
 .bb-badge  { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
 
+/* ── Tooltip system ──────────────────────────────────────────── */
+.tip { position: relative; cursor: help; }
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%; transform: translateX(-50%);
+  background: #0f172a; color: #e2e8f0;
+  font-size: 11px; line-height: 1.5;
+  padding: 7px 11px; border-radius: 7px;
+  white-space: pre-line; pointer-events: none;
+  opacity: 0; transition: opacity 150ms ease;
+  z-index: 300;
+  border: 1px solid rgba(255,255,255,0.10);
+  min-width: 170px; max-width: 250px;
+  text-align: center;
+  font-family: var(--sans); font-weight: 400;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.tip:hover::after { opacity: 1; }
+
+/* ── Entry verdict chip ──────────────────────────────────────── */
+.verdict-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.verdict-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; padding: 5px 11px;
+  border-radius: 7px; letter-spacing: 0.04em;
+  font-family: var(--mono); white-space: nowrap;
+}
+.verdict-reason { font-size: 11px; color: var(--text-2); font-style: italic; line-height: 1.4; }
+
+/* ── How to Read guide panel ─────────────────────────────────── */
+.guide-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px; margin-bottom: 16px;
+}
+.guide-panel summary {
+  cursor: pointer; list-style: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.07em;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+.guide-panel summary::-webkit-details-marker { display: none; }
+.guide-arrow { font-size: 9px; transition: transform 200ms; display: inline-block; }
+.guide-panel[open] .guide-arrow { transform: rotate(90deg); }
+.guide-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px; margin-top: 16px;
+}
+.guide-section { display: flex; flex-direction: column; gap: 5px; }
+.guide-section-title {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border); padding-bottom: 5px; margin-bottom: 4px;
+}
+.guide-row { display: flex; align-items: flex-start; gap: 8px; font-size: 11px; line-height: 1.5; color: var(--text); }
+.guide-pill {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+
 .scard-sub {
   font-family: var(--mono); font-size: 10px; font-weight: 600;
   color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em;
@@ -1089,6 +1150,62 @@ body.beginner-mode .beginner-only { display: block; }
     <span class="card-sub">{{ stocks_sorted|length }} cards</span>
   </div>
 
+  <!-- ── How to Read guide ───────────────────────────────────────── -->
+  <details class="guide-panel">
+    <summary><span class="guide-arrow">▶</span> 📖 How to read this dashboard</summary>
+    <div class="guide-grid">
+
+      <div class="guide-section">
+        <div class="guide-section-title">Entry Verdict</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3)">🟢 GO</span>Score ≥75, BB mid-range, RSI not overbought — good entry zone</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.3)">🟡 WAIT</span>Score ≥75 but BB extended or RSI >70 — pullback expected</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3)">🔴 SKIP</span>Both BB >0.85 and RSI >70 — overbought on two signals</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.3)">⚡ WATCH</span>BB squeeze — bands tightening, big move imminent, wait for direction</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Score (0–100)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">80–100</span>Strong Buy — all 5 factors bullish</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">60–79</span>Buy — majority of signals positive</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">40–59</span>Neutral — mixed signals, no clear edge</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">0–39</span>Bearish — avoid long entries</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">RSI (Momentum)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">45–70 ↑</span>Strong momentum — ideal buy zone</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">30–44</span>Low, possible recovery — watch closely</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.25)">&lt;30</span>Oversold — bounce possible, confirm first</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">&gt;70</span>Overbought — avoid buying, wait for dip</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Bollinger Bands %B</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.25)">&lt;0.20 🔵</span>Near lower band — bounce zone</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">0.20–0.60 🟢</span>Healthy mid-range — good to enter</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(251,146,60,0.1);color:#fb923c;border:1px solid rgba(251,146,60,0.25)">0.60–0.85 🟠</span>Extended — caution, wait for pullback</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">&gt;0.85 🔴</span>Near upper band — overbought risk</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.25)">⚡ Squeeze</span>Bands tight — explosive move building</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Volume (Vol ×)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">≥1.5×</span>Strong — institutional interest confirmed</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">1.0–1.5×</span>Normal — signal is valid but unconfirmed</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">&lt;1.0×</span>Weak — low conviction, treat signal with caution</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Moving Averages</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">MA5</span>5-day avg — short-term direction</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">MA20</span>20-day avg — medium-term trend</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(177,140,255,0.1);color:#b18cff;border:1px solid rgba(177,140,255,0.25)">MA60</span>60-day avg — must be above for long entries</div>
+        <div class="guide-row" style="color:var(--text-2);font-size:10px;margin-top:2px">Best setup: Price > MA5 > MA20 > MA60 (bull stack)</div>
+      </div>
+
+    </div>
+  </details>
+
   <div class="bento">
   {% for s in stocks_sorted %}
     {% set sc = s.score %}
@@ -1146,6 +1263,17 @@ body.beginner-mode .beginner-only { display: block; }
           <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">{{ s.sentiment.summary }}</span>
         {% endif %}
       </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      {% if s.get('entry_verdict') %}
+      {% set v = s.entry_verdict %}
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:{{ v.color }};background:{{ v.bg }};border:1px solid {{ v.border }}">
+          {{ v.emoji }} {{ v.label }}
+        </span>
+        <span class="verdict-reason">{{ v.reason }}</span>
+      </div>
+      {% endif %}
 
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
@@ -1209,15 +1337,26 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · {{ s.ma5 }}</span>
-          <span class="ma-badge ma20">MA20 · {{ s.ma20 }}</span>
-          <span class="ma-badge ma60">MA60 · {{ s.ma60 }}</span>
-          <span class="rsi-badge">RSI · {{ s.rsi }}</span>
-          <span class="vol-badge">Vol · {{ "%.1f"|format(s.vol_ratio) if s.vol_ratio else "—" }}×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · {{ s.ma5 }}</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · {{ s.ma20 }}</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · {{ s.ma60 }}</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · {{ s.rsi }}</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · {{ "%.1f"|format(s.vol_ratio) if s.vol_ratio else "—" }}×</span>
           {% if s.get('bb_pct') is not none and s.bb_pct is not none %}
           {% set _bp = s.bb_pct %}
           {% set _bc = '#60a5fa' if _bp < 0.20 else ('#34d399' if _bp <= 0.60 else ('#fb923c' if _bp <= 0.85 else '#f87171')) %}
-          <span class="bb-badge" style="color:{{ _bc }};background:{{ _bc }}14;border:1px solid {{ _bc }}33" title="Bollinger %B: 0=lower band, 1=upper band">BB {{ "%.2f"|format(_bp) }}{% if s.get('bb_squeeze') %} ⚡{% endif %}</span>
+          {% if s.get('bb_squeeze') %}
+          {% set _bb_tip = "BB %B: " + "%.2f"|format(_bp) + "&#10;⚡ SQUEEZE — bands tightening&#10;Big move imminent, wait for direction&#10;0=lower band · 1=upper band" %}
+          {% elif _bp < 0.20 %}
+          {% set _bb_tip = "BB %B: " + "%.2f"|format(_bp) + "&#10;🔵 Near lower band — bounce zone&#10;Watch for reversal confirmation&#10;0=lower band · 1=upper band" %}
+          {% elif _bp <= 0.60 %}
+          {% set _bb_tip = "BB %B: " + "%.2f"|format(_bp) + "&#10;🟢 Mid-range — healthy positioning&#10;Room to run in either direction&#10;0=lower band · 1=upper band" %}
+          {% elif _bp <= 0.85 %}
+          {% set _bb_tip = "BB %B: " + "%.2f"|format(_bp) + "&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band" %}
+          {% else %}
+          {% set _bb_tip = "BB %B: " + "%.2f"|format(_bp) + "&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band" %}
+          {% endif %}
+          <span class="bb-badge tip" style="color:{{ _bc }};background:{{ _bc }}14;border:1px solid {{ _bc }}33" data-tip="{{ _bb_tip }}">BB {{ "%.2f"|format(_bp) }}{% if s.get('bb_squeeze') %} ⚡{% endif %}</span>
           {% endif %}
           {% if s.get('pe_ratio') %}
           <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · {{ "%.1f"|format(s.pe_ratio) }}</span>
@@ -2108,6 +2247,54 @@ def _collect_headlines(stocks: list) -> list[dict]:
     return headlines
 
 
+def _entry_verdict(score: int, bb_pct, rsi, bb_squeeze: bool) -> dict | None:
+    """Synthesise score + BB + RSI into a single entry verdict chip."""
+    if bb_squeeze:
+        return {
+            "label": "WATCH",
+            "emoji": "⚡",
+            "color": "#f59e0b",
+            "bg": "rgba(245,158,11,0.12)",
+            "border": "rgba(245,158,11,0.30)",
+            "reason": "BB squeeze — big move building, wait for direction",
+        }
+    if score < 75:
+        return None
+    rsi_val = float(rsi) if rsi is not None else 0.0
+    bb_val  = float(bb_pct) if bb_pct is not None else 0.5
+    if bb_val > 0.85 and rsi_val > 70:
+        return {
+            "label": "SKIP",
+            "emoji": "🔴",
+            "color": "#f87171",
+            "bg": "rgba(248,113,113,0.12)",
+            "border": "rgba(248,113,113,0.30)",
+            "reason": f"Overbought on both — BB {bb_val:.2f} + RSI {rsi_val:.0f}",
+        }
+    if bb_val > 0.80 or rsi_val > 70:
+        reason = (
+            f"BB extended ({bb_val:.2f}) — wait for pullback"
+            if bb_val > 0.80
+            else f"RSI overbought ({rsi_val:.0f}) — wait for pullback"
+        )
+        return {
+            "label": "WAIT",
+            "emoji": "🟡",
+            "color": "#fbbf24",
+            "bg": "rgba(251,191,36,0.12)",
+            "border": "rgba(251,191,36,0.30)",
+            "reason": reason,
+        }
+    return {
+        "label": "GO",
+        "emoji": "🟢",
+        "color": "#34d399",
+        "bg": "rgba(52,211,153,0.12)",
+        "border": "rgba(52,211,153,0.30)",
+        "reason": f"Score {score} · BB {bb_val:.2f} · RSI {rsi_val:.0f}",
+    }
+
+
 def generate_dashboard(
     date: str,
     market_overview: dict,
@@ -2142,6 +2329,15 @@ def generate_dashboard(
     # Attach price sparklines to each stock dict
     for stk in stocks_sorted:
         stk["price_sparkline_svg"] = _build_price_sparkline_svg(stk.get("ohlc", []))
+
+    # Entry verdicts
+    for stk in stocks_sorted:
+        stk["entry_verdict"] = _entry_verdict(
+            stk["score"],
+            stk.get("bb_pct"),
+            stk.get("rsi"),
+            stk.get("bb_squeeze", False),
+        )
 
     # Fear & Greed
     fg = fear_greed or {}
