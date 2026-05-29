@@ -439,6 +439,67 @@ body {
 .vol-badge { background: rgba(52,211,153,0.08); color: var(--up); border: 1px solid rgba(52,211,153,0.20); font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
 .bb-badge  { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
 
+/* ── Tooltip system ──────────────────────────────────────────── */
+.tip { position: relative; cursor: help; }
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%; transform: translateX(-50%);
+  background: #0f172a; color: #e2e8f0;
+  font-size: 11px; line-height: 1.5;
+  padding: 7px 11px; border-radius: 7px;
+  white-space: pre-line; pointer-events: none;
+  opacity: 0; transition: opacity 150ms ease;
+  z-index: 300;
+  border: 1px solid rgba(255,255,255,0.10);
+  min-width: 170px; max-width: 250px;
+  text-align: center;
+  font-family: var(--sans); font-weight: 400;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.tip:hover::after { opacity: 1; }
+
+/* ── Entry verdict chip ──────────────────────────────────────── */
+.verdict-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.verdict-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; padding: 5px 11px;
+  border-radius: 7px; letter-spacing: 0.04em;
+  font-family: var(--mono); white-space: nowrap;
+}
+.verdict-reason { font-size: 11px; color: var(--text-2); font-style: italic; line-height: 1.4; }
+
+/* ── How to Read guide panel ─────────────────────────────────── */
+.guide-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px; margin-bottom: 16px;
+}
+.guide-panel summary {
+  cursor: pointer; list-style: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.07em;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+.guide-panel summary::-webkit-details-marker { display: none; }
+.guide-arrow { font-size: 9px; transition: transform 200ms; display: inline-block; }
+.guide-panel[open] .guide-arrow { transform: rotate(90deg); }
+.guide-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px; margin-top: 16px;
+}
+.guide-section { display: flex; flex-direction: column; gap: 5px; }
+.guide-section-title {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border); padding-bottom: 5px; margin-bottom: 4px;
+}
+.guide-row { display: flex; align-items: flex-start; gap: 8px; font-size: 11px; line-height: 1.5; color: var(--text); }
+.guide-pill {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+
 .scard-sub {
   font-family: var(--mono); font-size: 10px; font-weight: 600;
   color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em;
@@ -732,8 +793,8 @@ body.beginner-mode .beginner-only { display: block; }
     <div class="market-item">
       <span class="market-name">VIX 恐慌</span>
       <div class="market-line">
-        <span class="market-price">15.74</span>
-        <span class="pct down">-3.38%</span>
+        <span class="market-price">15.84</span>
+        <span class="pct up">+0.64%</span>
       </div>
     </div>
     
@@ -772,8 +833,8 @@ body.beginner-mode .beginner-only { display: block; }
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">73,161.11</span>
-        <span class="pct down">-1.59%</span>
+        <span class="market-price">73,371.40</span>
+        <span class="pct down">-0.22%</span>
       </div>
     </div>
     
@@ -796,7 +857,7 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">30 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated May 29 11:04 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated May 29 15:38 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -832,13 +893,13 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="badge blue">≥ 70</span>
         </div>
         <div class="kpi-val">10 / 30</div>
-        <div class="kpi-sub">mid-band (50-69): 11</div>
+        <div class="kpi-sub">mid-band (50-69): 12</div>
       </div>
       <div class="kpi">
         <div class="kpi-head">
           <span class="kpi-label">Avg signal</span>
         </div>
-        <div class="kpi-val">58.5</div>
+        <div class="kpi-val">59.1</div>
         <div class="kpi-sub">across 30 names</div>
       </div>
       <div class="kpi">
@@ -890,7 +951,7 @@ body.beginner-mode .beginner-only { display: block; }
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
           <span style="font-size:13px;color:var(--text);font-weight:600">Signal dist.</span>
-          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">58.5</b></span>
+          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">59.1</b></span>
         </div>
         <div class="hist-bar">
           
@@ -905,13 +966,13 @@ body.beginner-mode .beginner-only { display: block; }
           </div>
           
           <div class="hist-col">
-            <span class="hist-num">10</span>
-            <div class="hist-rect" style="height:140px;background:#f5b942;opacity:0.9"></div>
+            <span class="hist-num">9</span>
+            <div class="hist-rect" style="height:126px;background:#f5b942;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
-            <span class="hist-num">11</span>
-            <div class="hist-rect" style="height:154px;background:#80c97f;opacity:0.9"></div>
+            <span class="hist-num">12</span>
+            <div class="hist-rect" style="height:168px;background:#80c97f;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
@@ -955,6 +1016,14 @@ body.beginner-mode .beginner-only { display: block; }
               
             
             <div class="sr-cell" style="background:rgba(52,211,153,0.15)">
+              <div class="sr-tick">Commun</div>
+              <div class="sr-val" style="color:var(--up)">63</div>
+            </div>
+          
+            
+              
+            
+            <div class="sr-cell" style="background:rgba(52,211,153,0.15)">
               <div class="sr-tick">Techno</div>
               <div class="sr-val" style="color:var(--up)">62</div>
             </div>
@@ -962,17 +1031,9 @@ body.beginner-mode .beginner-only { display: block; }
             
               
             
-            <div class="sr-cell" style="background:rgba(52,211,153,0.15)">
-              <div class="sr-tick">Commun</div>
-              <div class="sr-val" style="color:var(--up)">60</div>
-            </div>
-          
-            
-              
-            
             <div class="sr-cell" style="background:rgba(245,185,66,0.12)">
               <div class="sr-tick">Unknow</div>
-              <div class="sr-val" style="color:var(--amber)">56</div>
+              <div class="sr-val" style="color:var(--amber)">57</div>
             </div>
           
         </div>
@@ -1117,7 +1178,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.57%</span></td>
               <td class="num mob-hide">67.0</td>
               <td class="num mob-hide" style="color: #34d399">+0.43</td>
-              <td class="num mob-hide">0.87×</td>
+              <td class="num mob-hide">0.90×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1159,7 +1220,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.03%</span></td>
               <td class="num mob-hide">66.0</td>
               <td class="num mob-hide" style="color: #34d399">+0.41</td>
-              <td class="num mob-hide">0.73×</td>
+              <td class="num mob-hide">0.78×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1201,7 +1262,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.42%</span></td>
               <td class="num mob-hide">65.4</td>
               <td class="num mob-hide" style="color: #34d399">+0.22</td>
-              <td class="num mob-hide">0.88×</td>
+              <td class="num mob-hide">0.91×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1243,7 +1304,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+3.47%</span></td>
               <td class="num mob-hide">60.1</td>
               <td class="num mob-hide" style="color: #f87171">-0.19</td>
-              <td class="num mob-hide">1.36×</td>
+              <td class="num mob-hide">1.37×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1285,7 +1346,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+6.47%</span></td>
               <td class="num mob-hide">63.7</td>
               <td class="num mob-hide" style="color: #34d399">+1.68</td>
-              <td class="num mob-hide">1.23×</td>
+              <td class="num mob-hide">1.35×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1327,7 +1388,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+1.15%</span></td>
               <td class="num mob-hide">57.4</td>
               <td class="num mob-hide" style="color: #34d399">+0.13</td>
-              <td class="num mob-hide">0.80×</td>
+              <td class="num mob-hide">0.83×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1453,7 +1514,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.52%</span></td>
               <td class="num mob-hide">56.9</td>
               <td class="num mob-hide" style="color: #f87171">-0.15</td>
-              <td class="num mob-hide">0.77×</td>
+              <td class="num mob-hide">0.78×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1465,6 +1526,48 @@ body.beginner-mode .beginner-only { display: block; }
                       stroke-dasharray="68.36 100.53" stroke-linecap="round"/>
                   </svg>
                   <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">68</div>
+                </div>
+              </td>
+              <td class="center"><span class="strength-badge high">偏多 📈</span></td>
+            </tr>
+          
+            
+            
+            
+            
+            
+            
+            <tr class="lb-row" data-type="stock" data-market="US" data-score="67" data-rsi="56.98" data-price="635.2899780273438" data-ma20="612.3" data-ma60="622.28">
+              <td>
+                <a href="./META.html" style="text-decoration:none;color:inherit">
+                  <div class="ticker-cell">
+                    <div class="ticker-tile">ME</div>
+                    <div class="ticker-meta">
+                      <div class="ticker-sym">META</div>
+                      <div class="ticker-name">Meta Platforms, Inc.</div>
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <span class="tag stock">stock</span>
+              </td>
+              <td class="num lg">635.29</td>
+              <td><span class="pct-chip up">+0.00%</span></td>
+              <td class="num mob-hide">57.0</td>
+              <td class="num mob-hide" style="color: #34d399">+2.72</td>
+              <td class="num mob-hide">1.00×</td>
+              <td class="ring-cell">
+                <span style="color:var(--muted);font-family:var(--mono)">—</span>
+              </td>
+              <td class="ring-cell">
+                <div style="width:40px;height:40px;position:relative">
+                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
+                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
+                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
+                      stroke-dasharray="67.36 100.53" stroke-linecap="round"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">67</div>
                 </div>
               </td>
               <td class="center"><span class="strength-badge high">偏多 📈</span></td>
@@ -1495,7 +1598,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+1.40%</span></td>
               <td class="num mob-hide">63.4</td>
               <td class="num mob-hide" style="color: #34d399">+0.63</td>
-              <td class="num mob-hide">1.01×</td>
+              <td class="num mob-hide">1.07×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1537,7 +1640,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+4.55%</span></td>
               <td class="num mob-hide">76.8</td>
               <td class="num mob-hide" style="color: #34d399">+2.78</td>
-              <td class="num mob-hide">0.76×</td>
+              <td class="num mob-hide">0.78×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1579,7 +1682,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+1.31%</span></td>
               <td class="num mob-hide">77.2</td>
               <td class="num mob-hide" style="color: #34d399">+0.25</td>
-              <td class="num mob-hide">0.91×</td>
+              <td class="num mob-hide">0.93×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1621,7 +1724,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+1.12%</span></td>
               <td class="num mob-hide">58.6</td>
               <td class="num mob-hide" style="color: #f87171">-2.67</td>
-              <td class="num mob-hide">0.95×</td>
+              <td class="num mob-hide">0.96×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1663,7 +1766,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.97%</span></td>
               <td class="num mob-hide">73.0</td>
               <td class="num mob-hide" style="color: #34d399">+1.82</td>
-              <td class="num mob-hide">0.79×</td>
+              <td class="num mob-hide">0.80×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1686,26 +1789,26 @@ body.beginner-mode .beginner-only { display: block; }
             
             
             
-            <tr class="lb-row" data-type="stock" data-market="US" data-score="57" data-rsi="56.98" data-price="635.2899780273438" data-ma20="612.3" data-ma60="622.28">
+            <tr class="lb-row" data-type="etf" data-market="US" data-score="54" data-rsi="54.17" data-price="173.8000030517578" data-ma20="172.94" data-ma60="169.57">
               <td>
-                <a href="./META.html" style="text-decoration:none;color:inherit">
+                <a href="./XLI.html" style="text-decoration:none;color:inherit">
                   <div class="ticker-cell">
-                    <div class="ticker-tile">ME</div>
+                    <div class="ticker-tile">XL</div>
                     <div class="ticker-meta">
-                      <div class="ticker-sym">META</div>
-                      <div class="ticker-name">Meta Platforms, Inc.</div>
+                      <div class="ticker-sym">XLI</div>
+                      <div class="ticker-name">State Street Industrial Select </div>
                     </div>
                   </div>
                 </a>
               </td>
               <td>
-                <span class="tag stock">stock</span>
+                <span class="tag etf">etf</span>
               </td>
-              <td class="num lg">635.29</td>
-              <td><span class="pct-chip up">+0.00%</span></td>
-              <td class="num mob-hide">57.0</td>
-              <td class="num mob-hide" style="color: #34d399">+2.72</td>
-              <td class="num mob-hide">0.99×</td>
+              <td class="num lg">173.80</td>
+              <td><span class="pct-chip down">-0.29%</span></td>
+              <td class="num mob-hide">54.2</td>
+              <td class="num mob-hide" style="color: #34d399">+0.02</td>
+              <td class="num mob-hide">1.09×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1714,9 +1817,9 @@ body.beginner-mode .beginner-only { display: block; }
                   <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
                     <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
                     <circle cx="20" cy="20" r="16" stroke="#f5b942" stroke-width="2.5" fill="none"
-                      stroke-dasharray="57.30 100.53" stroke-linecap="round"/>
+                      stroke-dasharray="54.29 100.53" stroke-linecap="round"/>
                   </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">57</div>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">54</div>
                 </div>
               </td>
               <td class="center"><span class="strength-badge mid">中性觀望 ⚖️</span></td>
@@ -1747,7 +1850,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.33%</span></td>
               <td class="num mob-hide">62.0</td>
               <td class="num mob-hide" style="color: #f87171">-3.45</td>
-              <td class="num mob-hide">0.73×</td>
+              <td class="num mob-hide">0.85×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1789,7 +1892,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.84%</span></td>
               <td class="num mob-hide">76.7</td>
               <td class="num mob-hide" style="color: #f87171">-0.19</td>
-              <td class="num mob-hide">0.79×</td>
+              <td class="num mob-hide">0.83×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1873,7 +1976,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+8.17%</span></td>
               <td class="num mob-hide">56.5</td>
               <td class="num mob-hide" style="color: #34d399">+0.73</td>
-              <td class="num mob-hide">1.20×</td>
+              <td class="num mob-hide">1.23×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1915,7 +2018,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.55%</span></td>
               <td class="num mob-hide">73.5</td>
               <td class="num mob-hide" style="color: #f87171">-0.37</td>
-              <td class="num mob-hide">0.74×</td>
+              <td class="num mob-hide">0.87×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1999,7 +2102,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.78%</span></td>
               <td class="num mob-hide">52.7</td>
               <td class="num mob-hide" style="color: #f87171">-1.94</td>
-              <td class="num mob-hide">0.87×</td>
+              <td class="num mob-hide">0.88×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -2011,48 +2114,6 @@ body.beginner-mode .beginner-only { display: block; }
                       stroke-dasharray="45.24 100.53" stroke-linecap="round"/>
                   </svg>
                   <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">45</div>
-                </div>
-              </td>
-              <td class="center"><span class="strength-badge mid">中性觀望 ⚖️</span></td>
-            </tr>
-          
-            
-            
-            
-            
-            
-            
-            <tr class="lb-row" data-type="etf" data-market="US" data-score="44" data-rsi="54.17" data-price="173.8000030517578" data-ma20="172.94" data-ma60="169.57">
-              <td>
-                <a href="./XLI.html" style="text-decoration:none;color:inherit">
-                  <div class="ticker-cell">
-                    <div class="ticker-tile">XL</div>
-                    <div class="ticker-meta">
-                      <div class="ticker-sym">XLI</div>
-                      <div class="ticker-name">State Street Industrial Select </div>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td>
-                <span class="tag etf">etf</span>
-              </td>
-              <td class="num lg">173.80</td>
-              <td><span class="pct-chip down">-0.29%</span></td>
-              <td class="num mob-hide">54.2</td>
-              <td class="num mob-hide" style="color: #34d399">+0.02</td>
-              <td class="num mob-hide">0.99×</td>
-              <td class="ring-cell">
-                <span style="color:var(--muted);font-family:var(--mono)">—</span>
-              </td>
-              <td class="ring-cell">
-                <div style="width:40px;height:40px;position:relative">
-                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
-                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
-                    <circle cx="20" cy="20" r="16" stroke="#f5b942" stroke-width="2.5" fill="none"
-                      stroke-dasharray="44.23 100.53" stroke-linecap="round"/>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">44</div>
                 </div>
               </td>
               <td class="center"><span class="strength-badge mid">中性觀望 ⚖️</span></td>
@@ -2083,7 +2144,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip up">+0.52%</span></td>
               <td class="num mob-hide">55.0</td>
               <td class="num mob-hide" style="color: #34d399">+0.17</td>
-              <td class="num mob-hide">0.92×</td>
+              <td class="num mob-hide">0.93×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -2167,7 +2228,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip down">-0.29%</span></td>
               <td class="num mob-hide">47.8</td>
               <td class="num mob-hide" style="color: #f87171">-0.04</td>
-              <td class="num mob-hide">1.15×</td>
+              <td class="num mob-hide">1.16×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -2209,7 +2270,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip down">-0.19%</span></td>
               <td class="num mob-hide">43.2</td>
               <td class="num mob-hide" style="color: #f87171">-2.31</td>
-              <td class="num mob-hide">0.80×</td>
+              <td class="num mob-hide">0.83×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -2251,7 +2312,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip down">-0.07%</span></td>
               <td class="num mob-hide">43.8</td>
               <td class="num mob-hide" style="color: #f87171">-0.19</td>
-              <td class="num mob-hide">1.18×</td>
+              <td class="num mob-hide">1.19×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -2494,6 +2555,25 @@ body.beginner-mode .beginner-only { display: block; }
       
       
       <div class="sector-tile high">
+        <div class="sector-name">Communication Services</div>
+        <div class="sector-avg high">63</div>
+        <div class="sector-tickers">
+          
+            
+            <span class="sector-chip high">APP · 70</span>
+          
+            
+            <span class="sector-chip high">META · 67</span>
+          
+            
+            <span class="sector-chip mid">GOOGL · 53</span>
+          
+        </div>
+      </div>
+    
+      
+      
+      <div class="sector-tile high">
         <div class="sector-name">Technology</div>
         <div class="sector-avg high">62</div>
         <div class="sector-tickers">
@@ -2521,28 +2601,9 @@ body.beginner-mode .beginner-only { display: block; }
     
       
       
-      <div class="sector-tile high">
-        <div class="sector-name">Communication Services</div>
-        <div class="sector-avg high">60</div>
-        <div class="sector-tickers">
-          
-            
-            <span class="sector-chip high">APP · 70</span>
-          
-            
-            <span class="sector-chip mid">META · 57</span>
-          
-            
-            <span class="sector-chip mid">GOOGL · 53</span>
-          
-        </div>
-      </div>
-    
-      
-      
       <div class="sector-tile mid">
         <div class="sector-name">Unknown</div>
-        <div class="sector-avg mid">56</div>
+        <div class="sector-avg mid">57</div>
         <div class="sector-tickers">
           
             
@@ -2576,6 +2637,9 @@ body.beginner-mode .beginner-only { display: block; }
             <span class="sector-chip high">SOXX · 60</span>
           
             
+            <span class="sector-chip mid">XLI · 54</span>
+          
+            
             <span class="sector-chip mid">QQQ · 53</span>
           
             
@@ -2586,9 +2650,6 @@ body.beginner-mode .beginner-only { display: block; }
           
             
             <span class="sector-chip mid">VTI · 48</span>
-          
-            
-            <span class="sector-chip mid">XLI · 44</span>
           
             
             <span class="sector-chip mid">TLT · 40</span>
@@ -2633,6 +2694,62 @@ body.beginner-mode .beginner-only { display: block; }
     </div>
     <span class="card-sub">30 cards</span>
   </div>
+
+  <!-- ── How to Read guide ───────────────────────────────────────── -->
+  <details class="guide-panel">
+    <summary><span class="guide-arrow">▶</span> 📖 How to read this dashboard</summary>
+    <div class="guide-grid">
+
+      <div class="guide-section">
+        <div class="guide-section-title">Entry Verdict</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3)">🟢 GO</span>Score ≥75, BB mid-range, RSI not overbought — good entry zone</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.3)">🟡 WAIT</span>Score ≥75 but BB extended or RSI >70 — pullback expected</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3)">🔴 SKIP</span>Both BB >0.85 and RSI >70 — overbought on two signals</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.3)">⚡ WATCH</span>BB squeeze — bands tightening, big move imminent, wait for direction</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Score (0–100)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">80–100</span>Strong Buy — all 5 factors bullish</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">60–79</span>Buy — majority of signals positive</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">40–59</span>Neutral — mixed signals, no clear edge</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">0–39</span>Bearish — avoid long entries</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">RSI (Momentum)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">45–70 ↑</span>Strong momentum — ideal buy zone</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">30–44</span>Low, possible recovery — watch closely</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.25)">&lt;30</span>Oversold — bounce possible, confirm first</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">&gt;70</span>Overbought — avoid buying, wait for dip</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Bollinger Bands %B</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.25)">&lt;0.20 🔵</span>Near lower band — bounce zone</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">0.20–0.60 🟢</span>Healthy mid-range — good to enter</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(251,146,60,0.1);color:#fb923c;border:1px solid rgba(251,146,60,0.25)">0.60–0.85 🟠</span>Extended — caution, wait for pullback</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">&gt;0.85 🔴</span>Near upper band — overbought risk</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.25)">⚡ Squeeze</span>Bands tight — explosive move building</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Volume (Vol ×)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">≥1.5×</span>Strong — institutional interest confirmed</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">1.0–1.5×</span>Normal — signal is valid but unconfirmed</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">&lt;1.0×</span>Weak — low conviction, treat signal with caution</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">Moving Averages</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">MA5</span>5-day avg — short-term direction</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">MA20</span>20-day avg — medium-term trend</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(177,140,255,0.1);color:#b18cff;border:1px solid rgba(177,140,255,0.25)">MA60</span>60-day avg — must be above for long entries</div>
+        <div class="guide-row" style="color:var(--text-2);font-size:10px;margin-top:2px">Best setup: Price > MA5 > MA20 > MA60 (bull stack)</div>
+      </div>
+
+    </div>
+  </details>
 
   <div class="bento">
   
@@ -2692,6 +2809,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (1.00) — wait for pullback</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -2716,15 +2844,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 77.84</span>
-          <span class="ma-badge ma20">MA20 · 77.34</span>
-          <span class="ma-badge ma60">MA60 · 73.96</span>
-          <span class="rsi-badge">RSI · 63.14</span>
-          <span class="vol-badge">Vol · 1.2×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 77.84</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 77.34</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 73.96</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 63.14</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.2×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.00</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.00&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.00</span>
           
           
         </div>
@@ -2844,6 +2975,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#34d399;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.30)">
+          🟢 GO
+        </span>
+        <span class="verdict-reason">Score 80 · BB 0.78 · RSI 64</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -2868,15 +3010,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 431.98</span>
-          <span class="ma-badge ma20">MA20 · 418.69</span>
-          <span class="ma-badge ma60">MA60 · 392.36</span>
-          <span class="rsi-badge">RSI · 63.81</span>
-          <span class="vol-badge">Vol · 0.6×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 431.98</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 418.69</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 392.36</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 63.81</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.6×</span>
           
           
           
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.78</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.78&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band">BB 0.78</span>
           
           
         </div>
@@ -2996,6 +3141,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (0.97) — wait for pullback</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3020,15 +3176,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 288.1</span>
-          <span class="ma-badge ma20">MA20 · 282.65</span>
-          <span class="ma-badge ma60">MA60 · 266.26</span>
-          <span class="rsi-badge">RSI · 67.04</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 288.1</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 282.65</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 266.26</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 67.04</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.97</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.97&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.97</span>
           
           
         </div>
@@ -3148,6 +3307,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (0.93) — wait for pullback</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3172,22 +3342,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 505.68</span>
-          <span class="ma-badge ma20">MA20 · 498.51</span>
-          <span class="ma-badge ma60">MA60 · 482.6</span>
-          <span class="rsi-badge">RSI · 65.96</span>
-          <span class="vol-badge">Vol · 0.7×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 505.68</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 498.51</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 482.6</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 65.96</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.93</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.93&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.93</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（66.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 5.1%</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（66.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 5.1%</div>
           </div>
         </div>
       </div>
@@ -3298,6 +3471,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (1.01) — wait for pullback</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3322,15 +3506,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 120.19</span>
-          <span class="ma-badge ma20">MA20 · 118.73</span>
-          <span class="ma-badge ma60">MA60 · 115.02</span>
-          <span class="rsi-badge">RSI · 65.44</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 120.19</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 118.73</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 115.02</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 65.44</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.01</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.01&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.01</span>
           
           
         </div>
@@ -3448,6 +3635,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#f59e0b;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.30)">
+          ⚡ WATCH
+        </span>
+        <span class="verdict-reason">BB squeeze — big move building, wait for direction</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3472,15 +3670,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 418.67</span>
-          <span class="ma-badge ma20">MA20 · 414.8</span>
-          <span class="ma-badge ma60">MA60 · 401.28</span>
-          <span class="rsi-badge">RSI · 60.14</span>
-          <span class="vol-badge">Vol · 1.4×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 418.67</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 414.8</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 401.28</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 60.14</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.4×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.02 ⚡</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.02&#10;⚡ SQUEEZE — bands tightening&#10;Big move imminent, wait for direction&#10;0=lower band · 1=upper band">BB 1.02 ⚡</span>
           
           
         </div>
@@ -3600,6 +3801,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (1.01) — wait for pullback</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3624,22 +3836,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 102.52</span>
-          <span class="ma-badge ma20">MA20 · 95.58</span>
-          <span class="ma-badge ma60">MA60 · 100.7</span>
-          <span class="rsi-badge">RSI · 63.66</span>
-          <span class="vol-badge">Vol · 1.2×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 102.52</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 95.58</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 100.7</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 63.66</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.4×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.01</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.01&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.01</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（63.7 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">🟡 量能正常（1.2× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.0%</div>
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（63.7 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">🟡 量能正常（1.4× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.0%</div>
           </div>
         </div>
       </div>
@@ -3754,6 +3969,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3778,15 +3996,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 133.65</span>
-          <span class="ma-badge ma20">MA20 · 133.03</span>
-          <span class="ma-badge ma60">MA60 · 129.75</span>
-          <span class="rsi-badge">RSI · 57.4</span>
-          <span class="vol-badge">Vol · 0.8×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 133.65</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 133.03</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 129.75</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 57.4</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.77</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.77&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band">BB 0.77</span>
           
           
         </div>
@@ -3906,6 +4127,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -3930,15 +4154,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 80.07</span>
-          <span class="ma-badge ma20">MA20 · 79.9</span>
-          <span class="ma-badge ma60">MA60 · 79.47</span>
-          <span class="rsi-badge">RSI · 58.47</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 80.07</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 79.9</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 79.47</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 58.47</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.85</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.85&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band">BB 0.85</span>
           
           
         </div>
@@ -4058,6 +4285,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4082,15 +4312,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 529.91</span>
-          <span class="ma-badge ma20">MA20 · 490.28</span>
-          <span class="ma-badge ma60">MA60 · 458.26</span>
-          <span class="rsi-badge">RSI · 72.79</span>
-          <span class="vol-badge">Vol · 1.1×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 529.91</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 490.28</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 458.26</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 72.79</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.1×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.26</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.26&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.26</span>
           
           
         </div>
@@ -4210,6 +4443,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#f59e0b;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.30)">
+          ⚡ WATCH
+        </span>
+        <span class="verdict-reason">BB squeeze — big move building, wait for direction</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4234,15 +4478,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 40.24</span>
-          <span class="ma-badge ma20">MA20 · 39.98</span>
-          <span class="ma-badge ma60">MA60 · 36.97</span>
-          <span class="rsi-badge">RSI · 56.88</span>
-          <span class="vol-badge">Vol · 0.8×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 40.24</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 39.98</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 36.97</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 56.88</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.57 ⚡</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" data-tip="BB %B: 0.57&#10;⚡ SQUEEZE — bands tightening&#10;Big move imminent, wait for direction&#10;0=lower band · 1=upper band">BB 0.57 ⚡</span>
           
           
         </div>
@@ -4313,6 +4560,170 @@ body.beginner-mode .beginner-only { display: block; }
     
     
 
+    <article id="stock-META" class="scard" data-type="stock" data-market="US" data-score="67" data-ticker="META" data-rsi="56.98" data-price="635.2899780273438" data-ma20="612.3" data-ma60="622.28">
+
+      <div class="scard-head">
+        <div class="scard-id">
+          <div class="scard-tile">ME</div>
+          <div>
+            <div class="scard-sym">META</div>
+            <div class="scard-name">Meta Platforms, Inc.</div>
+            <div class="scard-tags">
+              <span class="tag stock">stock</span>
+              <span class="tag market">US</span>
+            </div>
+          </div>
+        </div>
+        <div class="scard-price">
+          <div class="price-block">
+            <div class="price-val">$635.29</div>
+            <div class="price-chg up">+0.00%</div>
+          </div>
+          <div class="ring high">
+            <svg width="56" height="56">
+              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
+              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
+                stroke-dasharray="96.82 144.50" stroke-linecap="round"/>
+            </svg>
+            <div class="ring-num">67</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
+        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,16.8 6.0,18.6 10.0,17.7 14.0,20.7 18.0,16.3 22.0,14.1 26.0,18.1 30.0,24.0 34.0,21.7 38.0,14.2 42.0,13.3 46.0,15.6 50.0,17.2 54.0,21.9 58.0,20.6 62.0,19.3 66.0,17.7 70.0,16.6 74.0,4.0 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
+      </div>
+      
+
+      <div class="scard-row">
+        <span class="strength-badge high">偏多 📈</span>
+        
+          
+          
+          <span class="sentiment neut">-2</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有人樂觀看待SpaceX的IPO，但Meta面臨裁員、競爭對手應用程式的推出導致股價下跌，以及AI驅動裁員的疑慮，整體情緒偏向負面。</span>
+        
+      </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#f59e0b;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.30)">
+          ⚡ WATCH
+        </span>
+        <span class="verdict-reason">BB squeeze — big move building, wait for direction</span>
+      </div>
+      
+
+      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
+      <div class="beginner-only">
+        <div class="beg-verdict high">
+          📈 Buy Signal — Most indicators are pointing up (67/100)
+          
+        </div>
+        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
+      </div>
+
+      
+
+      <div class="expert-only">
+      
+      
+      
+      
+      </div>
+
+      
+      
+      
+
+      <div class="expert-only">
+        <div class="scard-row">
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 620.11</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 612.3</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 622.28</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 56.98</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.0×</span>
+          
+          
+          
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.12&#10;⚡ SQUEEZE — bands tightening&#10;Big move imminent, wait for direction&#10;0=lower band · 1=upper band">BB 1.12 ⚡</span>
+          
+          
+        </div>
+        <div>
+          <div class="scard-sub">Technical signals</div>
+          <div class="signals">
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（57.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">🟡 量能正常（1.0× 均量）</div><div class="signal-item">🟡 略高於 MA60（+2.1%）</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div>
+        <div class="scard-sub">Latest news</div>
+        <div class="news-list">
+          
+          <div class="news-item">
+            Maybe investors can wait to buy SpaceX after IPO: Lee Munson
+            
+            <span class="news-pub">Yahoo Finance Video</span>
+          </div>
+          
+          <div class="news-item">
+            'Not a cost-cutting exercise': How tech CEOs are framing AI-driven layoffs
+            
+            <span class="news-pub">Yahoo Finance</span>
+          </div>
+          
+          <div class="news-item">
+            Unpacking Q1 Earnings: Meta (NASDAQ:META) In The Context Of Other Social Networking Stocks
+            
+            <span class="news-pub">StockStory</span>
+          </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <details class="ai-details" open>
+        <summary>
+          <span class="ai-label">✦ AI Analysis</span>
+          <span class="ai-arrow">▼</span>
+        </summary>
+        <div class="ai-body">① 盤面偏弱 ② 關鍵價位：$607.3（MA5支撐），上方壓力 $619.1 (MA20) ③ 高機率劇本：若跌破$607.3，恐向下探底。</div>
+      </details>
+      
+
+      
+
+      <a href="./META.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+        → 查看詳細分析
+      </a>
+      <button class="copy-btn"
+        data-ticker="META"
+        data-price="635.29"
+        data-score="67"
+        data-entry=""
+        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
+    </article>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
     <article id="stock-XLV" class="scard" data-type="etf" data-market="US" data-score="67" data-ticker="XLV" data-rsi="63.37" data-price="150.8800048828125" data-ma20="146.43" data-ma60="147.22">
 
       <div class="scard-head">
@@ -4360,6 +4771,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4384,22 +4798,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 149.24</span>
-          <span class="ma-badge ma20">MA20 · 146.43</span>
-          <span class="ma-badge ma60">MA60 · 147.22</span>
-          <span class="rsi-badge">RSI · 63.37</span>
-          <span class="vol-badge">Vol · 1.0×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 149.24</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 146.43</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 147.22</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 63.37</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.1×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.05</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.05&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.05</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（63.4 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">🟡 量能正常（1.0× 均量）</div><div class="signal-item">🟡 略高於 MA60（+2.5%）</div>
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（63.4 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">🟡 量能正常（1.1× 均量）</div><div class="signal-item">🟡 略高於 MA60（+2.5%）</div>
           </div>
         </div>
       </div>
@@ -4512,6 +4929,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4536,15 +4956,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 486.92</span>
-          <span class="ma-badge ma20">MA20 · 432.02</span>
-          <span class="ma-badge ma60">MA60 · 301.32</span>
-          <span class="rsi-badge">RSI · 76.85</span>
-          <span class="vol-badge">Vol · 0.8×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 486.92</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 432.02</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 301.32</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 76.85</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.93</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.93&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.93</span>
           
           
         </div>
@@ -4662,6 +5085,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4686,15 +5112,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 183.08</span>
-          <span class="ma-badge ma20">MA20 · 174.51</span>
-          <span class="ma-badge ma60">MA60 · 153.42</span>
-          <span class="rsi-badge">RSI · 77.16</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 183.08</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 174.51</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 153.42</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 77.16</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.90</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.90&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.90</span>
           
           
         </div>
@@ -4814,6 +5243,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#f59e0b;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.30)">
+          ⚡ WATCH
+        </span>
+        <span class="verdict-reason">BB squeeze — big move building, wait for direction</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4838,15 +5278,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 419.83</span>
-          <span class="ma-badge ma20">MA20 · 421.44</span>
-          <span class="ma-badge ma60">MA60 · 374.34</span>
-          <span class="rsi-badge">RSI · 58.59</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 419.83</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 421.44</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 374.34</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 58.59</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.0×</span>
           
           
           
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.68 ⚡</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.68&#10;⚡ SQUEEZE — bands tightening&#10;Big move imminent, wait for direction&#10;0=lower band · 1=upper band">BB 0.68 ⚡</span>
           
           
         </div>
@@ -4966,6 +5409,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict high">
@@ -4990,15 +5436,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 553.12</span>
-          <span class="ma-badge ma20">MA20 · 514.28</span>
-          <span class="ma-badge ma60">MA60 · 416.81</span>
-          <span class="rsi-badge">RSI · 73.02</span>
-          <span class="vol-badge">Vol · 0.8×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 553.12</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 514.28</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 416.81</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 73.02</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.92</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.92&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.92</span>
           
           
         </div>
@@ -5071,39 +5520,39 @@ body.beginner-mode .beginner-only { display: block; }
     
     
 
-    <article id="stock-META" class="scard" data-type="stock" data-market="US" data-score="57" data-ticker="META" data-rsi="56.98" data-price="635.2899780273438" data-ma20="612.3" data-ma60="622.28">
+    <article id="stock-XLI" class="scard" data-type="etf" data-market="US" data-score="54" data-ticker="XLI" data-rsi="54.17" data-price="173.8000030517578" data-ma20="172.94" data-ma60="169.57">
 
       <div class="scard-head">
         <div class="scard-id">
-          <div class="scard-tile">ME</div>
+          <div class="scard-tile">XL</div>
           <div>
-            <div class="scard-sym">META</div>
-            <div class="scard-name">Meta Platforms, Inc.</div>
+            <div class="scard-sym">XLI</div>
+            <div class="scard-name">State Street Industrial Select </div>
             <div class="scard-tags">
-              <span class="tag stock">stock</span>
+              <span class="tag etf">etf</span>
               <span class="tag market">US</span>
             </div>
           </div>
         </div>
         <div class="scard-price">
           <div class="price-block">
-            <div class="price-val">$635.29</div>
-            <div class="price-chg up">+0.00%</div>
+            <div class="price-val">$173.80</div>
+            <div class="price-chg down">-0.29%</div>
           </div>
           <div class="ring mid">
             <svg width="56" height="56">
               <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
               <circle cx="28" cy="28" r="23" stroke="#f5b942" stroke-width="3.5" fill="none"
-                stroke-dasharray="82.36 144.50" stroke-linecap="round"/>
+                stroke-dasharray="78.03 144.50" stroke-linecap="round"/>
             </svg>
-            <div class="ring-num">57</div>
+            <div class="ring-num">54</div>
           </div>
         </div>
       </div>
 
       
       <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
-        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,16.8 6.0,18.6 10.0,17.7 14.0,20.7 18.0,16.3 22.0,14.1 26.0,18.1 30.0,24.0 34.0,21.7 38.0,14.2 42.0,13.3 46.0,15.6 50.0,17.2 54.0,21.9 58.0,20.6 62.0,19.3 66.0,17.7 70.0,16.6 74.0,4.0 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,9.6 6.0,13.6 10.0,18.5 14.0,15.0 18.0,4.0 22.0,11.1 26.0,13.0 30.0,8.5 34.0,10.2 38.0,12.0 42.0,9.8 46.0,17.5 50.0,19.1 54.0,24.0 58.0,19.1 62.0,19.6 66.0,16.5 70.0,10.3 74.0,10.3 78.0,11.6" fill="none" stroke="#f87171" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
         <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
       </div>
       
@@ -5113,15 +5562,18 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有人樂觀看待SpaceX的IPO，但Meta面臨裁員、競爭對手應用程式的推出導致股價下跌，以及AI驅動裁員的疑慮，整體情緒偏向負面。</span>
+          <span class="sentiment pos">+5</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題暗示華爾街對幾支股票持看漲態度，且盤前交易因強勁企業財報而走高，整體情緒偏向樂觀。</span>
         
       </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
 
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
-          ⚖️ Mixed Signals — No clear direction (57/100)
+          ⚖️ Mixed Signals — No clear direction (54/100)
           
         </div>
         <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
@@ -5142,22 +5594,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 620.11</span>
-          <span class="ma-badge ma20">MA20 · 612.3</span>
-          <span class="ma-badge ma60">MA60 · 622.28</span>
-          <span class="rsi-badge">RSI · 56.98</span>
-          <span class="vol-badge">Vol · 1.0×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 172.94</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 172.94</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 169.57</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 54.17</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.1×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 1.12 ⚡</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.61&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band">BB 0.61</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（57.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">⚠️ 量能不足（1.0× 均量）</div><div class="signal-item">🟡 略高於 MA60（+2.1%）</div>
+            <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div><div class="signal-item">RSI 中性（54.2）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">🟡 量能正常（1.1× 均量）</div><div class="signal-item">🟡 略高於 MA60（+2.5%）</div>
           </div>
         </div>
       </div>
@@ -5168,21 +5623,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            Maybe investors can wait to buy SpaceX after IPO: Lee Munson
+            Lockheed Martin Stock: Is Wall Street Bullish or Bearish?
             
-            <span class="news-pub">Yahoo Finance Video</span>
+            <span class="news-pub">Barchart</span>
           </div>
           
           <div class="news-item">
-            'Not a cost-cutting exercise': How tech CEOs are framing AI-driven layoffs
+            Are Wall Street Analysts Bullish on Parker-Hannifin Stock?
             
-            <span class="news-pub">Yahoo Finance</span>
+            <span class="news-pub">Barchart</span>
           </div>
           
           <div class="news-item">
-            Unpacking Q1 Earnings: Meta (NASDAQ:META) In The Context Of Other Social Networking Stocks
+            Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season
             
-            <span class="news-pub">StockStory</span>
+            <span class="news-pub">MT Newswires</span>
           </div>
           
         </div>
@@ -5195,19 +5650,19 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面偏弱 ② 關鍵價位：$607.3（MA5支撐），上方壓力 $619.1 (MA20) ③ 高機率劇本：若跌破$607.3，恐向下探底。</div>
+        <div class="ai-body">①盤面中性偏弱。②關鍵價位：$172.49 (MA20阻力), $170.5 (MA5支撐)。③高機率劇本：可能在 $170.5 - $172.49 區間震盪，若跌破 $170.5 則有下行壓力。</div>
       </details>
       
 
       
 
-      <a href="./META.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+      <a href="./XLI.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
         → 查看詳細分析
       </a>
       <button class="copy-btn"
-        data-ticker="META"
-        data-price="635.29"
-        data-score="57"
+        data-ticker="XLI"
+        data-price="173.80"
+        data-score="54"
         data-entry=""
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
@@ -5268,6 +5723,17 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#f59e0b;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.30)">
+          ⚡ WATCH
+        </span>
+        <span class="verdict-reason">BB squeeze — big move building, wait for direction</span>
+      </div>
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -5292,22 +5758,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 387.69</span>
-          <span class="ma-badge ma20">MA20 · 391.37</span>
-          <span class="ma-badge ma60">MA60 · 339.21</span>
-          <span class="rsi-badge">RSI · 61.98</span>
-          <span class="vol-badge">Vol · 0.7×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 387.69</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 391.37</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 339.21</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 61.98</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.45 ⚡</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" data-tip="BB %B: 0.45&#10;⚡ SQUEEZE — bands tightening&#10;Big move imminent, wait for direction&#10;0=lower band · 1=upper band">BB 0.45 ⚡</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（62.0 ↑）</div><div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 15.0%</div>
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（62.0 ↑）</div><div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 15.0%</div>
           </div>
         </div>
       </div>
@@ -5420,6 +5889,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -5444,15 +5916,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 725.48</span>
-          <span class="ma-badge ma20">MA20 · 705.51</span>
-          <span class="ma-badge ma60">MA60 · 642.18</span>
-          <span class="rsi-badge">RSI · 76.68</span>
-          <span class="vol-badge">Vol · 0.8×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 725.48</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 705.51</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 642.18</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 76.68</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.89</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.89&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.89</span>
           
           
         </div>
@@ -5570,6 +6045,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -5594,15 +6072,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 83.33</span>
-          <span class="ma-badge ma20">MA20 · 76.93</span>
-          <span class="ma-badge ma60">MA60 · 68.89</span>
-          <span class="rsi-badge">RSI · 74.32</span>
-          <span class="vol-badge">Vol · 1.0×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 83.33</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 76.93</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 68.89</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 74.32</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.0×</span>
           
           
           
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.80</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.80&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band">BB 0.80</span>
           
           
         </div>
@@ -5722,6 +6203,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -5746,15 +6230,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 137.35</span>
-          <span class="ma-badge ma20">MA20 · 136.94</span>
-          <span class="ma-badge ma60">MA60 · 143.67</span>
-          <span class="rsi-badge">RSI · 56.51</span>
-          <span class="vol-badge">Vol · 1.2×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 137.35</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 136.94</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 143.67</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 56.51</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.2×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.91</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.91&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.91</span>
           
           
         </div>
@@ -5874,6 +6361,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -5898,22 +6388,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 748.8</span>
-          <span class="ma-badge ma20">MA20 · 737.44</span>
-          <span class="ma-badge ma60">MA60 · 696.74</span>
-          <span class="rsi-badge">RSI · 73.52</span>
-          <span class="vol-badge">Vol · 0.7×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 748.8</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 737.44</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 696.74</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 73.52</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.90</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.90&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.90</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">RSI 中性（73.5）</div><div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.3%</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">RSI 中性（73.5）</div><div class="signal-item">🟡 MACD 死叉收斂（底部跡象）</div><div class="signal-item">⚠️ 量能不足（0.9× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.3%</div>
           </div>
         </div>
       </div>
@@ -6024,6 +6517,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -6048,15 +6544,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 368.47</span>
-          <span class="ma-badge ma20">MA20 · 362.78</span>
-          <span class="ma-badge ma60">MA60 · 343.3</span>
-          <span class="rsi-badge">RSI · 72.81</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 368.47</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 362.78</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 343.3</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 72.81</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.95</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.95&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.95</span>
           
           
         </div>
@@ -6174,6 +6673,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -6198,15 +6700,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 215.31</span>
-          <span class="ma-badge ma20">MA20 · 214.88</span>
-          <span class="ma-badge ma60">MA60 · 196.05</span>
-          <span class="rsi-badge">RSI · 52.67</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 215.31</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 214.88</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 196.05</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 52.67</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.48</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" data-tip="BB %B: 0.48&#10;🟢 Mid-range — healthy positioning&#10;Room to run in either direction&#10;0=lower band · 1=upper band">BB 0.48</span>
           
           
         </div>
@@ -6279,156 +6784,6 @@ body.beginner-mode .beginner-only { display: block; }
     
     
 
-    <article id="stock-XLI" class="scard" data-type="etf" data-market="US" data-score="44" data-ticker="XLI" data-rsi="54.17" data-price="173.8000030517578" data-ma20="172.94" data-ma60="169.57">
-
-      <div class="scard-head">
-        <div class="scard-id">
-          <div class="scard-tile">XL</div>
-          <div>
-            <div class="scard-sym">XLI</div>
-            <div class="scard-name">State Street Industrial Select </div>
-            <div class="scard-tags">
-              <span class="tag etf">etf</span>
-              <span class="tag market">US</span>
-            </div>
-          </div>
-        </div>
-        <div class="scard-price">
-          <div class="price-block">
-            <div class="price-val">$173.80</div>
-            <div class="price-chg down">-0.29%</div>
-          </div>
-          <div class="ring mid">
-            <svg width="56" height="56">
-              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
-              <circle cx="28" cy="28" r="23" stroke="#f5b942" stroke-width="3.5" fill="none"
-                stroke-dasharray="63.58 144.50" stroke-linecap="round"/>
-            </svg>
-            <div class="ring-num">44</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
-        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,9.6 6.0,13.6 10.0,18.5 14.0,15.0 18.0,4.0 22.0,11.1 26.0,13.0 30.0,8.5 34.0,10.2 38.0,12.0 42.0,9.8 46.0,17.5 50.0,19.1 54.0,24.0 58.0,19.1 62.0,19.6 66.0,16.5 70.0,10.3 74.0,10.3 78.0,11.6" fill="none" stroke="#f87171" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
-      </div>
-      
-
-      <div class="scard-row">
-        <span class="strength-badge mid">中性觀望 ⚖️</span>
-        
-          
-          
-          <span class="sentiment pos">+5</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題暗示華爾街對幾支股票持看漲態度，且盤前交易因強勁企業財報而走高，整體情緒偏向樂觀。</span>
-        
-      </div>
-
-      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
-      <div class="beginner-only">
-        <div class="beg-verdict mid">
-          ⚖️ Mixed Signals — No clear direction (44/100)
-          
-        </div>
-        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
-      </div>
-
-      
-
-      <div class="expert-only">
-      
-      
-      
-      
-      </div>
-
-      
-      
-      
-
-      <div class="expert-only">
-        <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 172.94</span>
-          <span class="ma-badge ma20">MA20 · 172.94</span>
-          <span class="ma-badge ma60">MA60 · 169.57</span>
-          <span class="rsi-badge">RSI · 54.17</span>
-          <span class="vol-badge">Vol · 1.0×</span>
-          
-          
-          
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.61</span>
-          
-          
-        </div>
-        <div>
-          <div class="scard-sub">Technical signals</div>
-          <div class="signals">
-            <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div><div class="signal-item">RSI 中性（54.2）</div><div class="signal-item">✅ MACD 金叉且動能擴張</div><div class="signal-item">⚠️ 量能不足（1.0× 均量）</div><div class="signal-item">🟡 略高於 MA60（+2.5%）</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div>
-        <div class="scard-sub">Latest news</div>
-        <div class="news-list">
-          
-          <div class="news-item">
-            Lockheed Martin Stock: Is Wall Street Bullish or Bearish?
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
-            Are Wall Street Analysts Bullish on Parker-Hannifin Stock?
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
-            Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday Buoyed by Robust Corporate Earnings Season
-            
-            <span class="news-pub">MT Newswires</span>
-          </div>
-          
-        </div>
-      </div>
-      
-
-      
-      <details class="ai-details" open>
-        <summary>
-          <span class="ai-label">✦ AI Analysis</span>
-          <span class="ai-arrow">▼</span>
-        </summary>
-        <div class="ai-body">①盤面中性偏弱。②關鍵價位：$172.49 (MA20阻力), $170.5 (MA5支撐)。③高機率劇本：可能在 $170.5 - $172.49 區間震盪，若跌破 $170.5 則有下行壓力。</div>
-      </details>
-      
-
-      
-
-      <a href="./XLI.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
-        → 查看詳細分析
-      </a>
-      <button class="copy-btn"
-        data-ticker="XLI"
-        data-price="173.80"
-        data-score="44"
-        data-entry=""
-        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
-    </article>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-
     <article id="stock-TLT" class="scard" data-type="etf" data-market="US" data-score="40" data-ticker="TLT" data-rsi="55.04" data-price="85.73999786376953" data-ma20="84.93" data-ma60="85.92">
 
       <div class="scard-head">
@@ -6476,6 +6831,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict mid">
@@ -6500,15 +6858,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 85.01</span>
-          <span class="ma-badge ma20">MA20 · 84.93</span>
-          <span class="ma-badge ma60">MA60 · 85.92</span>
-          <span class="rsi-badge">RSI · 55.04</span>
-          <span class="vol-badge">Vol · 0.9×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 85.01</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 84.93</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 85.92</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 55.04</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
-          <span class="bb-badge" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.74</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#fb923c;background:#fb923c14;border:1px solid #fb923c33" data-tip="BB %B: 0.74&#10;🟠 Approaching upper band&#10;Getting extended — caution on new entries&#10;0=lower band · 1=upper band">BB 0.74</span>
           
           
         </div>
@@ -6628,6 +6989,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict low">
@@ -6652,15 +7016,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 413.21</span>
-          <span class="ma-badge ma20">MA20 · 421.61</span>
-          <span class="ma-badge ma60">MA60 · 432.84</span>
-          <span class="rsi-badge">RSI · 40.52</span>
-          <span class="vol-badge">Vol · 1.2×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 413.21</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 421.61</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 432.84</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 40.52</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.2×</span>
           
           
           
-          <span class="bb-badge" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.24</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" data-tip="BB %B: 0.24&#10;🟢 Mid-range — healthy positioning&#10;Room to run in either direction&#10;0=lower band · 1=upper band">BB 0.24</span>
           
           
         </div>
@@ -6782,6 +7149,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict low">
@@ -6806,22 +7176,25 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 51.64</span>
-          <span class="ma-badge ma20">MA20 · 51.54</span>
-          <span class="ma-badge ma60">MA60 · 50.75</span>
-          <span class="rsi-badge">RSI · 47.84</span>
-          <span class="vol-badge">Vol · 1.1×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 51.64</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 51.54</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 50.75</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 47.84</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.2×</span>
           
           
           
-          <span class="bb-badge" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.30</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" data-tip="BB %B: 0.30&#10;🟢 Mid-range — healthy positioning&#10;Room to run in either direction&#10;0=lower band · 1=upper band">BB 0.30</span>
           
           
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">RSI 中性（47.8）</div><div class="signal-item">❌ MACD 偏空</div><div class="signal-item">🟡 量能正常（1.1× 均量）</div><div class="signal-item">🟡 略高於 MA60（+1.0%）</div>
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">RSI 中性（47.8）</div><div class="signal-item">❌ MACD 偏空</div><div class="signal-item">🟡 量能正常（1.2× 均量）</div><div class="signal-item">🟡 略高於 MA60（+1.0%）</div>
           </div>
         </div>
       </div>
@@ -6934,6 +7307,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict low">
@@ -6958,15 +7334,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 136.45</span>
-          <span class="ma-badge ma20">MA20 · 141.46</span>
-          <span class="ma-badge ma60">MA60 · 128.62</span>
-          <span class="rsi-badge">RSI · 43.2</span>
-          <span class="vol-badge">Vol · 0.8×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 136.45</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 141.46</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 128.62</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 43.2</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
-          <span class="bb-badge" style="color:#60a5fa;background:#60a5fa14;border:1px solid #60a5fa33" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.07</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#60a5fa;background:#60a5fa14;border:1px solid #60a5fa33" data-tip="BB %B: 0.07&#10;🔵 Near lower band — bounce zone&#10;Watch for reversal confirmation&#10;0=lower band · 1=upper band">BB 0.07</span>
           
           
         </div>
@@ -7086,6 +7465,9 @@ body.beginner-mode .beginner-only { display: block; }
         
       </div>
 
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
       <!-- ── Simple view: plain-English verdict ─────────────────────── -->
       <div class="beginner-only">
         <div class="beg-verdict low">
@@ -7110,15 +7492,18 @@ body.beginner-mode .beginner-only { display: block; }
 
       <div class="expert-only">
         <div class="scard-row">
-          <span class="ma-badge ma5">MA5 · 58.08</span>
-          <span class="ma-badge ma20">MA20 · 58.4</span>
-          <span class="ma-badge ma60">MA60 · 58.07</span>
-          <span class="rsi-badge">RSI · 43.81</span>
-          <span class="vol-badge">Vol · 1.2×</span>
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 58.08</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 58.4</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 58.07</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 43.81</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.2×</span>
           
           
           
-          <span class="bb-badge" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" title="Bollinger %B: 0=lower band, 1=upper band">BB 0.26</span>
+          
+          
+          
+          <span class="bb-badge tip" style="color:#34d399;background:#34d39914;border:1px solid #34d39933" data-tip="BB %B: 0.26&#10;🟢 Mid-range — healthy positioning&#10;Room to run in either direction&#10;0=lower band · 1=upper band">BB 0.26</span>
           
           
         </div>
