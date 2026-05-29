@@ -6,6 +6,7 @@ Called from report_generator.generate_dashboard() after the main index.html is w
 
 import os
 import math
+from datetime import datetime, timezone, timedelta
 from jinja2 import Template
 
 
@@ -650,6 +651,9 @@ DETAIL_HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>{{ s.ticker }} · Signal Monitor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1108,6 +1112,7 @@ body {
   <a href="./{{ next_ticker }}.html" class="back-link" title="Next: {{ next_ticker }}" style="padding:5px 9px">{{ next_ticker }} ›</a>
   {% endif %}
   <span class="topbar-date">{{ date }}</span>
+  {% if generated_at %}<span class="topbar-date" style="opacity:0.65" title="When this page was generated — refresh to get the latest">· updated {{ generated_at }}</span>{% endif %}
 </div>
 
 <div class="page-detail">
@@ -1670,9 +1675,12 @@ def generate_stock_detail_page(
     from jinja2 import Environment
     env = Environment()
 
+    generated_at = datetime.now(tz=timezone(timedelta(hours=8))).strftime("%b %d %H:%M HKT")
+
     html = env.from_string(DETAIL_HTML).render(
         s=s,
         date=date,
+        generated_at=generated_at,
         chart_svg=chart_svg,
         pullback_svg=pullback_svg,
         key_levels=key_levels,
