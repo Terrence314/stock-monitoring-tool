@@ -1336,31 +1336,58 @@ body {
         {% endif %}
       </div>
 
-      {# Score indicator breakdown #}
+      {# Score indicator breakdown — mirrors actual 5-factor scoring in technical_analysis.py #}
       <div style="background:var(--elevated);border:1px solid var(--border);border-radius:12px;padding:14px">
-        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Score Breakdown</div>
-        {%- set rsi_v = s.rsi or 50 %}
-        {%- set rsi_s = 20 if rsi_v > 55 else (10 if rsi_v > 50 else (-10 if rsi_v < 30 else 0)) %}
-        {%- set macd_s = 20 if s.macd_hist and s.macd_hist > 0 else (-20 if s.macd_hist and s.macd_hist < 0 else 0) %}
-        {%- set vol_s = 15 if s.vol_ratio and s.vol_ratio > 1.5 else (8 if s.vol_ratio and s.vol_ratio > 1.0 else 0) %}
-        {%- set ma_s = 25 if s.ma5 and s.ma20 and s.ma5 > s.ma20 else 0 %}
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Score Breakdown <span style="font-weight:400;opacity:.5">(5 × 20 = 100)</span></div>
+        {#- F1: Trend alignment -#}
+        {%- set _c = s.price if s.price else 0 %}
+        {%- set _f1 = 20 if (s.ma5 and s.ma20 and s.ma60 and _c > s.ma5 and s.ma5 > s.ma20 and s.ma20 > s.ma60)
+                     else (12 if (s.ma20 and s.ma60 and _c > s.ma20 and s.ma20 > s.ma60)
+                     else (5 if (s.ma60 and _c > s.ma60) else 0)) %}
+        {#- F2: RSI -#}
+        {%- set _rsi = s.rsi or 50 %}
+        {%- set _f2 = 20 if _rsi >= 45 and _rsi <= 70
+                     else (10 if _rsi >= 30 and _rsi < 45
+                     else (8 if _rsi < 30
+                     else (5 if _rsi > 75 else 0))) %}
+        {#- F3: MACD -#}
+        {%- set _mh = s.macd_hist or 0 %}
+        {%- set _f3 = 20 if (_mh > 0 and s.macd and s.macd > 0)
+                     else (12 if _mh > 0
+                     else (8 if _mh < 0 and _mh > -0.1
+                     else 0)) %}
+        {#- F4: Volume -#}
+        {%- set _vr = s.vol_ratio or 0 %}
+        {%- set _f4 = 20 if _vr >= 1.5 else (10 if _vr >= 1.0 else 0) %}
+        {#- F5: MA60 distance -#}
+        {%- set _f5 = 0 %}
+        {%- if s.ma60 and s.ma60 > 0 and s.price %}
+          {%- set _dist = (s.price - s.ma60) / s.ma60 * 100 %}
+          {%- set _f5 = 20 if _dist > 5 else (12 if _dist > 0 else 0) %}
+        {%- endif %}
         {%- set items = [
-          ('RSI', rsi_s, 20),
-          ('MACD Hist', macd_s, 20),
-          ('Volume', vol_s, 15),
-          ('MA Stack', ma_s, 25),
+          ('① Trend',  _f1, 20, 'MA stack alignment — price > MA5 > MA20 > MA60'),
+          ('② RSI',    _f2, 20, '45–70 rising = 20 · 30–45 = 10 · <30 oversold = 8'),
+          ('③ MACD',   _f3, 20, 'Golden cross expanding = 20 · cross only = 12 · converging = 8'),
+          ('④ Volume', _f4, 20, '≥1.5× = 20 · 1.0–1.5× = 10 · <1.0× = 0'),
+          ('⑤ MA60',   _f5, 20, '>5% above MA60 = 20 · above = 12 · below = 0'),
         ] %}
-        {% for label, pts, max_pts in items %}
-        {%- set pct = ([0, [pts, max_pts] | min] | max / max_pts * 100) | round %}
-        {%- set bar_c = '#34d399' if pts > 0 else ('#f87171' if pts < 0 else '#52545e') %}
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:60px">{{ label }}</span>
+        {%- set score_est = _f1 + _f2 + _f3 + _f4 + _f5 %}
+        {% for label, pts, max_pts, tip in items %}
+        {%- set pct = (pts / max_pts * 100) | round %}
+        {%- set bar_c = '#34d399' if pts >= 12 else ('#fbbf24' if pts > 0 else '#52545e') %}
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="{{ tip }}">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">{{ label }}</span>
           <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div style="height:100%;width:{{ pct }}%;background:{{ bar_c }};border-radius:2px"></div>
+            <div style="height:100%;width:{{ pct }}%;background:{{ bar_c }};border-radius:2px;transition:width .3s"></div>
           </div>
-          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:{{ bar_c }};min-width:24px;text-align:right">{{ '%+d'|format(pts) }}</span>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:{{ bar_c }};min-width:24px;text-align:right">{{ pts }}</span>
         </div>
         {% endfor %}
+        <div style="border-top:1px solid var(--border);margin-top:4px;padding-top:4px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--text-2)">
+          <span>Estimated</span>
+          <span style="font-weight:700;color:{{ '#34d399' if score_est >= 75 else ('#fbbf24' if score_est >= 50 else 'var(--text-2)') }}">{{ score_est }}/100</span>
+        </div>
       </div>
 
       {# MA badge row #}
@@ -1374,6 +1401,20 @@ body {
         <div class="badge-row" style="margin-top:6px">
           <span class="rsi-badge">RSI · {{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</span>
           <span class="vol-badge">Vol · {{ "%.1f"|format(s.vol_ratio) if s.vol_ratio else '—' }}×</span>
+          {%- if s.get('bb_pct') is not none and s.bb_pct is not none %}
+          {%- set _bp = s.bb_pct %}
+          {%- set _bc = '#60a5fa' if _bp < 0.20 else ('#34d399' if _bp <= 0.60 else ('#fb923c' if _bp <= 0.85 else '#f87171')) %}
+          <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;color:{{ _bc }};background:{{ _bc }}14;border:1px solid {{ _bc }}33"
+                title="BB %B: {{ '%.2f'|format(_bp) }} — 0=lower band, 1=upper band. {% if s.get('bb_squeeze') %}⚡ SQUEEZE active{% elif _bp < 0.20 %}Near lower band{% elif _bp <= 0.60 %}Mid-range{% elif _bp <= 0.85 %}Approaching upper{% else %}Near upper band{% endif %}">
+            BB {{ "%.2f"|format(_bp) }}{% if s.get('bb_squeeze') %} ⚡{% endif %}</span>
+          {%- endif %}
+          {%- if s.get('kd_k') is not none and s.kd_k is not none %}
+          {%- set _kd = s.kd_k %}
+          {%- set _kdc = '#60a5fa' if _kd < 20 else ('#2dd4bf' if _kd < 30 else ('#94a3b8' if _kd < 70 else ('#fb923c' if _kd < 80 else '#f87171'))) %}
+          <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;color:{{ _kdc }};background:{{ _kdc }}14;border:1px solid {{ _kdc }}33"
+                title="KD(9,3,3): K={{ '%.1f'|format(_kd) }} · D={{ '%.1f'|format(s.kd_d) if s.kd_d else '—' }}. {% if s.get('kd_golden_cross_low') %}🎯 Bottom golden cross{% elif s.get('kd_oversold') %}🔵 Oversold zone{% elif _kd > 80 %}Overbought{% else %}Neutral{% endif %}">
+            KD · {{ "%.0f"|format(_kd) }}{% if s.get('kd_golden_cross_low') %} 🎯{% elif s.get('kd_oversold') %} 🔵{% endif %}</span>
+          {%- endif %}
         </div>
       </div>
     </div>

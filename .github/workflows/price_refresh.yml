@@ -4,9 +4,11 @@ on:
   schedule:
     # Hourly during US market hours (9am–5pm ET), Mon–Fri
     # EDT (Apr–Oct): 13:00–21:00 UTC  |  EST (Nov–Mar): 14:00–22:00 UTC
+    # Range 13-22 covers both seasons: 1h early start in EDT (pre-market fine)
+    # and covers 5 PM ET close in EST without missing the end-of-day refresh.
     # GitHub throttles high-frequency schedules on free repos down to ~4x/day;
-    # hourly (:03) is reliably fired every time, giving 9 guaranteed runs/day.
-    - cron: "3 13-21 * * 1-5"
+    # hourly (:03) is reliably fired every time, giving 10 guaranteed runs/day.
+    - cron: "3 13-22 * * 1-5"
   workflow_dispatch:
     # Manual trigger for testing
 
