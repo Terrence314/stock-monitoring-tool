@@ -210,6 +210,8 @@ def main():
                 "kd_golden_cross_low":      ta.get("kd_golden_cross_low", False),
                 "kd_death_cross_high":      ta.get("kd_death_cross_high", False),
                 "kd_oversold":              ta.get("kd_oversold", False),
+                "bb_lower_touch":            ta.get("bb_lower_touch", False),
+                "bb_upper_touch":            ta.get("bb_upper_touch", False),
                 "ohlc":             _ohlc,
                 "open_price":       data.get("open", 0),
                 "high_price":       data.get("high", 0),

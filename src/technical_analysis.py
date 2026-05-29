@@ -245,6 +245,21 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         bb_walking_up   = False
         bb_walking_down = False
 
+    # ── BB Band Touch: price at extreme with oscillator confirmation ──────────
+    # Lower touch: bb_pct ≤ 0.10 AND RSI < 35 — price at lower band + oversold
+    # Upper touch: bb_pct ≥ 0.90 AND RSI > 70 — price at upper band + overbought
+    # Card C "反轉觸及邊界" + Card D "軌道觸及 + RSI 能量確認"
+    _bb_pct_val = float(latest["BB_pct"]) if not pd.isna(latest["BB_pct"]) else 0.5
+    _rsi_val    = float(rsi) if not pd.isna(rsi) else 50.0
+    bb_lower_touch = _bb_pct_val <= 0.10 and _rsi_val < 35
+    bb_upper_touch = _bb_pct_val >= 0.90 and _rsi_val > 70
+
+    # Add informational signals for combined band-touch conditions
+    if bb_lower_touch and not bb_walking_down:
+        signals.append(f"🔵 BB下軌觸及 + RSI超賣（RSI={_rsi_val:.0f}）— 留意反彈確認")
+    if bb_upper_touch and not bb_walking_up:
+        signals.append(f"⚠️ BB上軌觸及 + RSI超買（RSI={_rsi_val:.0f}）— 高位謹慎追入")
+
     def _safe(val):
         return round(float(val), 2) if not pd.isna(val) else None
 
@@ -276,5 +291,7 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         "kd_golden_cross_low":      kd_golden_cross_low,
         "kd_death_cross_high":      kd_death_cross_high,
         "kd_oversold":              kd_oversold,
+        "bb_lower_touch":            bb_lower_touch,
+        "bb_upper_touch":            bb_upper_touch,
         "df":                       df,
     }
