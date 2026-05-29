@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio · 2026/05/29</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0c10; --surface:#13141b; --elevated:#1a1c25; --border:#23252f;
+  --border-hi:#33363f; --text:#e7e8ec; --text-2:#8a8c98; --muted:#52545e;
+  --up:#34d399; --down:#f87171; --amber:#f5b942; --blue:#7aa2ff; --purple:#b18cff;
+  --cyan:#22d3ee;
+  --mono:'JetBrains Mono',monospace; --sans:'Inter',system-ui,sans-serif;
+}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans);
+  font-size:13px; line-height:1.55; min-height:100vh; -webkit-font-smoothing:antialiased; }
+.top { position:sticky; top:0; z-index:50; background:var(--surface);
+  border-bottom:1px solid var(--border); backdrop-filter:blur(12px); }
+.top-row { display:flex; align-items:center; gap:16px; padding:0 24px; height:56px; }
+.brand-logo { width:26px; height:26px; border-radius:7px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:700; font-size:12px; font-family:var(--mono); }
+.brand-title { font-size:14px; font-weight:600; }
+.brand-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); }
+.back-btn { margin-left:auto; font-family:var(--mono); font-size:11px;
+  color:var(--blue); text-decoration:none; padding:5px 10px;
+  border:1px solid rgba(122,162,255,0.3); border-radius:6px; }
+.back-btn:hover { background:rgba(122,162,255,0.08); }
+.page { max-width:1200px; margin:0 auto; padding:20px 24px 60px;
+  display:flex; flex-direction:column; gap:16px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; }
+.section-pill { display:inline-flex; align-items:center; font-family:var(--mono);
+  font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+  padding:3px 9px; border-radius:10px; margin-bottom:14px; }
+.pill-cyan   { background:rgba(34,211,238,0.10); color:var(--cyan);   border:1px solid rgba(34,211,238,0.25); }
+.pill-blue   { background:rgba(122,162,255,0.10); color:var(--blue);  border:1px solid rgba(122,162,255,0.25); }
+.pill-amber  { background:rgba(245,185,66,0.10);  color:var(--amber); border:1px solid rgba(245,185,66,0.25); }
+/* Account summary banner */
+.account-banner { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+@media(max-width:900px){ .account-banner{ grid-template-columns:repeat(3,1fr); } }
+@media(max-width:600px){ .account-banner{ grid-template-columns:1fr 1fr; } }
+.acct-card { background:var(--elevated); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+.acct-label { font-size:11px; color:var(--text-2); font-weight:500; }
+.acct-val { font-family:var(--mono); font-size:20px; font-weight:700; letter-spacing:-0.02em; margin-top:5px; }
+.acct-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); margin-top:2px; }
+.acct-val.up { color:var(--up); }
+.acct-val.down { color:var(--down); }
+.acct-val.neutral { color:var(--text); }
+/* FX bar */
+.fx-bar { background:rgba(34,211,238,0.06); border:1px solid rgba(34,211,238,0.15);
+  border-radius:8px; padding:10px 16px; font-family:var(--mono); font-size:11px;
+  color:var(--text-2); display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
+/* Tables */
+table { width:100%; border-collapse:collapse; }
+thead tr { background:var(--bg); }
+th { padding:9px 12px; font-size:11px; font-weight:500; color:var(--text-2);
+  text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+th.left { text-align:left; }
+td { padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:rgba(255,255,255,0.02); }
+.mono { font-family:var(--mono); font-size:12px; }
+.num  { font-family:var(--mono); font-size:12px; text-align:right; }
+.chip { font-family:var(--mono); font-size:11px; font-weight:600;
+  padding:2px 8px; border-radius:4px; display:inline-block; }
+.chip.up   { color:var(--up);   background:rgba(52,211,153,0.10); }
+.chip.down { color:var(--down); background:rgba(248,113,113,0.10); }
+.chip.na   { color:var(--muted); background:rgba(255,255,255,0.03); }
+.chip.buy  { color:var(--up);   background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); }
+.chip.sell { color:var(--down); background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.2); }
+.chip.dep  { color:var(--cyan); background:rgba(34,211,238,0.08);  border:1px solid rgba(34,211,238,0.2); }
+.chip.with { color:var(--amber);background:rgba(245,185,66,0.08);  border:1px solid rgba(245,185,66,0.2); }
+.ticker-tag { font-family:var(--mono); font-size:11px; font-weight:700;
+  background:var(--elevated); border:1px solid var(--border-hi);
+  padding:2px 8px; border-radius:4px; color:var(--text); }
+.empty { padding:40px; text-align:center; font-family:var(--mono);
+  font-size:12px; color:var(--text-2); }
+.help-box { background:rgba(122,162,255,0.05); border:1px solid rgba(122,162,255,0.2);
+  border-radius:8px; padding:14px 18px; font-family:var(--mono); font-size:11px;
+  color:var(--text-2); line-height:1.7; }
+.footer { text-align:center; padding:24px; color:var(--muted);
+  font-family:var(--mono); font-size:10px; letter-spacing:0.06em; }
+@media(max-width:768px){ .page{padding:12px 12px 40px;} .mob-hide{display:none!important;} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <div class="brand-logo">$</div>
+    <div>
+      <div class="brand-title">My Portfolio</div>
+      <div class="brand-sub">updated 2026/05/29 · USD/HKD 7.8</div>
+    </div>
+    <a href="./index.html" class="back-btn">← 返回總覽</a>
+  </div>
+</header>
+
+<div class="page">
+
+
+<div class="card">
+  <div class="empty">Portfolio is empty.<br><br>Add your first transaction:</div>
+  <div class="help-box" style="margin-top:16px">
+    <strong style="color:var(--text)">How to add transactions:</strong><br><br>
+    # Deposit cash<br>
+    <span style="color:var(--cyan)">python add_transaction.py deposit 50000 HKD</span><br>
+    <span style="color:var(--cyan)">python add_transaction.py deposit 10000 USD</span><br><br>
+    # Buy shares<br>
+    <span style="color:var(--up)">python add_transaction.py buy NVDA 10 125.50 USD</span><br>
+    <span style="color:var(--up)">python add_transaction.py buy NVDA 10 980.00 HKD</span><br><br>
+    # Sell shares<br>
+    <span style="color:var(--down)">python add_transaction.py sell NVDA 5 140.00 USD</span><br><br>
+    After running the command, push to GitHub to redeploy.
+  </div>
+</div>
+
+
+<!-- Help box always shown at bottom -->
+<div class="help-box">
+  <strong style="color:var(--text)">Add transactions via CLI:</strong><br>
+  <span style="color:var(--cyan)">python add_transaction.py deposit 50000 HKD</span> &nbsp;·&nbsp;
+  <span style="color:var(--up)">python add_transaction.py buy NVDA 10 125.50 USD</span> &nbsp;·&nbsp;
+  <span style="color:var(--down)">python add_transaction.py sell NVDA 5 140.00 USD</span><br>
+  Push to GitHub after adding — the next pipeline run updates prices and P&L automatically.
+</div>
+
+</div>
+<div class="footer">SIGNAL MONITOR · PORTFOLIO · 2026/05/29 · USD/HKD 7.8</div>
+</body>
+</html>

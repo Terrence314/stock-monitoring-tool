@@ -1,0 +1,2970 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern Backtest · 2026/05/29</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0c10; --surface:#13141b; --elevated:#1a1c25; --border:#23252f;
+  --border-hi:#33363f; --text:#e7e8ec; --text-2:#8a8c98; --muted:#52545e;
+  --up:#34d399; --down:#f87171; --amber:#f5b942; --blue:#7aa2ff; --purple:#b18cff;
+  --mono:'JetBrains Mono',monospace; --sans:'Inter',system-ui,sans-serif;
+}
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans);
+  font-size:13px; line-height:1.55; min-height:100vh; -webkit-font-smoothing:antialiased; }
+.top { position:sticky; top:0; z-index:50; background:var(--surface);
+  border-bottom:1px solid var(--border); backdrop-filter:blur(12px); }
+.top-row { display:flex; align-items:center; gap:16px; padding:0 24px; height:56px; }
+.brand-logo { width:26px; height:26px; border-radius:7px;
+  background:linear-gradient(135deg,var(--amber),var(--purple));
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:700; font-size:12px; font-family:var(--mono); }
+.brand-title { font-size:14px; font-weight:600; }
+.brand-sub { font-family:var(--mono); font-size:10px; color:var(--text-2); }
+.back-btn { margin-left:auto; font-family:var(--mono); font-size:11px;
+  color:var(--blue); text-decoration:none; padding:5px 10px;
+  border:1px solid rgba(122,162,255,0.3); border-radius:6px; }
+.back-btn:hover { background:rgba(122,162,255,0.08); }
+.page { max-width:1200px; margin:0 auto; padding:20px 24px 60px;
+  display:flex; flex-direction:column; gap:16px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px; }
+.section-pill { display:inline-flex; align-items:center; font-family:var(--mono);
+  font-size:9px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+  padding:3px 9px; border-radius:10px; margin-bottom:14px; }
+.pill-amber { background:rgba(245,185,66,0.10); color:var(--amber); border:1px solid rgba(245,185,66,0.25); }
+.pill-blue  { background:rgba(122,162,255,0.10); color:var(--blue);  border:1px solid rgba(122,162,255,0.25); }
+table { width:100%; border-collapse:collapse; }
+thead tr { background:var(--bg); }
+th { padding:9px 12px; font-size:11px; font-weight:500; color:var(--text-2);
+  text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+th.left { text-align:left; }
+td { padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:rgba(255,255,255,0.02); }
+.mono { font-family:var(--mono); font-size:12px; }
+.num  { font-family:var(--mono); font-size:12px; text-align:right; }
+.chip { font-family:var(--mono); font-size:11px; font-weight:600;
+  padding:2px 8px; border-radius:4px; display:inline-block; }
+.chip.up   { color:var(--up);   background:rgba(52,211,153,0.10); }
+.chip.down { color:var(--down); background:rgba(248,113,113,0.10); }
+.chip.na   { color:var(--muted); background:rgba(255,255,255,0.03); }
+.chip.buy  { color:var(--up);   background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); font-size:10px; }
+.chip.sell { color:var(--down); background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.2); font-size:10px; }
+.pattern-name { font-weight:600; font-size:13px; }
+.wr-bar { height:5px; border-radius:3px; background:var(--elevated); margin-top:4px; width:80px; }
+.wr-fill { height:100%; border-radius:3px; }
+.signal-row td:first-child { padding-left:16px; }
+.empty { padding:40px; text-align:center; font-family:var(--mono);
+  font-size:12px; color:var(--text-2); }
+.footer { text-align:center; padding:24px; color:var(--muted);
+  font-family:var(--mono); font-size:10px; letter-spacing:0.06em; }
+@media(max-width:768px){ .page{padding:12px 12px 40px;} .mob-hide{display:none!important;} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <div class="brand-logo">P</div>
+    <div>
+      <div class="brand-title">Pattern Backtest</div>
+      <div class="brand-sub">generated 2026/05/29 · 92 signal events · 8 patterns</div>
+    </div>
+    <a href="./index.html" class="back-btn">← 返回總覽</a>
+  </div>
+</header>
+
+<div class="page">
+
+
+
+<!-- Pattern summary table -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+    <span class="section-pill pill-amber">Pattern Performance · ranked by +10d win rate</span>
+    <div style="font-size:12px;color:var(--text-2)">
+      Each row = one named pattern · forward returns measured from pattern start date
+    </div>
+  </div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th class="left">Pattern</th>
+        <th class="left">Dir</th>
+        <th>Signals</th>
+        <th>+5d win%</th>
+        <th>+5d avg</th>
+        <th class="mob-hide">+10d win%</th>
+        <th class="mob-hide">+10d avg</th>
+        <th>+20d win%</th>
+        <th>+20d avg</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td class="pattern-name">Above MA60</td>
+      <td>
+        <span class="chip buy">🟢 BUY</span>
+      </td>
+      <td class="num">27</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">Below MA60</td>
+      <td>
+        <span class="chip sell">🔴 SELL</span>
+      </td>
+      <td class="num">3</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">Death Cross</td>
+      <td>
+        <span class="chip sell">🔴 SELL</span>
+      </td>
+      <td class="num">5</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">Golden Cross</td>
+      <td>
+        <span class="chip buy">🟢 BUY</span>
+      </td>
+      <td class="num">25</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">MACD Bear</td>
+      <td>
+        <span class="chip sell">🔴 SELL</span>
+      </td>
+      <td class="num">12</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">MACD Bull</td>
+      <td>
+        <span class="chip buy">🟢 BUY</span>
+      </td>
+      <td class="num">18</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">RSI Overbought</td>
+      <td>
+        <span class="chip sell">🔴 SELL</span>
+      </td>
+      <td class="num">1</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr>
+      <td class="pattern-name">RSI Oversold Bounce</td>
+      <td>
+        <span class="chip buy">🟢 BUY</span>
+      </td>
+      <td class="num">1</td>
+
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num mob-hide">
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      <td class="num ">
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Full signal log -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+    <span class="section-pill pill-blue">Full Signal Log · most recent first</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th class="left">Date</th>
+        <th class="left">Ticker</th>
+        <th class="left">Pattern</th>
+        <th class="left mob-hide">Dir</th>
+        <th>Entry $</th>
+        <th>+5d</th>
+        <th class="mob-hide">+10d</th>
+        <th>+20d</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">NVDA</span></td>
+      <td style="font-size:12px">Death Cross</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$215.14</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">NVDA</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$215.14</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">NVDA</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$215.14</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AMD</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$510.18</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AMD</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$510.18</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AMD</span></td>
+      <td style="font-size:12px">RSI Overbought</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$510.18</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AMD</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$510.18</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AVGO</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$438.36</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AVGO</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$438.36</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">AVGO</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$438.36</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">MSFT</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$438.84</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">MSFT</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$438.84</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">MSFT</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$438.84</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">META</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$624.35</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">META</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$624.35</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">META</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$624.35</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GOOGL</span></td>
+      <td style="font-size:12px">Death Cross</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$382.45</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GOOGL</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$382.45</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GOOGL</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$382.45</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">PLTR</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$153.69</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">PLTR</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$153.69</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">PLTR</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$153.69</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">NOW</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$120.68</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">NOW</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$120.68</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">NOW</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$120.68</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">TSLA</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$429.33</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">TSLA</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$429.33</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">TSLA</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$429.33</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">APP</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$583.10</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">APP</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$583.10</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">APP</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$583.10</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">SPY</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$756.04</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">SPY</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$756.04</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">SPY</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$756.04</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">QQQ</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$737.44</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">QQQ</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$737.44</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">QQQ</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$737.44</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">IWM</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$288.46</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">IWM</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$288.46</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">IWM</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$288.46</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">DIA</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$509.45</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">DIA</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$509.45</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">DIA</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$509.45</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">VTI</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$371.95</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">VTI</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$371.95</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">VTI</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$371.95</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLK</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$190.00</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLK</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$190.00</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLK</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$190.00</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLF</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$51.44</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLF</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$51.44</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLF</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$51.44</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLE</span></td>
+      <td style="font-size:12px">Death Cross</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$56.63</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLE</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$56.63</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLE</span></td>
+      <td style="font-size:12px">Below MA60</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$56.63</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLV</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$150.48</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLV</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$150.48</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLV</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$150.48</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLY</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$121.17</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLY</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$121.17</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLY</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$121.17</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLI</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$172.69</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLI</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$172.69</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XLI</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$172.69</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XBI</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$135.95</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XBI</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$135.95</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">XBI</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$135.95</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">SOXX</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$571.38</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">SOXX</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$571.38</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">SOXX</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$571.38</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">ARKK</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$80.01</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">ARKK</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$80.01</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">ARKK</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$80.01</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">CIBR</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$86.54</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">CIBR</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$86.54</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">CIBR</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$86.54</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">BOTZ</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$39.96</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">BOTZ</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$39.96</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">BOTZ</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$39.96</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">TLT</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$85.71</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">TLT</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$85.71</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">TLT</span></td>
+      <td style="font-size:12px">Below MA60</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$85.71</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">HYG</span></td>
+      <td style="font-size:12px">Golden Cross</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$80.22</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">HYG</span></td>
+      <td style="font-size:12px">MACD Bull</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$80.22</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">HYG</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$80.22</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GLD</span></td>
+      <td style="font-size:12px">Death Cross</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$415.60</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GLD</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$415.60</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GLD</span></td>
+      <td style="font-size:12px">RSI Oversold Bounce</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$415.60</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">GLD</span></td>
+      <td style="font-size:12px">Below MA60</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$415.60</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">USO</span></td>
+      <td style="font-size:12px">Death Cross</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$129.67</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">USO</span></td>
+      <td style="font-size:12px">MACD Bear</td>
+      <td class="mob-hide">
+        <span class="chip sell">🔴</span>
+      </td>
+      <td class="num">$129.67</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    <tr class="signal-row">
+      <td class="mono" style="color:var(--text-2)">2026-05-29</td>
+      <td><span style="font-family:var(--mono);font-size:11px;font-weight:700;
+        background:var(--elevated);border:1px solid var(--border-hi);
+        padding:2px 7px;border-radius:4px">USO</span></td>
+      <td style="font-size:12px">Above MA60</td>
+      <td class="mob-hide">
+        <span class="chip buy">🟢</span>
+      </td>
+      <td class="num">$129.67</td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num mob-hide">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+      <td class="num ">
+        
+        <span class="chip na">—</span>
+      </td>
+      
+    </tr>
+    
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+
+</div>
+<div class="footer">SIGNAL MONITOR · PATTERN BACKTEST · 2026/05/29</div>
+</body>
+</html>
