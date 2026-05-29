@@ -464,7 +464,7 @@ body {
   <a href="./TLT.html" class="back-link" title="Next: TLT" style="padding:5px 9px">TLT ›</a>
   
   <span class="topbar-date">2026/05/29</span>
-  <span class="topbar-date" style="opacity:0.65" title="When this page was generated — refresh to get the latest">· updated May 30 06:13 HKT</span>
+  <span class="topbar-date" style="opacity:0.65" title="When this page was generated — refresh to get the latest">· updated May 30 06:28 HKT</span>
 </div>
 
 <div class="page-detail">
@@ -647,40 +647,52 @@ body {
 
       
       <div style="background:var(--elevated);border:1px solid var(--border);border-radius:12px;padding:14px">
-        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Score Breakdown</div>
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Score Breakdown <span style="font-weight:400;opacity:.5">(5 × 20 = 100)</span></div>
         
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:60px">RSI</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="MA stack alignment — price > MA5 > MA20 > MA60">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">① Trend</span>
           <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px"></div>
+            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px;transition:width .3s"></div>
           </div>
-          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">+20</span>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">20</span>
         </div>
         
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:60px">MACD Hist</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="45–70 rising = 20 · 30–45 = 10 · <30 oversold = 8">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">② RSI</span>
           <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px"></div>
+            <div style="height:100%;width:0.0%;background:#52545e;border-radius:2px;transition:width .3s"></div>
           </div>
-          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">+20</span>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#52545e;min-width:24px;text-align:right">0</span>
         </div>
         
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:60px">Volume</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="Golden cross expanding = 20 · cross only = 12 · converging = 8">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">③ MACD</span>
           <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div style="height:100%;width:0.0%;background:#52545e;border-radius:2px"></div>
+            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px;transition:width .3s"></div>
           </div>
-          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#52545e;min-width:24px;text-align:right">+0</span>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">20</span>
         </div>
         
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:60px">MA Stack</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="≥1.5× = 20 · 1.0–1.5× = 10 · <1.0× = 0">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">④ Volume</span>
           <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px"></div>
+            <div style="height:100%;width:0.0%;background:#52545e;border-radius:2px;transition:width .3s"></div>
           </div>
-          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">+25</span>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#52545e;min-width:24px;text-align:right">0</span>
         </div>
         
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title=">5% above MA60 = 20 · above = 12 · below = 0">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">⑤ MA60</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px;transition:width .3s"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">20</span>
+        </div>
+        
+        <div style="border-top:1px solid var(--border);margin-top:4px;padding-top:4px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--text-2)">
+          <span>Estimated</span>
+          <span style="font-weight:700;color:#fbbf24">60/100</span>
+        </div>
       </div>
 
       
@@ -694,6 +706,12 @@ body {
         <div class="badge-row" style="margin-top:6px">
           <span class="rsi-badge">RSI · 72.8</span>
           <span class="vol-badge">Vol · 0.9×</span>
+          <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;color:#f87171;background:#f8717114;border:1px solid #f8717133"
+                title="BB %B: 0.88 — 0=lower band, 1=upper band. Near upper band">
+            BB 0.88</span>
+          <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;color:#f87171;background:#f8717114;border:1px solid #f8717133"
+                title="KD(9,3,3): K=84.1 · D=87.4. Overbought">
+            KD · 84</span>
         </div>
       </div>
     </div>
