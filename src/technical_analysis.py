@@ -162,26 +162,59 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         and float(latest["BB_bw"]) < float(latest["BB_bw_avg"]) * 0.75
     )
 
+    # ── BB Squeeze Breakout: squeeze just fired (bands expanding after compression) ──
+    # Up:   prev session was in squeeze → today bands expanding → price in upper zone (BB%B > 0.85)
+    # Down: prev session was in squeeze → today bands expanding → price in lower zone (BB%B < 0.15)
+    _bw_ok = (
+        not pd.isna(latest["BB_bw"]) and not pd.isna(latest["BB_bw_avg"])
+        and not pd.isna(prev["BB_bw"]) and not pd.isna(prev["BB_bw_avg"])
+    )
+    if _bw_ok:
+        _prev_squeezed   = float(prev["BB_bw"])   < float(prev["BB_bw_avg"])   * 0.75
+        _today_expanding = float(latest["BB_bw"]) >= float(latest["BB_bw_avg"]) * 0.75
+        _bb_pct_now      = float(latest["BB_pct"]) if not pd.isna(latest["BB_pct"]) else 0.5
+        bb_squeeze_breakout_up   = _prev_squeezed and _today_expanding and _bb_pct_now > 0.85
+        bb_squeeze_breakout_down = _prev_squeezed and _today_expanding and _bb_pct_now < 0.15
+    else:
+        bb_squeeze_breakout_up   = False
+        bb_squeeze_breakout_down = False
+
+    # ── BB Walking: price hugging upper/lower band for 3+ consecutive sessions ──
+    # Walking up:   BB%B > 0.80 for last 3 bars — strong uptrend in progress, hold signal
+    # Walking down: BB%B < 0.20 for last 3 bars — strong downtrend, avoid/exit signal
+    _recent_pct = df["BB_pct"].dropna().tail(3)
+    if len(_recent_pct) >= 3:
+        bb_walking_up   = bool(all(v > 0.80 for v in _recent_pct))
+        bb_walking_down = bool(all(v < 0.20 for v in _recent_pct))
+    else:
+        bb_walking_up   = False
+        bb_walking_down = False
+
     def _safe(val):
         return round(float(val), 2) if not pd.isna(val) else None
 
     return {
-        "score":        score,
-        "strength":     strength,
-        "strength_en":  strength_en,
-        "signals":      signals,
-        "ma5":          _safe(latest["MA5"]),
-        "ma20":         _safe(latest["MA20"]),
-        "ma60":         _safe(latest["MA60"]),
-        "rsi":          _safe(rsi),
-        "macd":         _safe(latest["MACD"]),
-        "macd_signal":  _safe(latest["MACD_signal"]),
-        "macd_hist":    _safe(latest["MACD_hist"]),
-        "vol_ratio":    _safe(vol_ratio),
-        "bb_upper":     _safe(latest["BB_upper"]),
-        "bb_mid":       _safe(latest["BB_mid"]),
-        "bb_lower":     _safe(latest["BB_lower"]),
-        "bb_pct":       _safe(latest["BB_pct"]),
-        "bb_squeeze":   bb_squeeze,
-        "df":           df,
+        "score":                    score,
+        "strength":                 strength,
+        "strength_en":              strength_en,
+        "signals":                  signals,
+        "ma5":                      _safe(latest["MA5"]),
+        "ma20":                     _safe(latest["MA20"]),
+        "ma60":                     _safe(latest["MA60"]),
+        "rsi":                      _safe(rsi),
+        "macd":                     _safe(latest["MACD"]),
+        "macd_signal":              _safe(latest["MACD_signal"]),
+        "macd_hist":                _safe(latest["MACD_hist"]),
+        "vol_ratio":                _safe(vol_ratio),
+        "bb_upper":                 _safe(latest["BB_upper"]),
+        "bb_mid":                   _safe(latest["BB_mid"]),
+        "bb_lower":                 _safe(latest["BB_lower"]),
+        "bb_pct":                   _safe(latest["BB_pct"]),
+        "bb_bw":                    _safe(latest["BB_bw"]),
+        "bb_squeeze":               bb_squeeze,
+        "bb_squeeze_breakout_up":   bb_squeeze_breakout_up,
+        "bb_squeeze_breakout_down": bb_squeeze_breakout_down,
+        "bb_walking_up":            bb_walking_up,
+        "bb_walking_down":          bb_walking_down,
+        "df":                       df,
     }

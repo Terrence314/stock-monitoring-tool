@@ -237,6 +237,10 @@ def _run(cfg: dict) -> None:
                 "bb_lower":         ta.get("bb_lower"),
                 "bb_pct":           ta.get("bb_pct"),
                 "bb_squeeze":       ta.get("bb_squeeze", False),
+                "bb_squeeze_breakout_up":   ta.get("bb_squeeze_breakout_up", False),
+                "bb_squeeze_breakout_down": ta.get("bb_squeeze_breakout_down", False),
+                "bb_walking_up":            ta.get("bb_walking_up", False),
+                "bb_walking_down":          ta.get("bb_walking_down", False),
                 "ai_view":          ai_view,
                 "sector":           data.get("sector", "Unknown"),
                 "entry":            "",  # populated by deep dive if run; placeholder here

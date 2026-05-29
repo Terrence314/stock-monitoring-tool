@@ -2247,8 +2247,67 @@ def _collect_headlines(stocks: list) -> list[dict]:
     return headlines
 
 
-def _entry_verdict(score: int, bb_pct, rsi, bb_squeeze: bool) -> dict | None:
-    """Synthesise score + BB + RSI into a single entry verdict chip."""
+def _entry_verdict(
+    score: int,
+    bb_pct,
+    rsi,
+    bb_squeeze: bool,
+    bb_squeeze_breakout_up: bool = False,
+    bb_squeeze_breakout_down: bool = False,
+    bb_walking_up: bool = False,
+    bb_walking_down: bool = False,
+) -> dict | None:
+    """Synthesise score + BB + RSI + pattern flags into a single entry verdict chip.
+
+    Priority order:
+      1. Squeeze breakout up   → BREAKOUT 🚀  (actionable — squeeze just fired upward)
+      2. Squeeze breakout down → BREAKOUT ↓   (warning — squeeze broke downward)
+      3. BB walking up         → RIDING ↑     (trend continuation, hold existing)
+      4. BB walking down       → FALLING ↓    (downtrend in progress, avoid)
+      5. BB squeeze active     → WATCH ⚡     (energy building, no direction yet)
+      6. Score < 75            → None         (not strong enough to label)
+      7. Overbought + extended → SKIP / WAIT  (entry timing poor)
+      8. Clean setup           → GO ✅
+    """
+    rsi_val = float(rsi) if rsi is not None else 0.0
+    bb_val  = float(bb_pct) if bb_pct is not None else 0.5
+
+    if bb_squeeze_breakout_up:
+        return {
+            "label": "BREAKOUT ↑",
+            "emoji": "🚀",
+            "color": "#a78bfa",
+            "bg": "rgba(167,139,250,0.14)",
+            "border": "rgba(167,139,250,0.35)",
+            "reason": f"BB squeeze just fired upward — bands expanding, BB {bb_val:.2f}",
+        }
+    if bb_squeeze_breakout_down:
+        return {
+            "label": "BREAKOUT ↓",
+            "emoji": "💥",
+            "color": "#f87171",
+            "bg": "rgba(248,113,113,0.14)",
+            "border": "rgba(248,113,113,0.35)",
+            "reason": f"BB squeeze fired downward — breakdown in progress, BB {bb_val:.2f}",
+        }
+    if bb_walking_up:
+        return {
+            "label": "RIDING ↑",
+            "emoji": "🏄",
+            "color": "#38bdf8",
+            "bg": "rgba(56,189,248,0.12)",
+            "border": "rgba(56,189,248,0.30)",
+            "reason": f"Walking the upper band 3+ days — trend has momentum, hold position",
+        }
+    if bb_walking_down:
+        return {
+            "label": "FALLING ↓",
+            "emoji": "📉",
+            "color": "#fb923c",
+            "bg": "rgba(251,146,60,0.12)",
+            "border": "rgba(251,146,60,0.30)",
+            "reason": f"Walking the lower band 3+ days — downtrend active, avoid long entry",
+        }
     if bb_squeeze:
         return {
             "label": "WATCH",
@@ -2260,8 +2319,6 @@ def _entry_verdict(score: int, bb_pct, rsi, bb_squeeze: bool) -> dict | None:
         }
     if score < 75:
         return None
-    rsi_val = float(rsi) if rsi is not None else 0.0
-    bb_val  = float(bb_pct) if bb_pct is not None else 0.5
     if bb_val > 0.85 and rsi_val > 70:
         return {
             "label": "SKIP",
@@ -2337,6 +2394,10 @@ def generate_dashboard(
             stk.get("bb_pct"),
             stk.get("rsi"),
             stk.get("bb_squeeze", False),
+            bb_squeeze_breakout_up=stk.get("bb_squeeze_breakout_up", False),
+            bb_squeeze_breakout_down=stk.get("bb_squeeze_breakout_down", False),
+            bb_walking_up=stk.get("bb_walking_up", False),
+            bb_walking_down=stk.get("bb_walking_down", False),
         )
 
     # Fear & Greed
