@@ -164,9 +164,13 @@
     },
     "MACD Bear": {
       "start": "2026-05-29",
-      "end": null
+      "end": "2026-05-29"
     },
     "Above MA60": {
+      "start": "2026-05-29",
+      "end": null
+    },
+    "MACD Bull": {
       "start": "2026-05-29",
       "end": null
     }
@@ -206,9 +210,13 @@
     },
     "MACD Bear": {
       "start": "2026-05-29",
-      "end": null
+      "end": "2026-05-29"
     },
     "Above MA60": {
+      "start": "2026-05-29",
+      "end": null
+    },
+    "MACD Bull": {
       "start": "2026-05-29",
       "end": null
     }
@@ -290,9 +298,13 @@
     },
     "MACD Bear": {
       "start": "2026-05-29",
-      "end": null
+      "end": "2026-05-29"
     },
     "Above MA60": {
+      "start": "2026-05-29",
+      "end": null
+    },
+    "MACD Bull": {
       "start": "2026-05-29",
       "end": null
     }
@@ -321,6 +333,10 @@
       "end": null
     },
     "Above MA60": {
+      "start": "2026-05-29",
+      "end": null
+    },
+    "RSI Overbought": {
       "start": "2026-05-29",
       "end": null
     }
@@ -406,7 +422,7 @@
     },
     "RSI Oversold Bounce": {
       "start": "2026-05-29",
-      "end": null
+      "end": "2026-05-29"
     },
     "Below MA60": {
       "start": "2026-05-29",
@@ -423,6 +439,10 @@
       "end": null
     },
     "Above MA60": {
+      "start": "2026-05-29",
+      "end": "2026-05-29"
+    },
+    "Below MA60": {
       "start": "2026-05-29",
       "end": null
     }

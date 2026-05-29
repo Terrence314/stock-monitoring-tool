@@ -826,5 +826,90 @@
     "type": "start",
     "price": 129.67,
     "score": 27
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "QQQ",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 739.22,
+    "score": 65
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "QQQ",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 739.22
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "VTI",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 372.82,
+    "score": 60
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "VTI",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 372.82
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "XLI",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 173.45,
+    "score": 44
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "XLI",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 173.45
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "SOXX",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "start",
+    "price": 569.45,
+    "score": 52
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "GLD",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "end",
+    "price": 418.94
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "USO",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "end",
+    "price": 128.68
+  },
+  {
+    "date": "2026-05-29",
+    "ticker": "USO",
+    "pattern": "Below MA60",
+    "direction": "sell",
+    "type": "start",
+    "price": 128.68,
+    "score": 10
   }
 ]
