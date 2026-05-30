@@ -754,7 +754,9 @@ body.beginner-mode .beginner-only { display: block; }
       <a class="nav-pill" href="#sectors">Sectors</a>
       <a class="nav-pill" href="#watchlist">Watchlist</a>
       <a class="nav-pill" href="#alerts">Alerts{% if alert_history %} <span class="nav-badge">{{ alert_history|length }}</span>{% endif %}</a>
-      <a class="nav-pill" href="#stocks">Stocks</a>
+      <a class="nav-pill" href="#favourites">⭐ Favs<span id="nav-fav-count" class="nav-badge" style="display:none">0</span></a>
+      <a class="nav-pill" href="#stocks">Tier 2</a>
+      <a class="nav-pill" href="#universe">Universe <span class="nav-badge" style="background:var(--border-hi);color:var(--text-2)">{{ universe_top100|length }}</span></a>
       <a class="nav-pill" href="./backtest.html">Backtest</a>
       <a class="nav-pill" href="./paper_trading.html">📋 Paper Trade</a>
       <a class="nav-pill" href="./pattern_backtest.html">🔬 Patterns</a>
@@ -1140,12 +1142,32 @@ body.beginner-mode .beginner-only { display: block; }
   {% endif %}
 </section>
 
-<!-- ─── STOCK CARDS (per-ticker bento) ────────────────────────────── -->
+<!-- ─── FAVOURITES ──────────────────────────────────────────────────── -->
+<section id="favourites" style="display:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 12px">
+    <div>
+      <span class="card-title" style="font-size:16px">⭐ My Favourites</span>
+      <span class="card-sub" style="margin-left:10px">starred tickers — always shown</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button onclick="exportFavourites()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--elevated);color:var(--text-2);cursor:pointer">Export JSON</button>
+      <span class="card-sub" id="fav-count-label">0 starred</span>
+    </div>
+  </div>
+  <div id="fav-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px">
+    <!-- Populated by JS from starred tickers matching Tier 2 cards -->
+    <div id="fav-empty-state" style="padding:32px;text-align:center;color:var(--muted);font-size:13px">
+      No favourites yet — click ⭐ on any stock card to pin it here permanently.
+    </div>
+  </div>
+</section>
+
+<!-- ─── STOCK CARDS (Tier 2 — per-ticker bento) ────────────────────── -->
 <section id="stocks">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 4px">
     <div>
-      <span class="card-title" style="font-size:16px">Stock signals</span>
-      <span class="card-sub" style="margin-left:10px">deep-dive per ticker</span>
+      <span class="card-title" style="font-size:16px">🔥 Tier 2 — Close Watch</span>
+      <span class="card-sub" style="margin-left:10px">top scorers · full Gemini analysis</span>
     </div>
     <span class="card-sub">{{ stocks_sorted|length }} cards</span>
   </div>
@@ -1223,7 +1245,22 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="scard-id">
           <div class="scard-tile">{{ s.ticker[:2] }}</div>
           <div>
-            <div class="scard-sym">{{ s.ticker }}</div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="scard-sym">{{ s.ticker }}</div>
+              <!-- Tier 2 history badges -->
+              {% if s.get('badge') == 'NEW' %}
+                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.15);color:var(--up);border:1px solid rgba(52,211,153,0.3);font-weight:700;letter-spacing:.04em">NEW</span>
+              {% elif s.get('badge') == 'STREAK' %}
+                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(245,185,66,0.15);color:var(--amber);border:1px solid rgba(245,185,66,0.3);font-weight:700;letter-spacing:.04em">🔥{{ s.get('consecutive_days', '') }}d</span>
+              {% elif s.get('badge') == 'RETURN' %}
+                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(177,140,255,0.15);color:var(--purple);border:1px solid rgba(177,140,255,0.3);font-weight:700;letter-spacing:.04em">↩ RETURN</span>
+              {% endif %}
+              <!-- Star/favourite button -->
+              <button class="star-btn" data-ticker="{{ s.ticker }}"
+                onclick="toggleFavourite('{{ s.ticker }}')"
+                style="background:none;border:none;cursor:pointer;font-size:15px;padding:1px 3px;line-height:1;border-radius:4px;transition:transform .15s;margin-left:2px"
+                title="Star {{ s.ticker }}">☆</button>
+            </div>
             <div class="scard-name">{{ s.name }}</div>
             <div class="scard-tags">
               <span class="tag {{ atype }}">{{ atype }}</span>
@@ -1415,6 +1452,81 @@ body.beginner-mode .beginner-only { display: block; }
   {% endfor %}
   </div>
 </section>
+
+<!-- ─── UNIVERSE LEADERBOARD ──────────────────────────────────────── -->
+{% if universe_top100 %}
+<section id="universe" class="card card-pad-0" style="max-width:1100px;margin:24px auto">
+  <div style="padding:20px 24px 12px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <span class="card-title" style="font-size:15px">📊 Universe Leaderboard</span>
+      <span class="card-sub" style="margin-left:10px">top {{ universe_top100|length }} · TA score only · no Gemini</span>
+    </div>
+    <span class="card-sub">{{ universe_top100|length }} tickers ranked</span>
+  </div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:12px">
+    <thead>
+      <tr style="border-bottom:1px solid var(--border)">
+        <th style="padding:8px 16px;text-align:left;color:var(--text-2);font-weight:600;width:32px">#</th>
+        <th style="padding:8px 8px;text-align:left;color:var(--text-2);font-weight:600">Ticker</th>
+        <th style="padding:8px 8px;text-align:left;color:var(--text-2);font-weight:600">Name</th>
+        <th style="padding:8px 8px;text-align:left;color:var(--text-2);font-weight:600">Sector</th>
+        <th style="padding:8px 16px;text-align:right;color:var(--text-2);font-weight:600">Score</th>
+        <th style="padding:8px 8px;text-align:center;color:var(--text-2);font-weight:600">Strength</th>
+        <th style="padding:8px 8px;text-align:center;color:var(--text-2);font-weight:600">RSI</th>
+        <th style="padding:8px 8px;text-align:center;color:var(--text-2);font-weight:600">Status</th>
+        <th style="padding:8px 16px;text-align:center;color:var(--text-2);font-weight:600">⭐</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in universe_top100 %}
+      {% set sc = r.score %}
+      {% set sc_class = 'high' if sc >= 70 else ('mid' if sc >= 45 else 'low') %}
+      {% set in_tier2 = r.ticker in (stocks_sorted | map(attribute='ticker') | list) %}
+      <tr style="border-bottom:1px solid var(--border);transition:background .15s"
+          onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
+        <td style="padding:9px 16px;color:var(--muted);font-family:var(--mono);font-size:11px">{{ loop.index }}</td>
+        <td style="padding:9px 8px">
+          <span style="font-family:var(--mono);font-weight:700;font-size:12px;color:var(--text)">
+            {% if in_tier2 %}<a href="./{{ r.ticker|lower }}.html" style="color:var(--blue);text-decoration:none">{{ r.ticker }}</a>
+            {% else %}{{ r.ticker }}{% endif %}
+          </span>
+        </td>
+        <td style="padding:9px 8px;color:var(--text-2);font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</td>
+        <td style="padding:9px 8px">
+          <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:var(--elevated);color:var(--text-2)">{{ r.sector or '—' }}</span>
+        </td>
+        <td style="padding:9px 16px;text-align:right">
+          <span class="strength-badge {{ sc_class }}" style="font-family:var(--mono);font-size:11px">{{ sc }}</span>
+        </td>
+        <td style="padding:9px 8px;text-align:center">
+          <span style="font-size:10px;color:var(--text-2)">{{ r.strength or '—' }}</span>
+        </td>
+        <td style="padding:9px 8px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-2)">
+          {% if r.rsi %}{{ "%.0f"|format(r.rsi) }}{% else %}—{% endif %}
+        </td>
+        <td style="padding:9px 8px;text-align:center">
+          {% if in_tier2 %}
+            <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(122,162,255,0.12);color:var(--blue);border:1px solid rgba(122,162,255,0.25)">Tier 2</span>
+          {% elif r.badge == 'NEW' %}
+            <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(52,211,153,0.12);color:var(--up);border:1px solid rgba(52,211,153,0.25)">NEW</span>
+          {% elif r.badge == 'RETURN' %}
+            <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(245,185,66,0.12);color:var(--amber);border:1px solid rgba(245,185,66,0.25)">RETURN</span>
+          {% else %}—{% endif %}
+        </td>
+        <td style="padding:9px 16px;text-align:center">
+          <button class="star-btn" data-ticker="{{ r.ticker }}"
+            onclick="toggleFavourite('{{ r.ticker }}')"
+            style="background:none;border:none;cursor:pointer;font-size:15px;padding:2px 4px;border-radius:4px;transition:transform .15s"
+            title="Star {{ r.ticker }}">☆</button>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+{% endif %}
 
 <div class="footer">⚠ Generated by AI · for research only · not investment advice · trade at your own risk</div>
 
@@ -1925,6 +2037,132 @@ function copyTradeSetup(btn) {
     setTimeout(function() { btn.textContent = '⎘ Copy trade setup'; }, 2000);
   });
 }
+
+/* ── FAVOURITES SYSTEM ─────────────────────────────────────────────
+   Stars are stored in localStorage so they persist across page loads.
+   data/favourites.json is the repo-committed seed list (loaded at boot).
+   Export button lets you download the current list to commit permanently.
+──────────────────────────────────────────────────────────────────── */
+const FAV_KEY = 'signalmonitor_favourites_v1';
+
+function getFavourites() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+
+function setFavourites(arr) {
+  localStorage.setItem(FAV_KEY, JSON.stringify([...new Set(arr)]));
+  renderFavourites();
+}
+
+function toggleFavourite(ticker) {
+  let favs = getFavourites();
+  const idx = favs.indexOf(ticker);
+  if (idx >= 0) {
+    favs.splice(idx, 1);
+  } else {
+    favs.push(ticker);
+  }
+  setFavourites(favs);
+}
+
+function renderFavourites() {
+  const favs  = getFavourites();
+  const count = favs.length;
+
+  // Update nav badge
+  const navBadge = document.getElementById('nav-fav-count');
+  if (navBadge) {
+    navBadge.textContent = count;
+    navBadge.style.display = count > 0 ? 'inline' : 'none';
+  }
+
+  // Update count label
+  const countLabel = document.getElementById('fav-count-label');
+  if (countLabel) countLabel.textContent = count + ' starred';
+
+  // Show/hide favourites section
+  const favSection = document.getElementById('favourites');
+  if (favSection) favSection.style.display = count > 0 ? 'block' : 'none';
+
+  // Sync all star buttons on page
+  document.querySelectorAll('.star-btn').forEach(function(btn) {
+    const t = btn.getAttribute('data-ticker');
+    const starred = favs.includes(t);
+    btn.textContent    = starred ? '★' : '☆';
+    btn.style.color    = starred ? 'var(--amber)' : 'var(--muted)';
+    btn.style.transform = starred ? 'scale(1.15)' : 'scale(1)';
+    btn.title = starred ? 'Unstar ' + t : 'Star ' + t;
+  });
+
+  // Populate favourites grid by cloning cards from Tier 2
+  const grid  = document.getElementById('fav-cards-grid');
+  const empty = document.getElementById('fav-empty-state');
+  if (!grid) return;
+
+  // Remove old clones (but keep the empty state placeholder)
+  grid.querySelectorAll('.fav-clone').forEach(function(el) { el.remove(); });
+
+  if (count === 0) {
+    if (empty) empty.style.display = '';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  favs.forEach(function(ticker) {
+    const source = document.getElementById('stock-' + ticker);
+    if (source) {
+      const clone = source.cloneNode(true);
+      clone.id    = 'fav-clone-' + ticker;
+      clone.classList.add('fav-clone');
+      // Prevent double-append issues on re-render
+      const existing = document.getElementById('fav-clone-' + ticker);
+      if (existing) existing.remove();
+      grid.appendChild(clone);
+    } else {
+      // Ticker is in favourites but not in Tier 2 — show a stub card
+      const stub = document.createElement('div');
+      stub.className   = 'fav-clone';
+      stub.id          = 'fav-clone-' + ticker;
+      stub.style.cssText = 'padding:20px;background:var(--elevated);border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;gap:12px';
+      stub.innerHTML   = '<span style="font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">' + ticker + '</span>'
+        + '<span style="font-size:12px;color:var(--muted)">Not in today\'s Tier 2 · score below cutoff</span>'
+        + '<button onclick="toggleFavourite(\'' + ticker + '\')" class="star-btn" data-ticker="' + ticker + '" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:16px;color:var(--amber)">★</button>';
+      grid.appendChild(stub);
+    }
+  });
+}
+
+function exportFavourites() {
+  const favs = getFavourites();
+  const blob = new Blob([JSON.stringify(favs, null, 2)], {type: 'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'favourites.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Seed from data/favourites.json if localStorage is empty
+(function seedFromRepo() {
+  const existing = localStorage.getItem(FAV_KEY);
+  if (!existing || JSON.parse(existing).length === 0) {
+    fetch('./favourites.json')
+      .then(function(r) { return r.ok ? r.json() : []; })
+      .then(function(arr) {
+        if (Array.isArray(arr) && arr.length > 0) {
+          setFavourites(arr);
+        }
+      })
+      .catch(function() {});
+  }
+})();
+
+// Initial render on load
+document.addEventListener('DOMContentLoaded', function() {
+  renderFavourites();
+});
 </script>
 </body>
 </html>
@@ -2386,6 +2624,7 @@ def generate_dashboard(
     fear_greed: dict | None = None,
     hk_brief: str = "",
     hk_data: dict | None = None,
+    broad_top100: list | None = None,
 ) -> str:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -2441,6 +2680,10 @@ def generate_dashboard(
     spy_chart_3m = _build_spy_price_svg(spy_ohlc[-66:] if spy_ohlc else [], spy_stock, width=560, height=120)
     spy_chart_6m = _build_spy_price_svg(spy_ohlc,                           spy_stock, width=560, height=120)
 
+    # Build favourites and universe leaderboard lists for the template
+    favourites_list = [s for s in stocks_sorted if s.get("is_favourite")]
+    universe_top100 = broad_top100 or []
+
     html = Template(DASHBOARD_HTML).render(
         date=date,
         generated_at=datetime.now(tz=timezone(timedelta(hours=8))).strftime("%b %d %H:%M HKT"),
@@ -2460,6 +2703,8 @@ def generate_dashboard(
         fg_delta=fg_delta,
         hk_brief=hk_brief,
         hk_data=hk_data or {},
+        favourites_list=favourites_list,
+        universe_top100=universe_top100,
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"

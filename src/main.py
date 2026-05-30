@@ -13,6 +13,8 @@ from paper_trading import run_paper_trading
 from pattern_engine import run_pattern_scan, format_pattern_alert, get_todays_new_events
 from pattern_backtest import run_pattern_backtest
 from portfolio import run_portfolio
+from broad_scan import run_broad_scan
+from tier2_manager import get_tier2_list, load_favourites
 
 
 SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
@@ -152,14 +154,45 @@ def _run(cfg: dict) -> None:
     print("      生成港股盤前分析…")
     hk_brief = run_hk_morning_brief(model, hk_data, market)
 
-    # ── 4. Watchlist analysis ────────────────────────────────────────────────
-    print(f"[4/5] 分析 {len(cfg['watchlist'])} 檔股票…")
+    # ── 3b. Broad scan → Tier 2 selection ───────────────────────────────────
+    print("[3b/5] 廣域掃描全市場（TA only，無 Gemini）…")
+    try:
+        run_broad_scan(today_key)
+    except Exception as bs_err:
+        print(f"  [broad_scan] ⚠️ skipped: {bs_err} — falling back to config watchlist")
+
+    print("      建立 Tier 2 精選名單…")
+    try:
+        tier2_items, broad_top100, _ = get_tier2_list(today_key)
+        # Build analysis watchlist from Tier 2 items
+        analysis_watchlist = [
+            {
+                "ticker":  item["ticker"],
+                "name":    item["name"],
+                "type":    "etf" if item["sector"] == "ETF" else "stock",
+                "market":  "US",
+                "is_favourite":     item.get("is_favourite", False),
+                "is_core":          item.get("is_core", False),
+                "badge":            item.get("badge"),
+                "consecutive_days": item.get("consecutive_days", 1),
+                "broad_score":      item.get("score", 0),
+            }
+            for item in tier2_items
+        ]
+        print(f"      Tier 2: {len(analysis_watchlist)} 檔（含收藏 {sum(1 for i in analysis_watchlist if i['is_favourite'])} 檔）")
+    except Exception as t2_err:
+        print(f"  [tier2_manager] ⚠️ skipped: {t2_err} — falling back to config watchlist")
+        analysis_watchlist = cfg["watchlist"]
+        broad_top100 = []
+
+    # ── 4. Tier 2 full analysis (TA + Gemini) ───────────────────────────────
+    print(f"[4/5] 深度分析 {len(analysis_watchlist)} 檔 Tier 2 股票…")
     stock_results = []
     ta_dfs: dict   = {}   # {ticker: DataFrame} — fed to pattern_engine after the loop
     threshold    = cfg.get("analysis", {}).get("signal_threshold_alert", 70)
     finnhub_key  = cfg["gemini"].get("finnhub_api_key", "")
 
-    for item in cfg["watchlist"]:
+    for item in analysis_watchlist:
         ticker = item["ticker"]
         asset_type = item.get("type", "stock")
         asset_market = item.get("market", "US")
@@ -266,6 +299,11 @@ def _run(cfg: dict) -> None:
                 "high_price":       data.get("high", 0),
                 "low_price":        data.get("low", 0),
                 "prev_close":       data.get("prev_close", 0),
+                # Tier 2 metadata
+                "is_favourite":     item.get("is_favourite", False),
+                "is_core":          item.get("is_core", False),
+                "badge":            item.get("badge"),
+                "consecutive_days": item.get("consecutive_days", 1),
             })
             flag = " 🔥" if ta["score"] >= threshold else ""
             print(f"信號 {ta['score']}/100{flag}")
@@ -275,7 +313,7 @@ def _run(cfg: dict) -> None:
     # ── Health Check ─────────────────────────────────────────────────────────
     health_issues = []
     scored_count = len(stock_results)
-    total_count  = len(cfg["watchlist"])
+    total_count  = len(analysis_watchlist)
     if scored_count < 10:
         health_issues.append(
             f"只有 {scored_count}/{total_count} 檔股票成功評分（數據源可能異常，yfinance 或 Finnhub）"
@@ -305,6 +343,7 @@ def _run(cfg: dict) -> None:
         fear_greed=fear_greed,
         hk_brief=hk_brief,
         hk_data=hk_data,
+        broad_top100=broad_top100,
     )
     print(f"      報告已儲存：{report_path}")
 
@@ -343,7 +382,7 @@ def _run(cfg: dict) -> None:
     # ── Backtest ─────────────────────────────────────────────────────────────
     # Isolated try/except: backtest failures must never block the report deploy
     try:
-        run_backtest([item["ticker"] for item in cfg["watchlist"]])
+        run_backtest([item["ticker"] for item in analysis_watchlist])
     except Exception as bt_err:
         print(f"  [backtest] ⚠️ skipped due to error: {bt_err}")
 
