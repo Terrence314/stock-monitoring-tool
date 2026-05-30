@@ -639,7 +639,7 @@ body {
 @media (max-width: 600px)  { .mid-row { grid-template-columns: 1fr; } }
 
 /* ── Signal histogram ───────────────────────────────────────────────── */
-.hist-bar   { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+.hist-bar   { display: flex; align-items: flex-end; gap: 8px; height: 100px; overflow: hidden; }
 .hist-col   { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .hist-num   { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
 .hist-rect  { width: 100%; border-radius: 5px 5px 2px 2px; }
@@ -835,8 +835,8 @@ body.beginner-mode .beginner-only { display: block; }
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">73,857.81</span>
-        <span class="pct up">+0.66%</span>
+        <span class="market-price">73,778.95</span>
+        <span class="pct up">+0.55%</span>
       </div>
     </div>
     
@@ -859,7 +859,7 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">53 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated May 31 02:31 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated May 31 06:36 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -969,17 +969,17 @@ body.beginner-mode .beginner-only { display: block; }
           
           <div class="hist-col">
             <span class="hist-num">1</span>
-            <div class="hist-rect" style="height:14px;background:#f5b942;opacity:0.9"></div>
+            <div class="hist-rect" style="height:4px;background:#f5b942;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
             <span class="hist-num">2</span>
-            <div class="hist-rect" style="height:28px;background:#80c97f;opacity:0.9"></div>
+            <div class="hist-rect" style="height:4px;background:#80c97f;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
             <span class="hist-num">50</span>
-            <div class="hist-rect" style="height:700px;background:#34d399;opacity:0.9"></div>
+            <div class="hist-rect" style="height:80px;background:#34d399;opacity:0.9"></div>
           </div>
           
         </div>
@@ -3363,7 +3363,7 @@ body.beginner-mode .beginner-only { display: block; }
           <div class="brief-letter b1">F</div>
           <div class="brief-body">
             <div class="brief-label">F・市場消息整理</div>
-            <div class="brief-text">今日全球市場焦點在於美股持續的溫和上漲動能，尤其科技股表現較佳，顯示投資者對成長股的偏好仍在。黃金強勢上漲逾 1%，反映出部分避險需求或是通膨預期抬頭，但VIX恐慌指數下跌，說明整體市場恐懼情緒不高。原油下跌，可能與全球經濟成長放緩的擔憂有關。比特幣小幅走高，維持在高位震盪。目前市場主要在交易科技創新和對通膨的潛在預期，同時維持對地緣政治的謹慎關注。</div>
+            <div class="brief-text">今日全球市場主要呈現溫和上揚態勢，美股SPY和QQQ雙雙小幅走高，顯示投資者對經濟前景仍抱有信心。黃金強勢上漲逾1%，凸顯其避險與抗通膨魅力，可能是因市場對潛在通膨壓力或地緣政治不確定性仍存戒心。原油則小幅回落，反映供應面或需求端出現局部調整。比特幣持續盤整，在7.3萬美元附近尋求支撐。整體來看，市場目前正在交易的是對經濟韌性的樂觀預期與通膨及地緣風險之間的微妙平衡。</div>
           </div>
         </div>
         
@@ -3371,7 +3371,7 @@ body.beginner-mode .beginner-only { display: block; }
           <div class="brief-letter b2">G</div>
           <div class="brief-body">
             <div class="brief-label">G・市場情緒判讀</div>
-            <div class="brief-text">目前市場情緒呈現「有驚無險」的狀態。VIX恐慌指數下跌，表明市場恐慌情緒有所緩解。美元指數小幅走弱，美債收益率微升，顯示資金並未大量湧入避險資產。綜合來看，雖然黃金表現強勢可能暗示部分避險情緒，但美股溫和上漲且VIX下跌，加上比特幣的持續高位，顯示市場整體偏向 Risk-On，投資者願意承擔一定風險追逐收益。</div>
+            <div class="brief-text">VIX恐慌指數顯著下跌近2.7%，跌破15.5，暗示市場恐懼情緒減弱，風險偏好回升。美元指數微幅走軟，美債TLT持穩，顯示資金並未急於湧入傳統避險資產。綜合觀察，在主要股指上漲、黃金走強但恐慌情緒下降的背景下，市場情緒呈現一種「謹慎的Risk-On」狀態。投資者願意承擔一定風險，但也對通膨或潛在地緣政治事件保持警惕，並非盲目樂觀。</div>
           </div>
         </div>
         
@@ -3384,7 +3384,8 @@ body.beginner-mode .beginner-only { display: block; }
     *   支撐：752.00
 *   QQQ (納斯達克 100 ETF):
     *   壓力：742.00
-    *   支撐：735.00</div>
+    *   支撐：735.00
+今日SPY和QQQ在突破近期高點後，均維持在相對強勢區域。SPY若能站穩756.5上方，則有機會挑戰760壓力；若回落跌破752，則可能測試更低支撐。QQQ則需留意742能否有效突破，否則可能在735-742區間震盪。</div>
           </div>
         </div>
         
@@ -3392,7 +3393,7 @@ body.beginner-mode .beginner-only { display: block; }
           <div class="brief-letter b4">I</div>
           <div class="brief-body">
             <div class="brief-label">I・今日交易計畫</div>
-            <div class="brief-text">綜合來看，今日操作方向偏 中性偏多。在技術面觀察，SPY與QQQ均處於上升通道，但需留意上漲動能是否能持續突破關鍵壓力位。最值得關注的機會是科技股的延續性表現，可留意QQQ能否有效站穩740之上。然而，必須警惕的風險是，若美債收益率快速上升或黃金的避險買盤進一步強化，可能暗示市場潛在的不確定性，屆時需密切關注VIX指數的變化，以避免潛在的快速回調。</div>
+            <div class="brief-text">綜合消息面、情緒面與技術面，今日操作方向偏向中性偏多。在VIX回落、股指穩步上漲的背景下，可關注科技股的續漲潛力，但鑒於黃金的強勢表現，仍需對潛在風險保持警惕。最值得關注的機會是科技權重股的動向，若QQQ能有效突破742，則可適度追蹤。必須警惕的風險事件是任何可能導致黃金進一步飆升的地緣政治消息，或VIX意外反彈，這些都可能快速逆轉市場情緒。</div>
           </div>
         </div>
         
@@ -3507,17 +3508,17 @@ body.beginner-mode .beginner-only { display: block; }
           <div class="hl-item">
             <div class="hl-meta">
               <span class="hl-ticker">BAC</span>
-              <span class="hl-src">Yahoo Personal Finance</span>
+              <span class="hl-src">TheStreet</span>
             </div>
-            <div class="hl-title">The best balance transfer credit cards for June 2026: Don't pay any interest until 2027</div>
+            <div class="hl-title">Bank of America has a stark message for Meta stock investors</div>
           </div>
           
           <div class="hl-item">
             <div class="hl-meta">
               <span class="hl-ticker">BAC</span>
-              <span class="hl-src">Simply Wall St.</span>
+              <span class="hl-src">Bloomberg</span>
             </div>
-            <div class="hl-title">Bank Of America Expands Community Homeownership And Canadian Arts Commitments</div>
+            <div class="hl-title">Paramount Is Pulling Every Lever to Sell LBO Debt</div>
           </div>
           
           <div class="hl-item">
@@ -4090,7 +4091,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題多數強調DocuSign的吸引力、AI推動、企業需求增長以及其作為熱門股票的潛力。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題多數強調DocuSign的AI創新、企業需求解決能力及股票的吸引力，顯示出強烈的正面情緒。</span>
         
       </div>
 
@@ -4185,9 +4186,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **強勁看漲**
-② 關鍵價位：**MA5 $49.88** (重要支撐)
-③ 高機率劇本：**股價有望繼續上漲，挑戰更高阻力位。**</div>
+        <div class="ai-body">① 強勢上漲 ② 關鍵價位：$49.88 (MA5) ③ 高機率劇本：突破MA5後持續上揚，挑戰新高。</div>
       </details>
       
 
@@ -4268,8 +4267,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向 Etsy 股價上漲、具有獲利能力和堅實基本面，儘管有「是否太遲買入」的疑問，整體情緒仍偏向樂觀。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">有兩則新聞報導其股價上漲或被視為有潛力的投資，但也有新聞提出是否已錯過買入時機，顯示市場情緒偏向正面但帶有觀望。</span>
         
       </div>
 
@@ -4364,9 +4363,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面極強，多頭佔據絕對優勢。
-② 關鍵支撐：MA5 ($65.04)，關鍵壓力：暫無明顯壓力，股價正創新高。
-③ 高機率劇本：繼續上漲，挑戰更高價位。</div>
+        <div class="ai-body">目前盤面極強，持續上漲。關鍵價位：支撐65.04 (MA5)。高機率劇本：繼續上攻，挑戰更高價位。</div>
       </details>
       
 
@@ -4448,7 +4445,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示GE在國防合約、成長投資及市場表現方面均有正面訊息，整體呈現樂觀趨勢。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示GE在國防合約、成長投資及股價表現上都有正面訊息，儘管有宏觀經濟評論，但對公司本身而言仍是偏向樂觀。</span>
         
       </div>
 
@@ -4543,7 +4540,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①極強勢。②關鍵價位：支撐315.82（MA5），阻力未明顯。③高機率劇本：站穩MA5後，有望持續上攻創新高。</div>
+        <div class="ai-body">① 目前盤面極強，多頭佔據絕對優勢。
+② 關鍵價位：支撐 $315.82 (MA5)，目標價位 $330 附近。
+③ 高機率劇本：股價持續向上突破，短期內有望挑戰更高點。</div>
       </details>
       
 
@@ -4625,7 +4624,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞指出 Robinhood 在監管、AI 交易和資產成長方面的正面發展，儘管有獲利了結，但整體趨勢看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示Robinhood資產成長、監管利好以及股價上漲，反映市場對其持樂觀態度。</span>
         
       </div>
 
@@ -4720,9 +4719,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面極強，股價創歷史新高。
-② 關鍵價位：上方無阻力，下方支撐可看MA5（$80.62）。
-③ 高機率劇本：多頭勢頭強勁，有望持續上漲。</div>
+        <div class="ai-body">① **極強**：HOOD現價遠超各均線，技術信號分數100/100，呈現強力做多態勢。
+② **關鍵價位**：支撐位$80.62 (MA5)；阻力位前高點。
+③ **高機率劇本**：股價短期內續漲機率高，可考慮逢低買入或持有。</div>
       </details>
       
 
@@ -4804,7 +4803,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多個新聞標題顯示 MongoDB 的財報和營收超乎預期，且受到分析師正面評價，並被視為有AI增長機會，整體情緒極為看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調MongoDB的財報優於預期、營收增長，並受到分析師的積極評價與重新評級，尤其指出AI帶來的成長機會，顯示極為樂觀的市場情緒。</span>
         
       </div>
 
@@ -4899,9 +4898,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **盤面極強**，多頭掌控。
-② 關鍵價位：**支撐 $317.83 (MA5)**，上方無顯著壓力。
-③ 高機率劇本：**持續上漲**，挑戰新高。</div>
+        <div class="ai-body">① 目前盤面極強，多頭佔優。
+② 關鍵價位：支撐 $317.83 (MA5)，阻力 $335.55 (現價附近)。
+③ 高機率劇本：股價續漲，挑戰新高。</div>
       </details>
       
 
@@ -4983,7 +4982,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">UPS 在墨西哥擴展重型空運，並在汽車和工業物流上投資 5000 萬美元，顯示公司在關鍵領域的增長和擴張，儘管股價可能折讓，但長期潛力看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">UPS 積極擴展新服務、投資於關鍵產業物流，並被評為值得未來長期投資的股票，顯示出強勁的成長潛力，儘管有持懷疑態度的聲音。</span>
         
       </div>
 
@@ -5078,9 +5077,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面極強，多頭強勢控盤。
-②關鍵價位：支撐$104.16（MA5），若突破$106.69（現價）有望挑戰更高。
-③高機率劇本：繼續上攻，挑戰新高。</div>
+        <div class="ai-body">UPS目前盤面極強🔥。關鍵價位：MA20（$99.45）、MA5（$104.16）。高機率劇本：續漲測試前期高點，短期回檔可考慮加碼。</div>
       </details>
       
 
@@ -5161,8 +5158,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有關於丹麥養老金黑名單 SpaceX 的負面消息，但這對 BAC 本身影響不大，而其在房貸、藝術承諾的擴張以及強勁的首季盈利，都顯示出積極的成長和價值，加上忠誠員工薪資成長的消息也偏正面，整體而言看多。</span>
+          <span class="sentiment neut">+2</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">正面消息如社區承諾和忠誠度獎勵被關於Meta的警示和對Paramount債務的關注所抵消，整體情緒偏向輕微看好。</span>
         
       </div>
 
@@ -5230,21 +5227,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            The best balance transfer credit cards for June 2026: Don't pay any interest until 2027
+            Bank of America has a stark message for Meta stock investors
             
-            <span class="news-pub">Yahoo Personal Finance</span>
+            <span class="news-pub">TheStreet</span>
+          </div>
+          
+          <div class="news-item">
+            Paramount Is Pulling Every Lever to Sell LBO Debt
+            
+            <span class="news-pub">Bloomberg</span>
           </div>
           
           <div class="news-item">
             Bank Of America Expands Community Homeownership And Canadian Arts Commitments
             
             <span class="news-pub">Simply Wall St.</span>
-          </div>
-          
-          <div class="news-item">
-            When loyalty is rewarded: Top earners who stay in their jobs get much larger pay increases than those who switch
-            
-            <span class="news-pub">Fortune</span>
           </div>
           
         </div>
@@ -5257,7 +5254,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強。②關鍵價位：$51.43 (MA20)、$51.60 (現價)。③高機率劇本：若能站穩$51.43，有望持續上漲挑戰新高。</div>
+        <div class="ai-body">① 目前盤面強勁，多頭佔優。
+② 關鍵價位：支撐 $51.43 (MA20)，壓力 $51.60。
+③ 高機率劇本：站穩MA20後，有望續漲挑戰更高點。</div>
       </details>
       
 
@@ -5339,7 +5338,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向 D 在 AI 和數據中心領域的潛在增長機會，與 NextEra Energy 的合作也強化了其市場地位，整體呈現積極正向。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調AI和數據中心需求對D的正面影響及成長機會，顯示市場對其前景抱持樂觀態度，儘管有反AI運動，但影響較間接。</span>
         
       </div>
 
@@ -5434,9 +5433,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 極強。
-② 關鍵價位：支撐 $66.76 (MA5)；壓力 $67.5 (近期高點)。
-③ 高機率劇本：突破 $67.5 後有望繼續上漲。</div>
+        <div class="ai-body">①強勁上漲 ②支撐$66.76，阻力$67.50 ③持續上攻，或短暫回測後再漲。</div>
       </details>
       
 
@@ -5517,8 +5514,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有巴菲特股票和分析師看好穆迪的正面消息，但水公司違規和派拉蒙債務的負面消息抵消了部分樂觀情緒，整體呈現謹慎樂觀。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有水公司違規和Pemex債務問題，但巴菲特股票的投資建議、Ellison限制派拉蒙債務的承諾以及對穆迪股票的分析師看好情緒，使整體趨向略為樂觀。</span>
         
       </div>
 
@@ -5613,9 +5610,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **盤面強弱：** 強力做多 🔥，突破均線阻力。
-② **關鍵價位：** 支撐 $451.1 (MA5)，阻力 $455 (預估短線高點)。
-③ **高機率劇本：** 股價有望持續上攻，挑戰新高。</div>
+        <div class="ai-body">① **盤面強勁**：股價站穩所有短期均線之上，RSI、MACD皆顯示多頭趨勢，量比放大，技術信號強烈。
+② **關鍵價位**：支撐$451.1 (MA5)，阻力未知（因處於相對高點）。
+③ **高機率劇本**：股價短期內續漲，挑戰新高。</div>
       </details>
       
 
@@ -5697,7 +5694,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向看好、漲勢或接近買入點，顯示出對MNST的正面情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向看好、接近買入點、或表現強勁，整體情緒偏向積極。</span>
         
       </div>
 
@@ -5792,7 +5789,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 極強勢，股價位於均線之上。 ② 關鍵價位：支撐87.9 (MA5)，壓力90 (短期高點)。 ③ 高機率劇本：若守住87.9，股價有望續漲挑戰更高點。</div>
+        <div class="ai-body">① 強勢盤面。
+② 關鍵價位：支撐 $87.9 (MA5)，阻力 $88.08 (現價)。
+③ 高機率劇本：突破現價後有望續漲，若跌破 MA5 則需留意。</div>
       </details>
       
 
@@ -5874,7 +5873,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有警告信號和對過往漲幅的疑慮，但股息考慮和來自Citi的更高估值提供了正向支撐，整體情緒偏向謹慎樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有看漲的股息和估值上調消息，但潛在的警告信號和對過去表現的質疑帶來了一定的謹慎。</span>
         
       </div>
 
@@ -5969,9 +5968,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面強勁，多頭佔優。
-② 關鍵價位：支撐220.35 (MA5)，阻力未知，應會挑戰新高。
-③ 高機率劇本：短期續漲，突破歷史高點。</div>
+        <div class="ai-body">①盤面極強，多頭佔優。
+②關鍵價位：支撐$220.35（MA5），壓力$221.12。
+③高機率劇本：突破壓力後上漲空間大。</div>
       </details>
       
 
@@ -6052,8 +6051,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞標題指出RDDT的市場表現良好、內部人士滿意，且有AI看好，儘管有關於期權波動的討論，但整體基調偏向積極。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有關於個人財務困境和家庭財務糾紛的新聞，但Reddit本身的市場表現和人工智慧的看好評論帶來了一定的正面情緒。</span>
         
       </div>
 
@@ -6121,21 +6120,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            'Volatility equals opportunity' in options trades as tech soars
+            'Is it Time to Retire? Do I Have Enough?' — Canadian, 49, With $1.8M Net Worth Wonders If It's Safe To Pull The Trigger
             
-            <span class="news-pub">Yahoo Finance Video</span>
+            <span class="news-pub">Benzinga</span>
+          </div>
+          
+          <div class="news-item">
+            'I Am Financially Irresponsible'— Debt Holder Stops Paying Credit Cards To Buy Groceries
+            
+            <span class="news-pub">Benzinga</span>
           </div>
           
           <div class="news-item">
             Husband, 42, Demanded Separate Finances To Protect His Kid But Now Expects Wife To Help With $65K A Year School — 'Technically Her Stepdaughter'
             
             <span class="news-pub">Benzinga</span>
-          </div>
-          
-          <div class="news-item">
-            Claude AI Makes Bullish Case for Reddit (RDDT)
-            
-            <span class="news-pub">Insider Monkey</span>
           </div>
           
         </div>
@@ -6148,7 +6147,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">RDDT盤面極強🔥。關鍵價位：$176.00為短線重要支撐。高機率劇本：若能守穩此位，有望進一步挑戰更高點，否則需留意回調風險。</div>
+        <div class="ai-body">目前盤面極強。關鍵價位：支撐約 $168，阻力看 $180。高機率劇本：短線持續上漲，可能挑戰 $180 或更高。</div>
       </details>
       
 
@@ -6230,7 +6229,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">U.S. Bancorp（USB）的財報表現優於預期，並且與亞馬遜的合作帶來了新的估值角度，顯示了正面的發展，儘管有少數標題對銀行業表達擔憂。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">U.S. Bancorp (USB) 的財報優於預期，且與亞馬遜的合作為估值帶來新角度，整體呈現積極面。</span>
         
       </div>
 
@@ -6325,9 +6324,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **盤面極強**，多頭趨勢明顯。
-② **關鍵價位**：支撐$54.61 (MA20)，阻力 $54.85 (現價上方)。
-③ **高機率劇本**：股價短期內有望持續走高，挑戰更高點。</div>
+        <div class="ai-body">①盤面強勁，多頭趨勢明顯。
+②關鍵支撐 $54.61 (MA20)，關鍵阻力 $54.85 (現價)。
+③高機率劇本：突破現價後有望繼續上攻，或在MA20附近獲得支撐。</div>
       </details>
       
 
@@ -6409,7 +6408,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示有看好與看壞的意見，且有整合與趨勢的討論，整體持中性偏樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示有看好 AFRM 的因素（股價上漲、整合計畫），但同時也有看跌的建議（賣出理由、表現不佳的股票），整體情緒偏向中性略帶樂觀。</span>
         
       </div>
 
@@ -6504,9 +6503,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強，多頭強勢。
-②關鍵價位：支撐$70.32（MA5），壓力前高。
-③高機率劇本：繼續上攻，挑戰更高點。</div>
+        <div class="ai-body">①**目前盤面極強**，股價突破均線，指標看好。
+②**關鍵價位**：支撐$70.32 (MA5)，阻力$75。
+③**高機率劇本**：有望繼續上攻，挑戰更高點。</div>
       </details>
       
 
@@ -6587,8 +6586,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">ARK 持續調整投資組合，包括獲利了結和加碼特定成長股，顯示其積極管理策略，並有一些利好消息如能源部的支持，但整體未見極度看多或看空信號。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞顯示Cathie Wood正在積極買入科技股和進行策略性調整，這反映了她對特定領域的信心和對潛在增長的追求，儘管也包含一些獲利了結，但整體基調偏向積極。</span>
         
       </div>
 
@@ -6656,6 +6655,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Cathie Wood buys $6.5 million of megacap tech stock
+            
+            <span class="news-pub">TheStreet</span>
+          </div>
+          
+          <div class="news-item">
             Cathie Wood’s ARK Takes More Profits In Robinhood, Buys KTOS And FUTU Instead
             
             <span class="news-pub">Stocktwits</span>
@@ -6665,12 +6670,6 @@ body.beginner-mode .beginner-only { display: block; }
             Cathie Wood, Other Strategists Put Their Mark On ETFs
             
             <span class="news-pub">Investor's Business Daily</span>
-          </div>
-          
-          <div class="news-item">
-            Ark Investment's Cathie Wood Just Trimmed Her AMD Stake to Add This Inference Stock. Should Investors Follow Suit?
-            
-            <span class="news-pub">Motley Fool</span>
           </div>
           
         </div>
@@ -6683,9 +6682,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強。
-②關鍵價位：$78.91（MA5）。
-③高機率劇本：站穩MA5則有望持續上攻，短線目標可能在$85-$88區間。</div>
+        <div class="ai-body">① 強勢多頭。
+② 關鍵價位：支撐 $78.91 (MA5)，阻力 $82.50。
+③ 高機率劇本：若能站穩 MA5，有望挑戰更高點，否則可能回測。</div>
       </details>
       
 
@@ -6767,7 +6766,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示股市上漲、創紀錄新高，並受地緣政治緊張緩解、AI 熱潮及和平協議希望等利好因素推動，整體情緒極度樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題提及股指創下歷史新高，並因美國與伊朗停火協議的樂觀預期而上漲，顯示市場呈現強勁的看漲情緒。</span>
         
       </div>
 
@@ -6835,12 +6834,6 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            Stocks Rally on Easing Geopolitical Tensions and AI Enthusiasm
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
             Pre-Markets Mostly Up on Lower Volume, Trade & Inventory Reports
             
             <span class="news-pub">Zacks</span>
@@ -6850,6 +6843,12 @@ body.beginner-mode .beginner-only { display: block; }
             Stock Indexes Rally to Record Highs on Peace Deal Hopes and AI Spending
             
             <span class="news-pub">Barchart</span>
+          </div>
+          
+          <div class="news-item">
+            S&P 500, Nasdaq Futures Pull Back After Trump Wants 'Couple Days To Think' About Iran Ceasefire Deal: ASTS, DELL, BB, SMCI In Focus
+            
+            <span class="news-pub">Stocktwits</span>
           </div>
           
         </div>
@@ -6862,9 +6861,11 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **極強**：股價位於所有重要均線之上，並加速上漲。
-② **支撐：MA5 ($507.22)**，其次是 **MA20 ($499.23)**。
-③ **高機率劇本：** 股價預計將持續上漲，短期內可能挑戰 $520 甚至更高。</div>
+        <div class="ai-body">**①盤面強弱：** 極強勢，多頭排列。
+
+**②關鍵價位：** 支撐507.22 (MA5)，阻力未知(創新高)。
+
+**③高機率劇本：** 突破前高後續創新高，短線回調可逢低買入。</div>
       </details>
       
 
@@ -6946,7 +6947,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞顯示Emerson Electric在AI領域擴展，並獲得分析師正面評價，儘管有地緣政治逆風，整體趨勢仍偏樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞顯示分析師對 Emerson 持樂觀態度，並指出公司在AI和自動化領域的擴張與重新定位，儘管有中東逆風，但整體看好其發展潛力。</span>
         
       </div>
 
@@ -7041,9 +7042,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面強勁，多方掌控。
-②關鍵價位：支撐約 $140.54 (MA5)；壓力約 $145-148。
-③高機率劇本：續漲測試壓力區，若突破則有望進一步上攻。</div>
+        <div class="ai-body">①目前盤面強勁，多方勢力佔優。
+②關鍵價位：支撐 $140.54 (MA5)；壓力 $145-$148 區間。
+③高機率劇本：續漲測試壓力位，若突破則有望進一步走高。</div>
       </details>
       
 
@@ -7125,7 +7126,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">FedEx Freight 的分拆和即將到來的財報，以及被評為頂級運輸股，都為公司帶來正面催化劑，儘管有等待財報的謹慎情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">FedEx Freight 的分拆上市以及即將公布的財報預期，結合整體運輸業的積極前景，為公司帶來正向催化劑，暗示投資人對其未來表現持樂觀態度。</span>
         
       </div>
 
@@ -7220,9 +7221,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強，多頭佔優。
-②關鍵價位：支撐405.83美元 (MA5)，阻力415美元。
-③高機率劇本：股價有望挑戰415美元，甚至上看更高。</div>
+        <div class="ai-body">① 目前盤面極強，多頭佔據絕對主導。
+② 關鍵支撐：$405.83 (MA5)，關鍵壓力：歷史新高。
+③ 高機率劇本：突破前高，續創新高。</div>
       </details>
       
 
@@ -7303,8 +7304,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調股市上漲、創紀錄高點、人工智慧熱情以及 Cloudflare (NET) 股價飆升，顯示出強烈的看漲情緒。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向股市上漲、雲端運算（NET）股價飆升以及AI基礎設施前景看好，整體呈現積極樂觀的趨勢。</span>
         
       </div>
 
@@ -7372,12 +7373,6 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            Stocks Rally on Easing Geopolitical Tensions and AI Enthusiasm
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
             Stock Indexes Rally to Record Highs on Peace Deal Hopes and AI Spending
             
             <span class="news-pub">Barchart</span>
@@ -7385,6 +7380,12 @@ body.beginner-mode .beginner-only { display: block; }
           
           <div class="news-item">
             Why Is Cloudflare (NET) Stock Rocketing Higher Today
+            
+            <span class="news-pub">StockStory</span>
+          </div>
+          
+          <div class="news-item">
+            1 Unprofitable Stock to Own for Decades and 2 Facing Headwinds
             
             <span class="news-pub">StockStory</span>
           </div>
@@ -7399,9 +7400,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面極強，多頭佔優。
-②關鍵價位：支撐$222.57 (MA5)，阻力未知，或看前高。
-③高機率劇本：續漲測試更高點，可能突破新高。</div>
+        <div class="ai-body">①盤面強勁，多頭佔優。
+②關鍵價位：支撐約 $220-222 (MA5/20)。
+③高機率劇本：突破前高後，有望繼續上漲。</div>
       </details>
       
 
@@ -7483,7 +7484,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+9</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有新聞標題都指向 VEA 表現優於大盤，並強調其優勢和投資價值，情緒非常樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有新聞標題都指向VEA表現優於S&P 500，並強調其國際股票優勢和低成本，顯示出強烈的買入信號和市場樂觀情緒。</span>
         
       </div>
 
@@ -7578,9 +7579,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強。
-②關鍵價位：支撐 $71.42 (MA5)，壓力 $71.77 (現價附近)。
-③高機率劇本：站穩MA5後，挑戰前高點或繼續上漲。</div>
+        <div class="ai-body">①目前盤面極強。②關鍵價位：支撐$71.42（MA5），上方阻力可觀察72-73區間。③高機率劇本：短期繼續上攻，挑戰更高點位，守穩MA5則漲勢延續。</div>
       </details>
       
 
@@ -7662,7 +7661,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示 Broadcom 在 AI 基礎設施領域的深度參與、達成重大交易，並加入兆美元市值俱樂部，整體趨勢極度看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調Broadcom在AI基礎設施領域的深化角色、AI預測的飆升潛力以及加入萬億美元市值俱樂部，顯示出強烈的成長動能和市場樂觀情緒。</span>
         
       </div>
 
@@ -7730,13 +7729,7 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            'Volatility equals opportunity' in options trades as tech soars
-            
-            <span class="news-pub">Yahoo Finance Video</span>
-          </div>
-          
-          <div class="news-item">
-            Dow Jones Futures: Market Hits Highs On Iran Hopes, These AI Stocks Struggle; Nvidia, Tesla Lead 5 Titans Near Buy Points
+            Dow Jones Futures: Iran Deal Or No, Market Hits Highs; Nvidia, Tesla Lead 5 Titans Near Buy Points
             
             <span class="news-pub">Investor's Business Daily</span>
           </div>
@@ -7745,6 +7738,12 @@ body.beginner-mode .beginner-only { display: block; }
             Prediction: This Artificial Intelligence (AI) Inference Specialist Is Going to Soar After June 3
             
             <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
+            Broadcom Deepens AI Infrastructure Role With US$36b Deal And FuriosaAI Pact
+            
+            <span class="news-pub">Simply Wall St.</span>
           </div>
           
         </div>
@@ -7757,7 +7756,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">AVGO盤勢極強🔥，突破MA壓力。關鍵價位：支撐426.27，阻力前高約450。高機率劇本：續漲挑戰前高，突破後有望創新高。</div>
+        <div class="ai-body">AVGO盤面極強，關鍵價位：支撐$422.91 (MA20)，壓力$446.77 (現價附近，需突破)。高機率劇本：突破現價後，有望進一步上漲。</div>
       </details>
       
 
@@ -7839,7 +7838,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調公司在AI資料中心和資料服務領域的成長潛力、強勁的財務表現以及其防禦性特質，顯示市場對IRM未來表現持高度樂觀態度。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調公司在AI資料中心和資料服務領域的成長潛力，以及其對股息和估值的積極影響。</span>
         
       </div>
 
@@ -7934,9 +7933,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強，呈強力做多格局。
-②關鍵支撐127.37-127.39區間，向上留意前高阻力。
-③高機率續漲突破，短線震盪後有望進一步上攻。</div>
+        <div class="ai-body">IRM 目前盤面強勁，趨勢向上。關鍵價位：支撐位 $127.37 (MA20)，阻力位待觀察。高機率劇本為持續上漲，可考慮逢低做多。</div>
       </details>
       
 
@@ -8018,7 +8015,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示市場對Dell的AI伺服器需求強勁、半導體產業前景樂觀，以及分析師調高目標價，儘管價格波動，客戶仍願意簽約，整體情緒非常看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示出對Dell的強烈正面情緒，包括股價目標調升、AI伺服器交易成功、著名投資人錯失機會的懊悔，以及政府合約帶來的股價飆升。</span>
         
       </div>
 
@@ -8086,21 +8083,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            'Volatility equals opportunity' in options trades as tech soars
-            
-            <span class="news-pub">Yahoo Finance Video</span>
-          </div>
-          
-          <div class="news-item">
-            Semiconductor rally isn't over yet, says Horizon's Mike Dickson
-            
-            <span class="news-pub">Yahoo Finance Video</span>
-          </div>
-          
-          <div class="news-item">
             JPMorgan resets Dell stock price target after earnings
             
             <span class="news-pub">TheStreet</span>
+          </div>
+          
+          <div class="news-item">
+            Dell Tells Some Of Its Biggest Customers It Can't Guarantee AI Server Prices For Years — Yet They're Signing The Deals Anyway
+            
+            <span class="news-pub">Benzinga</span>
+          </div>
+          
+          <div class="news-item">
+            Jim Cramer Regrets Missing out on Dell Technologies
+            
+            <span class="news-pub">Insider Monkey</span>
           </div>
           
         </div>
@@ -8113,9 +8110,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **盤面強弱：** DELL 目前極度強勢，股價創新高，所有均線呈多頭排列。
-② **關鍵價位：** 短期支撐位在 MA5 ($328.71) 附近。
-③ **高機率劇本：** 鑒於極強勢頭和高 RSI，短期內或有小幅回調，但仍偏向上行，挑戰更高價位。</div>
+        <div class="ai-body">① 目前盤面極強。
+② 關鍵價位：MA5 ($328.71) 為短期支撐，MA20 ($260.0) 為中期支撐。
+③ 高機率劇本：在強勁趨勢下，股價有望繼續上漲，但需留意RSI過高及量比放大後的獲利回吐風險。</div>
       </details>
       
 
@@ -8196,8 +8193,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調公司在AI驅動平台上的強勁增長動能、財報優於預期及營收年增，市場反應積極，儘管有短期指引較弱的考量，整體仍偏向樂觀。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調公司在AI領域的強勁動能、營收增長及優於預期的財報表現，顯示市場對其前景持樂觀態度。</span>
         
       </div>
 
@@ -8292,9 +8289,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面強勁，多頭勢頭旺盛。
-②關鍵價位：支撐60.00，阻力68.00。
-③高機率劇本：續漲測試上方阻力，若突破則有望挑戰新高。</div>
+        <div class="ai-body">①目前盤面極強，股價突破均線。
+②關鍵價位：MA5 支撐 $57.09，前方壓力約 $65-66。
+③高機率劇本：短期續漲，或在 $65-66 盤整後突破。若回落至 $57.09 仍具支撐。</div>
       </details>
       
 
@@ -8376,7 +8373,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+9</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞報導福特股價大幅上漲，並預期未來有進一步增長空間，整體市場情緒極為樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有新聞標題都指向福特股價強勁上漲，並預期未來會有更多利好。</span>
         
       </div>
 
@@ -8471,9 +8468,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強。
-②關鍵價位：$17.00 (支撐), $18.00 (阻力)。
-③高機率劇本：突破 $18.00，進一步上漲。若回測 $17.00 守住，亦可視為買點。</div>
+        <div class="ai-body">① 目前盤面強勁，多頭佔優。
+② 關鍵價位：支撐約 $16.04 (MA5)；壓力看前高 $17.9 (週線)。
+③ 高機率劇本：短線有望衝刺前高，若突破則向上空間可期，但須留意 RSI 過熱可能帶來回調風險。</div>
       </details>
       
 
@@ -8554,8 +8551,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+9</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題皆指出 First Solar (FSLR) 股價飆升、領漲，且市場對其估值持正面態度，整體情緒極度樂觀。</span>
+          <span class="sentiment pos">+8</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有新聞標題都指向股價飆升、估值強勁、以及與伊朗協議和關稅緊張相關的行業利好，顯示出極度看多的情緒。</span>
         
       </div>
 
@@ -8650,9 +8647,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **極強**。股價遠高於均線，RSI過熱，動能強勁。
-② **關鍵價位**：支撐MA5 ($282.33)，阻力MA200約$320 (未顯示，但以現價判斷應接近此區間)。
-③ **高機率劇本**：短期內可能繼續上漲，但RSI過高需提防回調，若能守穩MA5則漲勢有望延續。</div>
+        <div class="ai-body">① 目前盤面極強，多頭強勁。
+② 關鍵價位：支撐約 $282 (MA5)，壓力在 $306.79 附近。
+③ 高機率劇本：在強勁多頭下，股價有望持續上攻，短線目標可看前高或新高，但需留意RSI過熱可能引發回調。</div>
       </details>
       
 
@@ -8733,8 +8730,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有股價上漲與記憶體短缺的正面消息，但也有來自分析師的負面評估，整體情緒呈現中性偏樂觀。</span>
+          <span class="sentiment neg">-3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有股價上漲和對AI應用的討論，但記憶體短缺和銀行看空訊息帶來負面壓力，整體情緒偏向謹慎看空。</span>
         
       </div>
 
@@ -8829,7 +8826,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面極強。 ②關鍵價位：支撐$25.44（MA5），上方無顯著壓力。 ③高機率劇本：股價續漲，挑戰更高點。</div>
+        <div class="ai-body">①極強。②支撐 $25.44 (MA5)，關鍵 $27.04。③高機率續漲，若回落守住 MA5 仍是買點。</div>
       </details>
       
 
@@ -8911,7 +8908,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+9</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指出NTAP股價創歷史新高、上漲，並受AI推動獲利，整體市場也表現強勁，顯示極度樂觀的情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指出 NTAP 股價創歷史新高，並受 AI 需求驅動，市場整體也收於新高，顯示極度正向情緒。</span>
         
       </div>
 
@@ -9006,9 +9003,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面極強，股價呈爆發性上漲。
-② 關鍵價位：MA5 ($147.55) 為短線支撐，MA20 ($124.71) 為重要支撐。
-③ 高機率劇本：短線持續偏多，但RSI過高需提防回檔，可觀察MA5支撐力道。</div>
+        <div class="ai-body">NTAP現正極強勢上漲，短線超買嚴重。關鍵支撐位在$147.55（MA5）。高機率劇本為短線回檔修正，若能站穩MA5，則續漲可期。</div>
       </details>
       
 
@@ -9090,7 +9085,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調NUE的積極表現、作為投資選擇的吸引力，以及其在市場反彈中的優勢，暗示強烈的看漲情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調NUE的積極表現、作為投資選擇的吸引力，以及其在非AI股票中的領先地位，整體呈現強烈看漲情緒。</span>
         
       </div>
 
@@ -9185,11 +9180,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">**①目前盤面強弱：** 強勢上漲，多頭氣盛。
-
-**②關鍵價位：** 支撐位：MA5 ($243.61)；阻力位：無明顯阻力，留意$250附近壓力。
-
-**③高機率劇本：** 股價在MA5上方繼續走高，挑戰更高點。</div>
+        <div class="ai-body">①目前盤面極強，多頭佔據絕對優勢。
+②關鍵支撐：MA5 ($243.61)，其次MA20 ($232.24)。
+③高機率劇本：在MA5上方維持強勢，有望挑戰新高。</div>
       </details>
       
 
@@ -9271,7 +9264,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+9</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Okta 最近的新聞標題顯示其股價大幅上漲，達到四年新高和52週新高，主要受惠於AI驅動的企業安全需求提升及優於預期的業績指引。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Okta 調升2027年財測、營收飆升，且股價創下四年新高和52週新高，顯示市場對其AI驅動的企業安全需求前景極為看好。</span>
         
       </div>
 
@@ -9366,9 +9359,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面極強🔥。②關鍵價位：$98.71 (MA5支撐)、$123.27 (現價)。③高機率劇本：若守穩$98.71，有望持續上攻。
-
-請注意：以上分析僅供參考，不構成投資建議。投資有風險，請獨立判斷。</div>
+        <div class="ai-body">① **目前盤面極強**，漲幅驚人，突破多條均線。
+② **關鍵價位**：支撐位$98.71 (MA5)，阻力位參考新高附近。
+③ **高機率劇本**：短期內仍有上漲動能，但RSI過熱，需留意回調風險，或高位震盪後再上。</div>
       </details>
       
 
@@ -9449,8 +9442,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調AI投資熱潮、股價上漲及地緣政治緊張緩解對甲骨文的積極影響，儘管有少量對市場潛在風險的對沖，整體情緒偏向看好。</span>
+          <span class="sentiment pos">+5</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有對於AI投資增加負債和華爾街對風險對沖的擔憂，但AI市場的熱度以及Oracle自身股價的強勁表現，顯示市場對其AI發展前景仍抱持樂觀態度。</span>
         
       </div>
 
@@ -9518,6 +9511,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            AI Hyperscalers Are Taking on Debt, But the Broader Market Looks More Leveraged
+            
+            <span class="news-pub">Barchart</span>
+          </div>
+          
+          <div class="news-item">
             As Nvidia, Oracle And Amazon Pour Billions Into AI, Wall Street Is Quietly Hedging For Trouble
             
             <span class="news-pub">Benzinga</span>
@@ -9527,12 +9526,6 @@ body.beginner-mode .beginner-only { display: block; }
             Assessing Oracle (ORCL) Valuation After Strong Multi‑Month Share Price Momentum
             
             <span class="news-pub">Simply Wall St.</span>
-          </div>
-          
-          <div class="news-item">
-            Financial Services Roundup: Market Talk
-            
-            <span class="news-pub">The Wall Street Journal</span>
           </div>
           
         </div>
@@ -9545,9 +9538,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">ORCL盤面極強，現價$225.78，漲幅逾10%。
-關鍵價位：近期無明顯阻力，下方支撐關注MA5($201.12)。
-高機率劇本：在強勁買盤推動下，股價有望繼續上漲，短線目標可能觸及歷史新高。</div>
+        <div class="ai-body">ORCL目前盤面極強，股價大漲逾10%。關鍵價位是MA5 ($201.12)，若能守住此位，高機率將持續上攻。短期目標上看$230-$235。</div>
       </details>
       
 
@@ -9628,8 +9619,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇報導指出地緣政治緊張局勢緩解及對AI的熱情，帶動了網路安全股票（包括PANW）上漲，顯示市場情緒樂觀。</span>
+          <span class="sentiment pos">+8</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向看好 PANW 及其所屬產業，包括新高目標價和股票飆升等正面消息。</span>
         
       </div>
 
@@ -9697,21 +9688,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            Dow Jones Futures: Market Hits Highs On Iran Hopes, These AI Stocks Struggle; Nvidia, Tesla Lead 5 Titans Near Buy Points
+            Dow Jones Futures: Iran Deal Or No, Market Hits Highs; Nvidia, Tesla Lead 5 Titans Near Buy Points
             
             <span class="news-pub">Investor's Business Daily</span>
+          </div>
+          
+          <div class="news-item">
+            Wedbush Just Set a New Street-High Price Target of $325 on Palo Alto Networks. What This Means for PANW Stock.
+            
+            <span class="news-pub">Barchart</span>
           </div>
           
           <div class="news-item">
             CrowdStrike and Palo Alto Networks Shares Are Soaring, What You Need To Know
             
             <span class="news-pub">StockStory</span>
-          </div>
-          
-          <div class="news-item">
-            Highlights: Measuring Risk – AI & Cybersecurity in the Boardroom: 2nd Princeton CorpGov Forum
-            
-            <span class="news-pub">CorpGov.com</span>
           </div>
           
         </div>
@@ -9724,9 +9715,11 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **強勢上漲**：PANW現價$281.69，漲幅+9.28%，技術信號分數85/100，顯示極強勢頭。
-② **關鍵價位**：支撐位可看MA5 $261.05，若回檔守穩則多頭不變；突破$281.69後，上方空間值得期待。
-③ **高機率劇本**：股價有望持續向上突破，建議逢低佈局，或觀察盤中是否能站穩$280，再考慮追價。</div>
+        <div class="ai-body">① **極強**。股價強勁上漲，遠超各期均線，技術信號分數極高。
+② **關鍵價位：**
+   * **阻力：** $290 (潛在目標)
+   * **支撐：** $275 (短線)、$261.05 (MA5)
+③ **高機率劇本：** 股價在短線回調後，仍有機會挑戰新高，甚至突破 $290 阻力。密切關注 $275 短線支撐，若失守需留意回調風險。</div>
       </details>
       
 
@@ -9808,7 +9801,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">UiPath 儘管年化經常性收入（ARR）增長，但股價因疲弱的盈利而下跌，且標題中包含對其估值和長期弱勢的擔憂。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管營收和ARR有所增長，UiPath股價仍因盈利表現疲軟而下跌，且有基金出售大量股份，顯示市場對其前景存在疑慮。</span>
         
       </div>
 
@@ -9876,6 +9869,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Why This Fund Dumped $35 Million of UiPath Even as Revenue Grew 17%
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             3 Stocks Under $50 with Open Questions
             
             <span class="news-pub">StockStory</span>
@@ -9885,12 +9884,6 @@ body.beginner-mode .beginner-only { display: block; }
             UiPath Stock Falls After Weak Earnings Despite ARR Tops $1.9 Billion
             
             <span class="news-pub">GuruFocus.com</span>
-          </div>
-          
-          <div class="news-item">
-            UiPath Q1 Earnings In Line With Estimates, Revenues Increase Y/Y
-            
-            <span class="news-pub">Zacks</span>
           </div>
           
         </div>
@@ -9903,9 +9896,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">**①目前盤面強弱：** 強勢上漲，多頭氣盛。
-**②關鍵價位：** 支撐區約在 $11.3 (MA5) 和 $10.9 (MA60)，壓力區待觀察。
-**③高機率劇本：** 股價有望持續走高，挑戰新高點，可考慮逢低買進。</div>
+        <div class="ai-body">① 目前盤面強勁，多頭勢頭確立。
+② 關鍵支撐：MA5 ($11.3)，關鍵阻力：近期高點（約 $12.0）。
+③ 高機率劇本：突破 $12.0 後續漲，若跌破 $11.3 則可能回檔。</div>
       </details>
       
 
@@ -9987,7 +9980,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有長期看好與AI潛力等利多，但同時存在大股東減持、創辦人出走及梵蒂岡AI爭議等不確定因素，使整體情緒偏向中性略為樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">正面看待其長期潛力及AI代理人發展，但有機構減持和地緣政治風險，導致情緒較為複雜。</span>
         
       </div>
 
@@ -10082,7 +10075,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 強勢上漲 ② 關鍵支撐：$143.73 (MA60) ③ 高機率劇本：繼續上漲，留意追漲風險。</div>
+        <div class="ai-body">① **強力多頭**，盤面極強。
+② 關鍵價位：**支撐143.73 (MA60)，阻力156.54** (現價已突破)。
+③ 高機率劇本：在強勁基本面支持下，股價有望繼續向上測試。</div>
       </details>
       
 
@@ -10163,8 +10158,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管面臨美國國家公路交通安全管理局 (NHTSA) 調查的挑戰，但 Rivian 因 R2 SUV 發表確認、股價上漲以及軟體成長潛力而獲得正面關注。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調R2 SUV發布確認、股價上漲及軟體成長潛力，儘管有NHTSA調查消息，整體仍偏向正面。</span>
         
       </div>
 
@@ -10232,6 +10227,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            3 Stocks to Buy With Less Than $20
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             Stock Market Today, May 29: Rivian Automotive Jumps on R2 SUV Launch Confirmation
             
             <span class="news-pub">Motley Fool</span>
@@ -10241,12 +10242,6 @@ body.beginner-mode .beginner-only { display: block; }
             Rivian Faces NHTSA Probe Covering 115,000 R1 Vehicles
             
             <span class="news-pub">GuruFocus.com</span>
-          </div>
-          
-          <div class="news-item">
-            Rivian Rallies 8% as Tesla, Nio Stall: R2 Launch and Software Growth in Focus
-            
-            <span class="news-pub">24/7 Wall St.</span>
           </div>
           
         </div>
@@ -10259,7 +10254,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強。②關鍵價位：$16.00 (支撐)、$16.50 (阻力)。③高機率劇本：突破$16.50後繼續上漲。</div>
+        <div class="ai-body">① 強勢上漲 ② 支撐15.34，壓力16.50 ③ 高機率續漲，突破壓力區。</div>
       </details>
       
 
@@ -10340,8 +10335,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多則新聞指出 SMCI 因歐洲AI雲端合作夥伴關係而股價上漲，且整體市場受科技股帶動創下新高，顯示極度樂觀情緒。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">SMCI受惠於歐洲AI雲端合作夥伴關係，股價上漲，且AI相關產業獲市場高度關注。</span>
         
       </div>
 
@@ -10409,6 +10404,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Jensen Huang Has a Key Message for Super Micro Computer: It’s Time to ‘Enhance and Improve’ Regulation
+            
+            <span class="news-pub">Barchart</span>
+          </div>
+          
+          <div class="news-item">
             Stock Market Today, May 29: Super Micro Computer Jumps on European AI Cloud Partnership
             
             <span class="news-pub">Motley Fool</span>
@@ -10418,12 +10419,6 @@ body.beginner-mode .beginner-only { display: block; }
             Dell, Rocket Lab, Palantir, and More Stocks That Explain the Market Today
             
             <span class="news-pub">Barrons.com</span>
-          </div>
-          
-          <div class="news-item">
-            Dell’s Big Quarter Wasn’t Just About AI—Heard on the Street
-            
-            <span class="news-pub">The Wall Street Journal</span>
           </div>
           
         </div>
@@ -10436,7 +10431,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面極強，多頭主導。②關鍵支撐$39.65 (MA5)。③高機率續漲，若回測MA5不破則可逢低吸納。</div>
+        <div class="ai-body">①盤面極強，多頭強勢控盤。
+②關鍵支撐 $40，關鍵壓力 $48。
+③高機率續漲突破 $48，若回落守住 $40 仍為強勢。</div>
       </details>
       
 
@@ -10517,8 +10514,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有標題都暗示 Snowflake 及其同行股價上漲或表現強勁，這顯示出極度樂觀的市場情緒。</span>
+          <span class="sentiment pos">+9</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調股價上漲、分析師看好以及執行長對未來發展的信心，整體呈現極度樂觀的市場情緒。</span>
         
       </div>
 
@@ -10586,6 +10583,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Snowflake CEO says monster quarter shows why software firms need new pricing models to thrive in AI age
+            
+            <span class="news-pub">Fortune</span>
+          </div>
+          
+          <div class="news-item">
             Goldman Sachs massively resets Snowflake stock price target for 2026
             
             <span class="news-pub">TheStreet</span>
@@ -10595,12 +10598,6 @@ body.beginner-mode .beginner-only { display: block; }
             Jim Cramer on Snowflake: “The Stock Is Flying as It Should Be”
             
             <span class="news-pub">Insider Monkey</span>
-          </div>
-          
-          <div class="news-item">
-            JFrog, Wix, and Samsara Shares Skyrocket, What You Need To Know
-            
-            <span class="news-pub">StockStory</span>
           </div>
           
         </div>
@@ -10613,9 +10610,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①**強力多頭**，漲幅顯著。
-②關鍵價位：**支撐$203.96 (MA5)**，**阻力前高約$260**。
-③高機率劇本：**回檔後延續漲勢**，或**突破前高後加速上攻**。</div>
+        <div class="ai-body">① 強勢上攻。② 關鍵支撐 $203.96 (MA5)。③ 短線回檔買入，目標價位更高。</div>
       </details>
       
 
@@ -10696,8 +10691,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">SoFi推出銀行支持的穩定幣，具備每月審計和4.2%收益，並擴大其生態系統，顯示強勁的成長動能，這些都是非常正面的消息。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">SoFi發布了銀行支持的穩定幣，並提供4.2%的收益，加上市場對其股票反應積極，顯示出強烈的利好消息。</span>
         
       </div>
 
@@ -10765,21 +10760,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Time to Diversify Internationally?
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
+            3 Stocks to Buy With Less Than $20
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             Solana News: SoFi Just Launched a Bank-Backed Stablecoin With Monthly Audits and a 4.2% Yield
             
             <span class="news-pub">99bitcoins</span>
-          </div>
-          
-          <div class="news-item">
-            Dell, Rocket Lab, Palantir, and More Stocks That Explain the Market Today
-            
-            <span class="news-pub">Barrons.com</span>
-          </div>
-          
-          <div class="news-item">
-            SOFI Stock Pops Following SoFi's Stablecoin Announcement. What to Know.
-            
-            <span class="news-pub">Barchart</span>
           </div>
           
         </div>
@@ -10792,11 +10787,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">SOFI盤面極強，正價差排列，MA5、MA20、MA60皆呈現上升趨勢。
-
-關鍵價位：近期高點約 $18.22，支撐位可看MA5 $16.59。
-
-高機率劇本：在$16.59上方，股價有望繼續上攻，挑戰新高。</div>
+        <div class="ai-body">①盤面強勁 ②關鍵價位：支撐$16.05（MA20），壓力未明顯。 ③高機率劇本：若能站穩$18.22，有望持續上漲。</div>
       </details>
       
 
@@ -10878,7 +10869,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞指出 SPCE 股價上漲、被視為動能股，並受惠於飛行測試重啟和 SpaceX IPO 消息，儘管有藍色起源爆炸事件，SPCE 仍逆勢上漲。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向Virgin Galactic股價上漲，且在其他太空公司受挫時仍表現強勁，顯示市場對其前景樂觀。</span>
         
       </div>
 
@@ -10958,9 +10949,9 @@ body.beginner-mode .beginner-only { display: block; }
           </div>
           
           <div class="news-item">
-            Are You Looking for a Top Momentum Pick? Why Virgin Galactic (SPCE) is a Great Choice
+            AST SpaceMobile Plunges 17%, Planet Labs Drops 8% on Blue Origin Explosion, While Virgin Galactic Surges 11%
             
-            <span class="news-pub">Zacks</span>
+            <span class="news-pub">24/7 Wall St.</span>
           </div>
           
         </div>
@@ -10973,9 +10964,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面極強，多頭強勢噴發。
-② 關鍵價位：支撐 $4.25 (MA5)，阻力 $6.18（盤中價）。
-③ 高機率劇本：短期回檔後續漲，挑戰更高價位，或橫盤整理後續攻。</div>
+        <div class="ai-body">①盤面極強，處於飆升狀態。
+②關鍵支撐：MA5 ($4.25)，壓力：近期高點 ($6.18)。
+③高機率劇本：短期回調後，若能守穩MA5，有望繼續向上挑戰更高點。</div>
       </details>
       
 
@@ -11057,7 +11048,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有新聞標題皆指向股票上漲、市場創新高、地緣政治緊張緩解以及對AI的熱情，整體呈現極度樂觀的市場情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有標題都暗示著積極的市場表現、科技股的成長以及Workday股票的良好表現。</span>
         
       </div>
 
@@ -11131,15 +11122,15 @@ body.beginner-mode .beginner-only { display: block; }
           </div>
           
           <div class="news-item">
-            Stocks Rally on Easing Geopolitical Tensions and AI Enthusiasm
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
             Stock Market Today: Dow Closes Above 51,000; Nasdaq, S&P 500 Make History (Live Coverage)
             
             <span class="news-pub">Investor's Business Daily</span>
+          </div>
+          
+          <div class="news-item">
+            Stock Indexes Rally to Record Highs on Peace Deal Hopes and AI Spending
+            
+            <span class="news-pub">Barchart</span>
           </div>
           
         </div>
@@ -11152,9 +11143,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面強勁，多頭佔優。
-② 關鍵價位：上方阻力約在 $150，下方支撐約在 $130。
-③ 高機率劇本：突破 $150 後繼續上漲，或在 $130 附近止跌反彈。</div>
+        <div class="ai-body">① **盤面強勁**，股價突破均線，成交量放大。
+② **關鍵價位**：支撐$127.82 (MA60)，阻力可觀察近期高點。
+③ **高機率劇本**：短期持續上漲動能，但需留意RSI接近超買區，可能出現回調。</div>
       </details>
       
 
@@ -11235,8 +11226,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於債務和股價交易的負面消息，但分析師上調目標價和增加流動性等因素為MetLife帶來了積極的展望，抵消了部分負面影響。</span>
+          <span class="sentiment neut">+2</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">正面消息少於負面和中立消息，但摩根士丹利上調目標價提供了一定的支撐。</span>
         
       </div>
 
@@ -11304,6 +11295,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Paramount Is Pulling Every Lever to Sell LBO Debt
+            
+            <span class="news-pub">Bloomberg</span>
+          </div>
+          
+          <div class="news-item">
             Ares Marks Eagle Football Debt To 16 Cents As MetLife Pushes Back
             
             <span class="news-pub">GuruFocus.com</span>
@@ -11313,12 +11310,6 @@ body.beginner-mode .beginner-only { display: block; }
             PFG Stock Trading at a Discount to Industry at 1.88X: Time to Hold?
             
             <span class="news-pub">Zacks</span>
-          </div>
-          
-          <div class="news-item">
-            Uber Plans $49 Shuttle for New York-New Jersey World Cup Matches
-            
-            <span class="news-pub">Bloomberg</span>
           </div>
           
         </div>
@@ -11331,7 +11322,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁。② 關鍵價位：支撐80.5（MA20），阻力83.04（MA5）。③ 高機率劇本：若能站穩83.04，有望挑戰更高點，否則可能回測80.5。</div>
+        <div class="ai-body">① 盤面極強，多頭強勁。
+② 關鍵阻力：MA5 ($83.04)；關鍵支撐：MA20 ($80.5)。
+③ 高機率劇本：突破MA5後持續上漲，短期目標價約為$85-$86。</div>
       </details>
       
 
@@ -11413,7 +11406,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+9</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">所有新聞標題皆為正面，強調公司業績強勁、股價創歷史新高，並受惠於資料中心和AI支出，整體情緒極度樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示AMAT股票創下歷史新高，與AI相關的成長、數據中心晶片設備的超級週期以及出色的財報一同被提及，整體呈現極度看多的情緒。</span>
         
       </div>
 
@@ -11481,6 +11474,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            These Artificial Intelligence (AI) Stocks Have Crushed Nvidia in 2026 With Gains of 67% and 121%. They Can Still Soar Higher
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             Top 5 Stocks That Will Ride the Data Center Chip Equipment Supercycle
             
             <span class="news-pub">24/7 Wall St.</span>
@@ -11488,12 +11487,6 @@ body.beginner-mode .beginner-only { display: block; }
           
           <div class="news-item">
             Applied Materials Stock Just Hit New Record Highs. Don’t Count the Rally Out Just Yet.
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
-            Stock Indexes Rally to Record Highs on Peace Deal Hopes and AI Spending
             
             <span class="news-pub">Barchart</span>
           </div>
@@ -11508,7 +11501,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 強勢上漲 ② 支撐447.01，壓力450.06 ③ 突破450.06續漲，跌破則回測支撐。</div>
+        <div class="ai-body">① **強勁多頭**。② **關鍵價位：MA5 447.01、前高 450.06**。③ **高機率劇本：突破前高後繼續上攻，目標挑戰新高。**</div>
       </details>
       
 
@@ -11590,7 +11583,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示DXCM有新的成長機會、市場擴張潛力以及正向的合作關係，整體情緒偏向樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向正面的發展，包括新的指導、與Signos的合作擴展、潛在的市場擴大以及被S&P 500列為領頭羊之一。</span>
         
       </div>
 
@@ -11685,7 +11678,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面強勁。②關鍵價位：支撐$72.09（MA5），阻力前高$75-$76區間。③高機率劇本：若能突破阻力區，有望繼續上漲；若回調，MA5為短期支撐。</div>
+        <div class="ai-body">①目前盤面強勁，多頭佔優。
+②關鍵價位：支撐$72.09 (MA5)，阻力$75-$78區間。
+③高機率劇本：突破阻力區間後，有望上漲至更高點。</div>
       </details>
       
 
@@ -11767,7 +11762,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調高收益和穩定的退休收入，顯示市場對收益型資產的積極情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調高收益和穩定的退休金流，展現出強烈的收入投資機會和財富累積的正面情緒。</span>
         
       </div>
 
@@ -11862,9 +11857,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面極強，多頭排列。
-②關鍵價位：支撐80.15（MA5），阻力80.31（現價）。
-③高機率劇本：短期續漲，突破80.31後有望挑戰更高點。</div>
+        <div class="ai-body">①盤面強勁。②關鍵價位：支撐約80.15，壓力約80.31。③高機率劇本：續漲，短線有望突破壓力位。</div>
       </details>
       
 
@@ -11946,7 +11939,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題指出資料中心晶片設備超級循環、AI支出、以及半導體ETF的強勁表現，均顯示對半導體產業及LRCX的極度看好情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞強調AI晶片設備超級週期帶來的龐大商機和LRCX的成長潛力，呈現極度樂觀的市場情緒。</span>
         
       </div>
 
@@ -12014,21 +12007,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Lam Research CEO Sees AI Fueling $140 Billion Chip Equipment Boom
+            
+            <span class="news-pub">MarketBeat</span>
+          </div>
+          
+          <div class="news-item">
+            How The Lam Research (LRCX) Narrative Is Shifting With New Targets And WFE Spending Debates
+            
+            <span class="news-pub">Simply Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             Top 5 Stocks That Will Ride the Data Center Chip Equipment Supercycle
             
             <span class="news-pub">24/7 Wall St.</span>
-          </div>
-          
-          <div class="news-item">
-            This Risk ETF Is Riding Its Best Seven-Day Stretch in a Year
-            
-            <span class="news-pub">Barrons.com</span>
-          </div>
-          
-          <div class="news-item">
-            Qualcomm (QCOM) Up 35.5% Since Last Earnings Report: Can It Continue?
-            
-            <span class="news-pub">Zacks</span>
           </div>
           
         </div>
@@ -12041,9 +12034,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **強勢上漲**
-② **關鍵價位：MA5 ($316.63) 和 MA20 ($293.11)**
-③ **高機率劇本：站穩MA5繼續上攻，若跌破MA5可能回測MA20尋求支撐。**</div>
+        <div class="ai-body">①目前盤面強勁。
+②關鍵支撐：MA5 ($316.63)。
+③高機率劇本：突破壓力，繼續上漲。</div>
       </details>
       
 
@@ -12124,8 +12117,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞看好 Marvell 的未來潛力，目標股價重設和 Jim Cramer 承認判斷失誤皆指向其強勁表現，預期將有多年上漲行情。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於詩人科技股價下跌的消息，但大多數標題都指向分析師看好Marvell的長期表現，甚至連Jim Cramer也承認他錯估了Marvell的潛力。</span>
         
       </div>
 
@@ -12220,9 +12213,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 極強勢，股價創新高。
-② 關鍵支撐：MA5 ($202.62)；關鍵壓力：無。
-③ 高機率劇本：繼續上攻，或在 MA5 附近盤整後再創新高。</div>
+        <div class="ai-body">① **強勢上漲，多頭主導。**
+② **關鍵價位：支撐202.62 (MA5)，壓力205.00。**
+③ **高機率劇本：若能守穩MA5，有望繼續向上挑戰新高。**</div>
       </details>
       
 
@@ -12303,8 +12296,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有潛在的IPO機會和產業復甦，但管理層變革的挑戰、公司治理問題以及重要的股票出售事件帶來了不確定性和負面影響。</span>
+          <span class="sentiment neg">-3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題多涉及公司負債、管理層變動的潛在問題、股價下跌及企業治理問題，整體情緒偏向負面。</span>
         
       </div>
 
@@ -12372,21 +12365,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Paramount Is Pulling Every Lever to Sell LBO Debt
+            
+            <span class="news-pub">Bloomberg</span>
+          </div>
+          
+          <div class="news-item">
             As part of her Citi turnaround, Jane Fraser cut management layers from 13 to 8. But the ‘great flattening’ doesn’t always work as intended
             
             <span class="news-pub">Fortune</span>
           </div>
           
           <div class="news-item">
-            Danish Pension Blacklists SpaceX Over ‘Catastrophic Governance’
+            Is Wells Fargo Stock Underperforming the Dow?
             
-            <span class="news-pub">Bloomberg</span>
-          </div>
-          
-          <div class="news-item">
-            Mattel Stock Is Down 24%. Here's What a $50.9 Million Exit Could Mean
-            
-            <span class="news-pub">Motley Fool</span>
+            <span class="news-pub">Barchart</span>
           </div>
           
         </div>
@@ -12399,9 +12392,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面強勁。
-② 關鍵價位：MA20 ($125.38)。
-③ 高機率劇本：站穩MA20，有望續漲挑戰更高點。</div>
+        <div class="ai-body">① **盤面強勁**，多頭佔優。
+② 關鍵價位：**MA20 ($125.38)** 為短期支撐。
+③ 高機率劇本：**股價有望向上突破**，目標挑戰新高。</div>
       </details>
       
 
@@ -12482,8 +12475,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然醫療保健板塊整體表現疲軟，但Elevance Health自身表現強勁，股價接近公允價值，內部人士大量增持股票，顯示市場對其前景看好。</span>
+          <span class="sentiment pos">+5</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管醫療保健類股整體走軟，但有新聞指出ELV股價接近公允價值且內部人士大量增持股票，顯示市場對其前景抱持樂觀態度。</span>
         
       </div>
 
@@ -12578,9 +12571,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">**① 目前盤面強弱：** 強勢上漲，多頭氣盛。
-**② 關鍵價位：** 支撐$391.99（MA5），阻力前高$393.19。
-**③ 高機率劇本：** 股價將延續上漲趨勢，挑戰並突破新高。</div>
+        <div class="ai-body">① **盤面強勁**，站穩均線。
+② **關鍵價位：** 支撐 $392（MA5），阻力 $395。
+③ **高機率劇本：** 短線有望繼續上攻，挑戰 $400。</div>
       </details>
       
 
@@ -12662,7 +12655,7 @@ body.beginner-mode .beginner-only { display: block; }
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管通用汽車股價上漲，但電池廠延遲復工及整體消費股下跌的負面消息，抵消了部分樂觀情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管GM股價上漲，但有SUV銷售不佳、消費股下跌及電池廠延遲復工等負面消息，整體偏向負面。</span>
         
       </div>
 
@@ -12730,6 +12723,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            Chevy's Least-Sold SUV Is Costing The Company Tons Of Money
+            
+            <span class="news-pub">Money Digest</span>
+          </div>
+          
+          <div class="news-item">
             Why GM Stock Is Rising Even Though The Car Industry Is Shrinking
             
             <span class="news-pub">Investor's Business Daily</span>
@@ -12737,12 +12736,6 @@ body.beginner-mode .beginner-only { display: block; }
           
           <div class="news-item">
             Sector Update: Consumer Stocks Decline Late Afternoon
-            
-            <span class="news-pub">MT Newswires</span>
-          </div>
-          
-          <div class="news-item">
-            Sector Update: Consumer Stocks Decline Friday Afternoon
             
             <span class="news-pub">MT Newswires</span>
           </div>
@@ -12757,9 +12750,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前盤面極強，多頭強勢主導。
-②關鍵價位：支撐 $82.06 (MA5)；壓力前高點。
-③高機率劇本：延續上漲趨勢，挑戰前高。</div>
+        <div class="ai-body">①盤面強勁，多方勢力主導。
+②關鍵價位：MA5 ($82.06) 為短期支撐。
+③高機率劇本：站穩MA5後，挑戰前高甚至更高點位。</div>
       </details>
       
 
@@ -12840,8 +12833,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有看好的選項交易和長期投資討論，但也有來自Snap校友的新基金和國債殖利率上升可能帶來的市場調整，整體情緒偏向正面但存在不確定性。</span>
+          <span class="sentiment neg">-3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題多數圍繞市場風險、股票集中度風險以及與科技產業相關的負面議題，缺乏直接對微軟利好的消息。</span>
         
       </div>
 
@@ -12909,21 +12902,21 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
-            'Volatility equals opportunity' in options trades as tech soars
-            
-            <span class="news-pub">Yahoo Finance Video</span>
-          </div>
-          
-          <div class="news-item">
-            2 Genius Stocks That Billionaire Bill Ackman Just Loaded Up On
+            Datadog Share Value Has More Than Doubled As Investors Recognize a Growing Market Opportunity
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Snap alums unveil Ghost Angels fund
+            QQQ’s Hidden Risk: Why the Fund’s Top 5 Holdings Move Together
             
-            <span class="news-pub">TechCrunch</span>
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
+            FBI flags ‘anti-tech extremism’ as AI opposition grows
+            
+            <span class="news-pub">TheStreet</span>
           </div>
           
         </div>
@@ -12936,9 +12929,7 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">**①盤面強弱：** 強力做多，多頭主導。
-**②關鍵價位：** 支撐區間約$402.05~$424.9 (MA60~MA5)。
-**③高機率劇本：** 股價預計持續上漲，短期內有望挑戰更高位，但需留意RSI過熱可能引發回調。</div>
+        <div class="ai-body">①目前盤面極強。②關鍵價位：支撐424.9 (MA5)，阻力450.24 (現價)。③高機率劇本：續漲或短期盤整後再上攻，可考慮逢低買入。</div>
       </details>
       
 
@@ -13019,8 +13010,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">部分新聞標題顯示市場受到美伊關係變化的影響，呈現漲跌互見的波動，但整體仍有些許樂觀情緒存在。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有美伊衝突的負面消息，但亦有和平希望及市場上漲的樂觀消息，整體情緒偏向輕微看多。</span>
         
       </div>
 
@@ -13115,9 +13106,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面強勁，MA線多頭排列。
-②關鍵價位：支撐$289.69 (MA5)，阻力$290.43 (現價附近)。
-③高機率劇本：站穩MA5則有望向上突破，繼續保持強勢。</div>
+        <div class="ai-body">① 盤面偏強，短中長期均線多頭排列。
+② 關鍵價位：支撐 $289.69 (MA5)，阻力 $290.43 (現價)。
+③ 高機率劇本：若能守穩 MA5，有望繼續上攻，挑戰新高。</div>
       </details>
       
 
@@ -13198,8 +13189,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示股市上漲、地緣政治緊張緩解以及人工智慧的熱情，整體氛圍偏向樂觀。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有關於 QQQ 潛在風險和高收益 ETF 成本的警示，但整體股市上漲，特別是 Nasdaq 創新高，抵銷了部分負面情緒。</span>
         
       </div>
 
@@ -13267,6 +13258,12 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="news-list">
           
           <div class="news-item">
+            QQQ’s Hidden Risk: Why the Fund’s Top 5 Holdings Move Together
+            
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             NWI Management Dumps 42,700 MercadoLibre Shares Worth $82.4 Million
             
             <span class="news-pub">Motley Fool</span>
@@ -13276,12 +13273,6 @@ body.beginner-mode .beginner-only { display: block; }
             QQQI’s 13.8% Monthly Yield Comes With a Hidden Cost Investors Miss
             
             <span class="news-pub">24/7 Wall St.</span>
-          </div>
-          
-          <div class="news-item">
-            S&P 500 Jumps For Ninth Week, Longest Since 2023 With DELL Leading Nasdaq To Record Highs, While Positive US-Iran Ceasefire Bets Aid Dow —  UMG, COIN, MNKD, ASTC, ASTS In Focus
-            
-            <span class="news-pub">Stocktwits</span>
           </div>
           
         </div>
@@ -13294,9 +13285,9 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面極強，多頭強勢。
-② 關鍵價位：支撐 $730 (MA5)，壓力 $740。
-③ 高機率劇本：若守穩 $730，有望續創新高；若跌破，或有回檔。</div>
+        <div class="ai-body">①盤面極強，超買風險高。
+②關鍵支撐：730.24（MA5），關鍵阻力：無明顯阻力，需警惕回調。
+③高機率劇本：短期或震盪整理，甚至回調修正。</div>
       </details>
       
 
@@ -13377,8 +13368,8 @@ body.beginner-mode .beginner-only { display: block; }
         
           
           
-          <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示股市上漲、創下新高，且地緣政治緊張局勢緩和以及人工智慧熱情助長樂觀情緒。</span>
+          <span class="sentiment pos">+8</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示股市上漲，創歷史新高，並有積極的停火和AI支出預期，顯示強烈的樂觀情緒。</span>
         
       </div>
 
@@ -13452,13 +13443,13 @@ body.beginner-mode .beginner-only { display: block; }
           </div>
           
           <div class="news-item">
-            Stocks Rally on Easing Geopolitical Tensions and AI Enthusiasm
+            2 Weeks in May Rekindled My Love for Stock Picking. Here’s My Daily Trading Routine.
             
             <span class="news-pub">Barchart</span>
           </div>
           
           <div class="news-item">
-            2 Weeks in May Rekindled My Love for Stock Picking. Here’s My Daily Trading Routine.
+            The S&P 500’s Price Is Getting Better Every Week, But This Indicator Keeps Getting Worse. Why 52% Could Be The Market’s Tragic Number.
             
             <span class="news-pub">Barchart</span>
           </div>
@@ -13473,9 +13464,11 @@ body.beginner-mode .beginner-only { display: block; }
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① **盤面偏強**，短期均線多頭排列。
-② **關鍵價位**：751.55 (MA5 支撐)，上方無明顯阻力。
-③ **高機率劇本**：若能守穩MA5，有望持續向上挑戰新高；跌破則回測MA20。</div>
+        <div class="ai-body">**①目前盤面強弱：** 強勢，但RSI過高有回調壓力。
+
+**②關鍵價位：** 支撐位751.55（MA5），阻力位760（整數關卡）。
+
+**③高機率劇本：** 短線可能震盪或小幅回檔，但整體趨勢仍偏多，有機會測試更高點。</div>
       </details>
       
 
@@ -17634,22 +17627,24 @@ body.beginner-mode .beginner-only { display: block; }
   <!-- Gemini HK Brief -->
   
   <div style="background:var(--surface2);border-radius:10px;padding:20px 22px">
-    <pre style="white-space:pre-wrap;font-family:var(--sans);margin:0;font-size:13.5px;line-height:1.75;color:var(--text)">## 🌍 昨夜美股概況
-昨夜美股三大指數普遍向上，道瓊斯 ↑紅 0.72%、標普500 ↑紅 0.22%、納指 ↑紅 0.20%。VIX恐慌指數（市場對未來波動預期）↓綠 2.67%，顯示市場情緒趨穩。
+    <pre style="white-space:pre-wrap;font-family:var(--sans);margin:0;font-size:13.5px;line-height:1.75;color:var(--text)">好的，這是一份港股盤前分析：
+
+## 🌍 昨夜美股概況
+昨夜美股三大指數全線↑紅，道瓊斯指數領漲，標普500及納斯達克亦穩步向上，市場氣氛偏向樂觀。恐慌指數VIX顯著↓綠，反映投資者避險情緒降溫。
 
 ## 📊 港股開盤預測
-綜合數據來看，恒指昨夜ADR（預託證券，反映港股在海外市場的交易價格）表現參差，騰訊ADR微跌↓綠，阿里巴巴ADR亦跌↓綠1.54%。港股ETF (EWH) 輕微上升↑紅0.17%，整體美股向上，港股開盤預計中性偏低開。
+綜合數據分析，雖然騰訊ADR及阿里巴巴ADR微跌，但美股整體造好，特別是恒生指數昨收↑紅，港股ETF亦輕微上揚。預計今日港股偏多，恒指有望高開。
 
 ## 🔍 重點關注
-1.  **大型科網股表現**：騰訊、阿里巴巴ADR下跌，或拖累港股科網板塊。
-2.  **美債息走向**：美國10年期債息持平，未對市場構成額外壓力。
-3.  **VIX指數**：恐慌指數回落，反映市場避險情緒降溫，有助於穩定大市。
+* **科技股走勢：** 騰訊ADR及阿里巴巴ADR微跌，留意港股科技板塊會否受壓。
+* **美股強勢延續：** 昨夜道指及納指均升，有望帶動港股高開後承接升勢。
+* **資金流向：** 港股ETF輕微↑紅，反映有資金留意港股，需觀察開盤後資金動向。
 
 ## ⚠️ 風險提示
-美股大型科網股ADR表現疲軟，加上美國經濟數據的不確定性，可能壓抑今日港股的上升動力。
+美國十年債息維持不變，而市場尚未有明確催化劑推動大市，需留意高開後動力是否足夠，或會出現獲利回吐。
 
 ## 💡 新手小提示
-今天宜保持觀望態度，避免盲目追漲殺跌。</pre>
+今天建議以觀望態度為主，待市場方向更明確再作部署。</pre>
   </div>
   
 </section>
@@ -18108,6 +18103,10 @@ function copyTradeSetup(btn) {
    Export button lets you download the current list to commit permanently.
 ──────────────────────────────────────────────────────────────────── */
 const FAV_KEY = 'signalmonitor_favourites_v1';
+// Initialise _favs immediately so onmouseout inline handlers never see undefined
+window._favs = (function() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch(e) { return []; }
+})();
 
 function getFavourites() {
   try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
@@ -18121,15 +18120,49 @@ function setFavourites(arr) {
   renderFavourites();
 }
 
+function _showFavToast(msg) {
+  let t = document.getElementById('fav-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'fav-toast';
+    t.style.cssText = [
+      'position:fixed;bottom:72px;left:50%;transform:translateX(-50%)',
+      'background:rgba(30,31,40,0.96);border:1px solid rgba(245,185,66,0.35)',
+      'color:#f5b942;font-size:13px;font-weight:600;padding:9px 18px',
+      'border-radius:8px;z-index:9999;pointer-events:none',
+      'transition:opacity .25s;opacity:0;white-space:nowrap',
+      'box-shadow:0 4px 20px rgba(0,0,0,0.4)'
+    ].join(';');
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._hide);
+  t._hide = setTimeout(function() { t.style.opacity = '0'; }, 2200);
+}
+
 function toggleFavourite(ticker) {
   let favs = getFavourites();
   const idx = favs.indexOf(ticker);
-  if (idx >= 0) {
-    favs.splice(idx, 1);
-  } else {
+  const adding = idx < 0;
+  if (adding) {
     favs.push(ticker);
+  } else {
+    favs.splice(idx, 1);
   }
   setFavourites(favs);
+  // Give instant visual feedback — the Favourites section is above most cards
+  if (adding) {
+    _showFavToast('⭐ ' + ticker + ' added to Favourites');
+    var favSection = document.getElementById('favourites');
+    if (favSection) {
+      setTimeout(function() {
+        favSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  } else {
+    _showFavToast('☆ ' + ticker + ' removed from Favourites');
+  }
 }
 
 function renderFavourites() {
