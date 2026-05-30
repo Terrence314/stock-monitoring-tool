@@ -67,8 +67,7 @@ def _score_batch(batch: list[dict]) -> list[dict]:
             period=SCAN_PERIOD,
             auto_adjust=True,
             progress=False,
-            threads=True,
-            group_by="ticker" if len(batch) > 1 else None,
+            group_by="ticker",
         )
     except Exception as e:
         print(f"    [batch download] error: {e} — falling back to individual")
@@ -82,12 +81,19 @@ def _score_batch(batch: list[dict]) -> list[dict]:
                 stock = yf.Ticker(ticker)
                 df = stock.history(period=SCAN_PERIOD, auto_adjust=True)
             elif len(batch) == 1:
+                # Single ticker: yfinance returns flat columns (no MultiIndex)
                 df = raw
             else:
-                # Multi-ticker batch: columns are (field, ticker) MultiIndex
-                if ticker not in raw.columns.get_level_values(1):
-                    continue
-                df = raw.xs(ticker, axis=1, level=1)
+                # Multi-ticker batch: yfinance 1.x returns MultiIndex (ticker, field)
+                # Level 0 = ticker symbol, Level 1 = OHLCV field names
+                if isinstance(raw.columns, pd.MultiIndex):
+                    tickers_in_batch = raw.columns.get_level_values(0).unique().tolist()
+                    if ticker not in tickers_in_batch:
+                        continue
+                    df = raw[ticker]   # returns DataFrame with Open/High/Low/Close/Volume
+                else:
+                    # Flat columns — single ticker was returned despite multi request
+                    df = raw
 
             if df is None or df.empty:
                 continue
