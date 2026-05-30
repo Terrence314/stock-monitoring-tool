@@ -1090,5 +1090,1526 @@
     "type": "start",
     "price": 129.09,
     "score": 10
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DOCU",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 52.52,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DOCU",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 52.52,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DOCU",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 52.52,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ETSY",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 67.92,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ETSY",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 67.92,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ETSY",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 67.92,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GE",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 323.76,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GE",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 323.76,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GE",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 323.76,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 323.76,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HOOD",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.3,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HOOD",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.3,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HOOD",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.3,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HOOD",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.3,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HOOD",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.3,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MDB",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 335.55,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MDB",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 335.55,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MDB",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 335.55,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MDB",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 335.55,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "UPS",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 106.69,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "UPS",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 106.69,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "UPS",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 106.69,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "UPS",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 106.69,
+    "score": 100
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "BAC",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 51.6,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "BAC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 51.6,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "BAC",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 51.6,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "D",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 66.94,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "D",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 66.94,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "D",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 66.94,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MCO",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 453.25,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MCO",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 453.25,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MCO",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 453.25,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MCO",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 453.25,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MNST",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 88.08,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MNST",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 88.08,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MNST",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 88.08,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PNC",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 221.12,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PNC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 221.12,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PNC",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 221.12,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "RDDT",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 176.0,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "RDDT",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 176.0,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "RDDT",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 176.0,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "USB",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 54.85,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "USB",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 54.85,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "USB",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 54.85,
+    "score": 92
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AFRM",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.65,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AFRM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.65,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AFRM",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.65,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AFRM",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.65,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AFRM",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.65,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "EMR",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 143.82,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "EMR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 143.82,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "EMR",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 143.82,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FDX",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 411.75,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FDX",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 411.75,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FDX",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 411.75,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FDX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 411.75,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NET",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 241.82,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NET",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 241.82,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NET",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 241.82,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "VEA",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 71.77,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "VEA",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 71.77,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "VEA",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 71.77,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "VEA",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 71.77,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "IRM",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 128.25,
+    "score": 88
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "IRM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 128.25,
+    "score": 88
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "IRM",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 128.25,
+    "score": 88
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DELL",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 420.91,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DELL",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 420.91,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DELL",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 420.91,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DELL",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 420.91,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DELL",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 420.91,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ESTC",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 64.7,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ESTC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 64.7,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ESTC",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 64.7,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ESTC",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 64.7,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "F",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 17.44,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "F",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 17.44,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "F",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 17.44,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "F",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 17.44,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FSLR",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 306.79,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FSLR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 306.79,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FSLR",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 306.79,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "FSLR",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 306.79,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HPQ",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 27.04,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HPQ",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 27.04,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HPQ",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 27.04,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HPQ",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 27.04,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "HPQ",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 27.04,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NTAP",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 174.29,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NTAP",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 174.29,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NTAP",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 174.29,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NTAP",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 174.29,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NTAP",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 174.29,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NUE",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 250.0,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NUE",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 250.0,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NUE",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 250.0,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NUE",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 250.0,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NUE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 250.0,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "OKTA",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 123.27,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "OKTA",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 123.27,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "OKTA",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 123.27,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "OKTA",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 123.27,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ORCL",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 225.78,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ORCL",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 225.78,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ORCL",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 225.78,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ORCL",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 225.78,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PANW",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 281.69,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PANW",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 281.69,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PANW",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 281.69,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PATH",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 11.72,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PATH",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 11.72,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PATH",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 11.72,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PATH",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 11.72,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "RIVN",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 16.3,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "RIVN",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 16.3,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "RIVN",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 16.3,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SMCI",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 46.09,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SMCI",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 46.09,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SMCI",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 46.09,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SMCI",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 46.09,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SMCI",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 46.09,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SNOW",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 255.55,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SNOW",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 255.55,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SNOW",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 255.55,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SNOW",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 255.55,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SOFI",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.22,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SOFI",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.22,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SOFI",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.22,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SOFI",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.22,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SPCE",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.18,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SPCE",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.18,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SPCE",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.18,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SPCE",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.18,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SPCE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.18,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "WDAY",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 146.19,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "WDAY",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 146.19,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "WDAY",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 146.19,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "WDAY",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 146.19,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MET",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 82.69,
+    "score": 84
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MET",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 82.69,
+    "score": 84
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MET",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 82.69,
+    "score": 84
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MET",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 82.69,
+    "score": 84
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AMAT",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 450.06,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AMAT",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 450.06,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AMAT",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 450.06,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DXCM",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.74,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DXCM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.74,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DXCM",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.74,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DXCM",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.74,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "LRCX",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 318.18,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "LRCX",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 318.18,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "LRCX",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 318.18,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "LRCX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 318.18,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MRVL",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 205.0,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MRVL",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 205.0,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MRVL",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 205.0,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MRVL",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 205.0,
+    "score": 82
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "C",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 125.9,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "C",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 125.9,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "C",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 125.9,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ELV",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 393.19,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ELV",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 393.19,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "ELV",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 393.19,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GM",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 83.24,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 83.24,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GM",
+    "pattern": "Volume Breakdown",
+    "direction": "sell",
+    "type": "start",
+    "price": 83.24,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GM",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 83.24,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "GM",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 83.24,
+    "score": 80
   }
 ]
