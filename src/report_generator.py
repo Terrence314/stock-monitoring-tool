@@ -1143,21 +1143,34 @@ body.beginner-mode .beginner-only { display: block; }
 </section>
 
 <!-- ─── FAVOURITES ──────────────────────────────────────────────────── -->
-<section id="favourites" style="display:none">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 12px">
+<section id="favourites" class="card" style="max-width:1100px;margin:24px auto 0;padding:24px 28px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
     <div>
       <span class="card-title" style="font-size:16px">⭐ My Favourites</span>
-      <span class="card-sub" style="margin-left:10px">starred tickers — always shown</span>
+      <span class="card-sub" style="margin-left:10px">pinned tickers · always shown regardless of score</span>
     </div>
     <div style="display:flex;gap:8px;align-items:center">
-      <button onclick="exportFavourites()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--elevated);color:var(--text-2);cursor:pointer">Export JSON</button>
+      <button onclick="exportFavourites()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--elevated);color:var(--text-2);cursor:pointer" title="Download favourites.json to commit permanently">Export JSON</button>
       <span class="card-sub" id="fav-count-label">0 starred</span>
     </div>
   </div>
+
+  <!-- How-to hint — always visible, fades once you have favourites -->
+  <div id="fav-howto" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(245,185,66,0.06);border:1px solid rgba(245,185,66,0.18);border-radius:8px;margin-bottom:16px">
+    <span style="font-size:20px">☆</span>
+    <div>
+      <div style="font-size:13px;color:var(--text);font-weight:600">How to star a stock</div>
+      <div style="font-size:12px;color:var(--text-2);margin-top:2px">
+        Find any stock card below (Tier 2 section) or in the Universe Leaderboard table.
+        Click the <strong style="color:#f5b942">☆</strong> star icon next to the ticker name to pin it here.
+        Stars save in your browser and reload automatically each visit.
+      </div>
+    </div>
+  </div>
+
   <div id="fav-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px">
-    <!-- Populated by JS from starred tickers matching Tier 2 cards -->
-    <div id="fav-empty-state" style="padding:32px;text-align:center;color:var(--muted);font-size:13px">
-      No favourites yet — click ⭐ on any stock card to pin it here permanently.
+    <div id="fav-empty-state" style="padding:20px;text-align:center;color:var(--muted);font-size:12px;grid-column:1/-1">
+      No starred tickers yet.
     </div>
   </div>
 </section>
@@ -1258,8 +1271,10 @@ body.beginner-mode .beginner-only { display: block; }
               <!-- Star/favourite button -->
               <button class="star-btn" data-ticker="{{ s.ticker }}"
                 onclick="toggleFavourite('{{ s.ticker }}')"
-                style="background:none;border:none;cursor:pointer;font-size:15px;padding:1px 3px;line-height:1;border-radius:4px;transition:transform .15s;margin-left:2px"
-                title="Star {{ s.ticker }}">☆</button>
+                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
+                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
+                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
+                title="Click to add {{ s.ticker }} to Favourites">☆</button>
             </div>
             <div class="scard-name">{{ s.name }}</div>
             <div class="scard-tags">
@@ -1517,8 +1532,10 @@ body.beginner-mode .beginner-only { display: block; }
         <td style="padding:9px 16px;text-align:center">
           <button class="star-btn" data-ticker="{{ r.ticker }}"
             onclick="toggleFavourite('{{ r.ticker }}')"
-            style="background:none;border:none;cursor:pointer;font-size:15px;padding:2px 4px;border-radius:4px;transition:transform .15s"
-            title="Star {{ r.ticker }}">☆</button>
+            style="background:none;border:1px solid transparent;cursor:pointer;font-size:16px;padding:2px 5px;border-radius:5px;transition:all .15s;color:#8a8c98"
+            onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
+            onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
+            title="Click to add {{ r.ticker }} to Favourites">☆</button>
         </td>
       </tr>
     {% endfor %}
@@ -2051,7 +2068,9 @@ function getFavourites() {
 }
 
 function setFavourites(arr) {
-  localStorage.setItem(FAV_KEY, JSON.stringify([...new Set(arr)]));
+  const unique = [...new Set(arr)];
+  localStorage.setItem(FAV_KEY, JSON.stringify(unique));
+  window._favs = unique;  // expose globally for onmouseout checks
   renderFavourites();
 }
 
@@ -2081,18 +2100,21 @@ function renderFavourites() {
   const countLabel = document.getElementById('fav-count-label');
   if (countLabel) countLabel.textContent = count + ' starred';
 
-  // Show/hide favourites section
-  const favSection = document.getElementById('favourites');
-  if (favSection) favSection.style.display = count > 0 ? 'block' : 'none';
+  // Hide how-to hint once user has starred something
+  const howto = document.getElementById('fav-howto');
+  if (howto) howto.style.display = count > 0 ? 'none' : 'flex';
 
   // Sync all star buttons on page
+  window._favs = favs;  // expose for onmouseout inline handlers
   document.querySelectorAll('.star-btn').forEach(function(btn) {
     const t = btn.getAttribute('data-ticker');
     const starred = favs.includes(t);
-    btn.textContent    = starred ? '★' : '☆';
-    btn.style.color    = starred ? 'var(--amber)' : 'var(--muted)';
-    btn.style.transform = starred ? 'scale(1.15)' : 'scale(1)';
-    btn.title = starred ? 'Unstar ' + t : 'Star ' + t;
+    btn.textContent     = starred ? '★' : '☆';
+    btn.style.color     = starred ? '#f5b942' : '#8a8c98';
+    btn.style.transform = starred ? 'scale(1.2)' : 'scale(1)';
+    btn.style.background = starred ? 'rgba(245,185,66,0.12)' : '';
+    btn.style.borderColor = starred ? 'rgba(245,185,66,0.3)' : 'transparent';
+    btn.title = starred ? '★ Click to remove from Favourites' : '☆ Click to add to Favourites';
   });
 
   // Populate favourites grid by cloning cards from Tier 2
