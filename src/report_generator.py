@@ -2061,6 +2061,10 @@ function copyTradeSetup(btn) {
    Export button lets you download the current list to commit permanently.
 ──────────────────────────────────────────────────────────────────── */
 const FAV_KEY = 'signalmonitor_favourites_v1';
+// Initialise _favs immediately so onmouseout inline handlers never see undefined
+window._favs = (function() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch(e) { return []; }
+})();
 
 function getFavourites() {
   try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
@@ -2074,15 +2078,49 @@ function setFavourites(arr) {
   renderFavourites();
 }
 
+function _showFavToast(msg) {
+  let t = document.getElementById('fav-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'fav-toast';
+    t.style.cssText = [
+      'position:fixed;bottom:72px;left:50%;transform:translateX(-50%)',
+      'background:rgba(30,31,40,0.96);border:1px solid rgba(245,185,66,0.35)',
+      'color:#f5b942;font-size:13px;font-weight:600;padding:9px 18px',
+      'border-radius:8px;z-index:9999;pointer-events:none',
+      'transition:opacity .25s;opacity:0;white-space:nowrap',
+      'box-shadow:0 4px 20px rgba(0,0,0,0.4)'
+    ].join(';');
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._hide);
+  t._hide = setTimeout(function() { t.style.opacity = '0'; }, 2200);
+}
+
 function toggleFavourite(ticker) {
   let favs = getFavourites();
   const idx = favs.indexOf(ticker);
-  if (idx >= 0) {
-    favs.splice(idx, 1);
-  } else {
+  const adding = idx < 0;
+  if (adding) {
     favs.push(ticker);
+  } else {
+    favs.splice(idx, 1);
   }
   setFavourites(favs);
+  // Give instant visual feedback — the Favourites section is above most cards
+  if (adding) {
+    _showFavToast('⭐ ' + ticker + ' added to Favourites');
+    var favSection = document.getElementById('favourites');
+    if (favSection) {
+      setTimeout(function() {
+        favSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  } else {
+    _showFavToast('☆ ' + ticker + ' removed from Favourites');
+  }
 }
 
 function renderFavourites() {
