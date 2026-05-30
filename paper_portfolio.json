@@ -9,13 +9,14 @@
       "shares": 2.414642,
       "notional": 1000.0,
       "score": 25,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 446.77,
       "current_price": 446.77,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -78.79,
+      "pnl_pct": -7.88,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "MSFT-S-2026-05-22",
@@ -26,13 +27,14 @@
       "shares": 2.389087,
       "notional": 1000.0,
       "score": 24,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 450.24,
       "current_price": 450.24,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -75.66,
+      "pnl_pct": -7.57,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "META-S-2026-05-22",
@@ -43,13 +45,14 @@
       "shares": 1.638646,
       "notional": 1000.0,
       "score": 28,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 632.51,
       "current_price": 632.51,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -36.46,
+      "pnl_pct": -3.65,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "GOOGL-S-2026-05-22",
@@ -60,13 +63,14 @@
       "shares": 2.611171,
       "notional": 1000.0,
       "score": 25,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 380.34,
       "current_price": 380.34,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": 6.87,
+      "pnl_pct": 0.69,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "PLTR-S-2026-05-22",
@@ -112,13 +116,14 @@
       "shares": 7.595321,
       "notional": 1000.0,
       "score": 25,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 136.69,
       "current_price": 136.69,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -38.2,
+      "pnl_pct": -3.82,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "ARKK-S-2026-05-22",
@@ -129,13 +134,14 @@
       "shares": 13.089005,
       "notional": 1000.0,
       "score": 25,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 81.95,
       "current_price": 81.95,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -72.64,
+      "pnl_pct": -7.26,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "CIBR-2026-05-22",
@@ -163,13 +169,14 @@
       "shares": 11.809164,
       "notional": 1000.0,
       "score": 28,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 85.76,
       "current_price": 85.76,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -12.75,
+      "pnl_pct": -1.28,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "GLD-S-2026-05-22",
@@ -180,13 +187,14 @@
       "shares": 2.41651,
       "notional": 1000.0,
       "score": 10,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 417.12,
       "current_price": 417.12,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": -7.97,
+      "pnl_pct": -0.8,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "USO-S-2026-05-22",
@@ -197,13 +205,14 @@
       "shares": 7.096225,
       "notional": 1000.0,
       "score": 25,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
+      "status": "closed",
+      "exit_date": "2026-05-30",
+      "exit_price": 129.09,
       "current_price": 129.09,
       "current_date": "2026-05-30",
-      "pnl": null,
-      "pnl_pct": null
+      "pnl": 83.95,
+      "pnl_pct": 8.39,
+      "exit_reason": "force_close_strategy_reset"
     },
     {
       "id": "AVGO-2026-05-30",
