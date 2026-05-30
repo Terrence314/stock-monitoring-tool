@@ -645,7 +645,7 @@ body {
 @media (max-width: 600px)  { .mid-row { grid-template-columns: 1fr; } }
 
 /* ── Signal histogram ───────────────────────────────────────────────── */
-.hist-bar   { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+.hist-bar   { display: flex; align-items: flex-end; gap: 8px; height: 100px; overflow: hidden; }
 .hist-col   { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .hist-num   { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
 .hist-rect  { width: 100%; border-radius: 5px 5px 2px 2px; }
@@ -923,7 +923,7 @@ body.beginner-mode .beginner-only { display: block; }
           {% for b in sig_buckets %}
           <div class="hist-col">
             <span class="hist-num">{{ b.n }}</span>
-            <div class="hist-rect" style="height:{{ [b.n * 14, 4]|max }}px;background:{{ b.color }};opacity:0.9"></div>
+            <div class="hist-rect" style="height:{{ b.height }}px;background:{{ b.color }};opacity:0.9"></div>
           </div>
           {% endfor %}
         </div>
@@ -2469,7 +2469,12 @@ def _build_price_sparkline_svg(ohlc: list, width: int = 80, height: int = 28) ->
 
 
 def _build_sig_buckets(stocks: list) -> list[dict]:
-    """Return signal score distribution buckets for the histogram."""
+    """Return signal score distribution buckets for the histogram.
+
+    Each bucket gets a normalized ``height`` (4–80 px) so bars never
+    overflow the 100 px ``.hist-bar`` container regardless of how many
+    Tier-2 tickers exist.
+    """
     buckets = [
         {"range": "0–20",   "lo": 0,  "hi": 20,  "color": "#f87171", "n": 0},
         {"range": "20–40",  "lo": 20, "hi": 40,  "color": "#ff8a4d", "n": 0},
@@ -2483,6 +2488,12 @@ def _build_sig_buckets(stocks: list) -> list[dict]:
             if b["lo"] <= sc < b["hi"]:
                 b["n"] += 1
                 break
+    # Normalise heights: tallest bar = 80 px, minimum = 4 px.
+    # Prevents overflow out of the 100 px flex container (which has
+    # align-items: flex-end — overflow goes upward and covers the toolbar).
+    max_n = max((b["n"] for b in buckets), default=1) or 1
+    for b in buckets:
+        b["height"] = max(int(b["n"] / max_n * 80), 4)
     return buckets
 
 
