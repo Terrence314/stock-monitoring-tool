@@ -1,13 +1,14 @@
-"""paper_trading.py — Paper trading simulator (long + short).
+"""paper_trading.py — Paper trading simulator (long-only).
 
 On every daily run, this module:
-  1. Opens LONG $1,000 positions for tickers scoring >= BUY_THRESHOLD (≥70)
-  2. Opens SHORT $1,000 positions for tickers scoring <= SELL_THRESHOLD (≤30)
+  1. Opens LONG positions for tickers scoring >= BUY_THRESHOLD (≥70)
+     Subject to market regime gate: no new longs when SPY is weak.
+  2. Conviction-weighted sizing: score≥90→$2k, 80–89→$1.5k, 70–79→$1k
   3. Updates floating P&L for all open positions using today's fresh prices
-  4. Auto-closes positions held for HOLD_DAYS trading days
-  5. Renders outputs/paper_trading.html
+  4. Closes positions that hit Take-Profit (+12%) or Stop-Loss (−8%)
+  5. Auto-closes positions held for HOLD_DAYS trading days (fallback)
+  6. Renders outputs/paper_trading.html
 
-Short P&L is inverted: profit when price falls (sell high → buy back low).
 Portfolio state persists in outputs/paper_portfolio.json, deployed to
 GitHub Pages and restored via curl before each pipeline run.
 """
@@ -20,12 +21,18 @@ from jinja2 import Template
 
 PORTFOLIO_FILE   = os.path.join("outputs", "paper_portfolio.json")
 BUY_THRESHOLD    = 70       # score >= this → LONG signal
-SELL_THRESHOLD   = 30       # score <= this → SHORT signal
+SELL_THRESHOLD   = 30       # kept for backtest compat — shorts disabled (LONG_ONLY=True)
 SIGNAL_THRESHOLD = BUY_THRESHOLD   # kept for backtest compat
-NOTIONAL         = 1000.0   # USD virtual capital per trade
+NOTIONAL         = 1000.0   # USD base notional per trade (scaled by conviction)
 HOLD_DAYS        = 10       # trading days before auto-close (fallback)
-TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% / SHORT at -12% price move
-STOP_LOSS_PCT    = 8.0      # close LONG at -8%  / SHORT at +8%  price move
+TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% price move
+STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
+
+# ── Strategy settings ──────────────────────────────────────────────────────────
+LONG_ONLY            = True   # no short positions; model is a long trend-follower
+REGIME_FLOOR         = 50    # SPY score below this → no new longs (market too weak)
+REGIME_NORMAL        = 65    # SPY score below this → only high-conviction longs (≥80)
+HIGH_CONVICTION_MIN  = 80    # minimum score for transitional-market entries
 
 
 # ── Persistence ────────────────────────────────────────────────────────────────
@@ -42,6 +49,20 @@ def _save_portfolio(p: dict) -> None:
     os.makedirs(os.path.dirname(PORTFOLIO_FILE) or ".", exist_ok=True)
     with open(PORTFOLIO_FILE, "w", encoding="utf-8") as f:
         json.dump(p, f, ensure_ascii=False, indent=2)
+
+
+def _notional_for_score(score: int) -> float:
+    """Conviction-weighted sizing: higher signal score → larger position.
+
+    Score ≥ 90  →  $2,000  (strong buy, full bull alignment)
+    Score 80–89 →  $1,500  (strong buy)
+    Score 70–79 →  $1,000  (base case)
+    """
+    if score >= 90:
+        return NOTIONAL * 2.0
+    if score >= 80:
+        return NOTIONAL * 1.5
+    return NOTIONAL
 
 
 # ── Trading calendar ───────────────────────────────────────────────────────────
@@ -628,6 +649,75 @@ def _render_html(today_str: str, trades: list, calendar: list) -> str:
 
 # ── Entry point ────────────────────────────────────────────────────────────────
 
+
+def update_open_positions(stock_results: list, today_str: str) -> None:
+    """Lightweight intraday update: refresh prices + enforce TP/SL on open positions.
+
+    Called from price_refresh.py every hour during US market hours.
+    Does NOT open new positions — that is run_paper_trading()'s job.
+    """
+    portfolio = _load_portfolio()
+    trades    = portfolio.get("trades", [])
+    open_trades = [t for t in trades if t["status"] == "open"]
+    if not open_trades:
+        return
+
+    price_map = {
+        s["ticker"]: float(s["price"])
+        for s in stock_results
+        if s.get("price") and float(s["price"]) > 0
+    }
+
+    # Update current prices
+    for trade in open_trades:
+        cp = price_map.get(trade["ticker"])
+        if cp and cp > 0:
+            trade["current_price"] = round(cp, 2)
+            trade["current_date"]  = today_str
+
+    # Enforce TP / SL
+    closed_now = 0
+    for trade in open_trades:
+        cp = trade.get("current_price") or trade["entry_price"]
+        ep = trade["entry_price"]
+        if ep <= 0:
+            continue
+        is_short = trade.get("direction", "long") == "short"
+        pct = (ep - cp) / ep * 100 if is_short else (cp - ep) / ep * 100
+        pnl_dir = ep - cp if is_short else cp - ep
+
+        if pct >= TAKE_PROFIT_PCT:
+            trade.update({
+                "status":      "closed",
+                "exit_date":   today_str,
+                "exit_price":  round(cp, 2),
+                "exit_reason": "take_profit",
+                "pnl":         round(pnl_dir * trade["shares"], 2),
+                "pnl_pct":     round(pct, 2),
+            })
+            closed_now += 1
+        elif pct <= -STOP_LOSS_PCT:
+            trade.update({
+                "status":      "closed",
+                "exit_date":   today_str,
+                "exit_price":  round(cp, 2),
+                "exit_reason": "stop_loss",
+                "pnl":         round(pnl_dir * trade["shares"], 2),
+                "pnl_pct":     round(pct, 2),
+            })
+            closed_now += 1
+
+    portfolio["trades"]       = trades
+    portfolio["last_updated"] = today_str
+    _save_portfolio(portfolio)
+
+    if closed_now:
+        print(f"  [paper_trading] intraday TP/SL: {closed_now} position(s) closed")
+    else:
+        n_open = sum(1 for t in trades if t["status"] == "open")
+        print(f"  [paper_trading] intraday price update: {n_open} open positions refreshed")
+
+
 def run_paper_trading(
     today_str: str,
     today_scores: dict,         # {ticker: score} for today
@@ -671,7 +761,8 @@ def run_paper_trading(
             return
         if direction == "short" and ticker in open_short_tickers:
             return
-        shares = round(NOTIONAL / entry_price, 6)
+        pos_notional = _notional_for_score(score)
+        shares = round(pos_notional / entry_price, 6)
         # Attach active pattern names at trade open for attribution
         patterns_triggered = []
         if active_patterns:
@@ -684,7 +775,7 @@ def run_paper_trading(
             "signal_date":       today_str,
             "entry_price":       round(entry_price, 2),
             "shares":            shares,
-            "notional":          NOTIONAL,
+            "notional":          pos_notional,
             "score":             score,
             "status":            "open",
             "exit_date":         None,
@@ -698,14 +789,41 @@ def run_paper_trading(
         })
         new_count += 1
 
+    # ── Market regime gate: check SPY score before opening any longs ─────────────
+    spy_result = next((s for s in stock_results if s.get("ticker") == "SPY"), None)
+    spy_score  = spy_result["score"] if spy_result else 55   # default to transitional if SPY missing
+
+    if spy_score < REGIME_FLOOR:
+        print(f"  [paper_trading] SPY score={spy_score} < {REGIME_FLOOR} — bear regime, no new longs")
+    elif spy_score < REGIME_NORMAL:
+        print(f"  [paper_trading] SPY score={spy_score} — transitional market, only score≥{HIGH_CONVICTION_MIN} longs")
+    else:
+        print(f"  [paper_trading] SPY score={spy_score} — bull regime, normal threshold (score≥{BUY_THRESHOLD})")
+
     for ticker, score in today_scores.items():
+        if ticker == "SPY":
+            continue   # never trade SPY itself
         entry_price = price_map.get(ticker)
         if not entry_price or entry_price <= 0:
             continue
-        if score >= BUY_THRESHOLD:
-            _open_trade(ticker, score, "long", entry_price)
-        elif score <= SELL_THRESHOLD:
-            _open_trade(ticker, score, "short", entry_price)
+
+        # Long-only: no short positions (model is a long trend-follower)
+        if LONG_ONLY:
+            # Regime-gated long entry
+            if spy_score < REGIME_FLOOR:
+                pass   # no new longs in bear market
+            elif spy_score < REGIME_NORMAL:
+                if score >= HIGH_CONVICTION_MIN:
+                    _open_trade(ticker, score, "long", entry_price)
+            else:
+                if score >= BUY_THRESHOLD:
+                    _open_trade(ticker, score, "long", entry_price)
+        else:
+            # Legacy long+short (disabled — LONG_ONLY=True)
+            if score >= BUY_THRESHOLD:
+                _open_trade(ticker, score, "long", entry_price)
+            elif score <= SELL_THRESHOLD:
+                _open_trade(ticker, score, "short", entry_price)
 
     if not trades:
         print("  [paper_trading] no trades yet — skipping")

@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 
 from data_fetcher import fetch_fear_greed, fetch_market_overview, fetch_stock_data
 from notifier import send_exit_alert
+from paper_trading import update_open_positions
 from report_generator import generate_dashboard
 from technical_analysis import calculate_indicators
 
@@ -285,6 +286,14 @@ def main():
         hk_data=hk_data,
     )
     print(f"  報告已更新：{report_path}")
+
+    # ── Intraday paper trading update (prices + TP/SL, no new trades) ────────────
+    try:
+        today_key = datetime.now().strftime("%Y-%m-%d")
+        update_open_positions(stock_results, today_key)
+    except Exception as pt_err:
+        print(f"  [paper_trading] ⚠️ intraday update skipped: {pt_err}")
+
     print("\n  完成 ✅")
 
 
