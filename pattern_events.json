@@ -911,5 +911,184 @@
     "type": "start",
     "price": 128.68,
     "score": 10
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AMD",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 516.1,
+    "score": 65
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "AVGO",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 446.77,
+    "score": 88
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MSFT",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 450.24,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "MSFT",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 450.24,
+    "score": 80
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "META",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 632.51,
+    "score": 47
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "PLTR",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 156.54,
+    "score": 85
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NOW",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 124.37,
+    "score": 65
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "NOW",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 124.37,
+    "score": 65
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "APP",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 613.09,
+    "score": 70
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SPY",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 756.48,
+    "score": 58
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "QQQ",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 738.31,
+    "score": 65
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "IWM",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 290.43,
+    "score": 70
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "DIA",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 510.78,
+    "score": 90
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "VTI",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 372.54,
+    "score": 60
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "XLK",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 191.02,
+    "score": 75
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "XLV",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 149.47,
+    "score": 39
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "XLI",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 173.13
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "XLI",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 173.13,
+    "score": 24
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "SOXX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 569.08,
+    "score": 52
+  },
+  {
+    "date": "2026-05-30",
+    "ticker": "USO",
+    "pattern": "BB Walking Down",
+    "direction": "sell",
+    "type": "start",
+    "price": 129.09,
+    "score": 10
   }
 ]
