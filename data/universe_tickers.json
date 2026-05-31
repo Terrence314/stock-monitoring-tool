@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2.0",
+    "version": "2.1",
     "last_updated": "2026-06-01",
     "etf_methodology": "Forbes Advisor Best ETFs 2026: AUM≥$10B, ER≤0.35%, US large-cap (growth/value/blend), Morningstar 4-5 stars, turnover<12%, 3yr performance",
     "etf_source": "https://www.forbes.com/advisor/investing/best-etfs/",
@@ -15,6 +15,11 @@
         "version": "2.0",
         "date": "2026-06-01",
         "change": "Added Forbes Advisor 2026 picks: IVV, VGT, VONG, SMH, MGK, OEF, FNDX. Added user-requested VOO. Expanded core to 15 ETFs. Added category, expense_ratio, conflict_note to all ETF entries. 9 conflict notes added for tickers outside Forbes methodology."
+      },
+      {
+        "version": "2.1",
+        "date": "2026-06-01",
+        "change": "Added 6 Reddit 2026 community picks: VT (global one-fund), SCHG (growth tilt), SCHD (dividend), SPMO (momentum factor), SCHY (intl dividend), SGOV (T-bill/cash). VWCE/VWRP skipped — UCITS funds, not on US exchanges. Added VT, SCHG, SCHD to core."
       }
     ]
   },
@@ -34,7 +39,10 @@
     "IWM",
     "DIA",
     "GLD",
-    "TLT"
+    "TLT",
+    "VT",
+    "SCHG",
+    "SCHD"
   ],
   "universe": [
     {
@@ -1757,6 +1765,48 @@
       "sector": "ETF",
       "category": "US Large-Cap Value",
       "expense_ratio": 0.25
+    },
+    {
+      "ticker": "VT",
+      "name": "Vanguard Total World Stock ETF",
+      "sector": "ETF",
+      "category": "Global All-World",
+      "expense_ratio": 0.07
+    },
+    {
+      "ticker": "SCHG",
+      "name": "Schwab US Large-Cap Growth ETF",
+      "sector": "ETF",
+      "category": "US Large-Cap Growth",
+      "expense_ratio": 0.04
+    },
+    {
+      "ticker": "SCHD",
+      "name": "Schwab US Dividend Equity ETF",
+      "sector": "ETF",
+      "category": "US Dividend/Income",
+      "expense_ratio": 0.06
+    },
+    {
+      "ticker": "SPMO",
+      "name": "Invesco S&P 500 Momentum ETF",
+      "sector": "ETF",
+      "category": "US Momentum Factor",
+      "expense_ratio": 0.13
+    },
+    {
+      "ticker": "SCHY",
+      "name": "Schwab International Dividend ETF",
+      "sector": "ETF",
+      "category": "Intl Dividend",
+      "expense_ratio": 0.14
+    },
+    {
+      "ticker": "SGOV",
+      "name": "iShares 0-3M Treasury Bond ETF",
+      "sector": "ETF",
+      "category": "Cash / T-Bill",
+      "expense_ratio": 0.09
     }
   ]
 }
