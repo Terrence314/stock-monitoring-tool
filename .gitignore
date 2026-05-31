@@ -6,3 +6,5 @@ outputs/
 .env
 __pycache__/
 *.pyc
+# Real financial data — never commit to public repo
+data/portfolio_transactions.json

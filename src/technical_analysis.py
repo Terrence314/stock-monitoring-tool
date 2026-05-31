@@ -139,12 +139,23 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
     prev_macd_h = prev["MACD_hist"]
     macd_line  = latest["MACD"]
     macd_sig   = latest["MACD_signal"]
+    # Zero-line filter: golden cross above 0 = confirmed bullish zone (full credit).
+    # Golden cross below 0 = price still in bearish territory — discount per 0軸理論.
+    macd_above_zero = macd_line > 0
     if macd_line > macd_sig and macd_h > 0 and macd_h > prev_macd_h:
-        score += 20
-        signals.append("✅ MACD 金叉且動能擴張")
+        if macd_above_zero:
+            score += 20
+            signals.append("✅ MACD 金叉且動能擴張（0軸以上）")
+        else:
+            score += 12  # cross below zero — discounted
+            signals.append("🟡 MACD 金叉動能擴張（0軸以下，力度打折）")
     elif macd_line > macd_sig and macd_h > 0:
-        score += 12
-        signals.append("🟡 MACD 金叉（動能略收）")
+        if macd_above_zero:
+            score += 12
+            signals.append("🟡 MACD 金叉（動能略收）")
+        else:
+            score += 6   # cross below zero — halved
+            signals.append("🟡 MACD 金叉（0軸以下，信號偏弱）")
     elif macd_h > prev_macd_h and macd_h < 0:
         score += 8
         signals.append("🟡 MACD 死叉收斂（底部跡象）")
