@@ -1,7 +1,7 @@
 {
   "date": "2026-05-31",
-  "total_scanned": 323,
-  "generated_at": "2026-05-31T19:59:14.975494",
+  "total_scanned": 329,
+  "generated_at": "2026-05-31T20:03:45.964265",
   "results": [
     {
       "ticker": "HOOD",
@@ -127,6 +127,27 @@
         "✅ 爆量（成交量 3.9× 均量）",
         "✅ 站穩 MA60 上方 23.5%",
         "KD 中性（K=44.5 · D=34.5）"
+      ]
+    },
+    {
+      "ticker": "VT",
+      "name": "Vanguard Total World Stock ETF",
+      "sector": "ETF",
+      "score": 100,
+      "strength": "Strong Buy",
+      "rsi": 68.23,
+      "ma5": 157.22,
+      "ma20": 154.75,
+      "ma60": 147.17,
+      "bb_pct": 0.91,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "✅ RSI 動能走強（68.2 ↑）",
+        "✅ MACD 金叉且動能擴張（0軸以上）",
+        "✅ 爆量（成交量 1.9× 均量）",
+        "✅ 站穩 MA60 上方 7.4%",
+        "⚠️ KD 超買（K=94.3 · D=92.8）"
       ]
     },
     {
@@ -2283,6 +2304,27 @@
       ]
     },
     {
+      "ticker": "SGOV",
+      "name": "iShares 0-3M Treasury Bond ETF",
+      "sector": "ETF",
+      "score": 64,
+      "strength": "Buy",
+      "rsi": null,
+      "ma5": 100.65,
+      "ma20": 100.54,
+      "ma60": 100.25,
+      "bb_pct": 0.9,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（nan）",
+        "🟡 MACD 金叉（動能略收）",
+        "✅ 爆量（成交量 1.7× 均量）",
+        "🟡 略高於 MA60（+0.4%）",
+        "⚠️ KD 超買（K=94.7 · D=97.3）"
+      ]
+    },
+    {
       "ticker": "TWLO",
       "name": "Twilio",
       "sector": "Technology",
@@ -2532,6 +2574,27 @@
         "⚠️ 量能不足（1.0× 均量）",
         "✅ 站穩 MA60 上方 12.3%",
         "⚠️ KD 超買（K=93.3 · D=88.9）"
+      ]
+    },
+    {
+      "ticker": "SPMO",
+      "name": "Invesco S&P 500 Momentum ETF",
+      "sector": "ETF",
+      "score": 60,
+      "strength": "Buy",
+      "rsi": 72.73,
+      "ma5": 149.01,
+      "ma20": 143.72,
+      "ma60": 128.3,
+      "bb_pct": 0.86,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（72.7）",
+        "✅ MACD 金叉且動能擴張（0軸以上）",
+        "⚠️ 量能不足（0.7× 均量）",
+        "✅ 站穩 MA60 上方 17.4%",
+        "⚠️ KD 超買（K=89.2 · D=88.3）"
       ]
     },
     {
@@ -3456,6 +3519,28 @@
         "⚠️ 量能不足（0.8× 均量）",
         "✅ 站穩 MA60 上方 8.4%",
         "⚠️ KD 超買（K=94.6 · D=92.1）"
+      ]
+    },
+    {
+      "ticker": "SCHG",
+      "name": "Schwab US Large-Cap Growth ETF",
+      "sector": "ETF",
+      "score": 48,
+      "strength": "Neutral",
+      "rsi": 74.72,
+      "ma5": 34.72,
+      "ma20": 34.15,
+      "ma60": 31.87,
+      "bb_pct": 0.94,
+      "bb_squeeze": true,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（74.7）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.8× 均量）",
+        "✅ 站穩 MA60 上方 10.2%",
+        "⚠️ KD 超買（K=92.0 · D=85.3）",
+        "⚠️ BB上軌觸及 + RSI超買（RSI=75）— 高位謹慎追入"
       ]
     },
     {
@@ -4906,6 +4991,27 @@
         "⚠️ 量能不足（0.9× 均量）",
         "🟡 略高於 MA60（+2.1%）",
         "❌ KD 高位死叉（K=83.5 ↓ D=84.3）高位回落"
+      ]
+    },
+    {
+      "ticker": "SCHD",
+      "name": "Schwab US Dividend Equity ETF",
+      "sector": "ETF",
+      "score": 36,
+      "strength": "Sell",
+      "rsi": 64.83,
+      "ma5": 32.64,
+      "ma20": 32.02,
+      "ma60": 31.19,
+      "bb_pct": 0.79,
+      "bb_squeeze": false,
+      "signals": [
+        "🟡 中多頭（價格 > MA20 > MA60）",
+        "RSI 中性（64.8）",
+        "🟡 MACD 金叉（動能略收）",
+        "⚠️ 量能不足（0.9× 均量）",
+        "🟡 略高於 MA60（+4.2%）",
+        "KD 中性（K=72.4 · D=77.7）"
       ]
     },
     {
@@ -6571,6 +6677,27 @@
         "⚠️ 量能不足（0.8× 均量）",
         "❌ 跌破 MA60（-7.1%）",
         "KD 中性（K=36.8 · D=31.0）"
+      ]
+    },
+    {
+      "ticker": "SCHY",
+      "name": "Schwab International Dividend ETF",
+      "sector": "ETF",
+      "score": 17,
+      "strength": "Strong Sell",
+      "rsi": 49.81,
+      "ma5": 32.4,
+      "ma20": 32.33,
+      "ma60": 32.03,
+      "bb_pct": 0.5,
+      "bb_squeeze": false,
+      "signals": [
+        "⚠️ 價格站上 MA60",
+        "RSI 中性（49.8）",
+        "❌ MACD 偏空",
+        "⚠️ 量能不足（0.9× 均量）",
+        "🟡 略高於 MA60（+0.9%）",
+        "KD 中性（K=43.0 · D=54.9）"
       ]
     },
     {

@@ -1403,6 +1403,30 @@
         "Above MA60",
         "BB Walking Up"
       ]
+    },
+    {
+      "id": "VT-2026-05-31",
+      "ticker": "VT",
+      "direction": "long",
+      "signal_date": "2026-05-31",
+      "entry_price": 158.12,
+      "shares": 12.648622,
+      "notional": 2000.0,
+      "score": 100,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 158.12,
+      "current_date": "2026-05-31",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60",
+        "BB Walking Up"
+      ]
     }
   ],
   "last_updated": "2026-05-31"
