@@ -1885,31 +1885,74 @@ function toggleMode() {
   setInterval(updateMarketStatus, 60000);  // re-check every minute
 })();
 
-// ── Run Now — open GitHub Actions dispatch page in a small popup ─────
-// Embedding tokens in public HTML is not viable (GitHub secret scanning
-// auto-revokes them). A popup keeps the dashboard in focus while the
-// user triggers the workflow on GitHub with one click.
-window.triggerRefresh = function(btn) {
-  // Use an anchor-element click — this is NEVER blocked by popup blockers
-  // (unlike window.open which is silently suppressed on mobile and strict browsers).
-  var url = "https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml";
-  var a = document.createElement('a');
-  a.href   = url;
-  a.target = '_blank';
-  a.rel    = 'noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+// ── Supabase config (injected by pipeline from env vars) ─────────────
+var _SB_URL = '{{ supabase_url }}';
+var _SB_KEY = '{{ supabase_anon_key }}';
+var _SB_OK  = _SB_URL && _SB_URL.indexOf('supabase.co') !== -1;
 
-  // Show user what to do next
+// ── Run Now — trigger pipeline via Supabase Edge Function ────────────
+// If Supabase is configured: one-click trigger (POST to Edge Function).
+// Fallback: open GitHub Actions page (original 2-step flow).
+window.triggerRefresh = function(btn) {
   var orig = btn.textContent;
-  btn.textContent = '✅ GitHub opened — click "Run workflow"';
-  btn.style.color = 'var(--up)';
-  setTimeout(function() {
-    btn.textContent = orig;
-    btn.style.color = '';
-  }, 4000);
+
+  if (_SB_OK) {
+    // One-click path via Supabase Edge Function
+    btn.textContent = '⏳ Triggering…';
+    btn.disabled = true;
+
+    fetch(_SB_URL + '/functions/v1/run-now', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + _SB_KEY,
+      },
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.ok) {
+        btn.textContent = '✅ Pipeline triggered — refreshing in 60s…';
+        btn.style.color = 'var(--up)';
+        // Auto-reload after pipeline finishes (~40s run + buffer)
+        var countdown = 60;
+        var timer = setInterval(function() {
+          countdown--;
+          if (countdown <= 0) {
+            clearInterval(timer);
+            doRefresh(null);
+          } else {
+            btn.textContent = '✅ Refreshing in ' + countdown + 's…';
+          }
+        }, 1000);
+      } else {
+        btn.textContent = '⚠️ Error — opening GitHub';
+        btn.style.color = 'var(--warn)';
+        _openGitHubFallback();
+        setTimeout(function() { btn.textContent = orig; btn.style.color = ''; btn.disabled = false; }, 4000);
+      }
+    })
+    .catch(function() {
+      btn.textContent = '⚠️ Network error — opening GitHub';
+      btn.style.color = 'var(--warn)';
+      _openGitHubFallback();
+      setTimeout(function() { btn.textContent = orig; btn.style.color = ''; btn.disabled = false; }, 4000);
+    });
+
+  } else {
+    // Fallback: anchor-element click (never blocked by popup blockers)
+    _openGitHubFallback();
+    btn.textContent = '✅ GitHub opened — click "Run workflow"';
+    btn.style.color = 'var(--up)';
+    setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 4000);
+  }
 };
+
+function _openGitHubFallback() {
+  var url = 'https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml';
+  var a = document.createElement('a');
+  a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
 
 // ── Manual refresh ───────────────────────────────────────────────────
 function doRefresh(btn) {
@@ -2042,9 +2085,9 @@ function copyTradeSetup(btn) {
 }
 
 /* ── FAVOURITES SYSTEM ─────────────────────────────────────────────
-   Stars are stored in localStorage so they persist across page loads.
-   data/favourites.json is the repo-committed seed list (loaded at boot).
-   Export button lets you download the current list to commit permanently.
+   Primary store: Supabase `favourites` table (cross-device sync).
+   Fallback:      localStorage (works offline / before Supabase loads).
+   On page load:  localStorage used instantly, then Supabase syncs async.
 ──────────────────────────────────────────────────────────────────── */
 const FAV_KEY = 'signalmonitor_favourites_v1';
 // Initialise _favs immediately so onmouseout inline handlers never see undefined
@@ -2062,6 +2105,46 @@ function setFavourites(arr) {
   localStorage.setItem(FAV_KEY, JSON.stringify(unique));
   window._favs = unique;  // expose globally for onmouseout checks
   renderFavourites();
+}
+
+// ── Supabase favourites helpers ───────────────────────────────────────
+function _sbFavLoad() {
+  if (!_SB_OK) return;
+  fetch(_SB_URL + '/rest/v1/favourites?select=ticker', {
+    headers: { 'apikey': _SB_KEY, 'Authorization': 'Bearer ' + _SB_KEY },
+  })
+  .then(function(r) { return r.ok ? r.json() : []; })
+  .then(function(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) return;
+    var tickers = rows.map(function(r) { return r.ticker; });
+    // Merge: union of Supabase + localStorage (Supabase wins for cross-device)
+    var local = getFavourites();
+    var merged = [...new Set([...tickers, ...local])];
+    localStorage.setItem(FAV_KEY, JSON.stringify(merged));
+    window._favs = merged;
+    renderFavourites();
+  })
+  .catch(function() {}); // silent — localStorage still works
+}
+
+function _sbFavAdd(ticker) {
+  if (!_SB_OK) return;
+  fetch(_SB_URL + '/rest/v1/favourites', {
+    method: 'POST',
+    headers: {
+      'apikey': _SB_KEY, 'Authorization': 'Bearer ' + _SB_KEY,
+      'Content-Type': 'application/json', 'Prefer': 'resolution=ignore-duplicates',
+    },
+    body: JSON.stringify({ ticker: ticker }),
+  }).catch(function() {});
+}
+
+function _sbFavRemove(ticker) {
+  if (!_SB_OK) return;
+  fetch(_SB_URL + '/rest/v1/favourites?ticker=eq.' + encodeURIComponent(ticker), {
+    method: 'DELETE',
+    headers: { 'apikey': _SB_KEY, 'Authorization': 'Bearer ' + _SB_KEY },
+  }).catch(function() {});
 }
 
 function _showFavToast(msg) {
@@ -2091,8 +2174,10 @@ function toggleFavourite(ticker) {
   const adding = idx < 0;
   if (adding) {
     favs.push(ticker);
+    _sbFavAdd(ticker);    // sync to Supabase (no-op if not configured)
   } else {
     favs.splice(idx, 1);
+    _sbFavRemove(ticker); // sync to Supabase (no-op if not configured)
   }
   setFavourites(favs);
   // Give instant visual feedback — the Favourites section is above most cards
@@ -2205,9 +2290,10 @@ function exportFavourites() {
   }
 })();
 
-// Initial render on load
+// Initial render on load — then async-sync from Supabase
 document.addEventListener('DOMContentLoaded', function() {
-  renderFavourites();
+  renderFavourites();      // instant render from localStorage
+  _sbFavLoad();            // async Supabase sync (re-renders if server has more)
 });
 </script>
 </body>
@@ -2682,6 +2768,8 @@ def generate_dashboard(
     hk_brief: str = "",
     hk_data: dict | None = None,
     broad_top100: list | None = None,
+    supabase_url: str = "",
+    supabase_anon_key: str = "",
 ) -> str:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -2762,6 +2850,8 @@ def generate_dashboard(
         hk_data=hk_data or {},
         favourites_list=favourites_list,
         universe_top100=universe_top100,
+        supabase_url=supabase_url,
+        supabase_anon_key=supabase_anon_key,
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"

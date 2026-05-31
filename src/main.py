@@ -344,6 +344,8 @@ def _run(cfg: dict) -> None:
         hk_brief=hk_brief,
         hk_data=hk_data,
         broad_top100=broad_top100,
+        supabase_url=os.getenv('SUPABASE_URL', ''),
+        supabase_anon_key=os.getenv('SUPABASE_ANON_KEY', ''),
     )
     print(f"      報告已儲存：{report_path}")
 

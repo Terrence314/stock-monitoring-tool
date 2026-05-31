@@ -55,6 +55,8 @@ jobs:
           TELEGRAM_CHAT_ID:    ${{ secrets.TELEGRAM_CHAT_ID }}
           REPORT_URL:          ${{ secrets.REPORT_URL }}
           DISPATCH_TOKEN:      ${{ secrets.DISPATCH_TOKEN }}
+          SUPABASE_URL:        ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY:   ${{ secrets.SUPABASE_ANON_KEY }}
         run: python src/main.py
 
       - name: Deploy report to GitHub Pages
