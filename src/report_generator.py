@@ -2257,7 +2257,7 @@ function renderFavourites() {
       stub.id          = 'fav-clone-' + ticker;
       stub.style.cssText = 'padding:20px;background:var(--elevated);border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;gap:12px';
       stub.innerHTML   = '<span style="font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">' + ticker + '</span>'
-        + '<span style="font-size:12px;color:var(--muted)">Not in today\'s Tier 2 · score below cutoff</span>'
+        + '<span style="font-size:12px;color:var(--muted)">Not in today\\'s Tier 2 \xb7 score below cutoff</span>'
         + '<button onclick="toggleFavourite(\'' + ticker + '\')" class="star-btn" data-ticker="' + ticker + '" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:16px;color:var(--amber)">★</button>';
       grid.appendChild(stub);
     }
