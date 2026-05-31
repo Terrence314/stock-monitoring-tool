@@ -1890,42 +1890,25 @@ function toggleMode() {
 // auto-revokes them). A popup keeps the dashboard in focus while the
 // user triggers the workflow on GitHub with one click.
 window.triggerRefresh = function(btn) {
+  // Use an anchor-element click — this is NEVER blocked by popup blockers
+  // (unlike window.open which is silently suppressed on mobile and strict browsers).
   var url = "https://github.com/Terrence314/stock-monitoring-tool/actions/workflows/price_refresh.yml";
-  var popup = window.open(url, "gh-actions",
-    "width=900,height=600,left=" + Math.round((screen.width-900)/2) +
-    ",top=" + Math.round((screen.height-600)/2) +
-    ",resizable=yes,scrollbars=yes");
+  var a = document.createElement('a');
+  a.href   = url;
+  a.target = '_blank';
+  a.rel    = 'noopener noreferrer';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
-  if (!popup || popup.closed) {
-    // Popup blocked — fall back to new tab
-    window.open(url, "_blank");
-    btn.textContent = "↗ Opened in tab";
-    setTimeout(function() { btn.textContent = "▶ Run Now"; }, 3000);
-    return;
-  }
-
-  // Start auto-reload countdown so fresh data appears after user triggers
-  btn.disabled    = true;
-  btn.textContent = "⏳ Waiting…";
-  btn.title       = "Trigger 'Run workflow' in the popup, then wait for auto-reload";
-
-  // Poll until popup is closed, then start the 90s reload countdown
-  var pollIv = setInterval(function() {
-    if (popup.closed) {
-      clearInterval(pollIv);
-      btn.textContent = "✅ Refreshing in 90s…";
-      var secs = 90;
-      var iv = setInterval(function() {
-        secs--;
-        if (secs <= 0) {
-          clearInterval(iv);
-          window.location.reload(true);
-        } else {
-          btn.textContent = "✅ Refreshing in " + secs + "s…";
-        }
-      }, 1000);
-    }
-  }, 500);
+  // Show user what to do next
+  var orig = btn.textContent;
+  btn.textContent = '✅ GitHub opened — click "Run workflow"';
+  btn.style.color = 'var(--up)';
+  setTimeout(function() {
+    btn.textContent = orig;
+    btn.style.color = '';
+  }, 4000);
 };
 
 // ── Manual refresh ───────────────────────────────────────────────────
@@ -1933,9 +1916,12 @@ function doRefresh(btn) {
   if (btn) {
     btn.classList.add('spinning');
     btn.disabled = true;
+    // Brief visual confirmation before the page disappears
+    btn.querySelector('.spin-icon') && (btn.querySelector('.spin-icon').textContent = '↻');
   }
-  // Hard reload — bypasses browser cache, picks up latest GitHub Pages deploy
-  window.location.reload(true);
+  // Cache-bust by appending a timestamp query param — forces CDN to fetch fresh
+  var sep = window.location.href.indexOf('?') >= 0 ? '&' : '?';
+  window.location.href = window.location.href.replace(/[?&]_t=[0-9]+/, '') + sep + '_t=' + Date.now();
 }
 
 // ── Auto-refresh every 10 min with countdown display ─────────────────
