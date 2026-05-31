@@ -1,7 +1,7 @@
 {
   "date": "2026-05-31",
-  "total_scanned": 315,
-  "generated_at": "2026-05-31T19:35:53.387026",
+  "total_scanned": 323,
+  "generated_at": "2026-05-31T19:59:14.975494",
   "results": [
     {
       "ticker": "HOOD",
@@ -1483,6 +1483,27 @@
       ]
     },
     {
+      "ticker": "VGT",
+      "name": "Vanguard Info Technology ETF",
+      "sector": "ETF",
+      "score": 75,
+      "strength": "Buy",
+      "rsi": 78.68,
+      "ma5": 118.24,
+      "ma20": 112.96,
+      "ma60": 100.04,
+      "bb_pct": 0.97,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "⚠️ RSI 超買（78.7）— 注意回調",
+        "✅ MACD 金叉且動能擴張（0軸以上）",
+        "🟡 量能正常（1.1× 均量）",
+        "✅ 站穩 MA60 上方 21.0%",
+        "⚠️ KD 超買（K=92.2 · D=90.7）"
+      ]
+    },
+    {
       "ticker": "CDNS",
       "name": "Cadence Design",
       "sector": "Technology",
@@ -1522,6 +1543,28 @@
         "🟡 量能正常（1.5× 均量）",
         "🟡 略高於 MA60（+5.0%）",
         "⚠️ KD 超買（K=88.3 · D=88.3）"
+      ]
+    },
+    {
+      "ticker": "MGK",
+      "name": "Vanguard Mega Cap Growth ETF",
+      "sector": "ETF",
+      "score": 73,
+      "strength": "Buy",
+      "rsi": 75.63,
+      "ma5": 90.06,
+      "ma20": 88.14,
+      "ma60": 81.38,
+      "bb_pct": 0.93,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "⚠️ RSI 超買（75.6）— 注意回調",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "✅ 爆量（成交量 2.1× 均量）",
+        "✅ 站穩 MA60 上方 12.2%",
+        "⚠️ KD 超買（K=93.6 · D=89.6）",
+        "⚠️ BB上軌觸及 + RSI超買（RSI=76）— 高位謹慎追入"
       ]
     },
     {
@@ -1859,6 +1902,27 @@
         "⚠️ 量能不足（0.5× 均量）",
         "✅ 站穩 MA60 上方 110.2%",
         "KD 中性（K=40.2 · D=30.8）"
+      ]
+    },
+    {
+      "ticker": "IVV",
+      "name": "iShares Core S&P 500 ETF",
+      "sector": "ETF",
+      "score": 68,
+      "strength": "Buy",
+      "rsi": 74.58,
+      "ma5": 755.11,
+      "ma20": 742.77,
+      "ma60": 701.17,
+      "bb_pct": 0.91,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（74.6）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "✅ 爆量（成交量 1.8× 均量）",
+        "✅ 站穩 MA60 上方 8.4%",
+        "⚠️ KD 超買（K=94.8 · D=92.2）"
       ]
     },
     {
@@ -2258,6 +2322,27 @@
         "🟡 量能正常（1.0× 均量）",
         "✅ 站穩 MA60 上方 13.9%",
         "KD 中性（K=28.9 · D=30.2）"
+      ]
+    },
+    {
+      "ticker": "OEF",
+      "name": "iShares S&P 100 ETF",
+      "sector": "ETF",
+      "score": 63,
+      "strength": "Buy",
+      "rsi": 75.83,
+      "ma5": 374.41,
+      "ma20": 368.15,
+      "ma60": 344.41,
+      "bb_pct": 0.88,
+      "bb_squeeze": true,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "⚠️ RSI 超買（75.8）— 注意回調",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "🟡 量能正常（1.1× 均量）",
+        "✅ 站穩 MA60 上方 9.6%",
+        "⚠️ KD 超買（K=94.7 · D=89.2）"
       ]
     },
     {
@@ -2870,6 +2955,27 @@
       ]
     },
     {
+      "ticker": "VONG",
+      "name": "Vanguard Russell 1000 Growth ETF",
+      "sector": "ETF",
+      "score": 53,
+      "strength": "Neutral",
+      "rsi": 75.59,
+      "ma5": 129.97,
+      "ma20": 127.55,
+      "ma60": 119.54,
+      "bb_pct": 0.96,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "⚠️ RSI 超買（75.6）— 注意回調",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.7× 均量）",
+        "✅ 站穩 MA60 上方 10.1%",
+        "⚠️ KD 超買（K=93.9 · D=89.0）"
+      ]
+    },
+    {
       "ticker": "TSLA",
       "name": "Tesla",
       "sector": "Consumer Cyclical",
@@ -3164,6 +3270,48 @@
       ]
     },
     {
+      "ticker": "SMH",
+      "name": "VanEck Semiconductor ETF",
+      "sector": "ETF",
+      "score": 52,
+      "strength": "Neutral",
+      "rsi": 71.05,
+      "ma5": 594.54,
+      "ma20": 561.79,
+      "ma60": 469.42,
+      "bb_pct": 0.83,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（71.1）",
+        "🟡 MACD 金叉（動能略收）",
+        "⚠️ 量能不足（0.8× 均量）",
+        "✅ 站穩 MA60 上方 27.6%",
+        "⚠️ KD 超買（K=83.2 · D=86.5）"
+      ]
+    },
+    {
+      "ticker": "FNDX",
+      "name": "Schwab Fundamental US Large Co ETF",
+      "sector": "ETF",
+      "score": 52,
+      "strength": "Neutral",
+      "rsi": 73.49,
+      "ma5": 30.94,
+      "ma20": 30.49,
+      "ma60": 29.14,
+      "bb_pct": 0.89,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（73.5）",
+        "🟡 MACD 金叉（動能略收）",
+        "⚠️ 量能不足（0.4× 均量）",
+        "✅ 站穩 MA60 上方 6.3%",
+        "❌ KD 高位死叉（K=92.0 ↓ D=92.1）高位回落"
+      ]
+    },
+    {
       "ticker": "MRK",
       "name": "Merck",
       "sector": "Healthcare",
@@ -3287,6 +3435,27 @@
         "⚠️ 量能不足（0.9× 均量）",
         "✅ 站穩 MA60 上方 5.0%",
         "❌ KD 高位死叉（K=81.7 ↓ D=83.9）高位回落"
+      ]
+    },
+    {
+      "ticker": "VOO",
+      "name": "Vanguard S&P 500 ETF",
+      "sector": "ETF",
+      "score": 48,
+      "strength": "Neutral",
+      "rsi": 74.65,
+      "ma5": 690.98,
+      "ma20": 679.69,
+      "ma60": 641.62,
+      "bb_pct": 0.91,
+      "bb_squeeze": false,
+      "signals": [
+        "✅ 多頭排列（價格 > MA5 > MA20 > MA60）",
+        "RSI 中性（74.7）",
+        "🟡 MACD 死叉收斂（底部跡象）",
+        "⚠️ 量能不足（0.8× 均量）",
+        "✅ 站穩 MA60 上方 8.4%",
+        "⚠️ KD 超買（K=94.6 · D=92.1）"
       ]
     },
     {
