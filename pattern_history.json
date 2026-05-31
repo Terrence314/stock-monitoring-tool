@@ -1282,5 +1282,33 @@
       "start": "2026-05-30",
       "end": null
     }
+  },
+  "BIIB": {
+    "Golden Cross": {
+      "start": "2026-05-31",
+      "end": null
+    },
+    "MACD Bull": {
+      "start": "2026-05-31",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-05-31",
+      "end": null
+    }
+  },
+  "CCI": {
+    "Golden Cross": {
+      "start": "2026-05-31",
+      "end": null
+    },
+    "MACD Bear": {
+      "start": "2026-05-31",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-05-31",
+      "end": null
+    }
   }
 }

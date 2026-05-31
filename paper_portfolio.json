@@ -1404,6 +1404,52 @@
         "Above MA60",
         "BB Walking Up"
       ]
+    },
+    {
+      "id": "BIIB-2026-05-31",
+      "ticker": "BIIB",
+      "direction": "long",
+      "signal_date": "2026-05-31",
+      "entry_price": 196.0,
+      "shares": 7.653061,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 196.0,
+      "current_date": "2026-05-31",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ]
+    },
+    {
+      "id": "CCI-2026-05-31",
+      "ticker": "CCI",
+      "direction": "long",
+      "signal_date": "2026-05-31",
+      "entry_price": 91.5,
+      "shares": 16.393443,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 91.5,
+      "current_date": "2026-05-31",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bear",
+        "Above MA60"
+      ]
     }
   ],
   "last_updated": "2026-05-31"

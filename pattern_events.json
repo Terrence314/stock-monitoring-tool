@@ -2611,5 +2611,59 @@
     "type": "start",
     "price": 83.24,
     "score": 80
+  },
+  {
+    "date": "2026-05-31",
+    "ticker": "BIIB",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 196.0,
+    "score": 80
+  },
+  {
+    "date": "2026-05-31",
+    "ticker": "BIIB",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 196.0,
+    "score": 80
+  },
+  {
+    "date": "2026-05-31",
+    "ticker": "BIIB",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 196.0,
+    "score": 80
+  },
+  {
+    "date": "2026-05-31",
+    "ticker": "CCI",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 91.5,
+    "score": 80
+  },
+  {
+    "date": "2026-05-31",
+    "ticker": "CCI",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 91.5,
+    "score": 80
+  },
+  {
+    "date": "2026-05-31",
+    "ticker": "CCI",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 91.5,
+    "score": 80
   }
 ]
