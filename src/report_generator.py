@@ -613,6 +613,39 @@ body {
 }
 .copy-btn:hover { background: rgba(122,162,255,0.14); border-color: rgba(122,162,255,0.4); }
 
+/* ── ETF Panel responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #etf-panel table thead { display: none; }
+  #etf-panel table, #etf-panel tbody, #etf-panel tr, #etf-panel td { display: block; }
+  #etf-panel tbody { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+  #etf-panel tr {
+    background: var(--elevated); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px;
+    display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  }
+  #etf-panel tr td { padding: 0 !important; border: none !important; }
+  /* Price — large, first */
+  #etf-panel tr td:nth-child(1) { font-size: 15px; font-weight: 700; width: 100%; order: 2; }
+  /* Ticker — bold label */
+  #etf-panel tr td:nth-child(2) { font-size: 12px; font-weight: 700; width: 60%; order: 1; }
+  /* Name — hidden on mobile */
+  #etf-panel tr td:nth-child(3) { display: none; }
+  /* Category chip */
+  #etf-panel tr td:nth-child(4) { order: 3; }
+  /* ER — hidden */
+  #etf-panel tr td:nth-child(5) { display: none; }
+  /* TA Score — small badge */
+  #etf-panel tr td:nth-child(6) { order: 5; font-size: 11px; }
+  /* RSI */
+  #etf-panel tr td:nth-child(7) { order: 6; font-size: 11px; }
+  /* vs MA20 */
+  #etf-panel tr td:nth-child(8) { order: 4; font-size: 12px; font-weight: 600; width: 40%; text-align: right; }
+  /* Trend */
+  #etf-panel tr td:nth-child(9) { order: 7; }
+  /* Badge */
+  #etf-panel tr td:nth-child(10) { order: 8; }
+}
+
 /* ── Footer ─────────────────────────────────────────────────────────── */
 .footer {
   text-align: center; padding: 24px;
@@ -1182,16 +1215,17 @@ body.beginner-mode .beginner-only { display: block; }
   <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px">
     <div>
       <span class="card-title" style="font-size:16px">📊 ETF Dashboard</span>
-      <span class="card-sub" style="margin-left:10px">{{ etf_panel_items|length }} funds · always shown · Forbes 2026 methodology</span>
+      <span class="card-sub" style="margin-left:10px">{{ etf_panel_items|length }} funds · always shown · Forbes 2026 + Reddit community picks</span>
     </div>
     <span class="card-sub" style="font-size:10px;opacity:.7">Core ETFs · score independent</span>
   </div>
 
   <!-- Category group headers -->
   <div style="overflow-x:auto;padding:0 16px 20px">
-    <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <table style="width:100%;border-collapse:collapse;font-size:13px" role="grid" aria-label="ETF Dashboard — core ETFs with live TA data">
       <thead>
         <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:right;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em" scope="col">PRICE</th>
           <th style="text-align:left;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">TICKER</th>
           <th style="text-align:left;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">NAME</th>
           <th style="text-align:left;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">CATEGORY</th>
@@ -1215,12 +1249,29 @@ body.beginner-mode .beginner-only { display: block; }
         {% set is_forbes = e.ticker in ["IVV","VGT","VONG","SMH","MGK","OEF","FNDX"] %}
         {% set has_conflict = e.conflict_note is defined and e.conflict_note %}
         <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">
+            {% if e.price and e.price > 0 %}{{ "{:,.2f}".format(e.price) if e.price >= 1000 else "%.2f"|format(e.price) }}{% else %}<span style="color:var(--muted)">—</span>{% endif %}
+          </td>
           <td style="padding:9px 10px">
-            <a href="#stock-{{ e.ticker }}" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">{{ e.ticker }}</a>
+            {% if e.is_core %}<span style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text)">{{ e.ticker }}</span>{% else %}<a href="#stock-{{ e.ticker }}" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">{{ e.ticker }}</a>{% endif %}
           </td>
           <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.name }}</td>
           <td style="padding:9px 10px">
-            <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,0.1);color:var(--purple)">{{ e.category or e.sector }}</span>
+            {%- set cat = e.category or e.sector -%}
+            {%- if "Bond" in cat or "T-Bill" in cat or "Treasury" in cat -%}
+              {%- set chip_bg = "rgba(245,185,66,.12)" -%}{%- set chip_col = "var(--amber)" -%}
+            {%- elif "Intl" in cat or "Global" in cat or "Emerging" in cat or "Developed" in cat -%}
+              {%- set chip_bg = "rgba(122,162,255,.12)" -%}{%- set chip_col = "var(--blue)" -%}
+            {%- elif "Commodity" in cat or "Gold" in cat or "Oil" in cat -%}
+              {%- set chip_bg = "rgba(245,185,66,.12)" -%}{%- set chip_col = "var(--amber)" -%}
+            {%- elif "Dividend" in cat or "Income" in cat -%}
+              {%- set chip_bg = "rgba(52,211,153,.10)" -%}{%- set chip_col = "var(--up)" -%}
+            {%- elif "Cash" in cat -%}
+              {%- set chip_bg = "rgba(160,163,173,.12)" -%}{%- set chip_col = "var(--flat)" -%}
+            {%- else -%}
+              {%- set chip_bg = "rgba(177,140,255,.10)" -%}{%- set chip_col = "var(--purple)" -%}
+            {%- endif -%}
+            <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:{{ chip_bg }};color:{{ chip_col }}">{{ cat }}</span>
           </td>
           <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
             {% if e.expense_ratio %}{{ "%.2f"|format(e.expense_ratio) }}%{% else %}—{% endif %}
@@ -1235,9 +1286,12 @@ body.beginner-mode .beginner-only { display: block; }
           <td style="padding:9px 10px;text-align:center;font-size:14px">
             {% if ma20 > 0 %}{{ "▲" if trend_up else "▼" }}{% else %}—{% endif %}
           </td>
+          {%- set is_reddit = e.ticker in ["VT","SCHG","SCHD","SPMO","SCHY","SGOV"] -%}
           <td style="padding:9px 10px;text-align:center">
             {% if is_forbes %}
               <span title="Forbes Advisor Best ETF 2026" style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,200,0,.15);color:var(--amber);border:1px solid rgba(255,200,0,.3)">★ Forbes</span>
+            {% elif is_reddit %}
+              <span title="Reddit r/ETFs / r/Bogleheads 2026 community pick" style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(122,162,255,.12);color:var(--blue);border:1px solid rgba(122,162,255,.25)">↑ Reddit</span>
             {% elif has_conflict %}
               <span title="{{ e.conflict_note }}" style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,100,100,.08);color:var(--muted);cursor:help">⚠ Note</span>
             {% else %}
@@ -1250,7 +1304,7 @@ body.beginner-mode .beginner-only { display: block; }
     </table>
   </div>
   <div style="padding:8px 24px 14px;font-size:10px;color:var(--muted);border-top:1px solid var(--border)">
-    ★ Forbes = Forbes Advisor Best ETF 2026 (AUM≥$10B, ER≤0.35%, US large-cap, Morningstar 4-5★, turnover&lt;12%) · ⚠ Note = outside Forbes methodology (hover for detail) · TA Score independent of ETF type
+    ★ Forbes = Forbes Advisor Best ETF 2026 (AUM≥$10B, ER≤0.35%, US large-cap, Morningstar 4-5★) · ↑ Reddit = r/ETFs / r/Bogleheads 2026 community picks · ⚠ Note = outside Forbes criteria (hover for detail) · TA Score: low scores are normal for ETFs — they don't trigger individual stock momentum signals
   </div>
 </section>
 {% endif %}
