@@ -225,6 +225,8 @@ def get_tier2_list(today_str: str) -> tuple[list[dict], list[dict], dict]:
             "is_favourite":     ticker in favourites,
             "is_core":          ticker in core,
             "is_retained":      ticker in retained and ticker not in top50_tickers,
+            "category":         meta.get("category", ""),
+            "expense_ratio":    meta.get("expense_ratio"),
         }
 
     tier2_items_raw = [_make_item(t) for t in promoted_set]

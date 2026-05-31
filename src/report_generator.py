@@ -755,6 +755,7 @@ body.beginner-mode .beginner-only { display: block; }
       <a class="nav-pill" href="#watchlist">Watchlist</a>
       <a class="nav-pill" href="#alerts">Alerts{% if alert_history %} <span class="nav-badge">{{ alert_history|length }}</span>{% endif %}</a>
       <a class="nav-pill" href="#favourites">⭐ Favs<span id="nav-fav-count" class="nav-badge" style="display:none">0</span></a>
+      <a class="nav-pill" href="#etf-panel">📊 ETFs <span class="nav-badge" style="background:rgba(177,140,255,0.2);color:var(--purple)">{{ etf_panel_items|length }}</span></a>
       <a class="nav-pill" href="#stocks">Tier 2</a>
       <a class="nav-pill" href="#universe">Universe <span class="nav-badge" style="background:var(--border-hi);color:var(--text-2)">{{ universe_top100|length }}</span></a>
       <a class="nav-pill" href="./backtest.html">Backtest</a>
@@ -1174,6 +1175,85 @@ body.beginner-mode .beginner-only { display: block; }
     </div>
   </div>
 </section>
+
+<!-- ─── ETF PANEL ─────────────────────────────────────────────────────── -->
+{% if etf_panel_items %}
+<section id="etf-panel" class="card card-pad-0" style="max-width:1100px;margin:24px auto">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px">
+    <div>
+      <span class="card-title" style="font-size:16px">📊 ETF Dashboard</span>
+      <span class="card-sub" style="margin-left:10px">{{ etf_panel_items|length }} funds · always shown · Forbes 2026 methodology</span>
+    </div>
+    <span class="card-sub" style="font-size:10px;opacity:.7">Core ETFs · score independent</span>
+  </div>
+
+  <!-- Category group headers -->
+  <div style="overflow-x:auto;padding:0 16px 20px">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">TICKER</th>
+          <th style="text-align:left;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">NAME</th>
+          <th style="text-align:left;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">CATEGORY</th>
+          <th style="text-align:right;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">ER</th>
+          <th style="text-align:right;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">TA SCORE</th>
+          <th style="text-align:right;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">RSI</th>
+          <th style="text-align:right;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">vs MA20</th>
+          <th style="text-align:center;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">TREND</th>
+          <th style="text-align:center;padding:6px 10px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em">FORBES</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in etf_panel_items %}
+        {% set rsi = e.rsi or 0 %}
+        {% set rsi_color = "var(--red)" if rsi > 70 else ("var(--green)" if rsi < 35 else "var(--text-2)") %}
+        {% set ma20 = e.ma20 or 0 %}
+        {% set price = e.price or 0 %}
+        {% set vs_ma = ((price - ma20) / ma20 * 100) if ma20 > 0 else 0 %}
+        {% set trend_up = price > ma20 %}
+        {% set score_color = "var(--green)" if e.score >= 60 else ("var(--amber)" if e.score >= 35 else "var(--muted)") %}
+        {% set is_forbes = e.ticker in ["IVV","VGT","VONG","SMH","MGK","OEF","FNDX"] %}
+        {% set has_conflict = e.conflict_note is defined and e.conflict_note %}
+        <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
+          <td style="padding:9px 10px">
+            <a href="#stock-{{ e.ticker }}" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">{{ e.ticker }}</a>
+          </td>
+          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.name }}</td>
+          <td style="padding:9px 10px">
+            <span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,0.1);color:var(--purple)">{{ e.category or e.sector }}</span>
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
+            {% if e.expense_ratio %}{{ "%.2f"|format(e.expense_ratio) }}%{% else %}—{% endif %}
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;color:{{ score_color }}">{{ e.score }}</td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:{{ rsi_color }}">
+            {% if rsi > 0 %}{{ "%.1f"|format(rsi) }}{% else %}—{% endif %}
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:{{ 'var(--green)' if vs_ma > 0 else 'var(--red)' }}">
+            {% if ma20 > 0 %}{{ '%+.1f'|format(vs_ma) }}%{% else %}—{% endif %}
+          </td>
+          <td style="padding:9px 10px;text-align:center;font-size:14px">
+            {% if ma20 > 0 %}{{ "▲" if trend_up else "▼" }}{% else %}—{% endif %}
+          </td>
+          <td style="padding:9px 10px;text-align:center">
+            {% if is_forbes %}
+              <span title="Forbes Advisor Best ETF 2026" style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,200,0,.15);color:var(--amber);border:1px solid rgba(255,200,0,.3)">★ Forbes</span>
+            {% elif has_conflict %}
+              <span title="{{ e.conflict_note }}" style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,100,100,.08);color:var(--muted);cursor:help">⚠ Note</span>
+            {% else %}
+              <span style="font-size:10px;color:var(--muted)">Core</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div style="padding:8px 24px 14px;font-size:10px;color:var(--muted);border-top:1px solid var(--border)">
+    ★ Forbes = Forbes Advisor Best ETF 2026 (AUM≥$10B, ER≤0.35%, US large-cap, Morningstar 4-5★, turnover&lt;12%) · ⚠ Note = outside Forbes methodology (hover for detail) · TA Score independent of ETF type
+  </div>
+</section>
+{% endif %}
 
 <!-- ─── STOCK CARDS (Tier 2 — per-ticker bento) ────────────────────── -->
 <section id="stocks">
@@ -2829,6 +2909,13 @@ def generate_dashboard(
     favourites_list = [s for s in stocks_sorted if s.get("is_favourite")]
     universe_top100 = broad_top100 or []
 
+    # ETF panel — core ETFs sorted by score desc, then ticker
+    # Uses stocks_sorted (full Tier 2 list which includes all core tickers)
+    etf_panel_items = sorted(
+        [s for s in stocks_sorted if s.get("sector") == "ETF"],
+        key=lambda x: (-(x.get("score") or 0), x["ticker"])
+    )
+
     html = Template(DASHBOARD_HTML).render(
         date=date,
         generated_at=datetime.now(tz=timezone(timedelta(hours=8))).strftime("%b %d %H:%M HKT"),
@@ -2850,6 +2937,7 @@ def generate_dashboard(
         hk_data=hk_data or {},
         favourites_list=favourites_list,
         universe_top100=universe_top100,
+        etf_panel_items=etf_panel_items,
         supabase_url=supabase_url,
         supabase_anon_key=supabase_anon_key,
     )
