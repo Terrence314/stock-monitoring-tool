@@ -49,6 +49,15 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
     df["MA20"] = df["Close"].rolling(20).mean()
     df["MA60"] = df["Close"].rolling(60).mean()
 
+    # ── EMA Stack (S1 additions) ─────────────────────────────────────────────
+    df["EMA20"]        = df["Close"].ewm(span=20, adjust=False).mean()
+    df["EMA50"]        = df["Close"].ewm(span=50, adjust=False).mean()
+    df["EMA200"]       = df["Close"].ewm(span=200, adjust=False).mean()
+    df["EMA200_slope"] = df["EMA200"] - df["EMA200"].shift(10)
+
+    # ── 52-Week High ─────────────────────────────────────────────────────────
+    df["High_52w"] = df["High"].rolling(min(252, len(df))).max()
+
     # ── RSI ──────────────────────────────────────────────────────────────────
     df["RSI"] = _rsi(df["Close"])
 
@@ -96,6 +105,21 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         and kd_k < kd_d and prev_kd_k >= prev_kd_d
         and kd_k > 70
     )
+
+    # ── S1 Metrics ───────────────────────────────────────────────────────────
+    ema200       = latest["EMA200"]
+    ema200_slope = latest["EMA200_slope"]
+    ema_full_stack = (
+        latest["EMA20"] > latest["EMA50"] > latest["EMA200"]
+    )
+
+    high_52w      = latest["High_52w"]
+    pct_from_high = ((latest["Close"] - high_52w) / high_52w * 100) if high_52w and high_52w > 0 else None
+
+    _len    = len(df)
+    perf_3m = ((latest["Close"] - df["Close"].iloc[max(-63, -_len)]) / df["Close"].iloc[max(-63, -_len)] * 100) if _len > 5 else None
+    perf_1m = ((latest["Close"] - df["Close"].iloc[max(-21, -_len)]) / df["Close"].iloc[max(-21, -_len)] * 100) if _len > 5 else None
+    perf_1w = ((latest["Close"] - df["Close"].iloc[max(-5,  -_len)]) / df["Close"].iloc[max(-5,  -_len)] * 100) if _len > 5 else None
 
     # ── Signal Scoring (0–100, 5 factors × 20 pts each) ──────────────────────
     score   = 0
@@ -204,6 +228,56 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         else:
             signals.append(f"KD 中性（K={kd_k:.1f} · D={kd_d:.1f}）")
 
+    # ── S1 Supplementary Signals ─────────────────────────────────────────────
+
+    # [1] EMA200 slope warning — long-term trend gate
+    above_ema200 = latest["Close"] > ema200
+    if not pd.isna(ema200_slope):
+        if above_ema200 and ema200_slope > 0:
+            signals.append("✅ EMA200 向上（大趨勢支撐）")
+        elif above_ema200 and ema200_slope <= 0:
+            signals.append("⚠️ 價格在 EMA200 之上，但 EMA200 下彎 — 大趨勢轉弱")
+            if score >= 70:
+                signals.append("🔴 EMA200 斜率負值（長期趨勢走弱）— 高分但大趨勢唔支持")
+        elif not above_ema200 and ema200_slope > 0:
+            signals.append("⚠️ 價格在 EMA200 之下（EMA200 仍向上）")
+        else:
+            signals.append("❌ 價格在 EMA200 之下，EMA200 下彎 — 長期空頭")
+
+    # [2] EMA full stack quality check
+    if ema_full_stack:
+        signals.append("✅ EMA 三線排列（EMA20 > EMA50 > EMA200）")
+    elif score >= 70:
+        signals.append("⚠️ EMA 三線未齊（EMA20/50/200 排列未完整）— 趨勢質素打折")
+
+    # [3] 52-week high proximity badge
+    if pct_from_high is not None:
+        if pct_from_high > -5:
+            signals.append(f"🔥 距52週高 {pct_from_high:.1f}% — 極近歷史高位")
+        elif pct_from_high > -15:
+            signals.append(f"✅ 距52週高 {pct_from_high:.1f}% — 高位強勢")
+        elif pct_from_high > -25:
+            signals.append(f"🟡 距52週高 {pct_from_high:.1f}% — 中位")
+        else:
+            signals.append(f"⚠️ 距52週高 {pct_from_high:.1f}% — 遠離高位")
+
+    # [4] 1-month overextension penalty
+    overextended = perf_1m is not None and perf_1m > 25.0
+    if overextended:
+        signals.append(f"⚠️ 1個月升幅 {perf_1m:.1f}% — 可能過度延伸，注意追高風險")
+        signals.append(f"🔴 短期過度延伸（1M +{perf_1m:.1f}%）— 回調風險上升")
+        score = max(score - 10, 0)
+
+    # [5] S1 pullback entry signal — fires only on qualified stocks
+    _vol_ratio = latest["Vol_ratio"] if not pd.isna(latest["Vol_ratio"]) else None
+    s1_entry = (
+        _vol_ratio is not None and _vol_ratio < 0.9
+        and perf_1w is not None and -8.0 <= perf_1w <= 0.0
+        and score >= 60
+    )
+    if s1_entry:
+        signals.append(f"🎯 S1 入場訊號（縮量回調 {perf_1w:.1f}%，RelVol {_vol_ratio:.2f}）— 健康洗盤，等假突破")
+
     # ── Strength Label ────────────────────────────────────────────────────────
     if score >= 80:
         strength = "強力做多 🔥"
@@ -304,5 +378,15 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         "kd_oversold":              kd_oversold,
         "bb_lower_touch":            bb_lower_touch,
         "bb_upper_touch":            bb_upper_touch,
+        # S1 supplementary fields
+        "ema200":           _safe(ema200),
+        "ema200_slope":     _safe(ema200_slope),
+        "ema_full_stack":   bool(ema_full_stack),
+        "pct_from_high":    round(float(pct_from_high), 1) if pct_from_high is not None else None,
+        "perf_1m":          round(float(perf_1m), 1) if perf_1m is not None else None,
+        "perf_3m":          round(float(perf_3m), 1) if perf_3m is not None else None,
+        "perf_1w":          round(float(perf_1w), 1) if perf_1w is not None else None,
+        "s1_entry":         bool(s1_entry),
+        "overextended":     bool(overextended),
         "df":                       df,
     }
