@@ -869,8 +869,8 @@ body.beginner-mode .beginner-only { display: block; }
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">65,182.81</span>
-        <span class="pct down">-2.28%</span>
+        <span class="market-price">65,132.18</span>
+        <span class="pct down">-2.36%</span>
       </div>
     </div>
     
@@ -893,7 +893,7 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">30 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Jun 04 06:20 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Jun 04 06:25 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -915,7 +915,7 @@ body.beginner-mode .beginner-only { display: block; }
 
     <!-- KPI strip -->
     <section id="overview" class="kpi-strip">
-      <div class="kpi">
+      <div class="kpi" title="How many tickers closed up vs down today. BULLISH = more than half up; BEARISH = more than half down; MIXED = roughly even.">
         <div class="kpi-head">
           <span class="kpi-label">Market bias</span>
           <span class="badge down">BEARISH</span>
@@ -923,7 +923,7 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="kpi-val" style="color: var(--down)">Risk Off</div>
         <div class="kpi-sub">7 up · 23 down</div>
       </div>
-      <div class="kpi">
+      <div class="kpi" title="Stocks scoring 70+ out of 100. Score ≥70 = strong buy signal; 50–69 = moderate; below 50 = avoid new entries.">
         <div class="kpi-head">
           <span class="kpi-label">Strong signals</span>
           <span class="badge blue">≥ 70</span>
@@ -931,14 +931,14 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="kpi-val">1 / 30</div>
         <div class="kpi-sub">mid-band (50-69): 10</div>
       </div>
-      <div class="kpi">
+      <div class="kpi" title="Average signal score across all Tier 2 stocks. Above 60 = healthy momentum; below 40 = broad weakness across the watchlist.">
         <div class="kpi-head">
           <span class="kpi-label">Avg signal</span>
         </div>
         <div class="kpi-val">41.1</div>
         <div class="kpi-sub">across 30 names</div>
       </div>
-      <div class="kpi">
+      <div class="kpi" title="CNN Fear &amp; Greed Index (0–100). 75+ = Greed (market overheating); 25– = Fear (possible buying opportunity). Use alongside stock scores, not as a standalone signal.">
         <div class="kpi-head">
           <span class="kpi-label">Fear &amp; Greed</span>
           
@@ -946,7 +946,7 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="kpi-val" style="">—</div>
         <div class="kpi-sub">CNN index · /100</div>
       </div>
-      <div class="kpi">
+      <div class="kpi" title="Change in Fear &amp; Greed Index vs. the same time last week. Rising = sentiment improving; falling = market getting more fearful.">
         <div class="kpi-head">
           <span class="kpi-label">F&amp;G change</span>
           
@@ -1092,15 +1092,15 @@ body.beginner-mode .beginner-only { display: block; }
         <thead>
           <tr>
             <th class="first">Ticker</th>
-            <th class="first">Type</th>
-            <th>Last</th>
-            <th>Chg</th>
-            <th class="mob-hide">RSI</th>
-            <th class="mob-hide">MACD H</th>
-            <th class="mob-hide">Vol×</th>
-            <th class="center">7d</th>
-            <th class="center">Signal</th>
-            <th class="center">Strength</th>
+            <th class="first" title="Stock = individual company · ETF = exchange-traded fund (basket of stocks)">Type</th>
+            <th title="Latest closing price in USD">Last</th>
+            <th title="Price change since yesterday's close (%)">Chg</th>
+            <th class="mob-hide" title="RSI (Relative Strength Index): 45–70 ↑ = ideal buy zone · &gt;70 = overbought · &lt;30 = oversold">RSI</th>
+            <th class="mob-hide" title="MACD Histogram: positive (+) = bullish momentum building · negative (−) = bearish · expanding = trend accelerating">MACD H</th>
+            <th class="mob-hide" title="Volume ratio vs 20-day average. ≥1.5× = strong institutional interest · &lt;1.0× = low conviction">Vol×</th>
+            <th class="center" title="7-day score sparkline — shows whether the signal score is rising or falling over the past week">7d</th>
+            <th class="center" title="Signal score (0–100): 5 technical factors × 20pts each. ≥70 = strong buy · 40–69 = neutral · &lt;40 = bearish">Signal</th>
+            <th class="center" title="Strength label derived from the signal score: Strong Buy (80+) · Buy (60–79) · Neutral (40–59) · Sell/Strong Sell (&lt;40)">Strength</th>
           </tr>
         </thead>
         <tbody>
@@ -2572,6 +2572,12 @@ body.beginner-mode .beginner-only { display: block; }
     </div>
     <span class="card-sub">4 sectors</span>
   </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;font-size:10px;color:var(--text-2)">
+    <span title="Average signal score ≥60 across stocks in this sector">🟢 ≥60 = strong sector</span>
+    <span title="Average signal score 40–59">🟡 40–59 = mixed</span>
+    <span title="Average signal score below 40">🔴 &lt;40 = weak sector</span>
+    <span style="margin-left:4px">Each chip = ticker · score</span>
+  </div>
   <div class="sector-grid">
     
       
@@ -2761,7 +2767,7 @@ body.beginner-mode .beginner-only { display: block; }
   <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 4px">
     <div>
       <span class="card-title" style="font-size:16px">🔥 Tier 2 — Close Watch</span>
-      <span class="card-sub" style="margin-left:10px">top scorers · full Gemini analysis</span>
+      <span class="card-sub" style="margin-left:10px" title="Top 50 stocks by signal score from the 250-ticker universe, plus your favourites and core ETFs. Each card shows full AI analysis, technical indicators, and entry verdict.">top scorers · full Gemini analysis · hover indicators for explanations</span>
     </div>
     <span class="card-sub">30 cards</span>
   </div>
@@ -2816,7 +2822,44 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">MA5</span>5-day avg — short-term direction</div>
         <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">MA20</span>20-day avg — medium-term trend</div>
         <div class="guide-row"><span class="guide-pill" style="background:rgba(177,140,255,0.1);color:#b18cff;border:1px solid rgba(177,140,255,0.25)">MA60</span>60-day avg — must be above for long entries</div>
-        <div class="guide-row" style="color:var(--text-2);font-size:10px;margin-top:2px">Best setup: Price > MA5 > MA20 > MA60 (bull stack)</div>
+        <div class="guide-row" style="color:var(--text-2);font-size:10px;margin-top:2px">Best setup: Price &gt; MA5 &gt; MA20 &gt; MA60 (bull stack)</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">MACD (Momentum)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">+expanding</span>Golden cross with growing histogram — strongest buy signal</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">+stable</span>Golden cross, histogram flat — uptrend intact but slowing</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">−converging</span>Dead cross but histogram shrinking — potential bottom forming</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">−expanding</span>Dead cross and falling — avoid, trend is down</div>
+        <div class="guide-row" style="color:var(--text-2);font-size:10px;margin-top:2px">Zero-line rule: golden cross above 0 = stronger signal; below 0 = discounted (bear territory)</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">S1 Trend Signals (new)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ EMA200 ↑</span>Price above 200-day EMA and EMA rising — long-term uptrend confirmed</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">⚠️ EMA200 ↓</span>Price above EMA200 but EMA200 is turning down — long-term trend weakening</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">EMA 三線排列</span>EMA20 &gt; EMA50 &gt; EMA200 full alignment — strongest trend quality</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(248,113,113,0.1);color:#f87171;border:1px solid rgba(248,113,113,0.25)">🔥 距52週高</span>% below the 52-week high. Near high = strong; far below = structural weakness</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.1);color:#f5b942;border:1px solid rgba(245,185,66,0.25)">⚠️ 過度延伸</span>1-month gain &gt;25% — stock may be overextended, higher pullback risk</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.25)">🎯 S1 入場</span>Shrinking volume + mild weekly pullback (-8% to 0%) on a qualified stock — pullback entry setup</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">History Badges (streak)</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3);font-weight:700">NEW</span>First time on the Tier 2 list today — just promoted</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(245,185,66,0.15);color:#f5b942;border:1px solid rgba(245,185,66,0.3);font-weight:700">🔥 Xd</span>On the list X consecutive days — sustained strength, higher conviction</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(177,140,255,0.15);color:#b18cff;border:1px solid rgba(177,140,255,0.3);font-weight:700">↩ RETURN</span>Was on the list before, dropped off, now back — watch for confirmation</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-section-title">How the Score Works</div>
+        <div class="guide-row" style="color:var(--text-2);font-size:11px;line-height:1.6">The signal score (0–100) is the sum of 5 technical factors, each worth up to 20 points:</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">① Trend</span>Price vs MA5/MA20/MA60 alignment</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">② RSI</span>Momentum strength and direction</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">③ MACD</span>Trend crossover and expansion</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">④ Volume</span>Trading activity vs 20-day average</div>
+        <div class="guide-row"><span class="guide-pill" style="background:rgba(122,162,255,0.1);color:#7aa2ff;border:1px solid rgba(122,162,255,0.25)">⑤ Bollinger</span>Price position within the bands</div>
+        <div class="guide-row" style="color:var(--text-2);font-size:10px;margin-top:4px">S1 signals (EMA200, 52W high, etc.) are informational — they appear as signal text on each card but do not change the score directly, except the overextension penalty (−10 pts when 1M gain &gt;25%).</div>
       </div>
 
     </div>
