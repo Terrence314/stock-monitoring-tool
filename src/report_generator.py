@@ -2140,8 +2140,10 @@ function doRefresh(btn) {
     btn.querySelector('.spin-icon') && (btn.querySelector('.spin-icon').textContent = '↻');
   }
   // Cache-bust by appending a timestamp query param — forces CDN to fetch fresh
-  var sep = window.location.href.indexOf('?') >= 0 ? '&' : '?';
-  window.location.href = window.location.href.replace(/[?&]_t=[0-9]+/, '') + sep + '_t=' + Date.now();
+  // Compute sep AFTER stripping any existing _t= so &/? choice is based on the clean URL
+  var cleanHref = window.location.href.replace(/[?&]_t=[0-9]+/, '');
+  var sep = cleanHref.indexOf('?') >= 0 ? '&' : '?';
+  window.location.href = cleanHref + sep + '_t=' + Date.now();
 }
 
 // ── Auto-refresh every 10 min with countdown display ─────────────────
