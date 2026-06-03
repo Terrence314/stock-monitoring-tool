@@ -232,6 +232,11 @@ def main():
                 "next_earnings":    prev.get("next_earnings"),
                 "sector":           prev.get("sector", data.get("sector", "Unknown")),
                 "entry":            prev.get("entry", ""),
+                # Tier 2 history metadata — preserved from last daily AI run
+                "badge":            prev.get("badge"),
+                "consecutive_days": prev.get("consecutive_days", 1),
+                "is_favourite":     prev.get("is_favourite", False),
+                "is_core":          prev.get("is_core", False),
             })
 
             chg = data["price_change_pct"]
