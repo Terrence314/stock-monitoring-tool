@@ -103,7 +103,7 @@
       "exit_date": null,
       "exit_price": null,
       "current_price": 516.7,
-      "current_date": "2026-06-04",
+      "current_date": "2026-06-05",
       "pnl": null,
       "pnl_pct": null
     },
@@ -155,8 +155,8 @@
       "status": "open",
       "exit_date": null,
       "exit_price": null,
-      "current_price": 90.7,
-      "current_date": "2026-06-04",
+      "current_price": 89.04,
+      "current_date": "2026-05-30",
       "pnl": null,
       "pnl_pct": null
     },
@@ -228,7 +228,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 418.91,
-      "current_date": "2026-06-04",
+      "current_date": "2026-06-05",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -252,7 +252,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 428.05,
-      "current_date": "2026-06-04",
+      "current_date": "2026-06-05",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -272,14 +272,14 @@
       "shares": 9.582216,
       "notional": 1500.0,
       "score": 85,
-      "status": "closed",
-      "exit_date": "2026-06-04",
-      "exit_price": 141.7,
-      "exit_reason": "stop_loss",
-      "current_price": 141.7,
-      "current_date": "2026-06-04",
-      "pnl": -142.2,
-      "pnl_pct": -9.48,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 156.54,
+      "current_date": "2026-05-30",
+      "pnl": null,
+      "pnl_pct": null,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -301,7 +301,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 133.42,
-      "current_date": "2026-06-04",
+      "current_date": "2026-06-05",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -323,8 +323,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 80.07,
-      "current_date": "2026-06-04",
+      "current_price": 81.95,
+      "current_date": "2026-05-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -347,7 +347,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 79.83,
-      "current_date": "2026-06-04",
+      "current_date": "2026-06-05",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -357,5 +357,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-04"
+  "last_updated": "2026-06-05"
 }
