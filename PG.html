@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>PG · Signal Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS · V1 ────────────────────────────────────────────── */
+:root {
+  --bg:        #0b0c10;
+  --surface:   #13141b;
+  --elevated:  #1a1c25;
+  --border:    #23252f;
+  --border-hi: #33363f;
+  --text:      #e7e8ec;
+  --text-2:    #8a8c98;
+  --muted:     #52545e;
+  --up:        #34d399;
+  --down:      #f87171;
+  --blue:      #7aa2ff;
+  --amber:     #f5b942;
+  --purple:    #b18cff;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --sans: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+/* ── RESET ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── TOP BAR ────────────────────────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 28px; height: 52px;
+}
+.back-link {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--text-2); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: 7px;
+  border: 1px solid var(--border);
+  transition: color 0.15s, border-color 0.15s;
+}
+.back-link:hover { color: var(--text); border-color: var(--border-hi); }
+.topbar-ticker {
+  font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text);
+}
+.topbar-name { font-size: 12px; color: var(--text-2); }
+.spacer { flex: 1; }
+.topbar-date { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+/* ── PAGE WRAPPER ───────────────────────────────────────────────────── */
+.page-detail {
+  max-width: 1280px; margin: 0 auto;
+  padding: 24px 28px 64px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+
+/* ── SECTION LABEL ─────────────────────────────────────────────────── */
+.sec-label {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+}
+.sec-pill {
+  background: var(--amber); color: #fff;
+  font-family: var(--mono); font-size: 9px; font-weight: 800;
+  letter-spacing: 0.08em; padding: 3px 9px; border-radius: 10px;
+  text-transform: uppercase;
+}
+.sec-title {
+  font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.01em;
+}
+.sec-sub { font-size: 11px; color: var(--text-2); }
+
+/* ── CARD ───────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+.card.elevated { background: var(--elevated); }
+
+/* ── HERO CARD ──────────────────────────────────────────────────────── */
+.hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 16px;
+  padding: 28px 32px;
+}
+.hero-top { display: flex; align-items: flex-start; gap: 22px; flex-wrap: wrap; }
+.hero-logo {
+  width: 64px; height: 64px; border-radius: 14px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 20px; font-weight: 800; color: #fff;
+}
+.hero-id { flex: 1; min-width: 180px; }
+.hero-ticker {
+  font-family: var(--mono); font-size: 36px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.02em; line-height: 1;
+}
+.hero-name { font-size: 14px; color: var(--text-2); margin-top: 5px; }
+.hero-badges { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.tag {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.tag.stock  { background: rgba(122,162,255,0.12); color: var(--blue); border: 1px solid rgba(122,162,255,0.25); }
+.tag.etf    { background: rgba(177,140,255,0.12); color: var(--purple); border: 1px solid rgba(177,140,255,0.25); }
+.tag.market { background: rgba(255,255,255,0.04); color: var(--text-2); border: 1px solid var(--border); }
+.tag.date   { background: rgba(245,185,66,0.10); color: var(--amber); border: 1px solid rgba(245,185,66,0.25); }
+
+.hero-price-block { text-align: right; }
+.hero-price {
+  font-family: var(--mono); font-size: 42px; font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1;
+}
+.hero-chg {
+  font-family: var(--mono); font-size: 16px; font-weight: 600; margin-top: 5px;
+}
+.hero-chg.up   { color: var(--up); }
+.hero-chg.down { color: var(--down); }
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;
+  margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border);
+}
+@media (max-width: 900px) { .hero-stats { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .hero-stats { grid-template-columns: repeat(2, 1fr); } }
+.hero-stat { display: flex; flex-direction: column; gap: 3px; }
+.hs-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.hs-val { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* ── 2-COL ROW ──────────────────────────────────────────────────────── */
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 860px) { .row-2 { grid-template-columns: 1fr; } }
+
+/* ── 3-COL ROW ──────────────────────────────────────────────────────── */
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+@media (max-width: 1100px) { .row-3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px)  { .row-3 { grid-template-columns: 1fr; } }
+
+/* ── CHECK / WARNING ITEMS ──────────────────────────────────────────── */
+.check-list { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
+.check-item { font-size: 12.5px; color: var(--text); line-height: 1.5; }
+.check-item::before { content: '✓'; color: var(--up); margin-right: 8px; font-weight: 700; }
+.warn-item  { font-size: 12.5px; color: var(--text); line-height: 1.5; }
+.warn-item::before  { content: '⚠'; color: var(--amber); margin-right: 8px; }
+.num-item { font-size: 12.5px; color: var(--text); line-height: 1.5; }
+
+/* ── TECHNICAL ANALYSIS ─────────────────────────────────────────────── */
+.tech-layout { display: grid; grid-template-columns: 1fr 280px; gap: 22px; }
+@media (max-width: 1000px) { .tech-layout { grid-template-columns: 1fr; } }
+.chart-area { min-width: 0; }
+.chart-area svg { display: block; width: 100%; border-radius: 8px; overflow: hidden; }
+.no-chart {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-family: var(--mono); font-size: 12px;
+  background: var(--elevated); border-radius: 8px; border: 1px solid var(--border);
+}
+.chart-legend {
+  display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px;
+  font-family: var(--mono); font-size: 10px;
+}
+.legend-dot { width: 10px; height: 3px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+.tech-sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+/* ── SIGNAL SCORE RING ───────────────────────────────────────────────── */
+.ring-card {
+  background: var(--elevated); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.ring-large { width: 100px; height: 100px; position: relative; }
+.ring-large svg { transform: rotate(-90deg); display: block; }
+.ring-large .ring-num {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 28px; font-weight: 700;
+}
+.strength-big {
+  font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 10px;
+}
+.strength-big.high { color: var(--up);    background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.30); }
+.strength-big.mid  { color: var(--amber); background: rgba(245,185,66,0.12); border: 1px solid rgba(245,185,66,0.30); }
+.strength-big.low  { color: var(--down);  background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.30); }
+
+.breakout-badge {
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; padding: 4px 12px; border-radius: 6px;
+  text-transform: uppercase;
+}
+
+/* ── KEY LEVELS TABLE ───────────────────────────────────────────────── */
+.levels-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.levels-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.levels-table tr:last-child td { border-bottom: none; }
+.level-label { color: var(--text-2); }
+.level-val { font-family: var(--mono); font-weight: 600; text-align: right; }
+.level-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+
+/* ── SCENARIO CARDS ──────────────────────────────────────────────────── */
+.scenario-card {
+  background: var(--elevated); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+}
+.scen-top { display: flex; align-items: center; justify-content: space-between; }
+.scen-title { font-size: 13px; font-weight: 700; color: var(--text); }
+.prob-bar { height: 5px; border-radius: 3px; background: var(--border); margin-top: 4px; overflow: hidden; }
+.prob-fill { height: 100%; border-radius: 3px; }
+.prob-pct { font-family: var(--mono); font-size: 11px; font-weight: 700; }
+
+/* ── BULL/BEAR TABLE ────────────────────────────────────────────────── */
+.bb-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.bb-table th {
+  font-size: 10px; color: var(--text-2); font-weight: 500;
+  text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.bb-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.bb-table tr:last-child td { border-bottom: none; }
+.bb-table .target-val { font-family: var(--mono); font-weight: 600; }
+
+/* ── STRATEGY CARDS ──────────────────────────────────────────────────── */
+.strat-card {
+  background: var(--elevated); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px;
+}
+.strat-type { font-size: 13px; font-weight: 700; color: var(--text); }
+.strat-sub { font-size: 10px; color: var(--text-2); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1px; }
+.strat-action { font-size: 12px; color: var(--text); }
+.strat-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+.strat-pill {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 4px;
+}
+.strat-pill.stop   { background: rgba(248,113,113,0.10); color: var(--down);  border: 1px solid rgba(248,113,113,0.20); }
+.strat-pill.target { background: rgba(52,211,153,0.10);  color: var(--up);    border: 1px solid rgba(52,211,153,0.20); }
+.strat-note { font-size: 11px; color: var(--text-2); }
+
+/* ── ANALYST BAR ────────────────────────────────────────────────────── */
+.analyst-bar { display: flex; height: 7px; border-radius: 4px; overflow: hidden; gap: 1px; background: var(--elevated); }
+.analyst-buy  { background: var(--up); }
+.analyst-hold { background: var(--amber); opacity: 0.85; }
+.analyst-sell { background: var(--down); }
+.analyst-counts { display: flex; gap: 12px; margin-top: 5px; font-family: var(--mono); font-size: 10px; font-weight: 600; }
+.analyst-counts .buy  { color: var(--up); }
+.analyst-counts .hold { color: var(--amber); }
+.analyst-counts .sell { color: var(--down); }
+.analyst-counts .period { margin-left: auto; color: var(--text-2); }
+
+/* ── 52W RANGE BAR ──────────────────────────────────────────────────── */
+.range-bar {
+  position: relative; height: 5px; border-radius: 3px;
+  background: var(--elevated); margin: 8px 0 6px;
+}
+.range-fill {
+  position: absolute; top: 0; left: 0; height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+}
+.range-thumb {
+  position: absolute; top: -3px; width: 11px; height: 11px;
+  border-radius: 50%; background: var(--text);
+  border: 2px solid var(--surface); transform: translateX(-50%);
+}
+.range-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--text-2); }
+
+/* ── SUMMARY FOOTER ────────────────────────────────────────────────── */
+.summary-card {
+  background: linear-gradient(135deg, #13141b, #1a1c25);
+  border: 1px solid var(--border-hi);
+  border-radius: 16px; padding: 28px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.summary-text { flex: 1; min-width: 200px; }
+.summary-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.summary-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+.verdict-block { text-align: center; flex-shrink: 0; }
+.verdict-label {
+  font-family: var(--mono); font-size: 18px; font-weight: 700;
+  padding: 10px 24px; border-radius: 10px;
+  display: inline-block;
+}
+.verdict-label.up   { color: var(--up);    background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.30); }
+.verdict-label.down { color: var(--down);  background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.30); }
+.verdict-label.amber{ color: var(--amber); background: rgba(245,185,66,0.12);  border: 1px solid rgba(245,185,66,0.30); }
+.verdict-en { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 5px; letter-spacing: 0.08em; }
+
+/* ── FOOTER ────────────────────────────────────────────────────────── */
+.footer {
+  text-align: center; padding: 24px;
+  color: var(--muted); font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.06em;
+}
+
+/* ── MA BADGES ──────────────────────────────────────────────────────── */
+.ma-badge {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  padding: 3px 8px; border-radius: 5px;
+}
+.ma-badge.ma5  { background: rgba(245,185,66,0.10); color: var(--amber); border: 1px solid rgba(245,185,66,0.20); }
+.ma-badge.ma20 { background: rgba(122,162,255,0.10); color: var(--blue); border: 1px solid rgba(122,162,255,0.20); }
+.ma-badge.ma60 { background: rgba(177,140,255,0.10); color: var(--purple); border: 1px solid rgba(177,140,255,0.20); }
+.rsi-badge  { background: rgba(248,113,113,0.08); color: var(--down); border: 1px solid rgba(248,113,113,0.18); font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
+.vol-badge  { background: rgba(52,211,153,0.08); color: var(--up); border: 1px solid rgba(52,211,153,0.20); font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 5px; }
+.badge-row  { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+/* ── EARNINGS PILL ──────────────────────────────────────────────────── */
+.earnings {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 7px;
+  background: rgba(245,185,66,0.08); border: 1px solid rgba(245,185,66,0.30);
+  font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--amber);
+}
+.pulse {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245,185,66,0.5); }
+  50%      { box-shadow: 0 0 0 5px rgba(245,185,66,0); }
+}
+
+/* ── CORE THESIS BULLETS ──────────────────────────────────────────── */
+.core-bullets { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.core-bullet {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; line-height: 1.55; color: var(--text);
+  padding: 8px 10px; background: var(--elevated);
+  border-radius: 7px; border-left: 2px solid var(--blue);
+}
+.core-bullet::before {
+  content: '›'; color: var(--blue); font-size: 14px;
+  font-weight: 700; line-height: 1.4; flex-shrink: 0;
+}
+
+/* ── KEY LEVEL BOXES ──────────────────────────────────────────────── */
+.level-boxes { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.lbox {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px; border-radius: 8px;
+  font-size: 12px; font-weight: 600; border: 1px solid transparent;
+}
+.lbox-label { font-size: 12px; color: var(--text); }
+.lbox-val { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.lbox.resistance {
+  background: rgba(248,113,113,0.10); border-color: rgba(248,113,113,0.30);
+}
+.lbox.resistance .lbox-label { color: #fca5a5; }
+.lbox.resistance .lbox-val   { color: var(--down); }
+.lbox.support {
+  background: rgba(52,211,153,0.09); border-color: rgba(52,211,153,0.25);
+}
+.lbox.support .lbox-label { color: #6ee7b7; }
+.lbox.support .lbox-val   { color: var(--up); }
+.lbox.neutral {
+  background: rgba(122,162,255,0.09); border-color: rgba(122,162,255,0.25);
+}
+.lbox.neutral .lbox-label { color: #93c5fd; }
+.lbox.neutral .lbox-val   { color: var(--blue); }
+.lbox-tier-tag {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.04em; padding: 1px 6px; border-radius: 3px;
+  margin-left: 8px;
+}
+.lbox.resistance .lbox-tier-tag { background: rgba(248,113,113,0.15); color: var(--down); }
+.lbox.support    .lbox-tier-tag { background: rgba(52,211,153,0.12);  color: var(--up); }
+.lbox.neutral    .lbox-tier-tag { background: rgba(122,162,255,0.12); color: var(--blue); }
+
+/* ── SCENARIO CARDS (enhanced) ───────────────────────────────────── */
+.scen-cards { display: flex; flex-direction: column; gap: 8px; }
+.scen-card-v2 {
+  padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.scen-card-v2.up   { background: rgba(52,211,153,0.06); border-color: rgba(52,211,153,0.20); }
+.scen-card-v2.down { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.20); }
+.scen-card-v2.amber { background: rgba(245,185,66,0.06); border-color: rgba(245,185,66,0.20); }
+.scen-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.scen-icon-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+.scen-pct { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.scen-pbar { height: 4px; background: var(--elevated); border-radius: 2px; margin-bottom: 6px; }
+.scen-pfill { height: 100%; border-radius: 2px; }
+.scen-range { font-family: var(--mono); font-size: 11px; font-weight: 600; margin-top: 4px; }
+.scen-desc-v2 { font-size: 11px; color: var(--text-2); line-height: 1.4; }
+
+/* ── REPORT SUBTITLE BADGE ───────────────────────────────────────── */
+.report-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 10px;
+  background: linear-gradient(90deg, rgba(122,162,255,0.15), rgba(177,140,255,0.15));
+  border: 1px solid rgba(177,140,255,0.30);
+  color: var(--purple);
+}
+
+/* ── PULLBACK SECTION ANNOTATIONS ───────────────────────────────── */
+.pullback-stats {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+}
+.pb-stat {
+  padding: 6px 10px; border-radius: 7px; text-align: center;
+  background: var(--elevated); border: 1px solid var(--border);
+}
+.pb-stat-val { font-family: var(--mono); font-size: 14px; font-weight: 700; }
+.pb-stat-lbl { font-size: 10px; color: var(--text-2); margin-top: 2px; }
+
+/* ── Mobile ≤ 768px ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .page        { padding: 12px 12px 40px; }
+  .hero-ticker { font-size: 24px !important; }
+  .hero-price  { font-size: 24px !important; }
+  .back-link   { font-size: 12px !important; padding: 8px 0 !important; }
+  .section-label { font-size: 9px !important; padding: 2px 7px !important; }
+  .card        { padding: 14px; }
+  .targets-tbl { font-size: 11px; }
+  .targets-tbl td { padding: 8px 8px; }
+  .chart-area  { overflow-x: auto; }
+  .chart-area svg { min-width: 560px; width: 760px !important; }
+  .hero-stats  { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .hero-ticker { font-size: 20px !important; }
+  .hero-price  { font-size: 20px !important; }
+  .hero-stats  { grid-template-columns: repeat(2, 1fr) !important; }
+  .badge-row   { gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a href="./index.html" class="back-link">← 返回</a>
+  
+  <a href="./JNJ.html" class="back-link" title="Previous: JNJ" style="padding:5px 9px">‹ JNJ</a>
+  
+  <span class="topbar-ticker">PG</span>
+  <span class="topbar-name" style="display:none" id="topbar-fullname">Procter & Gamble Company (The)</span>
+  <div class="spacer"></div>
+  
+  <a href="./TJX.html" class="back-link" title="Next: TJX" style="padding:5px 9px">TJX ›</a>
+  
+  <span class="topbar-date">2026/06/09</span>
+  <span class="topbar-date" style="opacity:0.65" title="When this page was generated — refresh to get the latest">· updated Jun 09 23:41 HKT</span>
+</div>
+
+<div class="page-detail">
+
+
+
+<div class="hero-card">
+  <div class="hero-top">
+    <div class="hero-logo" style="background:linear-gradient(135deg,#34d399,#7aa2ff)">
+      PG
+    </div>
+    <div class="hero-id">
+      <div class="hero-ticker">PG</div>
+      <div class="hero-name">Procter & Gamble Company (The)</div>
+      <div class="hero-badges">
+        <span class="tag stock">stock</span>
+        <span class="tag market">US</span>
+        
+        <span class="tag market">Consumer Defensive</span>
+        
+        <span class="tag date">2026/06/09</span>
+      </div>
+      <div style="margin-top:10px">
+        <span class="report-badge">✦ 綜合研判報告</span>
+      </div>
+    </div>
+    <div class="hero-price-block">
+      <div class="hero-price">$147.97</div>
+      <div class="hero-chg up">+1.98%</div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hs-label">開盤</span>
+      <span class="hs-val">$144.67</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hs-label">日高</span>
+      <span class="hs-val" style="color:var(--up)">$148.05</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hs-label">日低</span>
+      <span class="hs-val" style="color:var(--down)">$144.53</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hs-label">昨收</span>
+      <span class="hs-val">$145.10</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hs-label">成交量</span>
+      <span class="hs-val">2M</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hs-label">信號分</span>
+      <span class="hs-val" style="color:#f5b942">57/100</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-2">
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">一</span>
+      <span class="sec-title">核心結論 Core Thesis</span>
+    </div>
+    
+    <div class="core-bullets">
+      
+      <div class="core-bullet">①目前盤面偏強，股價企穩於均線之上。</div>
+      
+      <div class="core-bullet">②關鍵價位：上方阻力148.50，下方支撐146.00。</div>
+      
+      <div class="core-bullet">③高機率劇本：若能突破148.50，有望測試150；若跌破146.00，可能回調至144.50。</div>
+      
+      <div class="core-bullet">⚠️ 價格站上 MA60</div>
+      
+      <div class="core-bullet">✅ RSI 動能走強（58.0 ↑）</div>
+      
+    </div>
+    
+    
+    <div style="margin-top:12px;padding:9px 12px;border-radius:8px;background:var(--elevated);border:1px solid var(--border);display:flex;align-items:center;gap:10px">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em">新聞情緒</span>
+      <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--up)">
+        +6
+      </span>
+      <span style="font-size:12px;color:var(--text)">新聞標題多與投資機會、股息收入、以及公司發展策略相關，顯示出正向的成長潛力與財務表現。</span>
+    </div>
+    
+    
+  </div>
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">二</span>
+      <span class="sec-title">公司基本面 Fundamentals</span>
+    </div>
+
+    
+    
+
+    
+    
+
+    <div class="check-list">
+      <div class="check-item">MA5 144.12 · MA20 143.3 · MA60 144.06</div>
+      <div class="check-item">RSI 58.0 · Vol 0.26×</div>
+      
+      
+      <div class="check-item">MACD +0.05 · Hist +0.49</div>
+      
+    </div>
+  </div>
+
+</div><!-- /.row-2 -->
+
+
+<div class="card">
+  <div class="sec-label">
+    <span class="sec-pill">技</span>
+    <span class="sec-title">一 技術面分析 Technical Analysis</span>
+    <span class="sec-sub">PG · last 100 bars</span>
+  </div>
+  <div class="tech-layout">
+    <div class="chart-area">
+      
+        <svg width="760" height="400" viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto"><rect width="760" height="400" fill="#0b0c10" rx="0"/><g opacity="0.35"><line x1="12" y1="12.0" x2="702" y2="12.0" stroke="#23252f" stroke-width="1"/><text x="706" y="16.0" fill="#52545e" font-size="9" font-family="JetBrains Mono, monospace">166.81</text><line x1="12" y1="68.5" x2="702" y2="68.5" stroke="#23252f" stroke-width="1"/><text x="706" y="72.5" fill="#52545e" font-size="9" font-family="JetBrains Mono, monospace">159.62</text><line x1="12" y1="125.0" x2="702" y2="125.0" stroke="#23252f" stroke-width="1"/><text x="706" y="129.0" fill="#52545e" font-size="9" font-family="JetBrains Mono, monospace">152.43</text><line x1="12" y1="181.5" x2="702" y2="181.5" stroke="#23252f" stroke-width="1"/><text x="706" y="185.5" fill="#52545e" font-size="9" font-family="JetBrains Mono, monospace">145.24</text><line x1="12" y1="238.0" x2="702" y2="238.0" stroke="#23252f" stroke-width="1"/><text x="706" y="242.0" fill="#52545e" font-size="9" font-family="JetBrains Mono, monospace">138.05</text></g><path d="M 43.0,188.8 L 50.0,178.6 L 56.9,169.3 L 63.8,165.6 L 70.7,162.0 L 77.5,160.4 L 84.5,157.8 L 91.4,152.0 L 98.2,141.2 L 105.2,126.3 L 112.1,112.7 L 119.0,101.2 L 125.9,94.7 L 132.8,88.9 L 139.7,84.0 L 146.6,79.9 L 153.5,78.5 L 160.3,75.1 L 167.2,78.5 L 174.2,80.8 L 181.1,81.4 L 188.0,73.5 L 194.9,64.6 L 201.8,54.4 L 208.7,46.3 L 215.6,36.3 L 222.5,38.9 L 229.4,47.5 L 236.2,55.4 L 243.2,70.7 L 250.1,91.8 L 257.0,104.8 L 263.9,110.6 L 270.8,118.3 L 277.7,123.8 L 284.6,128.4 L 291.4,133.3 L 298.4,140.3 L 305.2,150.6 L 312.2,159.5 L 319.1,169.4 L 325.9,182.1 L 332.9,195.0 L 339.8,199.4 L 346.7,203.2 L 353.6,205.6 L 360.5,204.5 L 367.4,202.5 L 374.2,202.2 L 381.2,201.1 L 388.1,201.0 L 395.0,206.4 L 401.9,205.6 L 408.8,201.6 L 415.7,198.5 L 422.6,197.2 L 429.5,192.4 L 436.4,194.7 L 443.2,200.3 L 450.2,197.5 L 457.1,196.1 L 464.0,199.3 L 470.9,200.1 L 477.8,196.1 L 484.7,192.4 L 491.6,184.6 L 498.5,172.1 L 505.4,164.8 L 512.2,160.9 L 519.2,162.3 L 526.1,170.2 L 533.0,176.9 L 539.9,174.6 L 546.8,176.2 L 553.6,177.6 L 560.6,177.6 L 567.5,179.2 L 574.4,188.1 L 581.2,193.4 L 588.1,201.0 L 595.1,202.5 L 602.0,206.6 L 608.9,206.3 L 615.8,205.2 L 622.6,200.7 L 629.6,199.8 L 636.5,190.1 L 643.4,184.6 L 650.2,184.4 L 657.1,190.9 L 664.1,194.3 L 671.0,205.7 L 677.9,213.8 L 684.8,209.1 L 691.7,201.5 L 698.6,190.3" stroke="#f5b942" stroke-width="1.2" fill="none" opacity="0.85"/><path d="M 146.6,135.4 L 153.5,129.0 L 160.3,122.8 L 167.2,118.5 L 174.2,113.3 L 181.1,108.6 L 188.0,102.8 L 194.9,96.6 L 201.8,90.7 L 208.7,84.3 L 215.6,77.6 L 222.5,73.0 L 229.4,70.5 L 236.2,69.3 L 243.2,70.4 L 250.1,72.4 L 257.0,73.9 L 263.9,74.4 L 270.8,76.7 L 277.7,80.4 L 284.6,84.5 L 291.4,87.6 L 298.4,90.7 L 305.2,94.7 L 312.2,100.0 L 319.1,106.5 L 325.9,114.7 L 332.9,123.4 L 339.8,131.0 L 346.7,139.3 L 353.6,148.8 L 360.5,156.1 L 367.4,162.1 L 374.2,167.6 L 381.2,171.9 L 388.1,176.1 L 395.0,181.5 L 401.9,185.9 L 408.8,188.5 L 415.7,190.5 L 422.6,193.3 L 429.5,196.3 L 436.4,199.5 L 443.2,200.9 L 450.2,200.1 L 457.1,200.0 L 464.0,200.6 L 470.9,200.8 L 477.8,200.1 L 484.7,197.4 L 491.6,194.7 L 498.5,192.5 L 505.4,191.3 L 512.2,189.7 L 519.2,187.7 L 526.1,187.0 L 533.0,185.2 L 539.9,183.6 L 546.8,183.4 L 553.6,182.5 L 560.6,182.1 L 567.5,181.9 L 574.4,181.9 L 581.2,181.6 L 588.1,183.3 L 595.1,183.7 L 602.0,183.7 L 608.9,183.4 L 615.8,183.9 L 622.6,185.4 L 629.6,187.5 L 636.5,188.2 L 643.4,188.4 L 650.2,189.8 L 657.1,192.5 L 664.1,193.6 L 671.0,195.4 L 677.9,198.2 L 684.8,198.0 L 691.7,198.5 L 698.6,196.7" stroke="#7aa2ff" stroke-width="1.2" fill="none" opacity="0.85"/><path d="M 422.6,137.7 L 429.5,137.6 L 436.4,137.7 L 443.2,138.0 L 450.2,137.8 L 457.1,138.4 L 464.0,139.4 L 470.9,140.2 L 477.8,140.6 L 484.7,140.3 L 491.6,140.4 L 498.5,140.6 L 505.4,141.3 L 512.2,142.2 L 519.2,143.3 L 526.1,145.2 L 533.0,146.9 L 539.9,148.0 L 546.8,149.5 L 553.6,151.1 L 560.6,153.3 L 567.5,155.3 L 574.4,157.4 L 581.2,159.1 L 588.1,161.1 L 595.1,163.4 L 602.0,166.4 L 608.9,169.2 L 615.8,171.6 L 622.6,174.0 L 629.6,177.0 L 636.5,179.0 L 643.4,180.6 L 650.2,182.4 L 657.1,184.0 L 664.1,185.6 L 671.0,187.4 L 677.9,189.2 L 684.8,190.0 L 691.7,190.5 L 698.6,190.7" stroke="#b18cff" stroke-width="1.2" fill="none" opacity="0.85"/><line x1="15.4" y1="189.4" x2="15.4" y2="204.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="13.4" y="194.6" width="4.1" height="8.1" fill="#f87171" opacity="0.85"/><line x1="22.4" y1="201.9" x2="22.4" y2="210.2" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="20.3" y="203.5" width="4.1" height="6.0" fill="#34d399" opacity="0.85"/><line x1="29.2" y1="184.4" x2="29.2" y2="206.7" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="27.2" y="184.4" width="4.1" height="19.6" fill="#34d399" opacity="0.85"/><line x1="36.2" y1="181.5" x2="36.2" y2="200.1" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="34.1" y="183.9" width="4.1" height="7.7" fill="#f87171" opacity="0.85"/><line x1="43.0" y1="154.1" x2="43.0" y2="180.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="41.0" y="161.7" width="4.1" height="14.3" fill="#34d399" opacity="0.85"/><line x1="50.0" y1="140.0" x2="50.0" y2="154.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="47.9" y="146.4" width="4.1" height="5.3" fill="#f87171" opacity="0.85"/><line x1="56.9" y1="146.1" x2="56.9" y2="164.4" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="54.8" y="151.9" width="4.1" height="4.9" fill="#f87171" opacity="0.85"/><line x1="63.8" y1="155.7" x2="63.8" y2="169.1" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="61.7" y="165.9" width="4.1" height="2.1" fill="#34d399" opacity="0.85"/><line x1="70.7" y1="162.9" x2="70.7" y2="177.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="68.6" y="168.5" width="4.1" height="5.1" fill="#f87171" opacity="0.85"/><line x1="77.5" y1="151.9" x2="77.5" y2="175.4" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="75.5" y="153.7" width="4.1" height="20.3" fill="#34d399" opacity="0.85"/><line x1="84.5" y1="137.6" x2="84.5" y2="159.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="82.4" y="139.1" width="4.1" height="10.4" fill="#34d399" opacity="0.85"/><line x1="91.4" y1="123.8" x2="91.4" y2="143.1" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="89.3" y="128.0" width="4.1" height="6.0" fill="#34d399" opacity="0.85"/><line x1="98.2" y1="102.0" x2="98.2" y2="135.8" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="96.2" y="111.4" width="4.1" height="21.3" fill="#34d399" opacity="0.85"/><line x1="105.2" y1="87.6" x2="105.2" y2="108.0" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="103.1" y="99.3" width="4.1" height="5.8" fill="#34d399" opacity="0.85"/><line x1="112.1" y1="77.6" x2="112.1" y2="105.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="110.0" y="84.0" width="4.1" height="1.8" fill="#f87171" opacity="0.85"/><line x1="119.0" y1="75.0" x2="119.0" y2="90.4" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="116.9" y="81.4" width="4.1" height="7.2" fill="#34d399" opacity="0.85"/><line x1="125.9" y1="80.5" x2="125.9" y2="106.0" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="123.8" y="84.6" width="4.1" height="11.2" fill="#f87171" opacity="0.85"/><line x1="132.8" y1="73.8" x2="132.8" y2="100.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="130.7" y="82.1" width="4.1" height="12.1" fill="#34d399" opacity="0.85"/><line x1="139.7" y1="66.0" x2="139.7" y2="89.0" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="137.6" y="75.0" width="4.1" height="10.6" fill="#34d399" opacity="0.85"/><line x1="146.6" y1="50.4" x2="146.6" y2="77.6" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="144.5" y="65.5" width="4.1" height="9.3" fill="#34d399" opacity="0.85"/><line x1="153.5" y1="54.8" x2="153.5" y2="77.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="151.4" y="61.4" width="4.1" height="13.0" fill="#f87171" opacity="0.85"/><line x1="160.3" y1="58.0" x2="160.3" y2="83.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="158.3" y="75.4" width="4.1" height="3.1" fill="#f87171" opacity="0.85"/><line x1="167.2" y1="82.9" x2="167.2" y2="107.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="165.2" y="82.9" width="4.1" height="16.5" fill="#f87171" opacity="0.85"/><line x1="174.2" y1="75.3" x2="174.2" y2="99.6" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="172.1" y="86.2" width="4.1" height="13.4" fill="#34d399" opacity="0.85"/><line x1="181.1" y1="66.6" x2="181.1" y2="89.3" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="179.0" y="68.8" width="4.1" height="12.9" fill="#34d399" opacity="0.85"/><line x1="188.0" y1="33.2" x2="188.0" y2="72.6" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="185.9" y="34.6" width="4.1" height="37.9" fill="#34d399" opacity="0.85"/><line x1="194.9" y1="21.4" x2="194.9" y2="44.2" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="192.8" y="33.8" width="4.1" height="2.9" fill="#34d399" opacity="0.85"/><line x1="201.8" y1="35.9" x2="201.8" y2="58.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="199.7" y="39.5" width="4.1" height="9.0" fill="#f87171" opacity="0.85"/><line x1="208.7" y1="39.8" x2="208.7" y2="52.6" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="206.6" y="42.0" width="4.1" height="3.6" fill="#f87171" opacity="0.85"/><line x1="215.6" y1="18.4" x2="215.6" y2="46.1" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="213.5" y="18.8" width="4.1" height="24.7" fill="#34d399" opacity="0.85"/><line x1="222.5" y1="23.8" x2="222.5" y2="48.0" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="220.4" y="33.7" width="4.1" height="13.8" fill="#f87171" opacity="0.85"/><line x1="229.4" y1="57.8" x2="229.4" y2="85.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="227.3" y="57.8" width="4.1" height="19.2" fill="#f87171" opacity="0.85"/><line x1="236.2" y1="77.9" x2="236.2" y2="95.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="234.2" y="79.3" width="4.1" height="8.9" fill="#f87171" opacity="0.85"/><line x1="243.2" y1="97.5" x2="243.2" y2="123.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="241.1" y="98.8" width="4.1" height="23.0" fill="#f87171" opacity="0.85"/><line x1="250.1" y1="118.3" x2="250.1" y2="138.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="248.0" y="124.4" width="4.1" height="1.0" fill="#f87171" opacity="0.85"/><line x1="257.0" y1="104.3" x2="257.0" y2="130.3" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="254.9" y="112.2" width="4.1" height="16.1" fill="#34d399" opacity="0.85"/><line x1="263.9" y1="97.1" x2="263.9" y2="124.8" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="261.8" y="106.1" width="4.1" height="4.0" fill="#34d399" opacity="0.85"/><line x1="270.8" y1="110.9" x2="270.8" y2="141.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="268.7" y="112.1" width="4.1" height="14.9" fill="#f87171" opacity="0.85"/><line x1="277.7" y1="129.1" x2="277.7" y2="150.3" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="275.6" y="135.7" width="4.1" height="13.3" fill="#f87171" opacity="0.85"/><line x1="284.6" y1="133.0" x2="284.6" y2="151.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="282.5" y="142.2" width="4.1" height="5.7" fill="#f87171" opacity="0.85"/><line x1="291.4" y1="132.3" x2="291.4" y2="147.9" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="289.4" y="136.4" width="4.1" height="2.0" fill="#34d399" opacity="0.85"/><line x1="298.4" y1="125.9" x2="298.4" y2="143.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="296.3" y="129.4" width="4.1" height="11.9" fill="#f87171" opacity="0.85"/><line x1="305.2" y1="155.9" x2="305.2" y2="180.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="303.2" y="158.3" width="4.1" height="20.3" fill="#f87171" opacity="0.85"/><line x1="312.2" y1="173.3" x2="312.2" y2="193.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="310.1" y="182.3" width="4.1" height="10.8" fill="#f87171" opacity="0.85"/><line x1="319.1" y1="185.5" x2="319.1" y2="197.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="317.0" y="191.9" width="4.1" height="5.6" fill="#f87171" opacity="0.85"/><line x1="325.9" y1="182.9" x2="325.9" y2="203.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="323.9" y="182.9" width="4.1" height="16.9" fill="#f87171" opacity="0.85"/><line x1="332.9" y1="190.1" x2="332.9" y2="213.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="330.8" y="204.9" width="4.1" height="1.3" fill="#f87171" opacity="0.85"/><line x1="339.8" y1="198.9" x2="339.8" y2="213.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="337.7" y="200.3" width="4.1" height="1.3" fill="#34d399" opacity="0.85"/><line x1="346.7" y1="195.2" x2="346.7" y2="213.4" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="344.6" y="202.1" width="4.1" height="9.9" fill="#f87171" opacity="0.85"/><line x1="353.6" y1="199.1" x2="353.6" y2="215.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="351.5" y="209.7" width="4.1" height="1.0" fill="#f87171" opacity="0.85"/><line x1="360.5" y1="187.5" x2="360.5" y2="210.9" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="358.4" y="194.1" width="4.1" height="13.1" fill="#34d399" opacity="0.85"/><line x1="367.4" y1="192.5" x2="367.4" y2="213.1" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="365.3" y="193.3" width="4.1" height="3.0" fill="#f87171" opacity="0.85"/><line x1="374.2" y1="192.1" x2="374.2" y2="205.8" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="372.2" y="199.0" width="4.1" height="1.3" fill="#34d399" opacity="0.85"/><line x1="381.2" y1="198.1" x2="381.2" y2="210.8" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="379.1" y="199.0" width="4.1" height="7.5" fill="#f87171" opacity="0.85"/><line x1="388.1" y1="202.2" x2="388.1" y2="215.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="386.0" y="207.4" width="4.1" height="1.9" fill="#f87171" opacity="0.85"/><line x1="395.0" y1="209.3" x2="395.0" y2="225.1" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="392.9" y="211.3" width="4.1" height="9.5" fill="#f87171" opacity="0.85"/><line x1="401.9" y1="191.0" x2="401.9" y2="216.3" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="399.8" y="192.6" width="4.1" height="13.7" fill="#34d399" opacity="0.85"/><line x1="408.8" y1="176.8" x2="408.8" y2="207.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="406.7" y="179.0" width="4.1" height="17.7" fill="#34d399" opacity="0.85"/><line x1="415.7" y1="177.2" x2="415.7" y2="193.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="413.6" y="177.2" width="4.1" height="13.4" fill="#f87171" opacity="0.85"/><line x1="422.6" y1="191.1" x2="422.6" y2="210.4" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="420.5" y="191.9" width="4.1" height="11.1" fill="#f87171" opacity="0.85"/><line x1="429.5" y1="194.1" x2="429.5" y2="209.3" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="427.4" y="196.7" width="4.1" height="8.9" fill="#34d399" opacity="0.85"/><line x1="436.4" y1="196.6" x2="436.4" y2="213.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="434.3" y="196.9" width="4.1" height="7.6" fill="#f87171" opacity="0.85"/><line x1="443.2" y1="197.4" x2="443.2" y2="210.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="441.2" y="205.9" width="4.1" height="1.0" fill="#f87171" opacity="0.85"/><line x1="450.2" y1="171.7" x2="450.2" y2="206.2" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="448.1" y="176.8" width="4.1" height="27.4" fill="#34d399" opacity="0.85"/><line x1="457.1" y1="179.0" x2="457.1" y2="202.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="455.0" y="183.6" width="4.1" height="12.3" fill="#f87171" opacity="0.85"/><line x1="464.0" y1="194.8" x2="464.0" y2="212.7" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="461.9" y="194.8" width="4.1" height="17.9" fill="#f87171" opacity="0.85"/><line x1="470.9" y1="205.1" x2="470.9" y2="213.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="468.8" y="208.7" width="4.1" height="2.7" fill="#34d399" opacity="0.85"/><line x1="477.8" y1="182.3" x2="477.8" y2="204.3" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="475.7" y="186.4" width="4.1" height="18.0" fill="#34d399" opacity="0.85"/><line x1="484.7" y1="125.1" x2="484.7" y2="162.8" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="482.6" y="128.3" width="4.1" height="30.1" fill="#f87171" opacity="0.85"/><line x1="491.6" y1="146.4" x2="491.6" y2="164.4" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="489.5" y="156.7" width="4.1" height="7.7" fill="#34d399" opacity="0.85"/><line x1="498.5" y1="134.7" x2="498.5" y2="156.4" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="496.4" y="143.9" width="4.1" height="6.8" fill="#f87171" opacity="0.85"/><line x1="505.4" y1="153.9" x2="505.4" y2="176.4" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="503.3" y="157.4" width="4.1" height="14.5" fill="#f87171" opacity="0.85"/><line x1="512.2" y1="162.0" x2="512.2" y2="175.9" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="510.2" y="167.0" width="4.1" height="1.0" fill="#34d399" opacity="0.85"/><line x1="519.2" y1="149.7" x2="519.2" y2="171.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="517.1" y="160.8" width="4.1" height="4.8" fill="#f87171" opacity="0.85"/><line x1="526.1" y1="175.0" x2="526.1" y2="197.0" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="524.0" y="175.0" width="4.1" height="20.7" fill="#f87171" opacity="0.85"/><line x1="533.0" y1="176.3" x2="533.0" y2="205.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="530.9" y="184.2" width="4.1" height="11.9" fill="#34d399" opacity="0.85"/><line x1="539.9" y1="152.3" x2="539.9" y2="176.0" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="537.8" y="160.6" width="4.1" height="11.8" fill="#34d399" opacity="0.85"/><line x1="546.8" y1="159.9" x2="546.8" y2="175.4" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="544.7" y="159.9" width="4.1" height="15.2" fill="#f87171" opacity="0.85"/><line x1="553.6" y1="163.6" x2="553.6" y2="173.9" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="551.6" y="171.2" width="4.1" height="1.0" fill="#f87171" opacity="0.85"/><line x1="560.6" y1="175.9" x2="560.6" y2="207.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="558.5" y="177.2" width="4.1" height="19.1" fill="#f87171" opacity="0.85"/><line x1="567.5" y1="176.6" x2="567.5" y2="200.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="565.4" y="188.5" width="4.1" height="3.5" fill="#f87171" opacity="0.85"/><line x1="574.4" y1="186.0" x2="574.4" y2="209.6" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="572.3" y="197.9" width="4.1" height="7.1" fill="#f87171" opacity="0.85"/><line x1="581.2" y1="189.0" x2="581.2" y2="202.0" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="579.2" y="197.7" width="4.1" height="3.7" fill="#f87171" opacity="0.85"/><line x1="588.1" y1="195.9" x2="588.1" y2="213.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="586.1" y="195.9" width="4.1" height="14.4" fill="#f87171" opacity="0.85"/><line x1="595.1" y1="187.8" x2="595.1" y2="209.8" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="593.0" y="203.9" width="4.1" height="2.3" fill="#34d399" opacity="0.85"/><line x1="602.0" y1="193.5" x2="602.0" y2="216.0" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="599.9" y="203.2" width="4.1" height="9.2" fill="#f87171" opacity="0.85"/><line x1="608.9" y1="197.4" x2="608.9" y2="217.8" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="606.8" y="203.5" width="4.1" height="7.8" fill="#34d399" opacity="0.85"/><line x1="615.8" y1="193.4" x2="615.8" y2="221.9" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="613.7" y="195.9" width="4.1" height="11.9" fill="#34d399" opacity="0.85"/><line x1="622.6" y1="186.2" x2="622.6" y2="194.9" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="620.6" y="187.8" width="4.1" height="4.5" fill="#34d399" opacity="0.85"/><line x1="629.6" y1="178.6" x2="629.6" y2="202.8" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="627.5" y="187.2" width="4.1" height="12.2" fill="#f87171" opacity="0.85"/><line x1="636.5" y1="155.6" x2="636.5" y2="195.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="634.4" y="163.8" width="4.1" height="31.7" fill="#34d399" opacity="0.85"/><line x1="643.4" y1="170.0" x2="643.4" y2="183.3" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="641.3" y="170.0" width="4.1" height="6.2" fill="#f87171" opacity="0.85"/><line x1="650.2" y1="178.3" x2="650.2" y2="197.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="648.2" y="179.3" width="4.1" height="15.4" fill="#f87171" opacity="0.85"/><line x1="657.1" y1="208.4" x2="657.1" y2="231.6" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="655.1" y="210.7" width="4.1" height="9.7" fill="#f87171" opacity="0.85"/><line x1="664.1" y1="213.8" x2="664.1" y2="230.3" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="662.0" y="216.2" width="4.1" height="5.5" fill="#34d399" opacity="0.85"/><line x1="671.0" y1="203.4" x2="671.0" y2="222.6" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="668.9" y="215.3" width="4.1" height="5.8" fill="#f87171" opacity="0.85"/><line x1="677.9" y1="198.0" x2="677.9" y2="223.5" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="675.8" y="201.4" width="4.1" height="15.1" fill="#f87171" opacity="0.85"/><line x1="684.8" y1="158.0" x2="684.8" y2="208.5" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="682.7" y="171.3" width="4.1" height="33.9" fill="#34d399" opacity="0.85"/><line x1="691.7" y1="171.2" x2="691.7" y2="183.2" stroke="#f87171" stroke-width="1" opacity="0.7"/><rect x="689.6" y="177.2" width="4.1" height="5.4" fill="#f87171" opacity="0.85"/><line x1="698.6" y1="159.4" x2="698.6" y2="187.1" stroke="#34d399" stroke-width="1" opacity="0.7"/><rect x="696.5" y="160.0" width="4.1" height="25.9" fill="#34d399" opacity="0.85"/><rect x="706" y="152.0" width="50" height="16" fill="#34d399" rx="3" opacity="0.9"/><text x="709" y="164.0" fill="#0b0c10" font-size="9" font-family="JetBrains Mono, monospace" font-weight="700">147.97</text><text x="12" y="240" fill="#52545e" font-size="8" font-family="JetBrains Mono, monospace">VOL</text><rect x="13.4" y="290.3" width="4.1" height="9.7" fill="#f87171" opacity="0.55"/><rect x="20.3" y="288.8" width="4.1" height="11.2" fill="#34d399" opacity="0.55"/><rect x="27.2" y="287.7" width="4.1" height="12.3" fill="#34d399" opacity="0.55"/><rect x="34.1" y="286.5" width="4.1" height="13.5" fill="#f87171" opacity="0.55"/><rect x="41.0" y="282.3" width="4.1" height="17.7" fill="#34d399" opacity="0.55"/><rect x="47.9" y="286.1" width="4.1" height="13.9" fill="#f87171" opacity="0.55"/><rect x="54.8" y="287.9" width="4.1" height="12.1" fill="#f87171" opacity="0.55"/><rect x="61.7" y="290.9" width="4.1" height="9.1" fill="#34d399" opacity="0.55"/><rect x="68.6" y="292.9" width="4.1" height="7.1" fill="#f87171" opacity="0.55"/><rect x="75.5" y="289.4" width="4.1" height="10.6" fill="#34d399" opacity="0.55"/><rect x="82.4" y="287.9" width="4.1" height="12.1" fill="#34d399" opacity="0.55"/><rect x="89.3" y="289.9" width="4.1" height="10.1" fill="#34d399" opacity="0.55"/><rect x="96.2" y="288.1" width="4.1" height="11.9" fill="#34d399" opacity="0.55"/><rect x="103.1" y="288.3" width="4.1" height="11.7" fill="#34d399" opacity="0.55"/><rect x="110.0" y="287.5" width="4.1" height="12.5" fill="#f87171" opacity="0.55"/><rect x="116.9" y="290.0" width="4.1" height="10.0" fill="#34d399" opacity="0.55"/><rect x="123.8" y="289.1" width="4.1" height="10.9" fill="#f87171" opacity="0.55"/><rect x="130.7" y="290.5" width="4.1" height="9.5" fill="#34d399" opacity="0.55"/><rect x="137.6" y="290.2" width="4.1" height="9.8" fill="#34d399" opacity="0.55"/><rect x="144.5" y="287.1" width="4.1" height="12.9" fill="#34d399" opacity="0.55"/><rect x="151.4" y="286.6" width="4.1" height="13.4" fill="#f87171" opacity="0.55"/><rect x="158.3" y="287.3" width="4.1" height="12.7" fill="#f87171" opacity="0.55"/><rect x="165.2" y="286.2" width="4.1" height="13.8" fill="#f87171" opacity="0.55"/><rect x="172.1" y="289.7" width="4.1" height="10.3" fill="#34d399" opacity="0.55"/><rect x="179.0" y="289.0" width="4.1" height="11.0" fill="#34d399" opacity="0.55"/><rect x="185.9" y="285.9" width="4.1" height="14.1" fill="#34d399" opacity="0.55"/><rect x="192.8" y="290.7" width="4.1" height="9.3" fill="#34d399" opacity="0.55"/><rect x="199.7" y="292.5" width="4.1" height="7.5" fill="#f87171" opacity="0.55"/><rect x="206.6" y="293.3" width="4.1" height="6.7" fill="#f87171" opacity="0.55"/><rect x="213.5" y="285.8" width="4.1" height="14.2" fill="#34d399" opacity="0.55"/><rect x="220.4" y="291.3" width="4.1" height="8.7" fill="#f87171" opacity="0.55"/><rect x="227.3" y="290.3" width="4.1" height="9.7" fill="#f87171" opacity="0.55"/><rect x="234.2" y="291.6" width="4.1" height="8.4" fill="#f87171" opacity="0.55"/><rect x="241.1" y="290.4" width="4.1" height="9.6" fill="#f87171" opacity="0.55"/><rect x="248.0" y="292.2" width="4.1" height="7.8" fill="#f87171" opacity="0.55"/><rect x="254.9" y="288.0" width="4.1" height="12.0" fill="#34d399" opacity="0.55"/><rect x="261.8" y="292.6" width="4.1" height="7.4" fill="#34d399" opacity="0.55"/><rect x="268.7" y="291.5" width="4.1" height="8.5" fill="#f87171" opacity="0.55"/><rect x="275.6" y="291.9" width="4.1" height="8.1" fill="#f87171" opacity="0.55"/><rect x="282.5" y="293.0" width="4.1" height="7.0" fill="#f87171" opacity="0.55"/><rect x="289.4" y="293.4" width="4.1" height="6.6" fill="#34d399" opacity="0.55"/><rect x="296.3" y="294.1" width="4.1" height="5.9" fill="#f87171" opacity="0.55"/><rect x="303.2" y="290.4" width="4.1" height="9.6" fill="#f87171" opacity="0.55"/><rect x="310.1" y="290.1" width="4.1" height="9.9" fill="#f87171" opacity="0.55"/><rect x="317.0" y="242.0" width="4.1" height="58.0" fill="#f87171" opacity="0.55"/><rect x="323.9" y="290.1" width="4.1" height="9.9" fill="#f87171" opacity="0.55"/><rect x="330.8" y="291.8" width="4.1" height="8.2" fill="#f87171" opacity="0.55"/><rect x="337.7" y="291.9" width="4.1" height="8.1" fill="#34d399" opacity="0.55"/><rect x="344.6" y="293.8" width="4.1" height="6.2" fill="#f87171" opacity="0.55"/><rect x="351.5" y="288.9" width="4.1" height="11.1" fill="#f87171" opacity="0.55"/><rect x="358.4" y="288.9" width="4.1" height="11.1" fill="#34d399" opacity="0.55"/><rect x="365.3" y="290.0" width="4.1" height="10.0" fill="#f87171" opacity="0.55"/><rect x="372.2" y="292.3" width="4.1" height="7.7" fill="#34d399" opacity="0.55"/><rect x="379.1" y="294.3" width="4.1" height="5.7" fill="#f87171" opacity="0.55"/><rect x="386.0" y="293.5" width="4.1" height="6.5" fill="#f87171" opacity="0.55"/><rect x="392.9" y="293.1" width="4.1" height="6.9" fill="#f87171" opacity="0.55"/><rect x="399.8" y="289.6" width="4.1" height="10.4" fill="#34d399" opacity="0.55"/><rect x="406.7" y="293.5" width="4.1" height="6.5" fill="#34d399" opacity="0.55"/><rect x="413.6" y="290.6" width="4.1" height="9.4" fill="#f87171" opacity="0.55"/><rect x="420.5" y="293.2" width="4.1" height="6.8" fill="#f87171" opacity="0.55"/><rect x="427.4" y="293.7" width="4.1" height="6.3" fill="#34d399" opacity="0.55"/><rect x="434.3" y="292.6" width="4.1" height="7.4" fill="#f87171" opacity="0.55"/><rect x="441.2" y="293.4" width="4.1" height="6.6" fill="#f87171" opacity="0.55"/><rect x="448.1" y="289.6" width="4.1" height="10.4" fill="#34d399" opacity="0.55"/><rect x="455.0" y="292.3" width="4.1" height="7.7" fill="#f87171" opacity="0.55"/><rect x="461.9" y="289.3" width="4.1" height="10.7" fill="#f87171" opacity="0.55"/><rect x="468.8" y="293.1" width="4.1" height="6.9" fill="#34d399" opacity="0.55"/><rect x="475.7" y="289.2" width="4.1" height="10.8" fill="#34d399" opacity="0.55"/><rect x="482.6" y="286.8" width="4.1" height="13.2" fill="#f87171" opacity="0.55"/><rect x="489.5" y="291.2" width="4.1" height="8.8" fill="#34d399" opacity="0.55"/><rect x="496.4" y="292.4" width="4.1" height="7.6" fill="#f87171" opacity="0.55"/><rect x="503.3" y="291.4" width="4.1" height="8.6" fill="#f87171" opacity="0.55"/><rect x="510.2" y="290.9" width="4.1" height="9.1" fill="#34d399" opacity="0.55"/><rect x="517.1" y="293.5" width="4.1" height="6.5" fill="#f87171" opacity="0.55"/><rect x="524.0" y="290.8" width="4.1" height="9.2" fill="#f87171" opacity="0.55"/><rect x="530.9" y="292.7" width="4.1" height="7.3" fill="#34d399" opacity="0.55"/><rect x="537.8" y="291.0" width="4.1" height="9.0" fill="#34d399" opacity="0.55"/><rect x="544.7" y="290.9" width="4.1" height="9.1" fill="#f87171" opacity="0.55"/><rect x="551.6" y="294.5" width="4.1" height="5.5" fill="#f87171" opacity="0.55"/><rect x="558.5" y="292.8" width="4.1" height="7.2" fill="#f87171" opacity="0.55"/><rect x="565.4" y="291.3" width="4.1" height="8.7" fill="#f87171" opacity="0.55"/><rect x="572.3" y="293.6" width="4.1" height="6.4" fill="#f87171" opacity="0.55"/><rect x="579.2" y="290.8" width="4.1" height="9.2" fill="#f87171" opacity="0.55"/><rect x="586.1" y="293.3" width="4.1" height="6.7" fill="#f87171" opacity="0.55"/><rect x="593.0" y="292.6" width="4.1" height="7.4" fill="#34d399" opacity="0.55"/><rect x="599.9" y="292.0" width="4.1" height="8.0" fill="#f87171" opacity="0.55"/><rect x="606.8" y="292.0" width="4.1" height="8.0" fill="#34d399" opacity="0.55"/><rect x="613.7" y="294.0" width="4.1" height="6.0" fill="#34d399" opacity="0.55"/><rect x="620.6" y="295.6" width="4.1" height="4.4" fill="#34d399" opacity="0.55"/><rect x="627.5" y="292.2" width="4.1" height="7.8" fill="#f87171" opacity="0.55"/><rect x="634.4" y="290.4" width="4.1" height="9.6" fill="#34d399" opacity="0.55"/><rect x="641.3" y="290.2" width="4.1" height="9.8" fill="#f87171" opacity="0.55"/><rect x="648.2" y="288.2" width="4.1" height="11.8" fill="#f87171" opacity="0.55"/><rect x="655.1" y="289.4" width="4.1" height="10.6" fill="#f87171" opacity="0.55"/><rect x="662.0" y="290.8" width="4.1" height="9.2" fill="#34d399" opacity="0.55"/><rect x="668.9" y="291.1" width="4.1" height="8.9" fill="#f87171" opacity="0.55"/><rect x="675.8" y="292.2" width="4.1" height="7.8" fill="#f87171" opacity="0.55"/><rect x="682.7" y="289.5" width="4.1" height="10.5" fill="#34d399" opacity="0.55"/><rect x="689.6" y="293.1" width="4.1" height="6.9" fill="#f87171" opacity="0.55"/><rect x="696.5" y="297.9" width="4.1" height="2.1" fill="#34d399" opacity="0.55"/><text x="12" y="302" fill="#52545e" font-size="8" font-family="JetBrains Mono, monospace">MACD</text><line x1="12" y1="345.0" x2="702" y2="345.0" stroke="#33363f" stroke-width="1"/><rect x="13.4" y="345.0" width="4.1" height="1.0" fill="#34d399" opacity="0.65"/><rect x="20.3" y="345.0" width="4.1" height="1.0" fill="#f87171" opacity="0.65"/><rect x="27.2" y="342.6" width="4.1" height="2.4" fill="#34d399" opacity="0.65"/><rect x="34.1" y="342.1" width="4.1" height="2.9" fill="#34d399" opacity="0.65"/><rect x="41.0" y="338.0" width="4.1" height="7.0" fill="#34d399" opacity="0.65"/><rect x="47.9" y="334.4" width="4.1" height="10.6" fill="#34d399" opacity="0.65"/><rect x="54.8" y="333.5" width="4.1" height="11.5" fill="#34d399" opacity="0.65"/><rect x="61.7" y="334.8" width="4.1" height="10.2" fill="#34d399" opacity="0.65"/><rect x="68.6" y="337.3" width="4.1" height="7.7" fill="#34d399" opacity="0.65"/><rect x="75.5" y="336.7" width="4.1" height="8.3" fill="#34d399" opacity="0.65"/><rect x="82.4" y="334.9" width="4.1" height="10.1" fill="#34d399" opacity="0.65"/><rect x="89.3" y="333.0" width="4.1" height="12.0" fill="#34d399" opacity="0.65"/><rect x="96.2" y="330.4" width="4.1" height="14.6" fill="#34d399" opacity="0.65"/><rect x="103.1" y="328.1" width="4.1" height="16.9" fill="#34d399" opacity="0.65"/><rect x="110.0" y="326.0" width="4.1" height="19.0" fill="#34d399" opacity="0.65"/><rect x="116.9" y="325.4" width="4.1" height="19.6" fill="#34d399" opacity="0.65"/><rect x="123.8" y="328.3" width="4.1" height="16.7" fill="#34d399" opacity="0.65"/><rect x="130.7" y="329.6" width="4.1" height="15.4" fill="#34d399" opacity="0.65"/><rect x="137.6" y="330.6" width="4.1" height="14.4" fill="#34d399" opacity="0.65"/><rect x="144.5" y="331.2" width="4.1" height="13.8" fill="#34d399" opacity="0.65"/><rect x="151.4" y="334.0" width="4.1" height="11.0" fill="#34d399" opacity="0.65"/><rect x="158.3" y="337.4" width="4.1" height="7.6" fill="#34d399" opacity="0.65"/><rect x="165.2" y="343.2" width="4.1" height="1.8" fill="#34d399" opacity="0.65"/><rect x="172.1" y="345.0" width="4.1" height="1.0" fill="#f87171" opacity="0.65"/><rect x="179.0" y="345.0" width="4.1" height="1.0" fill="#f87171" opacity="0.65"/><rect x="185.9" y="341.2" width="4.1" height="3.8" fill="#34d399" opacity="0.65"/><rect x="192.8" y="339.2" width="4.1" height="5.8" fill="#34d399" opacity="0.65"/><rect x="199.7" y="340.7" width="4.1" height="4.3" fill="#34d399" opacity="0.65"/><rect x="206.6" y="342.1" width="4.1" height="2.9" fill="#34d399" opacity="0.65"/><rect x="213.5" y="340.1" width="4.1" height="4.9" fill="#34d399" opacity="0.65"/><rect x="220.4" y="343.5" width="4.1" height="1.5" fill="#34d399" opacity="0.65"/><rect x="227.3" y="345.0" width="4.1" height="5.3" fill="#f87171" opacity="0.65"/><rect x="234.2" y="345.0" width="4.1" height="11.3" fill="#f87171" opacity="0.65"/><rect x="241.1" y="345.0" width="4.1" height="19.6" fill="#f87171" opacity="0.65"/><rect x="248.0" y="345.0" width="4.1" height="24.6" fill="#f87171" opacity="0.65"/><rect x="254.9" y="345.0" width="4.1" height="25.2" fill="#f87171" opacity="0.65"/><rect x="261.8" y="345.0" width="4.1" height="23.9" fill="#f87171" opacity="0.65"/><rect x="268.7" y="345.0" width="4.1" height="24.9" fill="#f87171" opacity="0.65"/><rect x="275.6" y="345.0" width="4.1" height="27.5" fill="#f87171" opacity="0.65"/><rect x="282.5" y="345.0" width="4.1" height="27.7" fill="#f87171" opacity="0.65"/><rect x="289.4" y="345.0" width="4.1" height="25.0" fill="#f87171" opacity="0.65"/><rect x="296.3" y="345.0" width="4.1" height="22.8" fill="#f87171" opacity="0.65"/><rect x="303.2" y="345.0" width="4.1" height="25.2" fill="#f87171" opacity="0.65"/><rect x="310.1" y="345.0" width="4.1" height="27.4" fill="#f87171" opacity="0.65"/><rect x="317.0" y="345.0" width="4.1" height="27.8" fill="#f87171" opacity="0.65"/><rect x="323.9" y="345.0" width="4.1" height="26.8" fill="#f87171" opacity="0.65"/><rect x="330.8" y="345.0" width="4.1" height="25.4" fill="#f87171" opacity="0.65"/><rect x="337.7" y="345.0" width="4.1" height="22.1" fill="#f87171" opacity="0.65"/><rect x="344.6" y="345.0" width="4.1" height="20.2" fill="#f87171" opacity="0.65"/><rect x="351.5" y="345.0" width="4.1" height="17.2" fill="#f87171" opacity="0.65"/><rect x="358.4" y="345.0" width="4.1" height="12.0" fill="#f87171" opacity="0.65"/><rect x="365.3" y="345.0" width="4.1" height="7.9" fill="#f87171" opacity="0.65"/><rect x="372.2" y="345.0" width="4.1" height="4.9" fill="#f87171" opacity="0.65"/><rect x="379.1" y="345.0" width="4.1" height="3.3" fill="#f87171" opacity="0.65"/><rect x="386.0" y="345.0" width="4.1" height="2.0" fill="#f87171" opacity="0.65"/><rect x="392.9" y="345.0" width="4.1" height="2.2" fill="#f87171" opacity="0.65"/><rect x="399.8" y="343.0" width="4.1" height="2.0" fill="#34d399" opacity="0.65"/><rect x="406.7" y="338.1" width="4.1" height="6.9" fill="#34d399" opacity="0.65"/><rect x="413.6" y="336.5" width="4.1" height="8.5" fill="#34d399" opacity="0.65"/><rect x="420.5" y="337.2" width="4.1" height="7.8" fill="#34d399" opacity="0.65"/><rect x="427.4" y="336.8" width="4.1" height="8.2" fill="#34d399" opacity="0.65"/><rect x="434.3" y="337.6" width="4.1" height="7.4" fill="#34d399" opacity="0.65"/><rect x="441.2" y="338.4" width="4.1" height="6.6" fill="#34d399" opacity="0.65"/><rect x="448.1" y="334.9" width="4.1" height="10.1" fill="#34d399" opacity="0.65"/><rect x="455.0" y="335.4" width="4.1" height="9.6" fill="#34d399" opacity="0.65"/><rect x="461.9" y="338.2" width="4.1" height="6.8" fill="#34d399" opacity="0.65"/><rect x="468.8" y="339.5" width="4.1" height="5.5" fill="#34d399" opacity="0.65"/><rect x="475.7" y="337.3" width="4.1" height="7.7" fill="#34d399" opacity="0.65"/><rect x="482.6" y="332.2" width="4.1" height="12.8" fill="#34d399" opacity="0.65"/><rect x="489.5" y="329.3" width="4.1" height="15.7" fill="#34d399" opacity="0.65"/><rect x="496.4" y="327.2" width="4.1" height="17.8" fill="#34d399" opacity="0.65"/><rect x="503.3" y="329.6" width="4.1" height="15.4" fill="#34d399" opacity="0.65"/><rect x="510.2" y="331.1" width="4.1" height="13.9" fill="#34d399" opacity="0.65"/><rect x="517.1" y="332.4" width="4.1" height="12.6" fill="#34d399" opacity="0.65"/><rect x="524.0" y="337.9" width="4.1" height="7.1" fill="#34d399" opacity="0.65"/><rect x="530.9" y="340.1" width="4.1" height="4.9" fill="#34d399" opacity="0.65"/><rect x="537.8" y="338.6" width="4.1" height="6.4" fill="#34d399" opacity="0.65"/><rect x="544.7" y="339.8" width="4.1" height="5.2" fill="#34d399" opacity="0.65"/><rect x="551.6" y="340.5" width="4.1" height="4.5" fill="#34d399" opacity="0.65"/><rect x="558.5" y="344.4" width="4.1" height="1.0" fill="#34d399" opacity="0.65"/><rect x="565.4" y="345.0" width="4.1" height="1.2" fill="#f87171" opacity="0.65"/><rect x="572.3" y="345.0" width="4.1" height="4.1" fill="#f87171" opacity="0.65"/><rect x="579.2" y="345.0" width="4.1" height="5.2" fill="#f87171" opacity="0.65"/><rect x="586.1" y="345.0" width="4.1" height="6.7" fill="#f87171" opacity="0.65"/><rect x="593.0" y="345.0" width="4.1" height="6.5" fill="#f87171" opacity="0.65"/><rect x="599.9" y="345.0" width="4.1" height="7.0" fill="#f87171" opacity="0.65"/><rect x="606.8" y="345.0" width="4.1" height="5.7" fill="#f87171" opacity="0.65"/><rect x="613.7" y="345.0" width="4.1" height="3.5" fill="#f87171" opacity="0.65"/><rect x="620.6" y="345.0" width="4.1" height="1.0" fill="#f87171" opacity="0.65"/><rect x="627.5" y="345.0" width="4.1" height="1.0" fill="#f87171" opacity="0.65"/><rect x="634.4" y="340.3" width="4.1" height="4.7" fill="#34d399" opacity="0.65"/><rect x="641.3" y="339.0" width="4.1" height="6.0" fill="#34d399" opacity="0.65"/><rect x="648.2" y="340.8" width="4.1" height="4.2" fill="#34d399" opacity="0.65"/><rect x="655.1" y="345.0" width="4.1" height="1.0" fill="#f87171" opacity="0.65"/><rect x="662.0" y="345.0" width="4.1" height="2.9" fill="#f87171" opacity="0.65"/><rect x="668.9" y="345.0" width="4.1" height="4.8" fill="#f87171" opacity="0.65"/><rect x="675.8" y="345.0" width="4.1" height="5.1" fill="#f87171" opacity="0.65"/><rect x="682.7" y="343.7" width="4.1" height="1.3" fill="#34d399" opacity="0.65"/><rect x="689.6" y="341.3" width="4.1" height="3.7" fill="#34d399" opacity="0.65"/><rect x="696.5" y="336.8" width="4.1" height="8.2" fill="#34d399" opacity="0.65"/><path d="M 15.4,345.0 L 22.4,345.1 L 29.2,343.5 L 36.2,342.9 L 43.0,340.0 L 50.0,336.9 L 56.9,335.0 L 63.8,334.3 L 70.7,334.6 L 77.5,333.3 L 84.5,331.2 L 91.4,328.7 L 98.2,325.6 L 105.2,322.3 L 112.1,318.9 L 119.0,316.2 L 125.9,315.5 L 132.8,314.2 L 139.7,313.0 L 146.6,311.5 L 153.5,311.6 L 160.3,312.3 L 167.2,315.0 L 174.2,316.3 L 181.1,316.3 L 188.0,313.7 L 194.9,311.9 L 201.8,312.1 L 208.7,312.5 L 215.6,310.8 L 222.5,312.4 L 229.4,316.4 L 236.2,320.8 L 243.2,327.4 L 250.1,333.0 L 257.0,336.5 L 263.9,338.8 L 270.8,342.4 L 277.7,347.1 L 284.6,350.7 L 291.4,352.5 L 298.4,354.2 L 305.2,358.6 L 312.2,363.1 L 319.1,366.8 L 325.9,369.6 L 332.9,372.1 L 339.8,373.2 L 346.7,374.8 L 353.6,375.5 L 360.5,374.4 L 367.4,373.3 L 374.2,372.4 L 381.2,372.0 L 388.1,371.7 L 395.0,372.0 L 401.9,369.6 L 408.8,366.3 L 415.7,364.5 L 422.6,363.8 L 429.5,362.6 L 436.4,362.1 L 443.2,361.7 L 450.2,358.7 L 457.1,357.7 L 464.0,358.3 L 470.9,358.2 L 477.8,356.1 L 484.7,352.0 L 491.6,348.6 L 498.5,345.3 L 505.4,344.6 L 512.2,343.6 L 519.2,342.7 L 526.1,344.6 L 533.0,345.1 L 539.9,343.5 L 546.8,343.4 L 553.6,343.2 L 560.6,345.1 L 567.5,346.2 L 574.4,348.1 L 581.2,349.3 L 588.1,350.9 L 595.1,351.6 L 602.0,352.8 L 608.9,352.8 L 615.8,352.2 L 622.6,350.9 L 629.6,350.8 L 636.5,347.6 L 643.4,346.2 L 650.2,346.6 L 657.1,349.1 L 664.1,350.6 L 671.0,352.1 L 677.9,352.9 L 684.8,349.6 L 691.7,347.9 L 698.6,344.6" stroke="#f5b942" stroke-width="1" fill="none"/><path d="M 15.4,345.0 L 22.4,345.0 L 29.2,344.7 L 36.2,344.4 L 43.0,343.5 L 50.0,342.2 L 56.9,340.7 L 63.8,339.4 L 70.7,338.5 L 77.5,337.4 L 84.5,336.2 L 91.4,334.7 L 98.2,332.9 L 105.2,330.8 L 112.1,328.4 L 119.0,325.9 L 125.9,323.9 L 132.8,321.9 L 139.7,320.1 L 146.6,318.4 L 153.5,317.0 L 160.3,316.1 L 167.2,315.9 L 174.2,316.0 L 181.1,316.0 L 188.0,315.6 L 194.9,314.8 L 201.8,314.3 L 208.7,313.9 L 215.6,313.3 L 222.5,313.1 L 229.4,313.8 L 236.2,315.2 L 243.2,317.6 L 250.1,320.7 L 257.0,323.9 L 263.9,326.8 L 270.8,330.0 L 277.7,333.4 L 284.6,336.9 L 291.4,340.0 L 298.4,342.8 L 305.2,346.0 L 312.2,349.4 L 319.1,352.9 L 325.9,356.2 L 332.9,359.4 L 339.8,362.2 L 346.7,364.7 L 353.6,366.9 L 360.5,368.4 L 367.4,369.3 L 374.2,370.0 L 381.2,370.4 L 388.1,370.6 L 395.0,370.9 L 401.9,370.7 L 408.8,369.8 L 415.7,368.7 L 422.6,367.7 L 429.5,366.7 L 436.4,365.8 L 443.2,365.0 L 450.2,363.7 L 457.1,362.5 L 464.0,361.7 L 470.9,361.0 L 477.8,360.0 L 484.7,358.4 L 491.6,356.4 L 498.5,354.2 L 505.4,352.3 L 512.2,350.6 L 519.2,349.0 L 526.1,348.1 L 533.0,347.5 L 539.9,346.7 L 546.8,346.0 L 553.6,345.5 L 560.6,345.4 L 567.5,345.5 L 574.4,346.1 L 581.2,346.7 L 588.1,347.5 L 595.1,348.4 L 602.0,349.2 L 608.9,350.0 L 615.8,350.4 L 622.6,350.5 L 629.6,350.5 L 636.5,350.0 L 643.4,349.2 L 650.2,348.7 L 657.1,348.8 L 664.1,349.1 L 671.0,349.7 L 677.9,350.4 L 684.8,350.2 L 691.7,349.7 L 698.6,348.7" stroke="#7aa2ff" stroke-width="1" fill="none"/><text x="22" y="314" fill="#8a8c98" font-size="8" font-family="JetBrains Mono, monospace">DIF +0.05  DEA -0.45  HIST +0.99</text><text x="188.0" y="394" fill="#52545e" font-size="8" text-anchor="middle" font-family="JetBrains Mono, monospace">bar 25</text><text x="360.5" y="394" fill="#52545e" font-size="8" text-anchor="middle" font-family="JetBrains Mono, monospace">bar 50</text><text x="533.0" y="394" fill="#52545e" font-size="8" text-anchor="middle" font-family="JetBrains Mono, monospace">bar 75</text><rect x="20" y="19" width="14" height="2" fill="#f5b942" rx="1"/><text x="38" y="26" fill="#f5b942" font-size="9" font-family="JetBrains Mono, monospace">MA5</text><rect x="80" y="19" width="14" height="2" fill="#7aa2ff" rx="1"/><text x="98" y="26" fill="#7aa2ff" font-size="9" font-family="JetBrains Mono, monospace">MA20</text><rect x="140" y="19" width="14" height="2" fill="#b18cff" rx="1"/><text x="158" y="26" fill="#b18cff" font-size="9" font-family="JetBrains Mono, monospace">MA60</text></svg>
+        <div class="chart-legend">
+          <span><span class="legend-dot" style="background:#f5b942"></span>MA5</span>
+          <span><span class="legend-dot" style="background:#7aa2ff"></span>MA20</span>
+          <span><span class="legend-dot" style="background:#b18cff"></span>MA60</span>
+          <span><span class="legend-dot" style="background:#34d399"></span>Bull candle</span>
+          <span><span class="legend-dot" style="background:#f87171"></span>Bear candle</span>
+        </div>
+      
+    </div>
+
+    <div class="tech-sidebar">
+      
+      <div class="ring-card">
+        <div class="ring-large">
+          <svg width="100" height="100">
+            <circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.06)" stroke-width="5" fill="none"/>
+            <circle cx="50" cy="50" r="45" stroke="#f5b942" stroke-width="5" fill="none"
+              stroke-dasharray="161.16 282.74" stroke-linecap="round"/>
+          </svg>
+          <div class="ring-num" style="color:#f5b942">57</div>
+        </div>
+        <span class="strength-big mid">中性觀望 ⚖️</span>
+        <span class="breakout-badge" style="background:rgba(245,185,66,0.10);color:#f5b942;border:1px solid #f5b94240">
+          Neutral
+        </span>
+        <div style="font-size:11px;color:var(--text-2);text-align:center">信號分數 57/100</div>
+      </div>
+
+      
+      <div style="background:var(--elevated);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Technical Signals</div>
+        
+        <div class="check-list">
+          
+          <div class="check-item">⚠️ 價格站上 MA60</div>
+          
+          <div class="check-item">✅ RSI 動能走強（58.0 ↑）</div>
+          
+          <div class="check-item">✅ MACD 金叉且動能擴張（0軸以上）</div>
+          
+          <div class="check-item">⚠️ 量能不足（0.3× 均量）</div>
+          
+          <div class="check-item">🟡 略高於 MA60（+2.7%）</div>
+          
+          <div class="check-item">KD 中性（K=80.3 · D=57.5）</div>
+          
+          <div class="check-item">⚠️ 價格在 EMA200 之上，但 EMA200 下彎 — 大趨勢轉弱</div>
+          
+          <div class="check-item">✅ 距52週高 -10.9% — 高位強勢</div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div style="background:var(--elevated);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Score Breakdown <span style="font-weight:400;opacity:.5">(5 × 20 = 100)</span></div>
+        
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="MA stack alignment — price > MA5 > MA20 > MA60">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">① Trend</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:25.0%;background:#fbbf24;border-radius:2px;transition:width .3s"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#fbbf24;min-width:24px;text-align:right">5</span>
+        </div>
+        
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="45–70 rising = 20 · 30–45 = 10 · <30 oversold = 8">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">② RSI</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px;transition:width .3s"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">20</span>
+        </div>
+        
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="Golden cross expanding = 20 · cross only = 12 · converging = 8">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">③ MACD</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:100.0%;background:#34d399;border-radius:2px;transition:width .3s"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">20</span>
+        </div>
+        
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title="≥1.5× = 20 · 1.0–1.5× = 10 · <1.0× = 0">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">④ Volume</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:0.0%;background:#52545e;border-radius:2px;transition:width .3s"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#52545e;min-width:24px;text-align:right">0</span>
+        </div>
+        
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px" title=">5% above MA60 = 20 · above = 12 · below = 0">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--text-2);min-width:64px">⑤ MA60</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:60.0%;background:#34d399;border-radius:2px;transition:width .3s"></div>
+          </div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;color:#34d399;min-width:24px;text-align:right">12</span>
+        </div>
+        
+        <div style="border-top:1px solid var(--border);margin-top:4px;padding-top:4px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--text-2)">
+          <span>Estimated</span>
+          <span style="font-weight:700;color:#fbbf24">57/100</span>
+        </div>
+      </div>
+
+      
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">Moving Averages</div>
+        <div class="badge-row">
+          <span class="ma-badge ma5">MA5 · 144.12</span>
+          <span class="ma-badge ma20">MA20 · 143.3</span>
+          <span class="ma-badge ma60">MA60 · 144.06</span>
+        </div>
+        <div class="badge-row" style="margin-top:6px">
+          <span class="rsi-badge">RSI · 58.0</span>
+          <span class="vol-badge">Vol · 0.3×</span>
+          <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;color:#f87171;background:#f8717114;border:1px solid #f8717133"
+                title="BB %B: 1.00 — 0=lower band, 1=upper band. Near upper band">
+            BB 1.00</span>
+          <span style="font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 7px;border-radius:5px;color:#f87171;background:#f8717114;border:1px solid #f8717133"
+                title="KD(9,3,3): K=80.3 · D=57.5. Overbought">
+            KD · 80</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-2">
+
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">三</span>
+      <span class="sec-title">催化劑 Key Catalysts</span>
+    </div>
+    <div class="check-list">
+      
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">1.</span>⚠️ 價格站上 MA60</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">2.</span>✅ RSI 動能走強（58.0 ↑）</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">3.</span>✅ MACD 金叉且動能擴張（0軸以上）</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">4.</span>⚠️ 量能不足（0.3× 均量）</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">5.</span>🟡 略高於 MA60（+2.7%）</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">6.</span>KD 中性（K=80.3 · D=57.5）</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">7.</span>⚠️ 價格在 EMA200 之上，但 EMA200 下彎 — 大趨勢轉弱</div>
+      
+      <div class="num-item"><span style="color:var(--amber);font-weight:700;margin-right:6px">8.</span>✅ 距52週高 -10.9% — 高位強勢</div>
+      
+      
+    </div>
+    
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Latest News</div>
+      
+      <div style="font-size:12px;color:var(--text);padding:7px 9px;background:var(--elevated);border-radius:6px;border-left:2px solid var(--border-hi);margin-bottom:5px;line-height:1.5">
+        Tims China picks Kwok Wah Cheung as new CEO
+        <span style="display:block;font-family:var(--mono);font-size:9px;color:var(--text-2);margin-top:3px">Verdict Food Service</span>
+      </div>
+      
+      <div style="font-size:12px;color:var(--text);padding:7px 9px;background:var(--elevated);border-radius:6px;border-left:2px solid var(--border-hi);margin-bottom:5px;line-height:1.5">
+        A Portfolio That Doubles Your Social Security Check—and Your Spouse’s
+        <span style="display:block;font-family:var(--mono);font-size:9px;color:var(--text-2);margin-top:3px">24/7 Wall St.</span>
+      </div>
+      
+      <div style="font-size:12px;color:var(--text);padding:7px 9px;background:var(--elevated);border-radius:6px;border-left:2px solid var(--border-hi);margin-bottom:5px;line-height:1.5">
+        Get Paid Like an Indiana Police Officer With $5,000 a Month in Dividend Income After Taxes
+        <span style="display:block;font-family:var(--mono);font-size:9px;color:var(--text-2);margin-top:3px">24/7 Wall St.</span>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">四</span>
+      <span class="sec-title">AI 影響分析</span>
+    </div>
+    
+    <div class="check-list">
+      
+      
+      <div class="check-item">①目前盤面偏強，股價企穩於均線之上</div>
+      
+      <div class="check-item">②關鍵價位：上方阻力148.50，下方支撐146.00</div>
+      
+      <div class="check-item">③高機率劇本：若能突破148.50，有望測試150；若跌破146.00，可能回調至144.50</div>
+      
+    </div>
+    
+  </div>
+
+</div><!-- /.row-2 -->
+
+
+<div class="row-3">
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">六</span>
+      <span class="sec-title">關鍵價位 Key Levels</span>
+    </div>
+    <div class="level-boxes">
+      
+      <div class="lbox resistance">
+        <span class="lbox-label">
+          52W 高點壓力
+          <span class="lbox-tier-tag">壓力</span>
+        </span>
+        <span class="lbox-val">$192.36</span>
+      </div>
+      
+      <div class="lbox support">
+        <span class="lbox-label">
+          MA20 支撐
+          <span class="lbox-tier-tag">支撐</span>
+        </span>
+        <span class="lbox-val">$143.30</span>
+      </div>
+      
+      <div class="lbox support">
+        <span class="lbox-label">
+          MA60 主要支撐
+          <span class="lbox-tier-tag">支撐</span>
+        </span>
+        <span class="lbox-val">$144.06</span>
+      </div>
+      
+      <div class="lbox support">
+        <span class="lbox-label">
+          52W 低點支撐
+          <span class="lbox-tier-tag">支撐</span>
+        </span>
+        <span class="lbox-val">$103.58</span>
+      </div>
+      
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">七</span>
+      <span class="sec-title">未來劇本 Scenarios</span>
+    </div>
+    <div class="scen-cards">
+      
+      <div class="scen-card-v2 up">
+        <div class="scen-head">
+          <div class="scen-icon-title">
+            <span>🐂</span>
+            <span style="color:#34d399">強勢續漲</span>
+          </div>
+          <span class="scen-pct" style="color:#34d399">30%</span>
+        </div>
+        <div class="scen-pbar">
+          <div class="scen-pfill" style="width:30%;background:#34d399"></div>
+        </div>
+        <div class="scen-desc-v2">技術面強勢，信號分數 57/100，資金持續流入</div>
+        <div class="scen-range" style="color:#34d399">目標：155.37 → 165.73</div>
+      </div>
+      
+      <div class="scen-card-v2 amber">
+        <div class="scen-head">
+          <div class="scen-icon-title">
+            <span>⟿</span>
+            <span style="color:#f5b942">高檔震盪</span>
+          </div>
+          <span class="scen-pct" style="color:#f5b942">45%</span>
+        </div>
+        <div class="scen-pbar">
+          <div class="scen-pfill" style="width:45%;background:#f5b942"></div>
+        </div>
+        <div class="scen-desc-v2">整理換手，等待方向選擇</div>
+        <div class="scen-range" style="color:#f5b942">目標：142.05 ~ 153.89</div>
+      </div>
+      
+      <div class="scen-card-v2 down">
+        <div class="scen-head">
+          <div class="scen-icon-title">
+            <span>🐻</span>
+            <span style="color:#f87171">短線回調</span>
+          </div>
+          <span class="scen-pct" style="color:#f87171">25%</span>
+        </div>
+        <div class="scen-pbar">
+          <div class="scen-pfill" style="width:25%;background:#f87171"></div>
+        </div>
+        <div class="scen-desc-v2">回測支撐，需留意止損</div>
+        <div class="scen-range" style="color:#f87171">目標：130.21 ~ 140.57</div>
+      </div>
+      
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">五</span>
+      <span class="sec-title">歷史回調統計（日線）</span>
+    </div>
+    
+    <svg width="100%" viewBox="0 0 440 150" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="99.0" width="420" height="33.0" fill="rgba(52,211,153,0.06)" rx="3"/><path d="M 10.0,109.9 L 14.2,110.2 L 18.5,102.0 L 22.7,105.1 L 27.0,92.2 L 31.2,87.9 L 35.5,90.2 L 39.7,94.0 L 43.9,97.4 L 48.2,88.8 L 52.4,82.5 L 56.7,77.7 L 60.9,70.6 L 65.2,65.4 L 69.4,59.6 L 73.6,57.7 L 77.9,63.9 L 82.1,58.0 L 86.4,55.0 L 90.6,50.9 L 94.8,54.7 L 99.1,56.4 L 103.3,65.5 L 107.6,59.8 L 111.8,52.3 L 116.1,37.6 L 120.3,37.3 L 124.5,43.6 L 128.8,42.4 L 133.0,30.8 L 137.3,43.2 L 141.5,55.9 L 145.8,60.6 L 150.0,75.1 L 154.2,76.3 L 158.5,71.0 L 162.7,68.3 L 167.0,77.3 L 171.2,86.8 L 175.5,86.3 L 179.7,81.4 L 183.9,83.5 L 188.2,99.5 L 192.4,105.7 L 196.7,107.6 L 200.9,108.6 L 205.2,111.4 L 209.4,108.8 L 213.6,113.8 L 217.9,112.9 L 222.1,106.1 L 226.4,107.1 L 230.6,108.3 L 234.8,111.5 L 239.1,112.7 L 243.3,117.6 L 247.6,105.5 L 251.8,99.7 L 256.1,104.7 L 260.3,110.0 L 264.5,107.3 L 268.8,110.6 L 273.0,111.6 L 277.3,98.8 L 281.5,106.9 L 285.8,114.2 L 290.0,112.4 L 294.2,102.8 L 298.5,90.8 L 302.7,90.1 L 307.0,87.5 L 311.2,96.6 L 315.5,94.5 L 319.7,93.9 L 323.9,106.9 L 328.2,101.9 L 332.4,91.8 L 336.7,98.0 L 340.9,96.8 L 345.2,107.1 L 349.4,105.2 L 353.6,110.9 L 357.9,109.3 L 362.1,113.1 L 366.4,110.4 L 370.6,114.0 L 374.8,110.2 L 379.1,107.0 L 383.3,103.4 L 387.6,108.4 L 391.8,93.1 L 396.1,98.5 L 400.3,106.4 L 404.5,117.5 L 408.8,115.7 L 413.0,117.8 L 417.3,115.8 L 421.5,96.4 L 425.8,101.2 L 430.0,91.5 L 430.0,132 L 10.0,132 Z" fill="#34d399" fill-opacity="0.10"/><path d="M 10.0,109.9 L 14.2,110.2 L 18.5,102.0 L 22.7,105.1 L 27.0,92.2 L 31.2,87.9 L 35.5,90.2 L 39.7,94.0 L 43.9,97.4 L 48.2,88.8 L 52.4,82.5 L 56.7,77.7 L 60.9,70.6 L 65.2,65.4 L 69.4,59.6 L 73.6,57.7 L 77.9,63.9 L 82.1,58.0 L 86.4,55.0 L 90.6,50.9 L 94.8,54.7 L 99.1,56.4 L 103.3,65.5 L 107.6,59.8 L 111.8,52.3 L 116.1,37.6 L 120.3,37.3 L 124.5,43.6 L 128.8,42.4 L 133.0,30.8 L 137.3,43.2 L 141.5,55.9 L 145.8,60.6 L 150.0,75.1 L 154.2,76.3 L 158.5,71.0 L 162.7,68.3 L 167.0,77.3 L 171.2,86.8 L 175.5,86.3 L 179.7,81.4 L 183.9,83.5 L 188.2,99.5 L 192.4,105.7 L 196.7,107.6 L 200.9,108.6 L 205.2,111.4 L 209.4,108.8 L 213.6,113.8 L 217.9,112.9 L 222.1,106.1 L 226.4,107.1 L 230.6,108.3 L 234.8,111.5 L 239.1,112.7 L 243.3,117.6 L 247.6,105.5 L 251.8,99.7 L 256.1,104.7 L 260.3,110.0 L 264.5,107.3 L 268.8,110.6 L 273.0,111.6 L 277.3,98.8 L 281.5,106.9 L 285.8,114.2 L 290.0,112.4 L 294.2,102.8 L 298.5,90.8 L 302.7,90.1 L 307.0,87.5 L 311.2,96.6 L 315.5,94.5 L 319.7,93.9 L 323.9,106.9 L 328.2,101.9 L 332.4,91.8 L 336.7,98.0 L 340.9,96.8 L 345.2,107.1 L 349.4,105.2 L 353.6,110.9 L 357.9,109.3 L 362.1,113.1 L 366.4,110.4 L 370.6,114.0 L 374.8,110.2 L 379.1,107.0 L 383.3,103.4 L 387.6,108.4 L 391.8,93.1 L 396.1,98.5 L 400.3,106.4 L 404.5,117.5 L 408.8,115.7 L 413.0,117.8 L 417.3,115.8 L 421.5,96.4 L 425.8,101.2 L 430.0,91.5" stroke="#34d399" stroke-width="1.5" fill="none" stroke-linejoin="round"/><circle cx="133.0" cy="30.8" r="3.5" fill="#f5b942" stroke="#0b0c10" stroke-width="1.5"/><text x="133.0" y="24.8" text-anchor="middle" font-size="9" fill="#f5b942" font-family="JetBrains Mono,monospace" font-weight="700">165.95</text><line x1="133.0" y1="30.8" x2="413.0" y2="117.8" stroke="#f87171" stroke-dasharray="2 2" stroke-width="1" stroke-opacity="0.7"/><text x="273.0" y="68.3" text-anchor="middle" font-size="9" fill="#f87171" font-family="JetBrains Mono,monospace" font-weight="700">-16%</text><text x="251.8" y="94.7" text-anchor="middle" font-size="8" fill="#ff8a4d" font-family="JetBrains Mono,monospace" font-weight="600">-12%</text><text x="427.0" y="85.5" text-anchor="end" font-size="9" fill="#f87171" font-family="JetBrains Mono,monospace">-11%</text></svg>
+    
+    <div class="pullback-stats">
+      
+      
+      
+    </div>
+
+    
+    
+    
+    <div style="padding:10px 12px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);border-radius:8px;margin-top:10px">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--up);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">關鍵支撐帶</div>
+      
+      <div style="font-family:var(--mono);font-size:12px;color:var(--text)">MA20 支撐 · $143.30</div>
+      
+      <div style="font-family:var(--mono);font-size:12px;color:var(--text)">MA60 主要支撐 · $144.06</div>
+      
+      <div style="font-family:var(--mono);font-size:12px;color:var(--text)">52W 低點支撐 · $103.58</div>
+      
+    </div>
+    
+  </div>
+
+</div><!-- /.row-3 -->
+
+
+<div class="row-3">
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">八</span>
+      <span class="sec-title">牛熊情境目標 Targets</span>
+    </div>
+    <table class="bb-table">
+      <thead>
+        <tr>
+          <th>情境</th>
+          <th>觸發條件</th>
+          <th>目標區間</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+      <tr>
+        <td style="color:#34d399;font-weight:600">超級牛市</td>
+        <td style="color:var(--text-2)">強勁突破+資金追漲</td>
+        <td class="target-val" style="color:#34d399">184.96 ~ 214.56</td>
+      </tr>
+      
+      <tr>
+        <td style="color:#34d399;font-weight:600">基本牛市</td>
+        <td style="color:var(--text-2)">維持強勢趨勢</td>
+        <td class="target-val" style="color:#34d399">162.77 ~ 180.52</td>
+      </tr>
+      
+      <tr>
+        <td style="color:#8a8c98;font-weight:600">中性</td>
+        <td style="color:var(--text-2)">區間整理</td>
+        <td class="target-val" style="color:#8a8c98">143.53 ~ 159.81</td>
+      </tr>
+      
+      <tr>
+        <td style="color:#f5b942;font-weight:600">保守</td>
+        <td style="color:var(--text-2)">回測主要支撐</td>
+        <td class="target-val" style="color:#f5b942">130.21 ~ 142.05</td>
+      </tr>
+      
+      <tr>
+        <td style="color:#f87171;font-weight:600">熊市</td>
+        <td style="color:var(--text-2)">跌破關鍵支撐</td>
+        <td class="target-val" style="color:#f87171">< 118.38</td>
+      </tr>
+      
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">九</span>
+      <span class="sec-title">主要風險 Key Risks</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+      
+      <div class="warn-item">個股盈利不及預期，下修風險</div>
+      
+      <div class="warn-item">大盤系統性風險，高 Beta 個股跌幅可能更深</div>
+      
+      <div class="warn-item">主力出貨或機構減倉，籌碼面轉弱</div>
+      
+      <div class="warn-item">短線漲幅過快，追高需注意回調壓力</div>
+      
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="sec-label">
+      <span class="sec-pill">十</span>
+      <span class="sec-title">投資策略 Strategy</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      
+      <div class="strat-card">
+        <div>
+          <div class="strat-type">短線操作</div>
+          <div class="strat-sub">Short-term</div>
+        </div>
+        <div class="strat-action">觀望為主，確認方向再進場</div>
+        
+        <div class="strat-meta">
+          <span class="strat-pill stop">STOP $137.61</span>
+          <span class="strat-pill target">TARGET $159.81</span>
+        </div>
+        
+      </div>
+      
+      <div class="strat-card">
+        <div>
+          <div class="strat-type">中線佈局</div>
+          <div class="strat-sub">Mid-term</div>
+        </div>
+        <div class="strat-action">小批試單，等待確認</div>
+        
+        <div class="strat-note">訊號中等，控制倉位</div>
+        
+      </div>
+      
+      <div class="strat-card">
+        <div>
+          <div class="strat-type">長線投資</div>
+          <div class="strat-sub">Long-term</div>
+        </div>
+        <div class="strat-action">繼續持有，注意停利</div>
+        
+        <div class="strat-note">訊號未達高位，不宜加碼</div>
+        
+      </div>
+      
+    </div>
+  </div>
+
+</div><!-- /.row-3 -->
+
+
+<div class="summary-card" style="
+  background: linear-gradient(135deg, var(--surface) 60%, var(--elevated));
+  border: 1px solid var(--border-hi);
+  border-radius: 14px; padding: 22px 28px;
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+">
+  <div class="summary-text" style="flex:1; min-width:200px">
+    <div class="summary-title" style="font-size:11px;font-family:var(--mono);color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">
+      ✦ PG · 綜合分析摘要
+    </div>
+    <div class="summary-body" style="font-size:13px;line-height:1.7;color:var(--text)">
+      ①目前盤面偏強，股價企穩於均線之上。　②關鍵價位：上方阻力148.50，下方支撐146.00。
+      
+    </div>
+  </div>
+  <div class="verdict-block" style="text-align:center;flex-shrink:0">
+    <div class="verdict-label amber" style="font-size:20px;font-weight:800;letter-spacing:-0.01em">中性觀望</div>
+    <div class="verdict-en" style="font-family:var(--mono);font-size:11px;color:var(--text-2);margin-top:4px">NEUTRAL</div>
+    <div style="font-family:var(--mono);font-size:10px;margin-top:6px;color:var(--amber);opacity:0.7">信號 57/100</div>
+  </div>
+</div>
+
+<div class="footer">⚠ Generated by AI · for research only · not investment advice · trade at your own risk</div>
+
+</div><!-- /.page-detail -->
+
+</body>
+</html>
