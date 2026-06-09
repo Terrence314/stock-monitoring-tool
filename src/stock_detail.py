@@ -1421,27 +1421,28 @@ body {
   </div>
 </div>
 
-{# ── LIVE CHART (TradingView real-time embed, lazy-loaded) ───────────────── #}
-<div class="card">
-  <details id="live-chart-details">
-    <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px">
-      <span class="sec-pill">live</span>
-      <span class="sec-title">即時圖表 Live Chart</span>
-      <span class="sec-sub">TradingView 即時報價（點擊展開）· real-time via CBOE BZX</span>
-    </summary>
-    <div id="tv-chart-container" style="height:480px;margin-top:12px;border-radius:12px;overflow:hidden">
-      <div id="tv-chart-inner" style="height:100%"></div>
-    </div>
-  </details>
+{# ── LIVE CHART (TradingView real-time embed, loads on scroll into view) ─── #}
+<div class="card" id="live-chart-card">
+  <div class="sec-label">
+    <span class="sec-pill">live</span>
+    <span class="sec-title">即時圖表 Live Chart</span>
+    <span class="sec-sub">TradingView 即時報價 · real-time via CBOE BZX · 5-min candles</span>
+  </div>
+  <div id="tv-chart-container" style="height:480px;margin-top:12px;border-radius:12px;overflow:hidden;background:var(--elevated)">
+    <div id="tv-chart-inner" style="height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-family:var(--mono);font-size:11px">loading live chart…</div>
+  </div>
 </div>
 <script>
 (function() {
-  var det = document.getElementById('live-chart-details');
-  if (!det) return;
+  var card = document.getElementById('live-chart-card');
+  if (!card) return;
   var loaded = false;
-  det.addEventListener('toggle', function() {
-    if (!det.open || loaded) return;
+  function loadWidget() {
+    if (loaded) return;
     loaded = true;
+    var inner = document.getElementById('tv-chart-inner');
+    inner.textContent = '';
+    inner.style.display = 'block';
     var s = document.createElement('script');
     s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
     s.async = true;
@@ -1458,8 +1459,16 @@ body {
       studies: ['MASimple@tv-basicstudies'],
       autosize: true
     });
-    document.getElementById('tv-chart-inner').appendChild(s);
-  });
+    inner.appendChild(s);
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) { loadWidget(); io.disconnect(); }
+    }, { rootMargin: '200px' });
+    io.observe(card);
+  } else {
+    loadWidget();
+  }
 })();
 </script>
 
