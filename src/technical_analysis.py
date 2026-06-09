@@ -278,6 +278,43 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
     if s1_entry:
         signals.append(f"🎯 S1 入場訊號（縮量回調 {perf_1w:.1f}%，RelVol {_vol_ratio:.2f}）— 健康洗盤，等假突破")
 
+    # ── Ming MA Context Signals ───────────────────────────────────────────────
+    # Ref: 均線的正確用法 — MA touch meaning depends on trend context
+    # Down trend: touch MA = sell zone.  Up trend: touch MA = rhythm correction / entry.
+
+    ma_bearish_alignment = (
+        not pd.isna(m5) and not pd.isna(m20) and not pd.isna(m60)
+        and m5 < m20 and m20 < m60
+    )
+    _lookback = df.iloc[-6:-1]  # 5 bars before latest
+
+    # [A] Downtrend bounce warning
+    if ma_bearish_alignment and not pd.isna(m20) and c > m20:
+        signals.append("⚠️ 下跌趨勢中價格反彈碰均線 — 注意反彈賣點，非買點（均線空頭排列）")
+
+    ma_false_breakdown = False
+    ma_true_weakness   = False
+
+    if len(_lookback) >= 3 and not pd.isna(m20):
+        _dipped = any(_lookback["Close"] < _lookback["MA20"])
+
+        # [B] False breakdown (洗盤): dipped below MA20 in last 5 bars, now reclaimed, vol controlled
+        if _dipped and c > m20:
+            _dip_vols = _lookback.loc[_lookback["Close"] < _lookback["MA20"], "Vol_ratio"]
+            _vol_ok   = _dip_vols.empty or float(_dip_vols.max()) < 1.5
+            if _vol_ok:
+                ma_false_breakdown = True
+                signals.append("⚡ 假跌破洗盤 — 跌破MA20後快速站回，量能受控，疑似洗盤（可留意做多機會）")
+
+        # [C] True weakness (真轉弱): broke MA20, stuck below, bounce no volume
+        if c < m20:
+            _was_above    = any(_lookback["Close"] > _lookback["MA20"])
+            _recent_vr    = df["Vol_ratio"].dropna().tail(3)
+            _bounce_weak  = bool(all(v < 0.8 for v in _recent_vr)) if len(_recent_vr) >= 2 else False
+            if _was_above and _bounce_weak:
+                ma_true_weakness = True
+                signals.append("🔴 真轉弱 — 跌破MA20後反彈站不回，量縮無力，趨勢疑似轉壞")
+
     # ── Strength Label ────────────────────────────────────────────────────────
     if score >= 80:
         strength = "強力做多 🔥"
@@ -388,5 +425,7 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         "perf_1w":          round(float(perf_1w), 1) if perf_1w is not None else None,
         "s1_entry":         bool(s1_entry),
         "overextended":     bool(overextended),
+        "ma_false_breakdown": bool(ma_false_breakdown),
+        "ma_true_weakness":   bool(ma_true_weakness),
         "df":                       df,
     }
