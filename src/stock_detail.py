@@ -1421,6 +1421,48 @@ body {
   </div>
 </div>
 
+{# ── LIVE CHART (TradingView real-time embed, lazy-loaded) ───────────────── #}
+<div class="card">
+  <details id="live-chart-details">
+    <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px">
+      <span class="sec-pill">live</span>
+      <span class="sec-title">即時圖表 Live Chart</span>
+      <span class="sec-sub">TradingView 即時報價（點擊展開）· real-time via CBOE BZX</span>
+    </summary>
+    <div id="tv-chart-container" style="height:480px;margin-top:12px;border-radius:12px;overflow:hidden">
+      <div id="tv-chart-inner" style="height:100%"></div>
+    </div>
+  </details>
+</div>
+<script>
+(function() {
+  var det = document.getElementById('live-chart-details');
+  if (!det) return;
+  var loaded = false;
+  det.addEventListener('toggle', function() {
+    if (!det.open || loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    s.async = true;
+    s.innerHTML = JSON.stringify({
+      symbol: '{{ tv_symbol }}',
+      interval: '5',
+      timezone: 'Asia/Hong_Kong',
+      theme: 'dark',
+      style: '1',
+      locale: 'zh_TW',
+      hide_top_toolbar: false,
+      hide_legend: false,
+      allow_symbol_change: false,
+      studies: ['MASimple@tv-basicstudies'],
+      autosize: true
+    });
+    document.getElementById('tv-chart-inner').appendChild(s);
+  });
+})();
+</script>
+
 {# ── ROW 2: Key Catalysts + AI Analysis ──────────────────────────────────── #}
 <div class="row-2">
 
@@ -1695,6 +1737,13 @@ def generate_stock_detail_page(
     """
     ohlc          = s.get("ohlc", [])
     chart_svg     = _build_candle_svg(ohlc) if len(ohlc) >= 10 else ""
+
+    # TradingView symbol — map HK tickers (0700.HK -> HKEX:700), US pass-through
+    _tk = s["ticker"]
+    if _tk.upper().endswith(".HK"):
+        tv_symbol = "HKEX:" + str(int(_tk[:-3]))
+    else:
+        tv_symbol = _tk
     pullback_svg  = _build_pullback_svg(ohlc) if len(ohlc) >= 10 else ""
     key_levels    = _build_key_levels(s)
     scenarios     = _build_scenarios(s)
@@ -1735,6 +1784,7 @@ def generate_stock_detail_page(
         ohlc_count=len(ohlc),
         prev_ticker=prev_ticker,
         next_ticker=next_ticker,
+        tv_symbol=tv_symbol,
     )
 
     os.makedirs(output_dir, exist_ok=True)
