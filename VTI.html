@@ -464,7 +464,7 @@ body {
   <a href="./NOW.html" class="back-link" title="Next: NOW" style="padding:5px 9px">NOW ›</a>
   
   <span class="topbar-date">2026/06/09</span>
-  <span class="topbar-date" style="opacity:0.65" title="When this page was generated — refresh to get the latest">· updated Jun 10 07:14 HKT</span>
+  <span class="topbar-date" style="opacity:0.65" title="When this page was generated — refresh to get the latest">· updated Jun 10 07:23 HKT</span>
 </div>
 
 <div class="page-detail">
@@ -723,6 +723,48 @@ body {
     </div>
   </div>
 </div>
+
+
+<div class="card">
+  <details id="live-chart-details">
+    <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px">
+      <span class="sec-pill">live</span>
+      <span class="sec-title">即時圖表 Live Chart</span>
+      <span class="sec-sub">TradingView 即時報價（點擊展開）· real-time via CBOE BZX</span>
+    </summary>
+    <div id="tv-chart-container" style="height:480px;margin-top:12px;border-radius:12px;overflow:hidden">
+      <div id="tv-chart-inner" style="height:100%"></div>
+    </div>
+  </details>
+</div>
+<script>
+(function() {
+  var det = document.getElementById('live-chart-details');
+  if (!det) return;
+  var loaded = false;
+  det.addEventListener('toggle', function() {
+    if (!det.open || loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    s.async = true;
+    s.innerHTML = JSON.stringify({
+      symbol: 'VTI',
+      interval: '5',
+      timezone: 'Asia/Hong_Kong',
+      theme: 'dark',
+      style: '1',
+      locale: 'zh_TW',
+      hide_top_toolbar: false,
+      hide_legend: false,
+      allow_symbol_change: false,
+      studies: ['MASimple@tv-basicstudies'],
+      autosize: true
+    });
+    document.getElementById('tv-chart-inner').appendChild(s);
+  });
+})();
+</script>
 
 
 <div class="row-2">
