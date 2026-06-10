@@ -134,7 +134,7 @@ def _run(cfg: dict) -> None:
 
     # ── 1. Setup AI ──────────────────────────────────────────────────────────
     print("\n[1/5] 初始化 Gemini AI…")
-    model = setup_gemini(cfg["gemini"]["api_key"], cfg["gemini"].get("model", "gemini-2.0-flash"))
+    model = setup_gemini(cfg["gemini"]["api_key"], cfg["gemini"].get("model", "gemini-2.5-flash"))
 
     # ── 2. Market overview ───────────────────────────────────────────────────
     print("[2/5] 抓取大盤數據…")
