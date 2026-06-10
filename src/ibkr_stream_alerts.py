@@ -129,9 +129,17 @@ def _check_triggers(ticker: str, price: float, lv: dict, state: dict) -> list[tu
 
 
 def main() -> None:
-    cfg = _load_json(os.path.join("config", "config.json"), {})
-    bot_token = os.getenv("TELEGRAM_BOT_TOKEN") or cfg.get("telegram", {}).get("bot_token", "")
-    chat_id   = os.getenv("TELEGRAM_CHAT_ID")   or cfg.get("telegram", {}).get("chat_id", "")
+    cfg     = _load_json(os.path.join("config", "config.json"), {})
+    secrets = _load_json(os.path.join("config", "secrets.json"), {})   # gitignored, local only
+    bot_token = (os.getenv("TELEGRAM_BOT_TOKEN")
+                 or secrets.get("telegram_bot_token", "")
+                 or cfg.get("telegram", {}).get("bot_token", ""))
+    chat_id   = (os.getenv("TELEGRAM_CHAT_ID")
+                 or secrets.get("telegram_chat_id", "")
+                 or cfg.get("telegram", {}).get("chat_id", ""))
+    if not bot_token or not chat_id:
+        print("⚠️ No Telegram credentials — alerts will print to console only.")
+        print("   Create config/secrets.json: {\"telegram_bot_token\": \"...\", \"telegram_chat_id\": \"...\"}")
 
     levels = _load_levels()
 
