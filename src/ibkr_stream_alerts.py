@@ -36,6 +36,7 @@ GATEWAY_PORT = 4002
 CLIENT_ID    = 8
 
 ANALYSIS_FILE  = os.path.join("outputs", "last_analysis.json")
+PORTFOLIO_FILE = os.path.join("outputs", "paper_portfolio.json")
 COOLDOWN_FILE  = os.path.join("outputs", "stream_alert_history.json")
 COOLDOWN_HOURS = 4
 DROP_PCT       = 3.0     # intraday drawdown sell trigger (%)
@@ -129,8 +130,24 @@ def main() -> None:
     chat_id   = os.getenv("TELEGRAM_CHAT_ID")   or cfg.get("telegram", {}).get("chat_id", "")
 
     levels = _load_levels()
-    # Highest-score tickers first, capped at gateway line limit
-    watch = sorted(levels, key=lambda t: levels[t]["score"], reverse=True)[:MAX_SYMBOLS]
+
+    # Open paper positions ALWAYS stream — their SELL alerts must never be missed
+    portfolio = _load_json(PORTFOLIO_FILE, {})
+    open_positions = {
+        t["ticker"] for t in portfolio.get("trades", [])
+        if t.get("status") == "open" and not t["ticker"].endswith(".HK")
+    }
+    for t in open_positions:
+        if t not in levels:
+            # Not in today's analysis — stream anyway; drawdown rule still protects it
+            levels[t] = {"score": 0, "ma20": None, "prev_high": None, "prev_close": None}
+    held = sorted(open_positions)
+
+    # Fill remaining slots with highest-score tickers
+    by_score = sorted(levels, key=lambda t: levels[t]["score"], reverse=True)
+    watch = held + [t for t in by_score if t not in open_positions][:MAX_SYMBOLS - len(held)]
+    if held:
+        print(f"Open positions pinned to stream: {', '.join(held)}")
     if not watch:
         print("No tickers found in last_analysis.json — run the daily pipeline first.")
         return
@@ -167,7 +184,7 @@ def main() -> None:
         for tk in tickers:
             sym = sym_map.get(tk.contract.symbol, tk.contract.symbol)
             price = tk.last or tk.close
-            if not price or sym not in levels:
+            if not price or price <= 0 or sym not in levels:
                 continue
             for rule, msg in _check_triggers(sym, float(price), levels[sym], tick_state[sym]):
                 if _cooldown_ok(history, sym, rule):
