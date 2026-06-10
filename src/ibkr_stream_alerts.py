@@ -54,7 +54,7 @@ def _load_json(path, default):
 def _load_levels() -> dict:
     """Reference levels per ticker from the daily analysis output."""
     data = _load_json(ANALYSIS_FILE, {})
-    stocks = data.get("stocks", data if isinstance(data, list) else [])
+    stocks = data.get("stock_results") or data.get("stocks") or (data if isinstance(data, list) else [])
     levels = {}
     for s in stocks:
         t = s.get("ticker")
@@ -144,18 +144,28 @@ def main() -> None:
     history = _load_json(COOLDOWN_FILE, {})
     tick_state: dict[str, dict] = {t: {} for t in watch}
     contracts = {}
+    skipped = []
     for t in watch:
-        c = Stock(t, "SMART", "USD")
-        ib.qualifyContracts(c)
+        # IBKR symbology: dashes in class shares become spaces (BRK-B -> BRK B)
+        ib_sym = t.replace("-", " ")
+        c = Stock(ib_sym, "SMART", "USD")
+        qualified = ib.qualifyContracts(c)
+        if not qualified or not c.conId:
+            skipped.append(t)
+            continue
         contracts[t] = c
         ib.reqMktData(c)
+    if skipped:
+        print(f"Skipped (no IBKR contract): {', '.join(skipped)}")
 
     print("Live — Ctrl+C to stop. Alerts fire to Telegram, cooldown "
           f"{COOLDOWN_HOURS}h per ticker/rule. NO orders are ever placed.")
 
+    sym_map = {ct.symbol: t for t, ct in contracts.items()}
+
     def on_tick(tickers):
         for tk in tickers:
-            sym = tk.contract.symbol
+            sym = sym_map.get(tk.contract.symbol, tk.contract.symbol)
             price = tk.last or tk.close
             if not price or sym not in levels:
                 continue
