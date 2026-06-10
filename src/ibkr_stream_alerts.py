@@ -34,6 +34,10 @@ from notifier import send_telegram
 GATEWAY_HOST = "127.0.0.1"
 GATEWAY_PORT = 4002
 CLIENT_ID    = 8
+REPORT_URL   = "https://terrence314.github.io/stock-monitoring-tool"
+HKT          = timezone(timedelta(hours=8))
+EXIT_HOUR_HKT = 4   # self-stop at 04:10 HKT (after US close) when started by launchd
+EXIT_MIN_HKT  = 10
 
 ANALYSIS_FILE  = os.path.join("outputs", "last_analysis.json")
 PORTFOLIO_FILE = os.path.join("outputs", "paper_portfolio.json")
@@ -155,7 +159,14 @@ def main() -> None:
     print(f"Streaming {len(watch)} tickers: {', '.join(watch[:10])}{'…' if len(watch) > 10 else ''}")
 
     ib = IB()
-    ib.connect(GATEWAY_HOST, GATEWAY_PORT, clientId=CLIENT_ID, timeout=10)
+    try:
+        ib.connect(GATEWAY_HOST, GATEWAY_PORT, clientId=CLIENT_ID, timeout=10)
+    except (ConnectionRefusedError, OSError, TimeoutError) as e:
+        print(f"❌ Cannot reach IB Gateway at {GATEWAY_HOST}:{GATEWAY_PORT} — is it open and logged in?")
+        if bot_token and chat_id:
+            send_telegram(bot_token, chat_id,
+                "⚠️ 即時警報引擎無法啟動 — IB Gateway 未開啟或未登入（請開 Gateway 後手動重啟）")
+        return
     ib.reqMarketDataType(3)   # delayed fallback works without data subscription
 
     history = _load_json(COOLDOWN_FILE, {})
@@ -188,18 +199,37 @@ def main() -> None:
                 continue
             for rule, msg in _check_triggers(sym, float(price), levels[sym], tick_state[sym]):
                 if _cooldown_ok(history, sym, rule):
+                    full = f"{msg}\n📊 {REPORT_URL}/{sym}.html"
                     print(f"[ALERT] {msg}")
                     if bot_token and chat_id:
-                        send_telegram(bot_token, chat_id, msg)
+                        send_telegram(bot_token, chat_id, full)
                     _mark_alerted(history, sym, rule)
 
     ib.pendingTickersEvent += on_tick
+
+    if bot_token and chat_id:
+        send_telegram(bot_token, chat_id,
+            f"📡 即時警報引擎上線 — streaming {len(contracts)} tickers "
+            f"({len(held)} positions pinned) · alerts only, no auto-trading")
+
+    def _auto_exit_check():
+        """Self-stop after US close so launchd sessions don't run all day."""
+        now = datetime.now(HKT)
+        if now.hour == EXIT_HOUR_HKT and now.minute >= EXIT_MIN_HKT:
+            print("US session over — engine self-stopping.")
+            if bot_token and chat_id:
+                send_telegram(bot_token, chat_id, "📡 即時警報引擎下線 — US session closed")
+            ib.disconnect()
+
     try:
-        ib.run()
+        while ib.isConnected():
+            ib.sleep(30)
+            _auto_exit_check()
     except KeyboardInterrupt:
         print("\nStopped.")
     finally:
-        ib.disconnect()
+        if ib.isConnected():
+            ib.disconnect()
 
 
 if __name__ == "__main__":
