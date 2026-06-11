@@ -863,6 +863,55 @@ body.beginner-mode .beginner-only { display: block; }
   <!-- ─── LEFT COLUMN ───────────────────────────────────────────── -->
   <div class="page-left">
 
+    <!-- ── 今日行動 ACTION BOX ─────────────────────────────────── -->
+    {% if action_box %}
+    <section class="card" style="border:1px solid {{ '#f87171' if action_box.breaker_trip else 'rgba(122,162,255,0.35)' }};background:linear-gradient(180deg,rgba(122,162,255,0.05),transparent)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--blue);text-transform:uppercase">⚡ 今日行動 Action Box</span>
+        <span style="font-size:10px;color:var(--text-2)">tool decides · you confirm · 永不自動下單</span>
+      </div>
+
+      {% if action_box.breaker_trip %}
+      <div style="padding:10px 12px;border-radius:10px;background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.35);margin-bottom:10px">
+        <strong style="color:var(--down)">🛑 STOP TRADING — 本月虧損 {{ action_box.breaker_pct }}% 已觸及 {{ action_box.breaker_limit }}% 斷路器。今個月唔開新倉，檢討策略。</strong>
+      </div>
+      {% elif action_box.no_action %}
+      <div style="padding:10px 12px;border-radius:10px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);margin-bottom:10px">
+        <span style="color:var(--up);font-weight:600">✅ 今日無行動</span>
+        <span style="color:var(--text-2);font-size:12px"> — 無股票合資格入場，持倉無賣出訊號。乜都唔做都係一個決定。</span>
+      </div>
+      {% else %}
+      {% for b in action_box.buys %}
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.2);margin-bottom:6px;flex-wrap:wrap">
+        <strong style="color:var(--up)">🟢 BUY <a href="./{{ b.ticker }}.html" style="color:var(--up)">{{ b.ticker }}</a></strong>
+        <span class="mono" style="font-size:12px">${{ '%.2f'|format(b.price) if b.price else '—' }} · score {{ b.score }}</span>
+        <span style="font-size:11px;color:var(--text-2)">$1,000 美元 · 止損 −5% · 持有 ≤10 交易日 · {{ b.reason }}</span>
+      </div>
+      {% endfor %}
+      {% for sl in action_box.sells %}
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.2);margin-bottom:6px;flex-wrap:wrap">
+        <strong style="color:var(--down)">🔴 SELL <a href="./{{ sl.ticker }}.html" style="color:var(--down)">{{ sl.ticker }}</a></strong>
+        {% if sl.float_pct is not none %}<span class="mono" style="font-size:12px">float {{ '%+.1f'|format(sl.float_pct) }}%</span>{% endif %}
+        <span style="font-size:11px;color:var(--text-2)">{{ sl.why }} — 持倉轉弱，考慮平倉</span>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-2)">
+        <span title="本月已實現+未實現盈虧 ÷ 投入名義金額。觸及 −5% 即停止開新倉。">
+          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%
+          <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
+        </span>
+        <span title="真錢上線門檻：60日驗證 + 勝率>50% + 總盈虧為正。達標前一律 paper trading。">
+          真錢門檻 Day {{ action_box.gate_day }}/{{ action_box.gate_days }}
+          · 勝率 {{ action_box.gate_winrate if action_box.gate_winrate is not none else '—' }}%
+          · PnL ${{ action_box.gate_pnl }}
+          · {{ '🎓 GO-LIVE READY' if action_box.gate_ready else '🔬 驗證中 (' ~ action_box.gate_trades ~ ' 筆已平倉)' }}
+        </span>
+      </div>
+    </section>
+    {% endif %}
+
     <!-- KPI strip -->
     <section id="overview" class="kpi-strip">
       <div class="kpi" title="How many tickers closed up vs down today. BULLISH = more than half up; BEARISH = more than half down; MIXED = roughly even.">
@@ -2807,6 +2856,115 @@ def _collect_headlines(stocks: list) -> list[dict]:
     return headlines
 
 
+GATE_START_DATE   = "2026-06-11"   # go-live validation window start (2 months)
+GATE_DAYS         = 60
+GATE_MIN_WINRATE  = 50.0           # %
+BREAKER_LIMIT_PCT = -5.0           # monthly circuit breaker
+
+
+def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
+    """今日行動 Action Box — tool decides, user confirms.
+
+    BUY:  GO/BREAKOUT-up verdict stocks not already held (max 3 shown)
+    SELL: open paper positions whose ticker turned bearish
+    Plus: monthly circuit breaker status and go-live gate progress.
+    """
+    import json as _json
+    from datetime import date as _date
+
+    try:
+        with open(os.path.join(output_dir, "paper_portfolio.json")) as f:
+            trades = _json.load(f).get("trades", [])
+    except (OSError, ValueError):
+        trades = []
+
+    open_trades   = [t for t in trades if t.get("status") == "open"]
+    held          = {t["ticker"] for t in open_trades}
+    by_ticker     = {s["ticker"]: s for s in stocks_sorted}
+
+    # ── BUY candidates ──
+    buys = []
+    for s in stocks_sorted:
+        v = s.get("entry_verdict") or {}
+        label = v.get("label", "")
+        if s["ticker"] in held:
+            continue
+        if ("GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label) and s.get("score", 0) >= 70:
+            buys.append({
+                "ticker": s["ticker"],
+                "price":  s.get("price"),
+                "score":  s.get("score"),
+                "reason": v.get("reason", ""),
+            })
+        if len(buys) >= 3:
+            break
+
+    # ── SELL candidates (held positions gone bearish) ──
+    sells = []
+    for t in open_trades:
+        s = by_ticker.get(t["ticker"])
+        if not s:
+            continue
+        v = (s.get("entry_verdict") or {}).get("label", "")
+        bearish = (s.get("score", 100) <= 30) or s.get("bb_walking_down") or "FALLING" in v or "SKIP" in v
+        if bearish:
+            ep, cp = t.get("entry_price") or 0, t.get("current_price") or 0
+            fpct = ((cp - ep) / ep * 100) if ep else None
+            sells.append({
+                "ticker": t["ticker"],
+                "float_pct": round(fpct, 1) if fpct is not None else None,
+                "why": f"score {s.get('score')}" + (" · BB walking down" if s.get("bb_walking_down") else ""),
+            })
+
+    # ── Circuit breaker: this month realized + unrealized vs notional ──
+    month_key = datetime.now(tz=timezone(timedelta(hours=8))).strftime("%Y-%m")
+    pnl_month, notional_month = 0.0, 0.0
+    for t in trades:
+        notional = t.get("notional") or 0
+        if t.get("status") == "closed" and (t.get("exit_date") or "").startswith(month_key):
+            pnl_month      += t.get("pnl") or 0
+            notional_month += notional
+        elif t.get("status") == "open":
+            ep, cp = t.get("entry_price") or 0, t.get("current_price") or 0
+            if ep and cp:
+                pnl_month      += (cp - ep) * (t.get("shares") or 0)
+                notional_month += notional
+    breaker_pct  = round(pnl_month / notional_month * 100, 2) if notional_month else 0.0
+    breaker_trip = breaker_pct <= BREAKER_LIMIT_PCT
+
+    # ── Go-live gate progress ──
+    gate_start = datetime.strptime(GATE_START_DATE, "%Y-%m-%d").date()
+    days_in    = max(0, (_date.today() - gate_start).days)
+    closed_in_window = [
+        t for t in trades
+        if t.get("status") == "closed" and (t.get("exit_date") or "") >= GATE_START_DATE
+    ]
+    wins     = sum(1 for t in closed_in_window if (t.get("pnl") or 0) > 0)
+    winrate  = round(wins / len(closed_in_window) * 100, 1) if closed_in_window else None
+    pnl_window = round(sum(t.get("pnl") or 0 for t in closed_in_window), 2)
+    gate_ready = (
+        days_in >= GATE_DAYS
+        and winrate is not None and winrate > GATE_MIN_WINRATE
+        and pnl_window > 0
+        and not breaker_trip
+    )
+
+    return {
+        "buys":          buys,
+        "sells":         sells,
+        "no_action":     not buys and not sells,
+        "breaker_pct":   breaker_pct,
+        "breaker_limit": BREAKER_LIMIT_PCT,
+        "breaker_trip":  breaker_trip,
+        "gate_day":      min(days_in, GATE_DAYS),
+        "gate_days":     GATE_DAYS,
+        "gate_winrate":  winrate,
+        "gate_pnl":      pnl_window,
+        "gate_trades":   len(closed_in_window),
+        "gate_ready":    gate_ready,
+    }
+
+
 def _entry_verdict(
     score: int,
     bb_pct,
@@ -3015,8 +3173,11 @@ def generate_dashboard(
         key=lambda x: (-(x.get("score") or 0), x["ticker"])
     )
 
+    action_box = _build_action_box(stocks_sorted, output_dir)
+
     html = Template(DASHBOARD_HTML).render(
         date=date,
+        action_box=action_box,
         generated_at=datetime.now(tz=timezone(timedelta(hours=8))).strftime("%b %d %H:%M HKT"),
         market=market_overview,
         brief_sections=brief_sections,
