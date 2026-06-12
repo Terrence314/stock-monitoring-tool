@@ -117,7 +117,7 @@ every BUY everywhere carries 📝 紙上練習單.
 | Daily brief (morning) | Daily pipeline | Market summary + top signals | Read with coffee |
 | 🔴 Exit alert | 15-min refresh | A high-score ticker's score collapsed | Check if you hold it |
 | 📡 引擎上線 (9:25pm) | Stream engine | Night monitoring started | Nothing — confirmation |
-| 🟢 BUY trigger | Stream engine | Price reclaimed MA20 (score≥60) or broke yesterday's high (score≥70) | Tap link → check live chart → decide |
+| 🟢 BUY trigger | Stream engine | Price reclaimed MA20 or broke yesterday's high (both score≥70, same bar as Action Box) | Tap link → check live chart → decide |
 | 🔴 SELL trigger | Stream engine | Held position broke MA20 | Consider exit |
 | ⚠️ SELL trigger | Stream engine | Held position −3% from session high | Consider exit / tighten stop |
 | 📡 引擎下線 (4:10am) | Stream engine | US session over | Sleep well |

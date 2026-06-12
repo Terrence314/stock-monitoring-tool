@@ -25,7 +25,7 @@
 
 | Alert | Condition | Suggested action |
 |---|---|---|
-| 🟢 MA20 reclaim | Price crosses back above MA20, score ≥60 | Consider entry — confirm on live chart volume |
+| 🟢 MA20 reclaim | Price crosses back above MA20, score ≥70 | Consider entry — confirm on live chart volume |
 | 🚀 Breakout | Price breaks yesterday's high, score ≥70 | Consider entry — strongest signal |
 | 🔴 MA20 break | Price drops below MA20 | Consider exit if holding |
 | ⚠️ Drawdown | −3% from session high | Consider exit / tighten stop |
