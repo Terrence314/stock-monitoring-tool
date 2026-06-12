@@ -90,6 +90,26 @@ Supplementary signals (don't change score, except noted):
 
 ---
 
+## 4b. One BUY Rule Everywhere (alignment, updated 2026-06-13)
+
+Every surface now uses the SAME definition of a buy:
+**verdict GO ✅ / BREAKOUT ↑ AND score ≥ 70** — with exact order ticket
+(買入 ≤ entry · 止損 −8% · 目標 +12% · 期限 10 交易日).
+
+| Surface | What you see |
+|---|---|
+| Dashboard ⚡ 今日行動 | Order tickets (the master copy) |
+| Daily Telegram | Identical 今日行動 section, same numbers |
+| Night stream engine | Triggers fire at score ≥70 with same ticket attached |
+| Paper engine (auto) | Only enters GO/BREAKOUT↑ stocks — measures the strategy you're told to follow |
+
+High score alone never triggers a buy anywhere — score tables are
+labeled 「排名，非買入指令」. Exit alerts say 持倉轉弱 only if you actually
+hold the ticker; otherwise 毋須行動. When the circuit breaker is tripped,
+every BUY everywhere carries 📝 紙上練習單.
+
+---
+
 ## 5. Telegram Alerts — What Each Message Means
 
 | Message | Source | Meaning | Your move |

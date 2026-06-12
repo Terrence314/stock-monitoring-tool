@@ -44,7 +44,7 @@ PORTFOLIO_FILE = os.path.join("outputs", "paper_portfolio.json")
 COOLDOWN_FILE  = os.path.join("outputs", "stream_alert_history.json")
 COOLDOWN_HOURS = 4
 DROP_PCT       = 3.0     # intraday drawdown sell trigger (%)
-MIN_SCORE_BUY  = 60
+MIN_SCORE_BUY  = 70      # same bar as the dashboard Action Box BUY rule
 MAX_SYMBOLS    = 40      # gateway line limit safety
 
 
@@ -54,6 +54,25 @@ def _load_json(path, default):
             return json.load(f)
     except (OSError, json.JSONDecodeError):
         return default
+
+
+def _fetch_fresh(filename: str) -> None:
+    """Pull the latest copy of an outputs file from GitHub Pages.
+
+    The daily pipeline runs in the cloud; without this the Mac-side engine
+    reads stale local levels unless the repo was manually pulled that day.
+    Falls back silently to the local copy on any network failure.
+    """
+    import requests
+    try:
+        r = requests.get(f"{REPORT_URL}/{filename}", timeout=10)
+        if r.ok:
+            os.makedirs("outputs", exist_ok=True)
+            with open(os.path.join("outputs", filename), "wb") as f:
+                f.write(r.content)
+            print(f"  ✅ {filename} refreshed from Pages")
+    except requests.RequestException as e:
+        print(f"  ⚠️ {filename} fetch failed ({e}) — using local copy")
 
 
 def _load_levels() -> dict:
@@ -143,7 +162,18 @@ def main() -> None:
         print("⚠️ No Telegram credentials — alerts will print to console only.")
         print("   Create config/secrets.json: {\"telegram_bot_token\": \"...\", \"telegram_chat_id\": \"...\"}")
 
+    # Fresh reference data — daily pipeline runs in the cloud
+    for _f in ("last_analysis.json", "action_box.json", "paper_portfolio.json"):
+        _fetch_fresh(_f)
+
     levels = _load_levels()
+
+    # Circuit breaker state from the dashboard — when tripped, BUY alerts are
+    # tagged as paper practice so night messages match what the web shows
+    breaker_trip = bool(_load_json(
+        os.path.join("outputs", "action_box.json"), {}).get("breaker_trip"))
+    if breaker_trip:
+        print("🛑 Circuit breaker tripped — BUY alerts will carry 📝 紙上練習單 tag")
 
     # Open paper positions ALWAYS stream — their SELL alerts must never be missed
     portfolio = _load_json(PORTFOLIO_FILE, {})
@@ -209,6 +239,8 @@ def main() -> None:
                 continue
             for rule, msg in _check_triggers(sym, float(price), levels[sym], tick_state[sym]):
                 if _cooldown_ok(history, sym, rule):
+                    if breaker_trip and "BUY" in msg:
+                        msg = "📝 紙上練習單（斷路器生效，真錢唔開新倉）\n" + msg
                     full = f"{msg}\n📊 {REPORT_URL}/{sym}.html"
                     print(f"[ALERT] {msg}")
                     if bot_token and chat_id:

@@ -1,3 +1,4 @@
+import json
 import os
 import re
 from datetime import datetime, timedelta, timezone
@@ -869,6 +870,7 @@ body.beginner-mode .beginner-only { display: block; }
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
         <span style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--blue);text-transform:uppercase">⚡ 今日行動 Action Box</span>
         <span style="font-size:10px;color:var(--text-2)">tool decides · you confirm · 永不自動下單</span>
+        <span style="font-size:10px;color:var(--muted)" title="分數量度趨勢強度；入場時機睇 BB/RSI verdict。高分但 BB 極端 = WAIT，唔追頂。">ⓘ 高分 ≠ 即買 — 要 GO / BREAKOUT verdict 先會出現喺度</span>
       </div>
 
       {% if action_box.breaker_trip %}
@@ -1080,7 +1082,7 @@ body.beginner-mode .beginner-only { display: block; }
     <section id="watchlist" class="card card-pad-0">
       <div class="card-head">
         <div>
-          <span class="card-title">Watchlist</span>
+          <span class="card-title">Watchlist</span><span style="font-size:10px;color:var(--muted);margin-left:10px">排名只反映趨勢強度，唔係買入指令 — 買咩睇頂部 ⚡ 今日行動</span>
           <span class="card-sub" style="margin-left:8px">{{ stocks_sorted|length }} names · sorted by signal ↓</span>
         </div>
         <span class="card-sub">click ticker → jump to card</span>
@@ -1402,7 +1404,7 @@ body.beginner-mode .beginner-only { display: block; }
 <section id="stocks">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 4px">
     <div>
-      <span class="card-title" style="font-size:16px">🔥 Tier 2 — Close Watch</span>
+      <span class="card-title" style="font-size:16px">🔥 Tier 2 — Close Watch</span><span style="font-size:10px;color:var(--muted);margin-left:10px">排名只反映趨勢強度，唔係買入指令 — 買咩睇頂部 ⚡ 今日行動</span>
       <span class="card-sub" style="margin-left:10px" title="Top 50 stocks by signal score from the 250-ticker universe, plus your favourites and core ETFs. Each card shows full AI analysis, technical indicators, and entry verdict.">top scorers · full Gemini analysis · hover indicators for explanations</span>
     </div>
     <span class="card-sub">{{ stocks_sorted|length }} cards</span>
@@ -1733,7 +1735,7 @@ body.beginner-mode .beginner-only { display: block; }
 <section id="universe" class="card card-pad-0" style="max-width:1100px;margin:24px auto">
   <div style="padding:20px 24px 12px;display:flex;align-items:center;justify-content:space-between">
     <div>
-      <span class="card-title" style="font-size:15px">📊 Universe Leaderboard</span>
+      <span class="card-title" style="font-size:15px">📊 Universe Leaderboard</span><span style="font-size:10px;color:var(--muted);margin-left:10px">排名只反映趨勢強度，唔係買入指令 — 買咩睇頂部 ⚡ 今日行動</span>
       <span class="card-sub" style="margin-left:10px">top {{ universe_top100|length }} · TA score only · no Gemini</span>
     </div>
     <span class="card-sub">{{ universe_top100|length }} tickers ranked</span>
@@ -3326,6 +3328,17 @@ def generate_dashboard(
 
     action_box = _build_action_box(stocks_sorted, output_dir)
     action_timeline = _log_action_history(action_box, output_dir)
+
+    # Export for other surfaces (daily Telegram, stream engine) so every
+    # channel shows the SAME instructions as the dashboard — one source of truth
+    try:
+        with open(os.path.join(output_dir, "action_box.json"), "w", encoding="utf-8") as f:
+            json.dump({
+                "ts": datetime.now(tz=timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M"),
+                **action_box,
+            }, f, ensure_ascii=False, indent=1)
+    except OSError as e:
+        print(f"  [action_box] ⚠️ export failed: {e}")
 
     html = Template(DASHBOARD_HTML).render(
         date=date,

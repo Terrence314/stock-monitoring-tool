@@ -369,7 +369,10 @@ def _run(cfg: dict) -> None:
     print(f"      AI 快取已儲存：{cache_path}")
 
     report_url = os.getenv("REPORT_URL", "")
-    message = format_daily_message(today, morning_brief, stock_results, report_url)
+    # Same Action Box the dashboard just rendered — one source of truth
+    _ab = load_json_file(os.path.join("outputs", "action_box.json"), None)
+    message = format_daily_message(today, morning_brief, stock_results, report_url,
+                                   action_box=_ab)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)
     print(f"      Telegram：{'✅ 成功' if ok else '❌ 失敗'}")
 

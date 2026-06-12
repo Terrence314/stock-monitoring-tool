@@ -800,12 +800,27 @@ def run_paper_trading(
     else:
         print(f"  [paper_trading] SPY score={spy_score} — bull regime, normal threshold (score≥{BUY_THRESHOLD})")
 
+    # Entry-timing gate — same rule the dashboard Action Box shows the user
+    # (verdict GO ✅ or BREAKOUT ↑). Without this the engine buys extended
+    # WAIT-verdict stocks the user is explicitly told not to chase, and the
+    # 60-day validation measures a strategy nobody follows.
+    verdict_map = {
+        s["ticker"]: ((s.get("entry_verdict") or {}).get("label", ""))
+        for s in stock_results
+    }
+
+    def _entry_timing_ok(tkr: str) -> bool:
+        label = verdict_map.get(tkr, "")
+        return "GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label
+
     for ticker, score in today_scores.items():
         if ticker == "SPY":
             continue   # never trade SPY itself
         entry_price = price_map.get(ticker)
         if not entry_price or entry_price <= 0:
             continue
+        if not _entry_timing_ok(ticker):
+            continue   # score qualified but entry timing poor — skip, same as Action Box
 
         # Long-only: no short positions (model is a long trend-follower)
         if LONG_ONLY:

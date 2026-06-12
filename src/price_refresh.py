@@ -281,8 +281,13 @@ def main():
     if exits:
         tickers_str = ", ".join(a["ticker"] for a in exits)
         print(f"\n  🚨 Exit alerts: {tickers_str}")
+        held = {
+            t["ticker"]
+            for t in load_json_file(os.path.join("outputs", "paper_portfolio.json"), {}).get("trades", [])
+            if t.get("status") == "open"
+        }
         if bot_token and chat_id:
-            ok = send_exit_alert(bot_token, chat_id, exits, report_url)
+            ok = send_exit_alert(bot_token, chat_id, exits, report_url, held_tickers=held)
             print(f"  Telegram exit alert: {'✅' if ok else '❌'}")
             if ok:
                 _save_exit_alert_history(exits)

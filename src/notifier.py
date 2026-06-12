@@ -31,14 +31,18 @@ def send_health_alert(bot_token: str, chat_id: str, issues: list) -> bool:
     return send_telegram(bot_token, chat_id, "\n".join(lines))
 
 
-def send_exit_alert(bot_token: str, chat_id: str, alerts: list, report_url: str = "") -> bool:
+def send_exit_alert(bot_token: str, chat_id: str, alerts: list, report_url: str = "",
+                    held_tickers: set | None = None) -> bool:
     """Send score-drop exit trigger alerts during price refresh.
 
     Each alert dict must contain: ticker, prev_score, curr_score, drop,
     price, price_change_pct, strength, prev_strength.
+    held_tickers: open paper position tickers — alerts on held positions get
+    the same action wording the dashboard Action Box uses.
     """
     if not alerts:
         return True
+    held_tickers = held_tickers or set()
 
     lines = [
         "🚨 <b>Exit Alert｜信號轉弱</b>",
@@ -49,16 +53,18 @@ def send_exit_alert(bot_token: str, chat_id: str, alerts: list, report_url: str 
     for a in alerts:
         chg  = a.get("price_change_pct", 0)
         arrow = "▲" if chg >= 0 else "▼"
+        is_held = a["ticker"] in held_tickers
         lines += [
             f"⚠️ <b>{a['ticker']}</b>  ${a['price']:.2f}  {arrow}{abs(chg):.2f}%",
             f"   信號：{a['prev_score']} → <b>{a['curr_score']}</b>  （↓{a['drop']} pts）",
             f"   {a.get('prev_strength', '')} → {a.get('strength', '')}",
+            ("   🔴 你有持倉 — 持倉轉弱，考慮平倉" if is_held
+             else "   ℹ️ 冇持倉 — 觀察名單轉弱，毋須行動"),
             "",
         ]
 
     lines += [
         "━━━━━━━━━━━━━━━━━",
-        "📌 如持有以上倉位，請審視退出策略",
     ]
     if report_url:
         lines.append(f"📄 <a href=\"{report_url}\">查看報告</a>")
@@ -67,7 +73,8 @@ def send_exit_alert(bot_token: str, chat_id: str, alerts: list, report_url: str 
     return send_telegram(bot_token, chat_id, "\n".join(lines))
 
 
-def format_daily_message(date: str, morning_brief: str, stocks: list, report_url: str = "") -> str:
+def format_daily_message(date: str, morning_brief: str, stocks: list, report_url: str = "",
+                         action_box: dict | None = None) -> str:
     sorted_stocks = sorted(stocks, key=lambda x: x["score"], reverse=True)
     top = sorted_stocks[:5]
 
@@ -75,6 +82,34 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
         "📊 <b>AI 股票監控｜每日報告</b>",
         f"📅 {date}",
         "",
+    ]
+
+    # ── 今日行動 — identical to the dashboard Action Box (one source of truth) ──
+    if action_box:
+        lines += ["━━━━━━━━━━━━━━━━━", "<b>⚡ 今日行動</b>"]
+        tripped = action_box.get("breaker_trip")
+        if tripped:
+            lines.append(f"🛑 斷路器已觸發（本月 {action_box.get('breaker_pct')}%）— "
+                         "真錢唔開新倉，下面 BUY 係 📝 紙上練習單")
+        buys  = action_box.get("buys", [])
+        sells = action_box.get("sells", [])
+        for b in buys:
+            tag = "📝 " if tripped else ""
+            lines.append(
+                f"{tag}🟢 <b>BUY {b['ticker']}</b> 買入 ≤ ${b.get('price', 0):.2f}"
+            )
+            if b.get("stop"):
+                lines.append(
+                    f"   止損 ${b['stop']:.2f} (−8%) · 目標 ${b.get('target', 0):.2f} (+12%)"
+                    f" · 期限 {b.get('expiry', '')}（10 交易日）· $1,000"
+                )
+        for s in sells:
+            lines.append(f"🔴 <b>SELL {s['ticker']}</b> — {s.get('why', '')}，持倉轉弱，考慮平倉")
+        if not buys and not sells:
+            lines.append("✅ 今日無行動 — 無合資格入場，持倉無賣出訊號")
+        lines.append("")
+
+    lines += [
         "━━━━━━━━━━━━━━━━━",
         "<b>🌅 早盤市場簡報</b>",
     ]
@@ -91,7 +126,7 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
     lines += [
         "",
         "━━━━━━━━━━━━━━━━━",
-        "<b>🏆 今日 Top 5 信號</b>",
+        "<b>📊 信號強度 Top 5</b>（趨勢排名，非買入指令 — 買咩睇上面「今日行動」）",
         "",
     ]
 
