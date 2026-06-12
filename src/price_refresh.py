@@ -146,10 +146,25 @@ def main():
         fear_greed = cache.get("fear_greed", {})
 
     # ── Refresh prices + TA for all tickers ─────────────────────────────────
-    print(f"\n  更新 {len(cfg['watchlist'])} 檔股票…")
+    # Union of config watchlist + last daily run's Tier 2 list — refreshing
+    # only the 30 config tickers would silently drop the other ~40 Tier 2
+    # cards (and shrink the Action Box candidate pool) on every 15-min run.
+    refresh_items = list(cfg["watchlist"])
+    _seen = {i["ticker"] for i in refresh_items}
+    for _t, _s in cached_stocks.items():
+        if _t not in _seen:
+            refresh_items.append({
+                "ticker": _t,
+                "name":   _s.get("name", _t),
+                "type":   _s.get("asset_type", "stock"),
+                "market": _s.get("market", "US"),
+            })
+            _seen.add(_t)
+
+    print(f"\n  更新 {len(refresh_items)} 檔股票…")
     stock_results = []
 
-    for item in cfg["watchlist"]:
+    for item in refresh_items:
         ticker      = item["ticker"]
         asset_type  = item.get("type", "stock")
         asset_market = item.get("market", "US")
@@ -166,8 +181,9 @@ def main():
             _hist = data.get("history")
             _ohlc = []
             if _hist is not None and not _hist.empty:
-                for _, row in _hist.tail(100).iterrows():
+                for _bar_dt, row in _hist.tail(100).iterrows():
                     _ohlc.append({
+                        "d": str(getattr(_bar_dt, "date", lambda: _bar_dt)()),
                         "o": round(float(row.get("Open",   0)), 2),
                         "h": round(float(row.get("High",   0)), 2),
                         "l": round(float(row.get("Low",    0)), 2),
@@ -247,7 +263,7 @@ def main():
             print(f"跳過（{e}）")
 
     scored = len(stock_results)
-    total  = len(cfg["watchlist"])
+    total  = len(refresh_items)
     print(f"\n  更新 {scored}/{total} 檔股票")
 
     if scored == 0:
@@ -279,6 +295,12 @@ def main():
     score_history = load_json_file(SCORE_HISTORY_FILE, {})
     alert_history = load_json_file(ALERT_HISTORY_FILE, [])
 
+    # Universe leaderboard data from the last daily broad scan — without this
+    # the 15-min refresh renders the Universe/ETF nav sections empty.
+    broad_top100 = load_json_file(
+        os.path.join("outputs", "broad_scan_latest.json"), {}
+    ).get("results", [])[:100]
+
     report_path = generate_dashboard(
         today,
         market,
@@ -289,6 +311,7 @@ def main():
         fear_greed=fear_greed,
         hk_brief=hk_brief,
         hk_data=hk_data,
+        broad_top100=broad_top100,
         supabase_url=os.getenv('SUPABASE_URL', ''),
         supabase_anon_key=os.getenv('SUPABASE_ANON_KEY', ''),
     )

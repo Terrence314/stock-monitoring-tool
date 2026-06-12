@@ -36,7 +36,7 @@ def _fmt(v, decimals=2) -> str:
 
 # ── SVG Candlestick Chart ──────────────────────────────────────────────────────
 
-def _build_candle_svg(ohlc: list, width: int = 760, height: int = 400) -> str:
+def _build_candle_svg(ohlc: list, width: int = 760, height: int = 400, markers: list | None = None) -> str:
     """Generate a full SVG candlestick chart with MA lines, volume, and MACD.
 
     Layout (top to bottom):
@@ -206,6 +206,30 @@ def _build_candle_svg(ohlc: list, width: int = 760, height: int = 400) -> str:
             f'width="{candle_w:.1f}" height="{body_height:.1f}" '
             f'fill="{color}" opacity="0.85"/>'
         )
+
+    # ── Signal markers (BUY ▲ below bar / SELL ▼ above bar) ──────────────────
+    if markers:
+        date_idx = {b.get("d"): i for i, b in enumerate(ohlc) if b.get("d")}
+        for m in markers:
+            mi = date_idx.get(m.get("d"))
+            if mi is None:
+                continue
+            mx = bx(mi)
+            label = m.get("label", "")
+            if m.get("side") == "buy":
+                ty = px(lows[mi]) + 6
+                parts.append(
+                    f'<polygon points="{mx:.1f},{ty:.1f} {mx-5:.1f},{ty+8:.1f} {mx+5:.1f},{ty+8:.1f}" '
+                    f'fill="#34d399" stroke="#0b0c10" stroke-width="0.5">'
+                    f'<title>🟢 {m.get("d","")} {label}</title></polygon>'
+                )
+            else:
+                ty = px(highs[mi]) - 6
+                parts.append(
+                    f'<polygon points="{mx:.1f},{ty:.1f} {mx-5:.1f},{ty-8:.1f} {mx+5:.1f},{ty-8:.1f}" '
+                    f'fill="#f87171" stroke="#0b0c10" stroke-width="0.5">'
+                    f'<title>🔴 {m.get("d","")} {label}</title></polygon>'
+                )
 
     # ── Last price tag ────────────────────────────────────────────────────────
     last_price = closes[-1]
@@ -1732,6 +1756,7 @@ def generate_stock_detail_page(
     date: str,
     output_dir: str,
     ticker_list: list[str] | None = None,
+    markers: list | None = None,
 ) -> str:
     """Generate a detail HTML page for a single stock.
 
@@ -1745,7 +1770,7 @@ def generate_stock_detail_page(
         Absolute path to the written HTML file.
     """
     ohlc          = s.get("ohlc", [])
-    chart_svg     = _build_candle_svg(ohlc) if len(ohlc) >= 10 else ""
+    chart_svg     = _build_candle_svg(ohlc, markers=markers) if len(ohlc) >= 10 else ""
 
     # TradingView symbol — map HK tickers (0700.HK -> HKEX:700), US pass-through
     _tk = s["ticker"]

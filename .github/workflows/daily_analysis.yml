@@ -40,7 +40,7 @@ jobs:
         run: |
           mkdir -p outputs data
           BASE="https://terrence314.github.io/stock-monitoring-tool"
-          for FILE in score_history.json alert_history.json last_analysis.json paper_portfolio.json pattern_history.json pattern_events.json broad_scan_latest.json; do
+          for FILE in score_history.json alert_history.json last_analysis.json paper_portfolio.json pattern_history.json pattern_events.json broad_scan_latest.json action_history.json exit_alert_history.json; do
             curl -f -s "$BASE/$FILE" -o "outputs/$FILE" || echo "  $FILE not yet on Pages — will be created this run"
           done
           # Restore data/ files (tier2_history + favourites) from Pages

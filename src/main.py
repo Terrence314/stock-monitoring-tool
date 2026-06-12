@@ -237,8 +237,9 @@ def _run(cfg: dict) -> None:
             _hist = data.get("history")
             _ohlc = []
             if _hist is not None and not _hist.empty:
-                for _, row in _hist.tail(100).iterrows():
+                for _bar_dt, row in _hist.tail(100).iterrows():
                     _ohlc.append({
+                        "d": str(getattr(_bar_dt, "date", lambda: _bar_dt)()),
                         "o": round(float(row.get("Open", 0)), 2),
                         "h": round(float(row.get("High", 0)), 2),
                         "l": round(float(row.get("Low", 0)), 2),

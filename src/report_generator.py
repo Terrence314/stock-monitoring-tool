@@ -909,6 +909,30 @@ body.beginner-mode .beginner-only { display: block; }
           · {{ '🎓 GO-LIVE READY' if action_box.gate_ready else '🔬 驗證中 (' ~ action_box.gate_trades ~ ' 筆已平倉)' }}
         </span>
       </div>
+
+      {% if action_timeline and action_timeline|length > 1 %}
+      <details style="margin-top:10px">
+        <summary style="cursor:pointer;font-size:11px;color:var(--text-2);font-family:var(--mono);user-select:none">
+          📜 行動記錄（最近 {{ action_timeline|length }} 次變化）
+        </summary>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px">
+          {% for h in action_timeline %}
+          <div style="display:flex;gap:10px;align-items:baseline;font-size:11px;flex-wrap:wrap;padding:4px 0;border-bottom:1px dashed var(--border)">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--muted);min-width:96px">{{ h.ts }}</span>
+            {% for b in h.buys %}
+            <span style="color:#34d399;font-family:var(--mono)">🟢 {{ b.ticker }}{% if b.score %} ({{ b.score }}){% endif %}</span>
+            {% endfor %}
+            {% for s in h.sells %}
+            <span style="color:#f87171;font-family:var(--mono)">🔴 {{ s.ticker }}</span>
+            {% endfor %}
+            {% if not h.buys and not h.sells %}<span style="color:var(--text-2)">✅ 無行動</span>{% endif %}
+            {% if h.added %}<span style="color:var(--text-2);font-size:10px">＋{{ h.added|join(' ＋') }}</span>{% endif %}
+            {% if h.removed %}<span style="color:var(--muted);font-size:10px;text-decoration:line-through">{{ h.removed|join(' ') }}</span>{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </details>
+      {% endif %}
     </section>
     {% endif %}
 
@@ -2862,6 +2886,55 @@ GATE_MIN_WINRATE  = 50.0           # %
 BREAKER_LIMIT_PCT = -5.0           # monthly circuit breaker
 
 
+ACTION_HISTORY_MAX = 200   # snapshots kept on disk
+
+
+def _log_action_history(action_box: dict, output_dir: str) -> list:
+    """Append Action Box snapshot to action_history.json when it changes.
+
+    Returns recent history (newest first) for the dashboard timeline.
+    Each entry: ts, buys, sells, added, removed (ticker-level diff vs the
+    previous snapshot) so the timeline can show what changed and when.
+    """
+    import json as _json
+    path = os.path.join(output_dir, "action_history.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            history = _json.load(f)
+    except (OSError, ValueError):
+        history = []
+
+    buys  = [{"ticker": b["ticker"], "score": b.get("score"), "price": b.get("price")}
+             for b in action_box.get("buys", [])]
+    sells = [{"ticker": s["ticker"], "why": s.get("why", "")}
+             for s in action_box.get("sells", [])]
+    curr_set = ({b["ticker"] for b in buys}, {s["ticker"] for s in sells})
+
+    prev = history[-1] if history else {"buys": [], "sells": []}
+    prev_set = ({b["ticker"] for b in prev.get("buys", [])},
+                {s["ticker"] for s in prev.get("sells", [])})
+
+    if curr_set != prev_set:
+        prev_all = prev_set[0] | prev_set[1]
+        curr_all = curr_set[0] | curr_set[1]
+        entry = {
+            "ts":      datetime.now(tz=timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M"),
+            "buys":    buys,
+            "sells":   sells,
+            "added":   sorted(curr_all - prev_all),
+            "removed": sorted(prev_all - curr_all),
+        }
+        history.append(entry)
+        history = history[-ACTION_HISTORY_MAX:]
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                _json.dump(history, f, ensure_ascii=False, indent=1)
+        except OSError as e:
+            print(f"  [action_history] ⚠️ write failed: {e}")
+
+    return list(reversed(history))[:12]
+
+
 def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     """今日行動 Action Box — tool decides, user confirms.
 
@@ -3093,6 +3166,59 @@ def _entry_verdict(
     }
 
 
+def _collect_signal_markers(output_dir: str) -> dict:
+    """Per-ticker chart markers from action history, paper trades, exit alerts.
+
+    Returns {ticker: [{"d": "YYYY-MM-DD", "side": "buy"/"sell", "label": str}]}
+    Sources:
+      • action_history.json     — Action Box BUY/SELL signal appearances
+      • paper_portfolio.json    — paper trade entries (buy) and exits (sell)
+      • exit_alert_history.json — exit alerts fired by the 15-min refresh
+    """
+    import json as _json
+    markers: dict[str, list] = {}
+
+    def _add(ticker, d, side, label):
+        if not ticker or not d:
+            return
+        lst = markers.setdefault(ticker, [])
+        if any(m["d"] == d and m["side"] == side for m in lst):
+            return   # one marker per ticker/day/side
+        lst.append({"d": d, "side": side, "label": label})
+
+    try:
+        with open(os.path.join(output_dir, "action_history.json"), encoding="utf-8") as f:
+            for h in _json.load(f):
+                d = (h.get("ts") or "")[:10]
+                for b in h.get("buys", []):
+                    _add(b.get("ticker"), d, "buy", f"BUY 訊號 score {b.get('score')}")
+                for s in h.get("sells", []):
+                    _add(s.get("ticker"), d, "sell", "SELL 訊號")
+    except (OSError, ValueError):
+        pass
+
+    try:
+        with open(os.path.join(output_dir, "paper_portfolio.json"), encoding="utf-8") as f:
+            for t in _json.load(f).get("trades", []):
+                _add(t.get("ticker"), (t.get("entry_date") or "")[:10], "buy",
+                     f"紙上買入 @{t.get('entry_price')}")
+                if t.get("status") == "closed":
+                    _add(t.get("ticker"), (t.get("exit_date") or "")[:10], "sell",
+                         f"紙上平倉 {t.get('exit_reason', '')}")
+    except (OSError, ValueError):
+        pass
+
+    # Exit alerts fired by the 15-min refresh ({ticker: iso timestamp})
+    try:
+        with open(os.path.join(output_dir, "exit_alert_history.json"), encoding="utf-8") as f:
+            for tkr, iso in _json.load(f).items():
+                _add(tkr, (iso or "")[:10], "sell", "Exit 警報")
+    except (OSError, ValueError):
+        pass
+
+    return markers
+
+
 def generate_dashboard(
     date: str,
     market_overview: dict,
@@ -3174,10 +3300,12 @@ def generate_dashboard(
     )
 
     action_box = _build_action_box(stocks_sorted, output_dir)
+    action_timeline = _log_action_history(action_box, output_dir)
 
     html = Template(DASHBOARD_HTML).render(
         date=date,
         action_box=action_box,
+        action_timeline=action_timeline,
         generated_at=datetime.now(tz=timezone(timedelta(hours=8))).strftime("%b %d %H:%M HKT"),
         market=market_overview,
         brief_sections=brief_sections,
@@ -3213,10 +3341,12 @@ def generate_dashboard(
         f.write(html)
 
     # Generate per-stock detail pages
+    signal_markers = _collect_signal_markers(output_dir)
     ticker_list = [s["ticker"] for s in stocks_sorted]
     for stk in stocks_sorted:
         try:
-            generate_stock_detail_page(stk, date, output_dir, ticker_list=ticker_list)
+            generate_stock_detail_page(stk, date, output_dir, ticker_list=ticker_list,
+                                       markers=signal_markers.get(stk["ticker"]))
         except Exception as exc:
             print(f"  [detail] {stk.get('ticker', '?')} skipped: {exc}")
 

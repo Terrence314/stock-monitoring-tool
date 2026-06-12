@@ -50,6 +50,15 @@ jobs:
             && echo "  ✅ Exit alert history loaded" \
             || echo "{}" > outputs/exit_alert_history.json \
             && echo "  ⚠️  No exit alert history — starting fresh"
+          # Live state files — without these the refresh rebuilds the dashboard
+          # from stale/empty data and overwrites the good copies on Pages.
+          # paper_portfolio.json is CRITICAL: repo has an old committed copy that
+          # would otherwise clobber the live portfolio every 15 minutes.
+          for FILE in paper_portfolio.json broad_scan_latest.json score_history.json alert_history.json action_history.json; do
+            curl -f -s "$BASE/$FILE" -o "outputs/$FILE" \
+              && echo "  ✅ $FILE loaded" \
+              || { rm -f "outputs/$FILE"; echo "  ⚠️  $FILE not on Pages — skipped"; }
+          done
 
       - name: Run price refresh
         # No GEMINI_API_KEY — this step calls yfinance only
