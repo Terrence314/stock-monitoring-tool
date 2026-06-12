@@ -873,9 +873,14 @@ body.beginner-mode .beginner-only { display: block; }
 
       {% if action_box.breaker_trip %}
       <div style="padding:10px 12px;border-radius:10px;background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.35);margin-bottom:10px">
-        <strong style="color:var(--down)">🛑 STOP TRADING — 本月虧損 {{ action_box.breaker_pct }}% 已觸及 {{ action_box.breaker_limit }}% 斷路器。今個月唔開新倉，檢討策略。</strong>
+        <strong style="color:var(--down)">🛑 斷路器已觸發 — 本月虧損 {{ action_box.breaker_pct }}% 已觸及 {{ action_box.breaker_limit }}%。</strong>
+        <span style="font-size:11px;color:var(--text-2);display:block;margin-top:4px">
+          真錢規則：今個月唔開新倉。下面嘅 BUY 係 📝 紙上練習單 — 繼續喺 paper account 照單執行，
+          練手 + 累積驗證紀錄（驗證期本來就係 paper）。斷路器下月 1 號自動重置。
+        </span>
       </div>
-      {% elif action_box.no_action %}
+      {% endif %}
+      {% if action_box.no_action %}
       <div style="padding:10px 12px;border-radius:10px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);margin-bottom:10px">
         <span style="color:var(--up);font-weight:600">✅ 今日無行動</span>
         <span style="color:var(--text-2);font-size:12px"> — 無股票合資格入場，持倉無賣出訊號。乜都唔做都係一個決定。</span>
@@ -884,6 +889,7 @@ body.beginner-mode .beginner-only { display: block; }
       {% for b in action_box.buys %}
       <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.2);margin-bottom:6px;flex-wrap:wrap">
         <strong style="color:var(--up)">🟢 BUY <a href="./{{ b.ticker }}.html" style="color:var(--up)">{{ b.ticker }}</a></strong>
+        {% if action_box.breaker_trip %}<span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(245,185,66,0.15);color:var(--amber);border:1px solid rgba(245,185,66,0.3)">📝 紙上練習單</span>{% endif %}
         <span class="mono" style="font-size:12px;font-weight:700">買入 ≤ ${{ '%.2f'|format(b.price) if b.price else '—' }}</span>
         <span class="mono" style="font-size:11px;color:var(--down)">止損 ${{ '%.2f'|format(b.stop) if b.stop else '—' }} (−8%)</span>
         <span class="mono" style="font-size:11px;color:var(--up)">目標 ${{ '%.2f'|format(b.target) if b.target else '—' }} (+12%)</span>
