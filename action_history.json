@@ -25,5 +25,43 @@
    "GE"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-12 23:41",
+  "buys": [
+   {
+    "ticker": "GD",
+    "score": 80,
+    "price": 360.8699951171875
+   },
+   {
+    "ticker": "BIIB",
+    "score": 80,
+    "price": 201.5500030517578
+   },
+   {
+    "ticker": "RCL",
+    "score": 80,
+    "price": 290.3999938964844
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "CIBR",
+    "why": "score 25"
+   },
+   {
+    "ticker": "ARKK",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "ARKK",
+   "CIBR",
+   "RCL"
+  ],
+  "removed": [
+   "GE"
+  ]
  }
 ]
