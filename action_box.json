@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-13 06:10",
+ "ts": "2026-06-13 06:48",
  "buys": [
   {
    "ticker": "BIIB",
@@ -37,6 +37,7 @@
  "gate_day": 1,
  "gate_days": 60,
  "gate_winrate": 0.0,
+ "gate_pf": 0.0,
  "gate_pnl": -836.11,
  "gate_trades": 4,
  "gate_ready": false

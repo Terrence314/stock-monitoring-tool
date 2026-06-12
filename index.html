@@ -869,8 +869,8 @@ body.beginner-mode .beginner-only { display: block; }
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">63,458.00</span>
-        <span class="pct down">-0.16%</span>
+        <span class="market-price">63,468.42</span>
+        <span class="pct down">-0.15%</span>
       </div>
     </div>
     
@@ -893,7 +893,7 @@ body.beginner-mode .beginner-only { display: block; }
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">103 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Jun 13 06:10 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Jun 13 06:48 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -974,9 +974,10 @@ body.beginner-mode .beginner-only { display: block; }
           斷路器 -7.4% / -5.0%
           <span style="color:#f87171">🛑 TRIPPED</span>
         </span>
-        <span title="真錢上線門檻：60日驗證 + 勝率>50% + 總盈虧為正。達標前一律 paper trading。">
+        <span title="真錢上線門檻：60日驗證 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正。PF = 總贏錢÷總輸錢 — 突破型策略可以勝率四成但靠大贏單賺錢，單睇勝率會冤枉佢。">
           真錢門檻 Day 1/60
           · 勝率 0.0%
+          · PF 0.0
           · PnL $-836.11
           · 🔬 驗證中 (4 筆已平倉)
         </span>
