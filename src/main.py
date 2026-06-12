@@ -404,11 +404,15 @@ def _run(cfg: dict) -> None:
     except Exception as pb_err:
         print(f"  [pattern_backtest] ⚠️ skipped due to error: {pb_err}")
 
-    # ── Portfolio ─────────────────────────────────────────────────────────────
+    # ── Portfolio (skipped while transaction log is empty) ───────────────────
     try:
-        pf_path = run_portfolio()
-        if pf_path:
-            print(f"      Portfolio: {pf_path}")
+        _tx = json.load(open("data/portfolio_transactions.json")).get("transactions", [])
+        if _tx:
+            pf_path = run_portfolio()
+            if pf_path:
+                print(f"      Portfolio: {pf_path}")
+        else:
+            print("  [portfolio] skipped — no transactions recorded yet")
     except Exception as pf_err:
         print(f"  [portfolio] ⚠️ skipped due to error: {pf_err}")
 
