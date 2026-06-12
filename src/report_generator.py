@@ -914,9 +914,10 @@ body.beginner-mode .beginner-only { display: block; }
           斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
-        <span title="真錢上線門檻：60日驗證 + 勝率>50% + 總盈虧為正。達標前一律 paper trading。">
+        <span title="真錢上線門檻：60日驗證 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正。PF = 總贏錢÷總輸錢 — 突破型策略可以勝率四成但靠大贏單賺錢，單睇勝率會冤枉佢。">
           真錢門檻 Day {{ action_box.gate_day }}/{{ action_box.gate_days }}
           · 勝率 {{ action_box.gate_winrate if action_box.gate_winrate is not none else '—' }}%
+          · PF {{ action_box.gate_pf if action_box.gate_pf is not none else '—' }}
           · PnL ${{ action_box.gate_pnl }}
           · {{ '🎓 GO-LIVE READY' if action_box.gate_ready else '🔬 驗證中 (' ~ action_box.gate_trades ~ ' 筆已平倉)' }}
         </span>
@@ -2895,6 +2896,9 @@ def _collect_headlines(stocks: list) -> list[dict]:
 GATE_START_DATE   = "2026-06-11"   # go-live validation window start (2 months)
 GATE_DAYS         = 60
 GATE_MIN_WINRATE  = 50.0           # %
+GATE_MIN_PF       = 1.3            # profit factor alternative — win-rate-only
+                                   # gates structurally fail breakout/trend styles
+                                   # that profit at 40% win rates via large winners
 BREAKER_LIMIT_PCT = -5.0           # monthly circuit breaker
 
 
@@ -3039,9 +3043,17 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     wins     = sum(1 for t in closed_in_window if (t.get("pnl") or 0) > 0)
     winrate  = round(wins / len(closed_in_window) * 100, 1) if closed_in_window else None
     pnl_window = round(sum(t.get("pnl") or 0 for t in closed_in_window), 2)
+    gross_win  = sum(t.get("pnl") or 0 for t in closed_in_window if (t.get("pnl") or 0) > 0)
+    gross_loss = abs(sum(t.get("pnl") or 0 for t in closed_in_window if (t.get("pnl") or 0) < 0))
+    profit_factor = (round(gross_win / gross_loss, 2) if gross_loss
+                     else (None if not gross_win else float("inf")))
+    quality_ok = (
+        (winrate is not None and winrate > GATE_MIN_WINRATE)
+        or (profit_factor is not None and profit_factor >= GATE_MIN_PF)
+    )
     gate_ready = (
         days_in >= GATE_DAYS
-        and winrate is not None and winrate > GATE_MIN_WINRATE
+        and quality_ok
         and pnl_window > 0
         and not breaker_trip
     )
@@ -3056,6 +3068,7 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "gate_day":      min(days_in, GATE_DAYS),
         "gate_days":     GATE_DAYS,
         "gate_winrate":  winrate,
+        "gate_pf":       (profit_factor if profit_factor != float("inf") else 99.0),
         "gate_pnl":      pnl_window,
         "gate_trades":   len(closed_in_window),
         "gate_ready":    gate_ready,
