@@ -103,7 +103,7 @@
       "exit_date": null,
       "exit_price": null,
       "current_price": 509.36,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": null,
       "pnl_pct": null
     },
@@ -156,7 +156,7 @@
       "exit_date": null,
       "exit_price": null,
       "current_price": 85.47,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": null,
       "pnl_pct": null
     },
@@ -224,11 +224,11 @@
       "notional": 1500.0,
       "score": 88,
       "status": "closed",
-      "exit_date": "2026-06-11",
+      "exit_date": "2026-06-12",
       "exit_price": 385.57,
       "exit_reason": "stop_loss",
       "current_price": 385.57,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": -205.47,
       "pnl_pct": -13.7,
       "patterns_triggered": [
@@ -248,11 +248,11 @@
       "notional": 1500.0,
       "score": 80,
       "status": "closed",
-      "exit_date": "2026-06-11",
+      "exit_date": "2026-06-12",
       "exit_price": 390.34,
       "exit_reason": "stop_loss",
       "current_price": 390.34,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": -199.56,
       "pnl_pct": -13.3,
       "patterns_triggered": [
@@ -273,11 +273,11 @@
       "notional": 1500.0,
       "score": 85,
       "status": "closed",
-      "exit_date": "2026-06-11",
+      "exit_date": "2026-06-12",
       "exit_price": 131.08,
       "exit_reason": "stop_loss",
       "current_price": 131.08,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": -243.96,
       "pnl_pct": -16.26,
       "patterns_triggered": [
@@ -301,7 +301,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 132.74,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -324,7 +324,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 75.46,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -347,7 +347,7 @@
       "exit_price": null,
       "exit_reason": null,
       "current_price": 79.94,
-      "current_date": "2026-06-11",
+      "current_date": "2026-06-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -357,5 +357,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-11"
+  "last_updated": "2026-06-12"
 }
