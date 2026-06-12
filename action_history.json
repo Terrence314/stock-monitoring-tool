@@ -94,5 +94,35 @@
    "GD",
    "RCL"
   ]
+ },
+ {
+  "ts": "2026-06-12 23:53",
+  "buys": [
+   {
+    "ticker": "BIIB",
+    "score": 80,
+    "price": 201.44500732421875
+   },
+   {
+    "ticker": "CCI",
+    "score": 80,
+    "price": 93.44000244140625
+   },
+   {
+    "ticker": "EL",
+    "score": 80,
+    "price": 89.19499969482422
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "ARKK",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "ARKK"
+  ],
+  "removed": []
  }
 ]
