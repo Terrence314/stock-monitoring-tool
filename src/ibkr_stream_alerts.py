@@ -103,7 +103,8 @@ def _check_triggers(ticker: str, price: float, lv: dict, state: dict) -> list[tu
         # BUY: MA20 reclaim
         if was_below and price > ma20 and score >= MIN_SCORE_BUY:
             fired.append(("ma20_reclaim",
-                f"🟢 BUY trigger — {ticker} reclaimed MA20 ({ma20:.2f}) @ {price:.2f} · score {score}"))
+                f"🟢 BUY trigger — {ticker} reclaimed MA20 ({ma20:.2f}) @ {price:.2f} · score {score}\n"
+                f"📋 買入 ≤ {price:.2f} · 止損 {price*0.92:.2f} (−8%) · 目標 {price*1.12:.2f} (+12%) · ≤10 交易日"))
         # SELL: MA20 break
         if not was_below and price < ma20:
             fired.append(("ma20_break",
@@ -113,7 +114,8 @@ def _check_triggers(ticker: str, price: float, lv: dict, state: dict) -> list[tu
     # BUY: breakout above yesterday's high
     if prev_high and price > prev_high and score >= 70 and not state.get("breakout_done"):
         fired.append(("breakout",
-            f"🚀 BUY trigger — {ticker} broke yesterday's high ({prev_high:.2f}) @ {price:.2f} · score {score}"))
+            f"🚀 BUY trigger — {ticker} broke yesterday's high ({prev_high:.2f}) @ {price:.2f} · score {score}\n"
+            f"📋 買入 ≤ {price:.2f} · 止損 {price*0.92:.2f} (−8%) · 目標 {price*1.12:.2f} (+12%) · ≤10 交易日"))
         state["breakout_done"] = True
 
     # SELL: intraday drawdown from session high

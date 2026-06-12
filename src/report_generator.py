@@ -884,8 +884,12 @@ body.beginner-mode .beginner-only { display: block; }
       {% for b in action_box.buys %}
       <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.2);margin-bottom:6px;flex-wrap:wrap">
         <strong style="color:var(--up)">🟢 BUY <a href="./{{ b.ticker }}.html" style="color:var(--up)">{{ b.ticker }}</a></strong>
-        <span class="mono" style="font-size:12px">${{ '%.2f'|format(b.price) if b.price else '—' }} · score {{ b.score }}</span>
-        <span style="font-size:11px;color:var(--text-2)">$1,000 美元 · 止損 −5% · 持有 ≤10 交易日 · {{ b.reason }}</span>
+        <span class="mono" style="font-size:12px;font-weight:700">買入 ≤ ${{ '%.2f'|format(b.price) if b.price else '—' }}</span>
+        <span class="mono" style="font-size:11px;color:var(--down)">止損 ${{ '%.2f'|format(b.stop) if b.stop else '—' }} (−8%)</span>
+        <span class="mono" style="font-size:11px;color:var(--up)">目標 ${{ '%.2f'|format(b.target) if b.target else '—' }} (+12%)</span>
+        <span class="mono" style="font-size:11px;color:var(--amber)">期限 {{ b.expiry }}（10 交易日）</span>
+        <span style="font-size:11px;color:var(--text-2)">$1,000 · score {{ b.score }} · {{ b.reason }}</span>
+        <span style="flex-basis:100%;font-size:10px;color:var(--muted);padding-left:2px">📋 落單即設止損單 — 買入後馬上喺 IBKR 掛 stop order，唔好等</span>
       </div>
       {% endfor %}
       {% for sl in action_box.sells %}
@@ -2963,11 +2967,23 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         if s["ticker"] in held:
             continue
         if ("GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label) and s.get("score", 0) >= 70:
+            px = s.get("price") or 0
+            # Order ticket numbers — same rules the paper engine enforces
+            # (paper_trading.py: STOP_LOSS_PCT=8, TAKE_PROFIT_PCT=12, HOLD_DAYS=10)
+            expiry = _date.today()
+            _td = 0
+            while _td < 10:
+                expiry += timedelta(days=1)
+                if expiry.weekday() < 5:
+                    _td += 1
             buys.append({
                 "ticker": s["ticker"],
-                "price":  s.get("price"),
+                "price":  px,
                 "score":  s.get("score"),
                 "reason": v.get("reason", ""),
+                "stop":   round(px * 0.92, 2) if px else None,
+                "target": round(px * 1.12, 2) if px else None,
+                "expiry": expiry.strftime("%m-%d"),
             })
         if len(buys) >= 3:
             break
