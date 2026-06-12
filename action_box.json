@@ -1,0 +1,43 @@
+{
+ "ts": "2026-06-13 06:10",
+ "buys": [
+  {
+   "ticker": "BIIB",
+   "price": 200.0500030517578,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 0.92",
+   "stop": 184.05,
+   "target": 224.06,
+   "expiry": "06-26"
+  },
+  {
+   "ticker": "EL",
+   "price": 89.68000030517578,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 61",
+   "stop": 82.51,
+   "target": 100.44,
+   "expiry": "06-26"
+  },
+  {
+   "ticker": "GD",
+   "price": 360.2200012207031,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.14",
+   "stop": 331.4,
+   "target": 403.45,
+   "expiry": "06-26"
+  }
+ ],
+ "sells": [],
+ "no_action": false,
+ "breaker_pct": -7.37,
+ "breaker_limit": -5.0,
+ "breaker_trip": true,
+ "gate_day": 1,
+ "gate_days": 60,
+ "gate_winrate": 0.0,
+ "gate_pnl": -836.11,
+ "gate_trades": 4,
+ "gate_ready": false
+}
