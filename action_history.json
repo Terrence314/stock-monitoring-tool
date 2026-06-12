@@ -124,5 +124,30 @@
    "ARKK"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-13 00:18",
+  "buys": [
+   {
+    "ticker": "BIIB",
+    "score": 80,
+    "price": 201.44000244140625
+   },
+   {
+    "ticker": "CCI",
+    "score": 80,
+    "price": 93.25
+   },
+   {
+    "ticker": "EL",
+    "score": 80,
+    "price": 89.33999633789062
+   }
+  ],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "ARKK"
+  ]
  }
 ]
