@@ -3294,8 +3294,11 @@ def generate_dashboard(
 
     # ETF panel — core ETFs sorted by score desc, then ticker
     # Uses stocks_sorted (full Tier 2 list which includes all core tickers)
+    # ETFs carry asset_type="etf"; yfinance reports no sector for funds, so
+    # the old sector=="ETF" filter matched nothing and the panel was empty.
     etf_panel_items = sorted(
-        [s for s in stocks_sorted if s.get("sector") == "ETF"],
+        [s for s in stocks_sorted
+         if s.get("asset_type") == "etf" or s.get("sector") == "ETF"],
         key=lambda x: (-(x.get("score") or 0), x["ticker"])
     )
 
