@@ -29,6 +29,7 @@ from datetime import datetime, timezone, timedelta
 
 from ib_async import IB, Stock
 
+from day_trading_engine import DayTradingEngine
 from notifier import send_telegram
 
 GATEWAY_HOST = "127.0.0.1"
@@ -254,11 +255,20 @@ def main() -> None:
             f"📡 即時警報引擎上線 — streaming {len(contracts)} tickers "
             f"({len(held)} positions pinned) · alerts only, no auto-trading")
 
+    # Day-trading mode (ORB) — separate ledger, reuses this IB connection
+    def _send_day_alert(msg: str) -> None:
+        print(f"[DAY-TRADE] {msg}")
+        if bot_token and chat_id:
+            send_telegram(bot_token, chat_id, msg)
+
+    day_engine = DayTradingEngine(ib, list(contracts.keys()), _send_day_alert)
+
     def _auto_exit_check():
         """Self-stop after US close so launchd sessions don't run all day."""
         now = datetime.now(HKT)
         if now.hour == EXIT_HOUR_HKT and now.minute >= EXIT_MIN_HKT:
             print("US session over — engine self-stopping.")
+            day_engine.eod_close()
             if bot_token and chat_id:
                 send_telegram(bot_token, chat_id, "📡 即時警報引擎下線 — US session closed")
             ib.disconnect()
@@ -266,6 +276,8 @@ def main() -> None:
     try:
         while ib.isConnected():
             ib.sleep(30)
+            if day_engine.due(time.time()):
+                day_engine.poll()
             _auto_exit_check()
     except KeyboardInterrupt:
         print("\nStopped.")
