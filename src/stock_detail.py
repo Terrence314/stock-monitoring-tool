@@ -99,9 +99,15 @@ def _build_candle_svg(ohlc: list, width: int = 760, height: int = 400, markers: 
     dea   = _ema(dif, 9)
     hist  = [2 * (d - e) for d, e in zip(dif, dea)]
 
+    # ── MA Ribbon (EMA96 of low / hl3 / high) ────────────────────────────────
+    hl3 = [(h + l + c) / 3 for h, l, c in zip(highs, lows, closes)]
+    ribbon_low  = _ema(lows, 96)
+    ribbon_mid  = _ema(hl3, 96)
+    ribbon_high = _ema(highs, 96)
+
     # ── Price scale ───────────────────────────────────────────────────────────
-    price_min = min(lows)
-    price_max = max(highs)
+    price_min = min(lows + ribbon_low)
+    price_max = max(highs + ribbon_high)
     price_rng = price_max - price_min
     if price_rng == 0:
         price_rng = price_max * 0.01 or 1
@@ -184,6 +190,20 @@ def _build_candle_svg(ohlc: list, width: int = 760, height: int = 400, markers: 
     parts.append(_ma_path(ma5,  "#f5b942"))   # amber
     parts.append(_ma_path(ma20, "#7aa2ff"))   # blue
     parts.append(_ma_path(ma60, "#b18cff"))   # purple
+
+    # ── MA Ribbon (EMA96 cloud: low / hl3 / high) ──────────────────────────────
+    high_pts = [(bx(i), px(v)) for i, v in enumerate(ribbon_high) if v is not None]
+    low_pts  = [(bx(i), px(v)) for i, v in enumerate(ribbon_low)  if v is not None]
+    if len(high_pts) >= 2 and len(low_pts) >= 2:
+        band_d = (
+            "M " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in high_pts)
+            + " L " + " L ".join(f"{x:.1f},{y:.1f}" for x, y in reversed(low_pts))
+            + " Z"
+        )
+        parts.append(f'<path d="{band_d}" fill="#ffd166" opacity="0.08"/>')
+    parts.append(_ma_path(ribbon_low,  "#ffd166"))  # yellow
+    parts.append(_ma_path(ribbon_mid,  "#ff9f43"))  # orange
+    parts.append(_ma_path(ribbon_high, "#ff6b6b"))  # red
 
     # ── Candlesticks ─────────────────────────────────────────────────────────
     for i in range(n):
@@ -319,6 +339,7 @@ def _build_candle_svg(ohlc: list, width: int = 760, height: int = 400, markers: 
         ("#f5b942", "MA5"),
         ("#7aa2ff", "MA20"),
         ("#b18cff", "MA60"),
+        ("#ff9f43", "Ribbon96"),
     ]
     lx_leg = pad_l + 8
     for color_l, lbl_l in legend_items:
