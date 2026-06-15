@@ -1,9 +1,28 @@
 {
- "ts": "2026-06-16 01:59",
- "buys": [],
+ "ts": "2026-06-16 04:55",
+ "buys": [
+  {
+   "ticker": "EL",
+   "price": 90.0,
+   "score": 80,
+   "reason": "Score 80 · BB 0.79 · RSI 62",
+   "stop": 82.8,
+   "target": 100.8,
+   "expiry": "06-29"
+  },
+  {
+   "ticker": "FDX",
+   "price": 338.75,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 62",
+   "stop": 311.65,
+   "target": 379.4,
+   "expiry": "06-29"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -5.84,
+ "no_action": false,
+ "breaker_pct": -5.9,
  "breaker_limit": -5.0,
  "breaker_trip": true,
  "gate_day": 4,
