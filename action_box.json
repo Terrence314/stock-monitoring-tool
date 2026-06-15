@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-14 04:50",
+ "ts": "2026-06-15 15:54",
  "buys": [
   {
    "ticker": "DIA",
@@ -8,7 +8,7 @@
    "reason": "Score 80 · BB 0.77 · RSI 59",
    "stop": 472.02,
    "target": 574.63,
-   "expiry": "06-26"
+   "expiry": "06-29"
   },
   {
    "ticker": "BIIB",
@@ -17,7 +17,7 @@
    "reason": "BB squeeze just fired upward — bands expanding, BB 0.92",
    "stop": 184.05,
    "target": 224.06,
-   "expiry": "06-26"
+   "expiry": "06-29"
   },
   {
    "ticker": "EL",
@@ -26,7 +26,7 @@
    "reason": "Score 80 · BB 0.80 · RSI 61",
    "stop": 82.51,
    "target": 100.44,
-   "expiry": "06-26"
+   "expiry": "06-29"
   }
  ],
  "sells": [],
@@ -34,7 +34,7 @@
  "breaker_pct": -7.37,
  "breaker_limit": -5.0,
  "breaker_trip": true,
- "gate_day": 2,
+ "gate_day": 4,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,
