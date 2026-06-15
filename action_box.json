@@ -1,35 +1,16 @@
 {
- "ts": "2026-06-16 01:32",
- "buys": [
-  {
-   "ticker": "RDDT",
-   "price": 177.27999877929688,
-   "score": 80,
-   "reason": "Score 80 · BB 0.74 · RSI 57",
-   "stop": 163.1,
-   "target": 198.55,
-   "expiry": "06-29"
-  },
-  {
-   "ticker": "RIVN",
-   "price": 16.84000015258789,
-   "score": 80,
-   "reason": "Score 80 · BB 0.69 · RSI 56",
-   "stop": 15.49,
-   "target": 18.86,
-   "expiry": "06-29"
-  }
- ],
+ "ts": "2026-06-16 01:59",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -7.37,
+ "no_action": true,
+ "breaker_pct": -5.84,
  "breaker_limit": -5.0,
  "breaker_trip": true,
  "gate_day": 4,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,
- "gate_pnl": -836.11,
- "gate_trades": 4,
+ "gate_pnl": -874.84,
+ "gate_trades": 6,
  "gate_ready": false
 }
