@@ -65,15 +65,25 @@ def run_morning_brief(model, market_overview: dict) -> str:
 
 
 def run_stock_quick_view(model, ticker: str, name: str, stock_data: dict, ta: dict) -> str:
-    """50-word stock view for the watchlist — Prompt B style."""
+    """~120-word structured view for low-signal stocks (score <65)."""
     change = stock_data["price_change_pct"]
+    bb_info = ""
+    if ta.get("bb_upper") and ta.get("bb_lower"):
+        bb_info = f"\nBB上軌：{ta['bb_upper']} | BB下軌：{ta['bb_lower']} | BB%：{ta.get('bb_pct', 'N/A')}"
+    kd_info = ""
+    if ta.get("kd_k") is not None:
+        kd_info = f"\nKD-K：{ta['kd_k']} | KD-D：{ta['kd_d']}"
     prompt = f"""股票：{ticker}（{name}）
 現價：${stock_data['current_price']:.2f}  漲跌：{change:+.2f}%
 MA5：{ta['ma5']} | MA20：{ta['ma20']} | MA60：{ta['ma60']}
-RSI：{ta['rsi']} | MACD Hist：{ta['macd_hist']} | 量比：{ta['vol_ratio']}×
+RSI：{ta['rsi']} | MACD Hist：{ta['macd_hist']} | 量比：{ta['vol_ratio']}×{{bb_info}}{{kd_info}}
 技術信號分數：{ta['score']}/100（{ta['strength']}）
 
-請用繁體中文，50 字以內，給出：①目前盤面強弱 ②關鍵價位 ③高機率劇本。"""
+請用繁體中文，120 字以內，分四點回答（每點一行，直接給結論，不要標題符號）：
+①盤面強弱：目前趨勢方向與動能強弱
+②關鍵價位：最近支撐位與壓力位（給具體數字）
+③高機率劇本：未來3–5個交易日最可能走勢
+④主要風險：一個最需警惕的下行風險"""
 
     return _call(model, prompt)
 

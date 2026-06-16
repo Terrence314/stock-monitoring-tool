@@ -1743,18 +1743,44 @@ body {
   background: linear-gradient(135deg, var(--surface) 60%, var(--elevated));
   border: 1px solid var(--border-hi);
   border-radius: 14px; padding: 22px 28px;
-  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap;
 ">
   <div class="summary-text" style="flex:1; min-width:200px">
-    <div class="summary-title" style="font-size:11px;font-family:var(--mono);color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">
+    <div class="summary-title" style="font-size:11px;font-family:var(--mono);color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">
       ✦ {{ s.ticker }} · 綜合分析摘要
     </div>
-    <div class="summary-body" style="font-size:13px;line-height:1.7;color:var(--text)">
-      {% for b in core_bullets[:2] %}{{ b }}{% if not loop.last %}　{% endif %}{% endfor %}
+
+    {% if s.thesis %}
+    {# ── Deep dive (score ≥65): show all three structured sections ── #}
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;font-family:var(--mono);color:var(--text-2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">核心論點</div>
+      <div style="font-size:13px;line-height:1.75;color:var(--text)">{{ s.thesis }}</div>
+    </div>
+    {% if s.risks %}
+    <div style="margin-bottom:14px;padding:10px 14px;border-radius:8px;background:var(--elevated);border-left:3px solid var(--down)">
+      <div style="font-size:10px;font-family:var(--mono);color:var(--down);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">風險矩陣</div>
+      <div style="font-size:12px;line-height:1.7;color:var(--text-2)">{{ s.risks }}</div>
+    </div>
+    {% endif %}
+    {% if s.entry %}
+    <div style="padding:10px 14px;border-radius:8px;background:var(--elevated);border-left:3px solid var(--up)">
+      <div style="font-size:10px;font-family:var(--mono);color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">擇時建議</div>
+      <div style="font-size:12px;line-height:1.7;color:var(--text)">{{ s.entry }}</div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    {# ── Quick view (score <65): show 4-point structured bullets ── #}
+    <div class="summary-body" style="font-size:13px;line-height:1.8;color:var(--text)">
+      {% for b in core_bullets %}
+      <div style="padding:3px 0;border-bottom:1px solid var(--border);margin-bottom:4px">{{ b }}</div>
+      {% endfor %}
       {% if not core_bullets %}{{ s.ai_view or ('技術信號分數 ' ~ sc ~ '/100，強度評級：' ~ s.strength ~ '。') }}{% endif %}
     </div>
+    {% endif %}
   </div>
-  <div class="verdict-block" style="text-align:center;flex-shrink:0">
+
+  <div class="verdict-block" style="text-align:center;flex-shrink:0;padding-top:4px">
     <div class="verdict-label {{ verdict.cls }}" style="font-size:20px;font-weight:800;letter-spacing:-0.01em">{{ verdict.label }}</div>
     <div class="verdict-en" style="font-family:var(--mono);font-size:11px;color:var(--text-2);margin-top:4px">{{ verdict.en }}</div>
     <div style="font-family:var(--mono);font-size:10px;margin-top:6px;color:var(--{{ verdict.cls }});opacity:0.7">信號 {{ sc }}/100</div>

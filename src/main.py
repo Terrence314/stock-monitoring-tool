@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data, fetch_fear_greed, fetch_hk_indicators
 from technical_analysis import calculate_indicators
-from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_news_sentiment, run_hk_morning_brief
+from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_stock_deep_dive, run_news_sentiment, run_hk_morning_brief
 from report_generator import generate_dashboard
 from notifier import send_telegram, send_health_alert, format_daily_message
 from backtest import run_backtest
@@ -207,6 +207,14 @@ def _run(cfg: dict) -> None:
             ta_dfs[ticker] = ta["df"]   # stash for pattern_engine
             ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
 
+            # ── Deep dive for high-signal stocks (score ≥65) ──────────────
+            deep = {"thesis": "", "risks": "", "entry": ""}
+            if ta["score"] >= 65:
+                try:
+                    deep = run_stock_deep_dive(model, ticker, data["name"], data, ta)
+                except Exception as dd_err:
+                    print(f"  [deep_dive] ⚠️ {ticker}: {dd_err}")
+
             # ── Finnhub: news + analyst ratings + financials ───────────────
             fh = fetch_finnhub_data(ticker, finnhub_key) if finnhub_key else {}
 
@@ -283,8 +291,10 @@ def _run(cfg: dict) -> None:
                 "bb_lower_touch":            ta.get("bb_lower_touch", False),
                 "bb_upper_touch":            ta.get("bb_upper_touch", False),
                 "ai_view":          ai_view,
+                "thesis":           deep.get("thesis", ""),
+                "risks":            deep.get("risks", ""),
                 "sector":           data.get("sector", "Unknown"),
-                "entry":            "",  # populated by deep dive if run; placeholder here
+                "entry":            deep.get("entry", ""),
                 "news":             combined_news[:5],
                 "sentiment":        sentiment,
                 "analyst_buy":      fh.get("analyst_buy"),
