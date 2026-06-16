@@ -1,6 +1,15 @@
 {
- "ts": "2026-06-16 07:04",
+ "ts": "2026-06-16 12:26",
  "buys": [
+  {
+   "ticker": "URI",
+   "price": 1084.010009765625,
+   "score": 82,
+   "reason": "Score 82 · BB 0.79 · RSI 69",
+   "stop": 997.29,
+   "target": 1214.09,
+   "expiry": "06-30"
+  },
   {
    "ticker": "EL",
    "price": 90.0,
@@ -8,24 +17,21 @@
    "reason": "Score 80 · BB 0.79 · RSI 62",
    "stop": 82.8,
    "target": 100.8,
-   "expiry": "06-29"
-  },
-  {
-   "ticker": "FDX",
-   "price": 338.75,
-   "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 62",
-   "stop": 311.65,
-   "target": 379.4,
-   "expiry": "06-29"
+   "expiry": "06-30"
   }
  ],
- "sells": [],
+ "sells": [
+  {
+   "ticker": "RDDT",
+   "float_pct": 2.6,
+   "why": "score 8"
+  }
+ ],
  "no_action": false,
  "breaker_pct": -5.67,
  "breaker_limit": -5.0,
  "breaker_trip": true,
- "gate_day": 4,
+ "gate_day": 5,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,

@@ -259,5 +259,33 @@
    "FDX"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-16 12:26",
+  "buys": [
+   {
+    "ticker": "URI",
+    "score": 82,
+    "price": 1084.010009765625
+   },
+   {
+    "ticker": "EL",
+    "score": 80,
+    "price": 90.0
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "RDDT",
+    "why": "score 8"
+   }
+  ],
+  "added": [
+   "RDDT",
+   "URI"
+  ],
+  "removed": [
+   "FDX"
+  ]
  }
 ]
