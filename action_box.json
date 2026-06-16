@@ -1,32 +1,26 @@
 {
- "ts": "2026-06-16 12:26",
+ "ts": "2026-06-16 22:57",
  "buys": [
   {
-   "ticker": "URI",
-   "price": 1084.010009765625,
-   "score": 82,
-   "reason": "Score 82 · BB 0.79 · RSI 69",
-   "stop": 997.29,
-   "target": 1214.09,
+   "ticker": "UPS",
+   "price": 109.80000305175781,
+   "score": 80,
+   "reason": "Score 80 · BB 0.75 · RSI 61",
+   "stop": 101.02,
+   "target": 122.98,
    "expiry": "06-30"
   },
   {
-   "ticker": "EL",
-   "price": 90.0,
+   "ticker": "GM",
+   "price": 84.55000305175781,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 62",
-   "stop": 82.8,
-   "target": 100.8,
+   "reason": "Score 80 · BB 0.77 · RSI 61",
+   "stop": 77.79,
+   "target": 94.7,
    "expiry": "06-30"
   }
  ],
- "sells": [
-  {
-   "ticker": "RDDT",
-   "float_pct": 2.6,
-   "why": "score 8"
-  }
- ],
+ "sells": [],
  "no_action": false,
  "breaker_pct": -5.67,
  "breaker_limit": -5.0,
