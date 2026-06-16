@@ -312,5 +312,33 @@
    "RDDT",
    "URI"
   ]
+ },
+ {
+  "ts": "2026-06-17 01:35",
+  "buys": [
+   {
+    "ticker": "MCO",
+    "score": 80,
+    "price": 470.1050109863281
+   },
+   {
+    "ticker": "PINS",
+    "score": 80,
+    "price": 21.514999389648438
+   },
+   {
+    "ticker": "UPS",
+    "score": 80,
+    "price": 110.375
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MCO",
+   "PINS"
+  ],
+  "removed": [
+   "GM"
+  ]
  }
 ]

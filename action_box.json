@@ -1,28 +1,37 @@
 {
- "ts": "2026-06-16 22:57",
+ "ts": "2026-06-17 01:35",
  "buys": [
   {
-   "ticker": "UPS",
-   "price": 109.80000305175781,
+   "ticker": "MCO",
+   "price": 470.1050109863281,
    "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 61",
-   "stop": 101.02,
-   "target": 122.98,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
+   "stop": 432.5,
+   "target": 526.52,
    "expiry": "06-30"
   },
   {
-   "ticker": "GM",
-   "price": 84.55000305175781,
+   "ticker": "PINS",
+   "price": 21.514999389648438,
    "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 61",
-   "stop": 77.79,
-   "target": 94.7,
+   "reason": "Score 80 · BB 0.71 · RSI 56",
+   "stop": 19.79,
+   "target": 24.1,
+   "expiry": "06-30"
+  },
+  {
+   "ticker": "UPS",
+   "price": 110.375,
+   "score": 80,
+   "reason": "Score 80 · BB 0.77 · RSI 62",
+   "stop": 101.55,
+   "target": 123.62,
    "expiry": "06-30"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -5.67,
+ "breaker_pct": -6.49,
  "breaker_limit": -5.0,
  "breaker_trip": true,
  "gate_day": 5,
