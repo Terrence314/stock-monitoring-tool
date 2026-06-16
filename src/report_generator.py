@@ -1115,7 +1115,7 @@ body.beginner-mode .beginner-only { display: block; }
             {% set dash = circ * (sc / 100) %}
             <tr class="lb-row" data-type="{{ s.get('asset_type', 'stock') }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-rsi="{{ s.rsi or 0 }}" data-price="{{ s.price or 0 }}" data-ma20="{{ s.ma20 or 0 }}" data-ma60="{{ s.ma60 or 0 }}">
               <td>
-                <a href="./{{ s.ticker }}.html" style="text-decoration:none;color:inherit">
+                <a href="#" onclick="scrollToCard('{{ s.ticker }}');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to {{ s.ticker }} card below">
                   <div class="ticker-cell">
                     <div class="ticker-tile">{{ s.ticker[:2] }}</div>
                     <div class="ticker-meta">
@@ -1504,6 +1504,17 @@ body.beginner-mode .beginner-only { display: block; }
     </div>
   </details>
 
+  <!-- ── Score-bucket jump bar ──────────────────────────────────────── -->
+  <div style="display:flex;align-items:center;gap:8px;padding:0 4px 16px;flex-wrap:wrap">
+    <span style="font-size:10px;color:var(--text-2);font-family:var(--mono);margin-right:4px">JUMP TO</span>
+    <button onclick="jumpToBucket(80)" class="bucket-btn" title="First stock with score ≥80">≥80 Strong</button>
+    <button onclick="jumpToBucket(70)" class="bucket-btn" title="First stock with score ≥70">≥70 Buy</button>
+    <button onclick="jumpToBucket(60)" class="bucket-btn" title="First stock with score ≥60">≥60 Watch</button>
+    <button onclick="jumpToBucket(0)"  class="bucket-btn" title="Scroll to top of list">All ↑</button>
+    <span style="flex:1"></span>
+    <button id="bento-show-all" style="display:none;font-size:11px;padding:5px 14px;background:rgba(122,162,255,0.1);color:var(--blue);border:1px solid rgba(122,162,255,0.3);border-radius:6px;cursor:pointer;font-family:var(--mono)"></button>
+  </div>
+
   <div class="bento">
   {% for s in stocks_sorted %}
     {% set sc = s.score %}
@@ -1515,7 +1526,7 @@ body.beginner-mode .beginner-only { display: block; }
     {% set ring_dash = ring_circ * (sc / 100) %}
     {% set atype = s.get('asset_type', 'stock') %}
 
-    <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-ticker="{{ s.ticker }}" data-rsi="{{ s.rsi or 0 }}" data-price="{{ s.price or 0 }}" data-ma20="{{ s.ma20 or 0 }}" data-ma60="{{ s.ma60 or 0 }}">
+    <article id="stock-{{ s.ticker }}" class="scard{{ ' high' if high else '' }}" data-type="{{ atype }}" data-market="{{ s.get('market', 'US') }}" data-score="{{ sc }}" data-ticker="{{ s.ticker }}" data-rsi="{{ s.rsi or 0 }}" data-price="{{ s.price or 0 }}" data-ma20="{{ s.ma20 or 0 }}" data-ma60="{{ s.ma60 or 0 }}" data-bento-idx="{{ loop.index }}">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -1679,7 +1690,7 @@ body.beginner-mode .beginner-only { display: block; }
         </div>
         <div>
           <div class="scard-sub">Technical signals</div>
-          <div class="signals">
+          <div class="signals" data-sig-ticker="{{ s.ticker }}">
             {% for sig in s.signals %}<div class="signal-item">{{ sig }}</div>{% endfor %}
           </div>
         </div>
@@ -1761,6 +1772,7 @@ body.beginner-mode .beginner-only { display: block; }
       {% set sc = r.score %}
       {% set sc_class = 'high' if sc >= 70 else ('mid' if sc >= 45 else 'low') %}
       {% set in_tier2 = r.ticker in (stocks_sorted | map(attribute='ticker') | list) %}
+      {% if loop.index == 26 %}</tbody><tbody id="universe-extra" style="display:none">{% endif %}
       <tr style="border-bottom:1px solid var(--border);transition:background .15s"
           onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
         <td style="padding:9px 16px;color:var(--muted);font-family:var(--mono);font-size:11px">{{ loop.index }}</td>
@@ -1804,6 +1816,9 @@ body.beginner-mode .beginner-only { display: block; }
     {% endfor %}
     </tbody>
   </table>
+  </div>
+  <div id="universe-expand-row" style="display:none;padding:12px 24px">
+    <button onclick="expandUniverse()" style="font-size:11px;padding:6px 18px;background:rgba(122,162,255,0.1);color:var(--blue);border:1px solid rgba(122,162,255,0.3);border-radius:6px;cursor:pointer;font-family:var(--mono)">Show all {{ universe_top100|length }} tickers ▼</button>
   </div>
 </section>
 {% endif %}
@@ -1898,6 +1913,101 @@ body.beginner-mode .beginner-only { display: block; }
 </nav>
 
 <script>
+// ── UI Navigation helpers ────────────────────────────────────────────────
+function scrollToCard(ticker) {
+  var el = document.getElementById('stock-' + ticker);
+  if (!el) return;
+  if (el.style.display === 'none') {
+    document.querySelectorAll('.scard').forEach(function(c) { c.style.display = ''; });
+    var btn = document.getElementById('bento-show-all');
+    if (btn) btn.style.display = 'none';
+  }
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function jumpToBucket(minScore) {
+  var cards = document.querySelectorAll('.scard');
+  if (minScore === 0) {
+    var bento = document.querySelector('.bento');
+    if (bento) bento.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+  for (var i = 0; i < cards.length; i++) {
+    if (parseInt(cards[i].dataset.score) >= minScore) {
+      if (cards[i].style.display === 'none') {
+        cards.forEach(function(c) { c.style.display = ''; });
+        var btn = document.getElementById('bento-show-all');
+        if (btn) btn.style.display = 'none';
+      }
+      cards[i].scrollIntoView({behavior:'smooth', block:'start'});
+      return;
+    }
+  }
+}
+
+function expandUniverse() {
+  var extra = document.getElementById('universe-extra');
+  if (extra) extra.style.display = '';
+  var row = document.getElementById('universe-expand-row');
+  if (row) row.style.display = 'none';
+}
+
+(function initBentoCollapse() {
+  var cards = document.querySelectorAll('.scard[data-bento-idx]');
+  var SHOW = 20;
+  var hiddenCount = 0;
+  cards.forEach(function(c) {
+    if (parseInt(c.dataset.bentoIdx) > SHOW) {
+      c.style.display = 'none';
+      hiddenCount++;
+    }
+  });
+  if (hiddenCount > 0) {
+    var btn = document.getElementById('bento-show-all');
+    if (btn) {
+      btn.style.display = 'inline-block';
+      btn.textContent = 'Show all ' + cards.length + ' stocks ▼';
+      btn.onclick = function() {
+        cards.forEach(function(c) { c.style.display = ''; });
+        btn.style.display = 'none';
+      };
+    }
+  }
+})();
+
+(function initSignalsCollapse() {
+  document.querySelectorAll('.signals[data-sig-ticker]').forEach(function(wrap) {
+    var items = wrap.querySelectorAll('.signal-item');
+    if (items.length <= 3) return;
+    for (var i = 3; i < items.length; i++) items[i].style.display = 'none';
+    var extra = items.length - 3;
+    var toggle = document.createElement('button');
+    toggle.style.cssText = 'margin-top:4px;background:none;border:none;color:var(--text-2);font-size:10px;cursor:pointer;padding:2px 0;display:block;font-family:var(--mono)';
+    toggle.textContent = '▼ +' + extra + ' more';
+    var open = false;
+    toggle.onclick = function(e) {
+      e.stopPropagation();
+      open = !open;
+      for (var i = 3; i < items.length; i++) items[i].style.display = open ? '' : 'none';
+      toggle.textContent = open ? '▲ less' : ('▼ +' + extra + ' more');
+    };
+    wrap.appendChild(toggle);
+  });
+})();
+
+(function initUniverseCollapse() {
+  var extra = document.getElementById('universe-extra');
+  var row = document.getElementById('universe-expand-row');
+  if (extra && row) row.style.display = 'block';
+})();
+
+// ── CSS for bucket-btn ───────────────────────────────────────────────────
+(function addBucketBtnCSS() {
+  var s = document.createElement('style');
+  s.textContent = '.bucket-btn{font-size:11px;padding:5px 12px;background:rgba(255,255,255,0.05);color:var(--text-2);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-family:var(--mono);transition:all .15s}.bucket-btn:hover{background:rgba(122,162,255,0.12);color:var(--blue);border-color:rgba(122,162,255,0.35)}';
+  document.head.appendChild(s);
+})();
+
 // Search + keyboard shortcuts
 (function() {
   var searchInput = document.getElementById('ticker-search');
