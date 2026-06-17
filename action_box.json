@@ -1,9 +1,19 @@
 {
- "ts": "2026-06-18 00:39",
- "buys": [],
+ "ts": "2026-06-18 03:26",
+ "buys": [
+  {
+   "ticker": "ARKK",
+   "price": 79.48999786376953,
+   "score": 80,
+   "reason": "Score 80 · BB 0.68 · RSI 56",
+   "stop": 73.13,
+   "target": 89.03,
+   "expiry": "07-01"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -5.49,
+ "no_action": false,
+ "breaker_pct": -5.48,
  "breaker_limit": -5.0,
  "breaker_trip": true,
  "gate_day": 6,
