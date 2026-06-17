@@ -1,32 +1,14 @@
 {
- "ts": "2026-06-17 07:24",
+ "ts": "2026-06-18 00:16",
  "buys": [
   {
-   "ticker": "MCO",
-   "price": 468.4100036621094,
-   "score": 82,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.13",
-   "stop": 430.94,
-   "target": 524.62,
-   "expiry": "06-30"
-  },
-  {
-   "ticker": "UPS",
-   "price": 110.0199966430664,
+   "ticker": "HON",
+   "price": 234.28500366210938,
    "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 62",
-   "stop": 101.22,
-   "target": 123.22,
-   "expiry": "06-30"
-  },
-  {
-   "ticker": "SOFI",
-   "price": 17.709999084472656,
-   "score": 75,
-   "reason": "Score 75 · BB 0.80 · RSI 57",
-   "stop": 16.29,
-   "target": 19.84,
-   "expiry": "06-30"
+   "reason": "Score 80 · BB 0.76 · RSI 60",
+   "stop": 215.54,
+   "target": 262.4,
+   "expiry": "07-01"
   }
  ],
  "sells": [],
@@ -34,7 +16,7 @@
  "breaker_pct": -6.48,
  "breaker_limit": -5.0,
  "breaker_trip": true,
- "gate_day": 5,
+ "gate_day": 6,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,

@@ -394,8 +394,31 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 15.99,
-      "current_date": "2026-06-16",
+      "current_price": 16.67,
+      "current_date": "2026-06-17",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ]
+    },
+    {
+      "id": "HON-2026-06-17",
+      "ticker": "HON",
+      "direction": "long",
+      "signal_date": "2026-06-17",
+      "entry_price": 234.29,
+      "shares": 6.402458,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 234.29,
+      "current_date": "2026-06-17",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -405,5 +428,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-16"
+  "last_updated": "2026-06-17"
 }
