@@ -1,19 +1,19 @@
 {
- "ts": "2026-06-18 03:26",
+ "ts": "2026-06-18 06:01",
  "buys": [
   {
-   "ticker": "ARKK",
-   "price": 79.48999786376953,
+   "ticker": "BIIB",
+   "price": 198.6699981689453,
    "score": 80,
-   "reason": "Score 80 · BB 0.68 · RSI 56",
-   "stop": 73.13,
-   "target": 89.03,
+   "reason": "Score 80 · BB 0.75 · RSI 55",
+   "stop": 182.78,
+   "target": 222.51,
    "expiry": "07-01"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -5.48,
+ "breaker_pct": -5.74,
  "breaker_limit": -5.0,
  "breaker_trip": true,
  "gate_day": 6,
