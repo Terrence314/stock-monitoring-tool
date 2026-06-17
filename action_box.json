@@ -1,19 +1,9 @@
 {
- "ts": "2026-06-18 00:16",
- "buys": [
-  {
-   "ticker": "HON",
-   "price": 234.28500366210938,
-   "score": 80,
-   "reason": "Score 80 · BB 0.76 · RSI 60",
-   "stop": 215.54,
-   "target": 262.4,
-   "expiry": "07-01"
-  }
- ],
+ "ts": "2026-06-18 00:39",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -6.48,
+ "no_action": true,
+ "breaker_pct": -5.49,
  "breaker_limit": -5.0,
  "breaker_trip": true,
  "gate_day": 6,
