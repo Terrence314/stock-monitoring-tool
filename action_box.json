@@ -1,22 +1,31 @@
 {
- "ts": "2026-06-19 03:28",
+ "ts": "2026-06-19 06:08",
  "buys": [
   {
    "ticker": "ARKK",
-   "price": 79.43000030517578,
-   "score": 80,
-   "reason": "Score 80 · BB 0.66 · RSI 55",
-   "stop": 73.08,
-   "target": 88.96,
+   "price": 80.19000244140625,
+   "score": 90,
+   "reason": "Score 90 · BB 0.73 · RSI 57",
+   "stop": 73.77,
+   "target": 89.81,
    "expiry": "07-02"
   },
   {
-   "ticker": "SOFI",
-   "price": 17.799999237060547,
-   "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 58",
-   "stop": 16.38,
-   "target": 19.94,
+   "ticker": "MRVL",
+   "price": 310.5799865722656,
+   "score": 90,
+   "reason": "Score 90 · BB 0.80 · RSI 65",
+   "stop": 285.73,
+   "target": 347.85,
+   "expiry": "07-02"
+  },
+  {
+   "ticker": "LYFT",
+   "price": 14.279999732971191,
+   "score": 82,
+   "reason": "Score 82 · BB 0.74 · RSI 55",
+   "stop": 13.14,
+   "target": 15.99,
    "expiry": "07-02"
   }
  ],

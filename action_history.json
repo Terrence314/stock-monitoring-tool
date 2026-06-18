@@ -482,5 +482,33 @@
    "ARKK"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-19 06:08",
+  "buys": [
+   {
+    "ticker": "ARKK",
+    "score": 90,
+    "price": 80.19000244140625
+   },
+   {
+    "ticker": "MRVL",
+    "score": 90,
+    "price": 310.5799865722656
+   },
+   {
+    "ticker": "LYFT",
+    "score": 82,
+    "price": 14.279999732971191
+   }
+  ],
+  "sells": [],
+  "added": [
+   "LYFT",
+   "MRVL"
+  ],
+  "removed": [
+   "SOFI"
+  ]
  }
 ]
