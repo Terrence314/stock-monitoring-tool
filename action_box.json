@@ -1,14 +1,14 @@
 {
- "ts": "2026-06-18 07:43",
+ "ts": "2026-06-19 00:04",
  "buys": [
   {
-   "ticker": "BIIB",
-   "price": 198.6699981689453,
+   "ticker": "SOFI",
+   "price": 17.803499221801758,
    "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 55",
-   "stop": 182.78,
-   "target": 222.51,
-   "expiry": "07-01"
+   "reason": "Score 80 · BB 0.78 · RSI 57",
+   "stop": 16.38,
+   "target": 19.94,
+   "expiry": "07-02"
   }
  ],
  "sells": [],
@@ -16,7 +16,7 @@
  "breaker_pct": -5.95,
  "breaker_limit": -5.0,
  "breaker_trip": true,
- "gate_day": 6,
+ "gate_day": 7,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,
