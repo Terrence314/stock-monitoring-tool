@@ -1,13 +1,22 @@
 {
- "ts": "2026-06-19 00:32",
+ "ts": "2026-06-19 03:28",
  "buys": [
   {
-   "ticker": "SOFI",
-   "price": 17.720300674438477,
+   "ticker": "ARKK",
+   "price": 79.43000030517578,
    "score": 80,
-   "reason": "Score 80 · BB 0.76 · RSI 57",
-   "stop": 16.3,
-   "target": 19.85,
+   "reason": "Score 80 · BB 0.66 · RSI 55",
+   "stop": 73.08,
+   "target": 88.96,
+   "expiry": "07-02"
+  },
+  {
+   "ticker": "SOFI",
+   "price": 17.799999237060547,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 58",
+   "stop": 16.38,
+   "target": 19.94,
    "expiry": "07-02"
   }
  ],

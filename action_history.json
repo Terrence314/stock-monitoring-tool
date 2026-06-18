@@ -462,5 +462,25 @@
   "removed": [
    "BIIB"
   ]
+ },
+ {
+  "ts": "2026-06-19 03:28",
+  "buys": [
+   {
+    "ticker": "ARKK",
+    "score": 80,
+    "price": 79.43000030517578
+   },
+   {
+    "ticker": "SOFI",
+    "score": 80,
+    "price": 17.799999237060547
+   }
+  ],
+  "sells": [],
+  "added": [
+   "ARKK"
+  ],
+  "removed": []
  }
 ]
