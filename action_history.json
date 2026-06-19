@@ -637,5 +637,29 @@
    "URI",
    "VOO"
   ]
+ },
+ {
+  "ts": "2026-06-20 03:33",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "MAR",
+    "why": "score 22"
+   },
+   {
+    "ticker": "SPG",
+    "why": "score 12"
+   },
+   {
+    "ticker": "URI",
+    "why": "score 8"
+   }
+  ],
+  "added": [
+   "MAR",
+   "SPG",
+   "URI"
+  ],
+  "removed": []
  }
 ]
