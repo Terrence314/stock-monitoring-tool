@@ -178,6 +178,7 @@ def fetch_market_overview() -> dict:
     for ticker, name in MARKET_INDICES.items():
         try:
             hist = yf.Ticker(ticker).history(period="5d")
+            hist = hist.dropna(subset=["Close"])  # handle market holidays
             if hist.empty:
                 continue
             latest = float(hist["Close"].iloc[-1])

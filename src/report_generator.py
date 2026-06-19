@@ -1132,7 +1132,7 @@ body.beginner-mode .beginner-only { display: block; }
               <td><span class="pct-chip {{ chg_class }}">{{ "%+.2f"|format(s.price_change_pct) }}%</span></td>
               <td class="num mob-hide">{{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</td>
               <td class="num mob-hide" style="color: {{ '#34d399' if s.macd_hist and s.macd_hist > 0 else '#f87171' }}">{{ ("%+.2f"|format(s.macd_hist)) if s.macd_hist is not none else '—' }}</td>
-              <td class="num mob-hide">{{ "%.2f"|format(s.vol_ratio) }}×</td>
+              <td class="num mob-hide">{{ "%.2f"|format(s.vol_ratio) if s.vol_ratio else "—" }}×</td>
               <td class="ring-cell">
                 {% if s.sparkline_svg %}{{ s.sparkline_svg | safe }}{% else %}<span style="color:var(--muted);font-family:var(--mono)">—</span>{% endif %}
               </td>

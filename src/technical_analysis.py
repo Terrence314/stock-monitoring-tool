@@ -386,7 +386,7 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         return round(float(val), 2) if not pd.isna(val) else None
 
     return {
-        "score":                    score,
+        "score":                    min(score, 100),
         "strength":                 strength,
         "strength_en":              strength_en,
         "signals":                  signals,

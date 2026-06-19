@@ -1311,7 +1311,7 @@ body {
     {% endif %}
 
     <div class="check-list">
-      <div class="check-item">MA5 {{ s.ma5 }} · MA20 {{ s.ma20 }} · MA60 {{ s.ma60 }}</div>
+      <div class="check-item">MA5 {{ s.ma5 if s.ma5 is not none else "—" }} · MA20 {{ s.ma20 if s.ma20 is not none else "—" }} · MA60 {{ s.ma60 if s.ma60 is not none else "—" }}</div>
       <div class="check-item">RSI {{ "%.1f"|format(s.rsi) if s.rsi else '—' }} · Vol {{ "%.2f"|format(s.vol_ratio) if s.vol_ratio else '—' }}×</div>
       {% if s.pe_ratio %}
       <div class="check-item">P/E Ratio {{ "%.1f"|format(s.pe_ratio) }}</div>
@@ -1439,9 +1439,9 @@ body {
       <div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text-2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">Moving Averages</div>
         <div class="badge-row">
-          <span class="ma-badge ma5">MA5 · {{ s.ma5 }}</span>
-          <span class="ma-badge ma20">MA20 · {{ s.ma20 }}</span>
-          <span class="ma-badge ma60">MA60 · {{ s.ma60 }}</span>
+          <span class="ma-badge ma5">MA5 · {{ s.ma5 if s.ma5 is not none else "—" }}</span>
+          <span class="ma-badge ma20">MA20 · {{ s.ma20 if s.ma20 is not none else "—" }}</span>
+          <span class="ma-badge ma60">MA60 · {{ s.ma60 if s.ma60 is not none else "—" }}</span>
         </div>
         <div class="badge-row" style="margin-top:6px">
           <span class="rsi-badge">RSI · {{ "%.1f"|format(s.rsi) if s.rsi else '—' }}</span>
