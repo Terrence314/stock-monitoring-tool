@@ -55,8 +55,9 @@ def update_score_history(today_str: str, stock_results: list) -> dict:
 def update_alert_history(today_str: str, stock_results: list, threshold: int) -> list:
     """Append high-signal stocks; keep last ALERT_KEEP_ENTRIES entries."""
     alerts: list = load_json_file(ALERT_HISTORY_FILE, [])
+    existing_keys = {(a["date"], a["ticker"]) for a in alerts}
     for s in stock_results:
-        if s["score"] >= threshold:
+        if s["score"] >= threshold and (today_str, s["ticker"]) not in existing_keys:
             alerts.append({
                 "date":     today_str,
                 "ticker":   s["ticker"],
