@@ -548,5 +548,74 @@
    "MAR",
    "MRVL"
   ]
+ },
+ {
+  "ts": "2026-06-20 02:09",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "HON",
+    "why": "score 22"
+   },
+   {
+    "ticker": "ARKK",
+    "why": "score 22"
+   },
+   {
+    "ticker": "MRVL",
+    "why": "score 28"
+   },
+   {
+    "ticker": "MAR",
+    "why": "score 22"
+   },
+   {
+    "ticker": "SPG",
+    "why": "score 12"
+   },
+   {
+    "ticker": "LYFT",
+    "why": "score 22"
+   },
+   {
+    "ticker": "NXPI",
+    "why": "score 28"
+   },
+   {
+    "ticker": "ON",
+    "why": "score 18"
+   },
+   {
+    "ticker": "QCOM",
+    "why": "score 28"
+   },
+   {
+    "ticker": "URI",
+    "why": "score 8"
+   },
+   {
+    "ticker": "VOO",
+    "why": "score 18"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 18"
+   }
+  ],
+  "added": [
+   "ARKK",
+   "HON",
+   "LYFT",
+   "MAR",
+   "MRVL",
+   "NXPI",
+   "ON",
+   "QCOM",
+   "QQQ",
+   "SPG",
+   "URI",
+   "VOO"
+  ],
+  "removed": []
  }
 ]
