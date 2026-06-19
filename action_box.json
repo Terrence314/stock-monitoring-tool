@@ -1,69 +1,8 @@
 {
- "ts": "2026-06-20 02:09",
+ "ts": "2026-06-20 02:37",
  "buys": [],
- "sells": [
-  {
-   "ticker": "HON",
-   "float_pct": -2.3,
-   "why": "score 22"
-  },
-  {
-   "ticker": "ARKK",
-   "float_pct": 0.0,
-   "why": "score 22"
-  },
-  {
-   "ticker": "MRVL",
-   "float_pct": 0.0,
-   "why": "score 28"
-  },
-  {
-   "ticker": "MAR",
-   "float_pct": 0.0,
-   "why": "score 22"
-  },
-  {
-   "ticker": "SPG",
-   "float_pct": 0.0,
-   "why": "score 12"
-  },
-  {
-   "ticker": "LYFT",
-   "float_pct": 0.0,
-   "why": "score 22"
-  },
-  {
-   "ticker": "NXPI",
-   "float_pct": 0.0,
-   "why": "score 28"
-  },
-  {
-   "ticker": "ON",
-   "float_pct": 0.0,
-   "why": "score 18"
-  },
-  {
-   "ticker": "QCOM",
-   "float_pct": 0.0,
-   "why": "score 28"
-  },
-  {
-   "ticker": "URI",
-   "float_pct": 0.0,
-   "why": "score 8"
-  },
-  {
-   "ticker": "VOO",
-   "float_pct": 0.0,
-   "why": "score 18"
-  },
-  {
-   "ticker": "QQQ",
-   "float_pct": 0.0,
-   "why": "score 18"
-  }
- ],
- "no_action": false,
+ "sells": [],
+ "no_action": true,
  "breaker_pct": -2.88,
  "breaker_limit": -5.0,
  "breaker_trip": false,
