@@ -510,5 +510,32 @@
   "removed": [
    "SOFI"
   ]
+ },
+ {
+  "ts": "2026-06-19 23:51",
+  "buys": [
+   {
+    "ticker": "ARKK",
+    "score": 90,
+    "price": 80.19000244140625
+   },
+   {
+    "ticker": "MRVL",
+    "score": 90,
+    "price": 310.5799865722656
+   },
+   {
+    "ticker": "MAR",
+    "score": 84,
+    "price": 396.20001220703125
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MAR"
+  ],
+  "removed": [
+   "LYFT"
+  ]
  }
 ]

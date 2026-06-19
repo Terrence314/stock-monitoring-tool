@@ -12760,5 +12760,289 @@
     "type": "start",
     "price": 387.88,
     "score": 18
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "ADI",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 434.46,
+    "score": 100
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "CAT",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 985.82,
+    "score": 100
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "FLR",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 53.66,
+    "score": 100
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "ARM",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 439.46,
+    "score": 90
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "LRCX",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 389.04,
+    "score": 90
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "MRVL",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 310.58,
+    "score": 90
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "TXN",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 322.86,
+    "score": 88
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "GPC",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 108.7,
+    "score": 85
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "GPC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 108.7,
+    "score": 85
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "GPC",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 108.7,
+    "score": 85
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "GPC",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 108.7,
+    "score": 85
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "GPC",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 108.7,
+    "score": 85
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "SPG",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 211.33
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "USB",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 58.14,
+    "score": 84
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "NXPI",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 313.27,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "NXPI",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 313.27,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "NXPI",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 313.27,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "ON",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 121.62,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "ON",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 121.62,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "ON",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 121.62,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "QCOM",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 226.11
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "QCOM",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 226.11,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "QCOM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 226.11
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "QCOM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 226.11,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "QCOM",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 226.11,
+    "score": 80
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "WDC",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 746.23,
+    "score": 75
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "C",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "start",
+    "price": 143.06,
+    "score": 72
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "C",
+    "pattern": "Volume Breakdown",
+    "direction": "sell",
+    "type": "start",
+    "price": 143.06,
+    "score": 72
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "SPY",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 746.74,
+    "score": 70
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "SPY",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 746.74
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "HD",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 334.28,
+    "score": 69
+  },
+  {
+    "date": "2026-06-19",
+    "ticker": "PNC",
+    "pattern": "Volume Breakdown",
+    "direction": "sell",
+    "type": "start",
+    "price": 232.04,
+    "score": 64
   }
 ]

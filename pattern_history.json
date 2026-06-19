@@ -201,8 +201,8 @@
   },
   "SPY": {
     "Golden Cross": {
-      "start": "2026-05-29",
-      "end": "2026-06-09"
+      "start": "2026-06-19",
+      "end": null
     },
     "MACD Bear": {
       "start": "2026-06-02",
@@ -222,7 +222,7 @@
     },
     "Death Cross": {
       "start": "2026-06-09",
-      "end": null
+      "end": "2026-06-19"
     },
     "BB Squeeze Breakout Down": {
       "start": "2026-06-10",
@@ -871,6 +871,10 @@
     "BB Walking Up": {
       "start": "2026-06-08",
       "end": "2026-06-16"
+    },
+    "Volume Breakdown": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "RDDT": {
@@ -910,6 +914,10 @@
     },
     "BB Walking Up": {
       "start": "2026-06-09",
+      "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
       "end": null
     }
   },
@@ -1529,6 +1537,10 @@
     "MACD Bear": {
       "start": "2026-06-08",
       "end": "2026-06-11"
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "MRVL": {
@@ -1549,8 +1561,8 @@
       "end": "2026-06-11"
     },
     "Volume Breakout": {
-      "start": "2026-06-02",
-      "end": "2026-06-04"
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "C": {
@@ -1572,6 +1584,14 @@
     },
     "BB Walking Up": {
       "start": "2026-06-03",
+      "end": null
+    },
+    "RSI Overbought": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "Volume Breakdown": {
+      "start": "2026-06-19",
       "end": null
     }
   },
@@ -2347,6 +2367,10 @@
     "RSI Overbought": {
       "start": "2026-06-02",
       "end": "2026-06-08"
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "CDNS": {
@@ -2632,14 +2656,26 @@
   "QCOM": {
     "Golden Cross": {
       "start": "2026-06-02",
-      "end": null
+      "end": "2026-06-19"
     },
     "MACD Bull": {
       "start": "2026-06-02",
-      "end": null
+      "end": "2026-06-19"
     },
     "Above MA60": {
       "start": "2026-06-02",
+      "end": null
+    },
+    "Death Cross": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "MACD Bear": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
       "end": null
     }
   },
@@ -2672,6 +2708,10 @@
     },
     "MACD Bull": {
       "start": "2026-06-18",
+      "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
       "end": null
     }
   },
@@ -2979,6 +3019,10 @@
     "Above MA60": {
       "start": "2026-06-03",
       "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "ILMN": {
@@ -3111,6 +3155,10 @@
     "BB Walking Up": {
       "start": "2026-06-17",
       "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "CVS": {
@@ -3176,7 +3224,7 @@
     },
     "BB Walking Up": {
       "start": "2026-06-11",
-      "end": null
+      "end": "2026-06-19"
     }
   },
   "TWLO": {
@@ -3361,6 +3409,10 @@
     "MACD Bear": {
       "start": "2026-06-12",
       "end": "2026-06-16"
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "JPM": {
@@ -4283,6 +4335,10 @@
     "Above MA60": {
       "start": "2026-06-16",
       "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "BLK": {
@@ -4405,6 +4461,10 @@
     "BB Walking Up": {
       "start": "2026-06-17",
       "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
     }
   },
   "MCHP": {
@@ -4432,6 +4492,56 @@
     },
     "Above MA60": {
       "start": "2026-06-18",
+      "end": null
+    }
+  },
+  "GPC": {
+    "Golden Cross": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "MACD Bull": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "Volume Breakout": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "BB Walking Up": {
+      "start": "2026-06-19",
+      "end": null
+    }
+  },
+  "NXPI": {
+    "Death Cross": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "MACD Bear": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-06-19",
+      "end": null
+    }
+  },
+  "ON": {
+    "Death Cross": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "MACD Bear": {
+      "start": "2026-06-19",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-06-19",
       "end": null
     }
   }
