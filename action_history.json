@@ -750,5 +750,30 @@
    "PWR",
    "VEA"
   ]
+ },
+ {
+  "ts": "2026-06-23 06:48",
+  "buys": [
+   {
+    "ticker": "WFC",
+    "score": 82,
+    "price": 83.83999633789062
+   },
+   {
+    "ticker": "IRM",
+    "score": 80,
+    "price": 131.86000061035156
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "WFC"
+  ],
+  "removed": []
  }
 ]

@@ -1,6 +1,15 @@
 {
- "ts": "2026-06-23 04:48",
+ "ts": "2026-06-23 06:48",
  "buys": [
+  {
+   "ticker": "WFC",
+   "price": 83.83999633789062,
+   "score": 82,
+   "reason": "Score 82 · BB 0.78 · RSI 61",
+   "stop": 77.13,
+   "target": 93.9,
+   "expiry": "07-06"
+  },
   {
    "ticker": "IRM",
    "price": 131.86000061035156,
@@ -19,7 +28,7 @@
   }
  ],
  "no_action": false,
- "breaker_pct": -2.6,
+ "breaker_pct": -2.61,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 11,
