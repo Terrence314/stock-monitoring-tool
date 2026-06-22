@@ -1,43 +1,25 @@
 {
- "ts": "2026-06-23 01:43",
+ "ts": "2026-06-23 04:48",
  "buys": [
   {
    "ticker": "IRM",
-   "price": 132.75,
+   "price": 131.86000061035156,
    "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.19",
-   "stop": 122.13,
-   "target": 148.68,
-   "expiry": "07-06"
-  },
-  {
-   "ticker": "PWR",
-   "price": 730.7349853515625,
-   "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 56",
-   "stop": 672.28,
-   "target": 818.42,
-   "expiry": "07-06"
-  },
-  {
-   "ticker": "VEA",
-   "price": 72.36990356445312,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 61",
-   "stop": 66.58,
-   "target": 81.05,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.13",
+   "stop": 121.31,
+   "target": 147.68,
    "expiry": "07-06"
   }
  ],
  "sells": [
   {
    "ticker": "VOO",
-   "float_pct": -0.2,
+   "float_pct": -0.3,
    "why": "score 25"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.49,
+ "breaker_pct": -2.6,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 11,
