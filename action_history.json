@@ -699,5 +699,35 @@
    "VOO"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-23 01:43",
+  "buys": [
+   {
+    "ticker": "IRM",
+    "score": 80,
+    "price": 132.75
+   },
+   {
+    "ticker": "PWR",
+    "score": 80,
+    "price": 730.7349853515625
+   },
+   {
+    "ticker": "VEA",
+    "score": 80,
+    "price": 72.36990356445312
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "VEA"
+  ],
+  "removed": []
  }
 ]
