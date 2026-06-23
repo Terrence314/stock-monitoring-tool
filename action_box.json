@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-24 04:05",
+ "ts": "2026-06-24 06:13",
  "buys": [
   {
    "ticker": "RXT",
@@ -14,17 +14,12 @@
  "sells": [
   {
    "ticker": "VOO",
-   "float_pct": -1.4,
-   "why": "score 17"
-  },
-  {
-   "ticker": "QQQ",
-   "float_pct": -3.3,
-   "why": "score 25"
+   "float_pct": -1.7,
+   "why": "score 27"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.78,
+ "breaker_pct": -2.85,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 12,

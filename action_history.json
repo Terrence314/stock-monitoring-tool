@@ -888,5 +888,25 @@
    "ARKK",
    "INCY"
   ]
+ },
+ {
+  "ts": "2026-06-24 06:13",
+  "buys": [
+   {
+    "ticker": "RXT",
+    "score": 70,
+    "price": 7.269999980926514
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 27"
+   }
+  ],
+  "added": [],
+  "removed": [
+   "QQQ"
+  ]
  }
 ]
