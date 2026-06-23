@@ -861,5 +861,32 @@
   "removed": [
    "PSA"
   ]
+ },
+ {
+  "ts": "2026-06-24 04:05",
+  "buys": [
+   {
+    "ticker": "RXT",
+    "score": 70,
+    "price": 7.269999980926514
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "RXT"
+  ],
+  "removed": [
+   "ARKK",
+   "INCY"
+  ]
  }
 ]

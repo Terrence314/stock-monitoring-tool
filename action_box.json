@@ -1,25 +1,20 @@
 {
- "ts": "2026-06-24 01:55",
+ "ts": "2026-06-24 04:05",
  "buys": [
   {
-   "ticker": "INCY",
-   "price": 104.90499877929688,
-   "score": 80,
-   "reason": "Score 80 · BB 0.76 · RSI 59",
-   "stop": 96.51,
-   "target": 117.49,
+   "ticker": "RXT",
+   "price": 7.269999980926514,
+   "score": 70,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 0.94",
+   "stop": 6.69,
+   "target": 8.14,
    "expiry": "07-07"
   }
  ],
  "sells": [
   {
-   "ticker": "ARKK",
-   "float_pct": -3.6,
-   "why": "score 29"
-  },
-  {
    "ticker": "VOO",
-   "float_pct": -1.5,
+   "float_pct": -1.4,
    "why": "score 17"
   },
   {
