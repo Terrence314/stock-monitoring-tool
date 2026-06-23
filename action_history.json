@@ -803,5 +803,33 @@
    "IRM",
    "WFC"
   ]
+ },
+ {
+  "ts": "2026-06-23 23:49",
+  "buys": [
+   {
+    "ticker": "PSA",
+    "score": 80,
+    "price": 322.44000244140625
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "ARKK",
+    "why": "score 29"
+   },
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "ARKK"
+  ],
+  "removed": []
  }
 ]

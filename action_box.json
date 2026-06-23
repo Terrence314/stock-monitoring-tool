@@ -1,30 +1,35 @@
 {
- "ts": "2026-06-23 23:37",
+ "ts": "2026-06-23 23:49",
  "buys": [
   {
    "ticker": "PSA",
-   "price": 322.80999755859375,
+   "price": 322.44000244140625,
    "score": 80,
    "reason": "Score 80 · BB 0.79 · RSI 64",
-   "stop": 296.99,
-   "target": 361.55,
+   "stop": 296.64,
+   "target": 361.13,
    "expiry": "07-07"
   }
  ],
  "sells": [
   {
+   "ticker": "ARKK",
+   "float_pct": -2.2,
+   "why": "score 29"
+  },
+  {
    "ticker": "VOO",
-   "float_pct": -0.3,
+   "float_pct": -1.5,
    "why": "score 17"
   },
   {
    "ticker": "QQQ",
-   "float_pct": -0.4,
+   "float_pct": -3.2,
    "why": "score 25"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.61,
+ "breaker_pct": -2.7,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 12,
