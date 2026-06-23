@@ -831,5 +831,35 @@
    "ARKK"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-24 01:55",
+  "buys": [
+   {
+    "ticker": "INCY",
+    "score": 80,
+    "price": 104.90499877929688
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "ARKK",
+    "why": "score 29"
+   },
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "INCY"
+  ],
+  "removed": [
+   "PSA"
+  ]
  }
 ]

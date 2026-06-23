@@ -1,20 +1,20 @@
 {
- "ts": "2026-06-23 23:49",
+ "ts": "2026-06-24 01:55",
  "buys": [
   {
-   "ticker": "PSA",
-   "price": 322.44000244140625,
+   "ticker": "INCY",
+   "price": 104.90499877929688,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 64",
-   "stop": 296.64,
-   "target": 361.13,
+   "reason": "Score 80 · BB 0.76 · RSI 59",
+   "stop": 96.51,
+   "target": 117.49,
    "expiry": "07-07"
   }
  ],
  "sells": [
   {
    "ticker": "ARKK",
-   "float_pct": -2.2,
+   "float_pct": -3.6,
    "why": "score 29"
   },
   {
@@ -24,12 +24,12 @@
   },
   {
    "ticker": "QQQ",
-   "float_pct": -3.2,
+   "float_pct": -3.3,
    "why": "score 25"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.7,
+ "breaker_pct": -2.78,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 12,
