@@ -1,29 +1,25 @@
 {
- "ts": "2026-06-23 06:48",
+ "ts": "2026-06-23 23:37",
  "buys": [
   {
-   "ticker": "WFC",
-   "price": 83.83999633789062,
-   "score": 82,
-   "reason": "Score 82 · BB 0.78 · RSI 61",
-   "stop": 77.13,
-   "target": 93.9,
-   "expiry": "07-06"
-  },
-  {
-   "ticker": "IRM",
-   "price": 131.86000061035156,
+   "ticker": "PSA",
+   "price": 322.80999755859375,
    "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.13",
-   "stop": 121.31,
-   "target": 147.68,
-   "expiry": "07-06"
+   "reason": "Score 80 · BB 0.79 · RSI 64",
+   "stop": 296.99,
+   "target": 361.55,
+   "expiry": "07-07"
   }
  ],
  "sells": [
   {
    "ticker": "VOO",
    "float_pct": -0.3,
+   "why": "score 17"
+  },
+  {
+   "ticker": "QQQ",
+   "float_pct": -0.4,
    "why": "score 25"
   }
  ],
@@ -31,7 +27,7 @@
  "breaker_pct": -2.61,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 11,
+ "gate_day": 12,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,

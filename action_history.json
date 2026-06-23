@@ -775,5 +775,33 @@
    "WFC"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-23 23:37",
+  "buys": [
+   {
+    "ticker": "PSA",
+    "score": 80,
+    "price": 322.80999755859375
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 25"
+   }
+  ],
+  "added": [
+   "PSA",
+   "QQQ"
+  ],
+  "removed": [
+   "IRM",
+   "WFC"
+  ]
  }
 ]
