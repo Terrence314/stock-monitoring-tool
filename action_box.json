@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-25 05:23",
+ "ts": "2026-06-25 07:04",
  "buys": [
   {
    "ticker": "TLT",
@@ -32,17 +32,17 @@
  "sells": [
   {
    "ticker": "VOO",
-   "float_pct": -2.0,
+   "float_pct": -1.8,
    "why": "score 17"
   },
   {
    "ticker": "QQQ",
-   "float_pct": -4.5,
+   "float_pct": -4.1,
    "why": "score 17"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.77,
+ "breaker_pct": -2.73,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 13,
