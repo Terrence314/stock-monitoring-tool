@@ -999,5 +999,41 @@
    "BIIB"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-25 05:23",
+  "buys": [
+   {
+    "ticker": "TLT",
+    "score": 92,
+    "price": 87.37999725341797
+   },
+   {
+    "ticker": "BKNG",
+    "score": 85,
+    "price": 181.25
+   },
+   {
+    "ticker": "RUN",
+    "score": 84,
+    "price": 14.420000076293945
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "BKNG"
+  ],
+  "removed": [
+   "BIIB"
+  ]
  }
 ]

@@ -1,43 +1,43 @@
 {
- "ts": "2026-06-25 03:45",
+ "ts": "2026-06-25 05:23",
  "buys": [
   {
-   "ticker": "RUN",
-   "price": 14.595000267028809,
-   "score": 84,
-   "reason": "Score 84 · BB 0.63 · RSI 57",
-   "stop": 13.43,
-   "target": 16.35,
-   "expiry": "07-08"
-  },
-  {
    "ticker": "TLT",
-   "price": 87.375,
-   "score": 82,
+   "price": 87.37999725341797,
+   "score": 92,
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.13",
    "stop": 80.39,
-   "target": 97.86,
+   "target": 97.87,
    "expiry": "07-08"
   },
   {
-   "ticker": "BIIB",
-   "price": 201.09500122070312,
-   "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.87",
-   "stop": 185.01,
-   "target": 225.23,
+   "ticker": "BKNG",
+   "price": 181.25,
+   "score": 85,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.16",
+   "stop": 166.75,
+   "target": 203.0,
+   "expiry": "07-08"
+  },
+  {
+   "ticker": "RUN",
+   "price": 14.420000076293945,
+   "score": 84,
+   "reason": "Score 84 · BB 0.60 · RSI 56",
+   "stop": 13.27,
+   "target": 16.15,
    "expiry": "07-08"
   }
  ],
  "sells": [
   {
    "ticker": "VOO",
-   "float_pct": -1.8,
+   "float_pct": -2.0,
    "why": "score 17"
   },
   {
    "ticker": "QQQ",
-   "float_pct": -4.3,
+   "float_pct": -4.5,
    "why": "score 17"
   }
  ],
