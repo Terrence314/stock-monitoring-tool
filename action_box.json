@@ -1,28 +1,31 @@
 {
- "ts": "2026-06-24 06:13",
+ "ts": "2026-06-24 23:24",
  "buys": [
   {
-   "ticker": "RXT",
-   "price": 7.269999980926514,
-   "score": 70,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.94",
-   "stop": 6.69,
-   "target": 8.14,
-   "expiry": "07-07"
-  }
- ],
- "sells": [
+   "ticker": "NCLH",
+   "price": 21.219999313354492,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.01",
+   "stop": 19.52,
+   "target": 23.77,
+   "expiry": "07-08"
+  },
   {
-   "ticker": "VOO",
-   "float_pct": -1.7,
-   "why": "score 27"
+   "ticker": "TLT",
+   "price": 87.34500122070312,
+   "score": 72,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.12",
+   "stop": 80.36,
+   "target": 97.83,
+   "expiry": "07-08"
   }
  ],
+ "sells": [],
  "no_action": false,
- "breaker_pct": -2.85,
+ "breaker_pct": -2.86,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 12,
+ "gate_day": 13,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,
