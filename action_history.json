@@ -932,5 +932,38 @@
    "RXT",
    "VOO"
   ]
+ },
+ {
+  "ts": "2026-06-25 01:55",
+  "buys": [
+   {
+    "ticker": "RUN",
+    "score": 84,
+    "price": 15.181599617004395
+   },
+   {
+    "ticker": "TLT",
+    "score": 82,
+    "price": 87.3949966430664
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "QQQ",
+   "RUN",
+   "VOO"
+  ],
+  "removed": [
+   "NCLH"
+  ]
  }
 ]
