@@ -1,39 +1,48 @@
 {
- "ts": "2026-06-25 01:55",
+ "ts": "2026-06-25 03:45",
  "buys": [
   {
    "ticker": "RUN",
-   "price": 15.181599617004395,
+   "price": 14.595000267028809,
    "score": 84,
-   "reason": "Score 84 · BB 0.73 · RSI 59",
-   "stop": 13.97,
-   "target": 17.0,
+   "reason": "Score 84 · BB 0.63 · RSI 57",
+   "stop": 13.43,
+   "target": 16.35,
    "expiry": "07-08"
   },
   {
    "ticker": "TLT",
-   "price": 87.3949966430664,
+   "price": 87.375,
    "score": 82,
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.13",
-   "stop": 80.4,
-   "target": 97.88,
+   "stop": 80.39,
+   "target": 97.86,
+   "expiry": "07-08"
+  },
+  {
+   "ticker": "BIIB",
+   "price": 201.09500122070312,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 0.87",
+   "stop": 185.01,
+   "target": 225.23,
    "expiry": "07-08"
   }
  ],
  "sells": [
   {
    "ticker": "VOO",
-   "float_pct": -1.0,
+   "float_pct": -1.8,
    "why": "score 17"
   },
   {
    "ticker": "QQQ",
-   "float_pct": -3.2,
+   "float_pct": -4.3,
    "why": "score 17"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.57,
+ "breaker_pct": -2.77,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 13,
