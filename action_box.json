@@ -1,22 +1,22 @@
 {
- "ts": "2026-06-25 23:41",
+ "ts": "2026-06-25 23:42",
  "buys": [
   {
    "ticker": "MRK",
-   "price": 124.05500030517578,
+   "price": 124.0250015258789,
    "score": 80,
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.09",
-   "stop": 114.13,
-   "target": 138.94,
+   "stop": 114.1,
+   "target": 138.91,
    "expiry": "07-09"
   },
   {
    "ticker": "NCLH",
-   "price": 21.235000610351562,
+   "price": 21.2450008392334,
    "score": 80,
    "reason": "BB squeeze just fired upward — bands expanding, BB 0.96",
-   "stop": 19.54,
-   "target": 23.78,
+   "stop": 19.55,
+   "target": 23.79,
    "expiry": "07-09"
   }
  ],
