@@ -7,7 +7,7 @@ from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_
 from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_stock_deep_dive, run_news_sentiment, run_hk_morning_brief
 from report_generator import generate_dashboard
-from notifier import send_telegram, send_health_alert, format_daily_message
+from notifier import send_telegram, send_health_alert, format_daily_message, format_ibkr_pnl_alert
 from backtest import run_backtest
 from paper_trading import run_paper_trading
 from pattern_engine import run_pattern_scan, format_pattern_alert, get_todays_new_events
@@ -398,6 +398,25 @@ def _run(cfg: dict) -> None:
                                    action_box=_ab)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)
     print(f"      Telegram：{'✅ 成功' if ok else '❌ 失敗'}")
+
+    # ── IBKR P&L / position alert ────────────────────────────────────────────
+    _ibkr_positions_list = _ibkr.get("positions", [])
+    if _ibkr_positions_list and cfg["telegram"]["bot_token"]:
+        try:
+            daily_loss_thr   = cfg.get("analysis", {}).get("pnl_alert_daily_loss", -20.0)
+            drawdown_thr     = cfg.get("analysis", {}).get("pnl_alert_drawdown_pct", -10.0)
+            pnl_msg = format_ibkr_pnl_alert(
+                _ibkr_positions_list, stock_results,
+                daily_loss_threshold=daily_loss_thr,
+                drawdown_pct_threshold=drawdown_thr,
+            )
+            if pnl_msg:
+                ok_p = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], pnl_msg)
+                print(f"      IBKR P&L 預警：{'✅ 已發送' if ok_p else '❌ 失敗'}")
+            else:
+                print("      IBKR P&L：持倉正常，無預警")
+        except Exception as pnl_err:
+            print(f"  [ibkr_pnl] ⚠️ skipped: {pnl_err}")
 
     # ── Pattern scan ─────────────────────────────────────────────────────────
     # Detects active named patterns per ticker; updates pattern_history.json

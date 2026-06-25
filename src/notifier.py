@@ -162,3 +162,73 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
     ]
 
     return "\n".join(lines)
+
+
+def format_ibkr_pnl_alert(positions: list, stock_results: list,
+                           daily_loss_threshold: float = -20.0,
+                           drawdown_pct_threshold: float = -10.0) -> str | None:
+    """Build Telegram alert for IBKR positions with P&L warnings or sell signals.
+
+    Returns None if nothing worth alerting.
+    ALERTS ONLY — never places orders.
+    """
+    sig_map = {s["ticker"]: s for s in stock_results}
+    lines = []
+
+    for p in positions:
+        ticker   = p.get("ticker", "")
+        qty      = p.get("qty", 0)
+        avg      = p.get("avg_cost", 0)
+        price    = p.get("market_price", 0)
+        upnl     = p.get("unrealized_pnl", 0)
+        dpnl     = p.get("daily_pnl", 0)
+        mktval   = p.get("market_value", 0)
+
+        alerts = []
+
+        # 1. Daily loss threshold
+        if dpnl < daily_loss_threshold:
+            alerts.append(f"📉 今日虧損 ${dpnl:.2f}")
+
+        # 2. Unrealized drawdown %
+        cost_basis = avg * qty
+        if cost_basis > 0:
+            drawdown_pct = (upnl / cost_basis) * 100
+            if drawdown_pct < drawdown_pct_threshold:
+                alerts.append(f"⚠️ 浮虧 {drawdown_pct:.1f}%（成本 ${cost_basis:.2f}）")
+
+        # 3. Sell signal from technical analysis
+        sig = sig_map.get(ticker)
+        if sig:
+            score = sig.get("score", 0)
+            sell_sigs = sig.get("sell_signals", [])
+            ta_signals = sig.get("signals", [])
+            # Check for bearish signals in signal list
+            bearish = [s for s in ta_signals if any(w in s for w in ["❌", "🔴", "死叉", "跌穿", "爆量下跌"])]
+            if sell_sigs:
+                alerts.append(f"🔴 賣出訊號：{sell_sigs[0][:60]}")
+            elif bearish:
+                alerts.append(f"⚠️ 偏空信號：{bearish[0][:60]}")
+            if score < 30 and qty > 0:
+                alerts.append(f"📊 信號評分偏低 {score}/100 — 持倉需留意")
+
+        if alerts:
+            pnl_str = f"+${upnl:.2f}" if upnl >= 0 else f"-${abs(upnl):.2f}"
+            dpnl_str = f"+${dpnl:.2f}" if dpnl >= 0 else f"-${abs(dpnl):.2f}"
+            lines.append(
+                f"📦 <b>{ticker}</b>  ×{qty} · 均${avg:.2f} · 現${price:.2f}"
+                f"  ｜  浮盈 <b>{pnl_str}</b>  今日 {dpnl_str}"
+            )
+            for a in alerts:
+                lines.append(f"   {a}")
+            lines.append("")
+
+    if not lines:
+        return None
+
+    header = [
+        "🏦 <b>IBKR 持倉預警</b>",
+        "",
+    ]
+    footer = ["⚠️ 僅供參考，不構成投資建議"]
+    return "\n".join(header + lines + footer)

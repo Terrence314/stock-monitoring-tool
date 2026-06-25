@@ -1,35 +1,208 @@
 {
   "watchlist": [
-    {"ticker": "NVDA", "name": "NVIDIA", "type": "stock", "market": "US"},
-    {"ticker": "AMD", "name": "AMD", "type": "stock", "market": "US"},
-    {"ticker": "AVGO", "name": "Broadcom", "type": "stock", "market": "US"},
-    {"ticker": "MSFT", "name": "Microsoft", "type": "stock", "market": "US"},
-    {"ticker": "META", "name": "Meta", "type": "stock", "market": "US"},
-    {"ticker": "GOOGL", "name": "Alphabet", "type": "stock", "market": "US"},
-    {"ticker": "PLTR", "name": "Palantir", "type": "stock", "market": "US"},
-    {"ticker": "NOW", "name": "ServiceNow", "type": "stock", "market": "US"},
-    {"ticker": "TSLA", "name": "Tesla", "type": "stock", "market": "US"},
-    {"ticker": "APP", "name": "AppLovin", "type": "stock", "market": "US"},
-    {"ticker": "SPY", "name": "S&P 500 ETF", "type": "etf", "market": "US"},
-    {"ticker": "QQQ", "name": "Nasdaq 100 ETF", "type": "etf", "market": "US"},
-    {"ticker": "IWM", "name": "Russell 2000 ETF", "type": "etf", "market": "US"},
-    {"ticker": "DIA", "name": "Dow Jones ETF", "type": "etf", "market": "US"},
-    {"ticker": "VTI", "name": "Total Market ETF", "type": "etf", "market": "US"},
-    {"ticker": "XLK", "name": "Tech Sector ETF", "type": "etf", "market": "US"},
-    {"ticker": "XLF", "name": "Financial Sector ETF", "type": "etf", "market": "US"},
-    {"ticker": "XLE", "name": "Energy Sector ETF", "type": "etf", "market": "US"},
-    {"ticker": "XLV", "name": "Healthcare ETF", "type": "etf", "market": "US"},
-    {"ticker": "XLY", "name": "Consumer Disc ETF", "type": "etf", "market": "US"},
-    {"ticker": "XLI", "name": "Industrial ETF", "type": "etf", "market": "US"},
-    {"ticker": "XBI", "name": "Biotech ETF", "type": "etf", "market": "US"},
-    {"ticker": "SOXX", "name": "Semiconductors ETF", "type": "etf", "market": "US"},
-    {"ticker": "ARKK", "name": "ARK Innovation ETF", "type": "etf", "market": "US"},
-    {"ticker": "CIBR", "name": "Cybersecurity ETF", "type": "etf", "market": "US"},
-    {"ticker": "BOTZ", "name": "Robotics & AI ETF", "type": "etf", "market": "US"},
-    {"ticker": "TLT", "name": "20yr Treasury ETF", "type": "etf", "market": "US"},
-    {"ticker": "HYG", "name": "High Yield Bond ETF", "type": "etf", "market": "US"},
-    {"ticker": "GLD", "name": "Gold ETF", "type": "etf", "market": "US"},
-    {"ticker": "USO", "name": "Oil ETF", "type": "etf", "market": "US"}
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "AMD",
+      "name": "AMD",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "META",
+      "name": "Meta",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "type": "stock",
+      "market": "US",
+      "ibkr_held": true
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "APP",
+      "name": "AppLovin",
+      "type": "stock",
+      "market": "US"
+    },
+    {
+      "ticker": "SPY",
+      "name": "S&P 500 ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "QQQ",
+      "name": "Nasdaq 100 ETF",
+      "type": "etf",
+      "market": "US",
+      "ibkr_held": true
+    },
+    {
+      "ticker": "IWM",
+      "name": "Russell 2000 ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "DIA",
+      "name": "Dow Jones ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "VTI",
+      "name": "Total Market ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XLK",
+      "name": "Tech Sector ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XLF",
+      "name": "Financial Sector ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XLE",
+      "name": "Energy Sector ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XLV",
+      "name": "Healthcare ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XLY",
+      "name": "Consumer Disc ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XLI",
+      "name": "Industrial ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "XBI",
+      "name": "Biotech ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "SOXX",
+      "name": "Semiconductors ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "ARKK",
+      "name": "ARK Innovation ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "CIBR",
+      "name": "Cybersecurity ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "BOTZ",
+      "name": "Robotics & AI ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "TLT",
+      "name": "20yr Treasury ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "HYG",
+      "name": "High Yield Bond ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "GLD",
+      "name": "Gold ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "USO",
+      "name": "Oil ETF",
+      "type": "etf",
+      "market": "US"
+    },
+    {
+      "ticker": "SCHD",
+      "name": "Schwab Dividend ETF",
+      "type": "etf",
+      "market": "US",
+      "ibkr_held": true
+    },
+    {
+      "ticker": "IBKR",
+      "name": "Interactive Brokers",
+      "type": "stock",
+      "market": "US",
+      "ibkr_held": true
+    },
+    {
+      "ticker": "SPYL.L",
+      "name": "SPDR S&P500 UCITS ETF",
+      "type": "etf",
+      "market": "LSE",
+      "ibkr_held": true
+    }
   ],
   "language": "zh-TW",
   "market": "US",
@@ -48,6 +221,8 @@
   },
   "analysis": {
     "history_period": "6mo",
-    "signal_threshold_alert": 70
+    "signal_threshold_alert": 70,
+    "pnl_alert_daily_loss": -20,
+    "pnl_alert_drawdown_pct": -10
   }
 }
