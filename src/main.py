@@ -141,7 +141,12 @@ def _run(cfg: dict) -> None:
     today     = datetime.now().strftime("%Y/%m/%d")
     today_key = datetime.now().strftime("%Y-%m-%d")
 
+    skip_ai = os.getenv("SKIP_AI", "") == "1" or not cfg["gemini"]["api_key"]
     errors = validate_config(cfg)
+    if skip_ai:
+        # Remove Gemini error so pipeline runs without AI
+        errors = [e for e in errors if "GEMINI" not in e and "gemini" not in e.lower()]
+        print("  ⚠️  AI 分析已跳過（無 Gemini API Key）— TA + Telegram 仍正常運行")
     if errors:
         print("[ERROR] 缺少必要設定：")
         for e in errors:
@@ -151,7 +156,7 @@ def _run(cfg: dict) -> None:
 
     # ── 1. Setup AI ──────────────────────────────────────────────────────────
     print("\n[1/5] 初始化 Gemini AI…")
-    model = setup_gemini(cfg["gemini"]["api_key"], cfg["gemini"].get("model", "gemini-2.5-flash"))
+    model = setup_gemini(cfg["gemini"]["api_key"], cfg["gemini"].get("model", "gemini-2.5-flash")) if not skip_ai else None
 
     # ── 2. Market overview ───────────────────────────────────────────────────
     print("[2/5] 抓取大盤數據…")
@@ -166,10 +171,10 @@ def _run(cfg: dict) -> None:
 
     # ── 3. Morning brief ─────────────────────────────────────────────────────
     print("[3/5] 生成早盤簡報（F→G→H→I）…")
-    morning_brief = run_morning_brief(model, market)
+    morning_brief = run_morning_brief(model, market) if model else "（AI 分析已跳過）"
 
     print("      生成港股盤前分析…")
-    hk_brief = run_hk_morning_brief(model, hk_data, market)
+    hk_brief = run_hk_morning_brief(model, hk_data, market) if model else ""
 
     # ── 3b. Broad scan → Tier 2 selection ───────────────────────────────────
     print("[3b/5] 廣域掃描全市場（TA only，無 Gemini）…")
@@ -222,7 +227,7 @@ def _run(cfg: dict) -> None:
 
             ta = calculate_indicators(data["history"])
             ta_dfs[ticker] = ta["df"]   # stash for pattern_engine
-            ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta)
+            ai_view = run_stock_quick_view(model, ticker, data["name"], data, ta) if model else ""
 
             # ── Deep dive for high-signal stocks (score ≥65) ──────────────
             deep = {"thesis": "", "risks": "", "entry": ""}
@@ -249,7 +254,7 @@ def _run(cfg: dict) -> None:
                     seen.add(key)
                     combined_headlines.append(h)
 
-            sentiment = run_news_sentiment(model, ticker, combined_headlines)
+            sentiment = run_news_sentiment(model, ticker, combined_headlines) if model else {"score": None, "summary": ""}
 
             # ── Merge Finnhub news into combined news list for display ──────
             combined_news = list(data.get("news", []))

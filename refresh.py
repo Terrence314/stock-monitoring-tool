@@ -111,14 +111,28 @@ def main():
     print("▶  Full analysis pipeline (prices + TA + AI + Telegram)")
     print(f"{'─'*50}")
     t0 = time.time()
+    run_env = {**os.environ, **env_override, "PYTHONPATH": os.path.join(ROOT, "src")}
     result = subprocess.run(
         [sys.executable, os.path.join(ROOT, "src", "main.py")],
         cwd=ROOT,
-        env={**os.environ, **env_override}
+        env=run_env
     )
     elapsed = time.time() - t0
     ok = result.returncode == 0
     print(f"{'✅ done' if ok else '❌ failed'}  ({elapsed:.1f}s)")
+
+    # Show what was updated
+    if ok:
+        try:
+            with open(os.path.join(ROOT, "outputs", "last_analysis.json")) as _f:
+                _d = json.load(_f)
+            _stocks = _d.get("stock_results", [])
+            _date   = _d.get("date", "?")
+            _top    = sorted(_stocks, key=lambda x: x.get("score", 0), reverse=True)[:3]
+            print(f"\n  ✅ last_analysis.json updated: {_date}")
+            print(f"  Top signals: {', '.join(f"{s['ticker']} ({s['score']})" for s in _top)}")
+        except Exception:
+            pass
 
     # ── Step 3: Portfolio dashboard ──────────────────────────────────────────
     _run("Portfolio dashboard", "portfolio_report.py")
