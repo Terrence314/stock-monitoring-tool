@@ -9,6 +9,7 @@ Click "Refresh" on the page to pull fresh IBKR positions + prices + TA + Telegra
 Server stays running in Terminal — close Terminal to stop it.
 """
 import http.server
+import webbrowser
 import json
 import os
 import subprocess
@@ -190,6 +191,8 @@ def main():
   Press Ctrl+C to stop.
 """)
     server = http.server.HTTPServer(("localhost", PORT), Handler)
+    # Auto-open browser after 0.5s (gives server time to bind)
+    threading.Timer(0.5, lambda: webbrowser.open(f"http://localhost:{PORT}")).start()
     try:
         server.serve_forever()
     except KeyboardInterrupt:

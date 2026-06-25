@@ -9,7 +9,7 @@ Usage:
 import json
 import os
 import webbrowser
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 POSITIONS_FILE = os.path.join("outputs", "ibkr_positions.json")
 ANALYSIS_FILE  = os.path.join("outputs", "last_analysis.json")
@@ -175,13 +175,94 @@ def _build_card(p: dict, sig: dict | None) -> str:
     </div>"""
 
 
-def build_html(positions, account, sig_map, synced_at, analysis_date):
+def build_html(positions, account, sig_map, synced_at, analysis_date, market=None, generated_at=None):
     total_upnl   = sum(p.get("unrealized_pnl", 0) for p in positions)
     total_dpnl   = sum(p.get("daily_pnl", 0) for p in positions)
     total_mktval = sum(p.get("market_value", 0) for p in positions)
     net_liq      = account.get("net_liquidation", 0)
     buying_pow   = account.get("buying_power", 0)
     currency     = account.get("currency", "HKD")
+
+    # ── Staleness ────────────────────────────────────────────────────────────
+    today_str    = date.today().isoformat()
+    try:
+        analysis_dt  = datetime.strptime(analysis_date, "%Y-%m-%d").date()
+        days_stale   = (date.today() - analysis_dt).days
+    except Exception:
+        days_stale = 0
+    is_stale = days_stale > 0
+    stale_banner = ""
+    if is_stale:
+        stale_color = "#fb923c" if days_stale <= 3 else "#f87171"
+        stale_banner = f'''
+    <div style="background:rgba(251,146,60,0.1);border:1px solid rgba(251,146,60,0.3);
+      border-radius:10px;padding:12px 16px;margin-bottom:16px;
+      display:flex;align-items:center;gap:10px">
+      <span style="font-size:18px">⚠️</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:{stale_color}">信號數據已過期 {days_stale} 天</div>
+        <div style="font-size:11px;color:#8a8c98;margin-top:2px">
+          分析日期：{analysis_date} · 點擊頁面右下角 🔄 Refresh 更新
+        </div>
+      </div>
+    </div>'''
+
+    # ── IBKR sync age ────────────────────────────────────────────────────────
+    try:
+        fmt = "%Y-%m-%d %H:%M" if " " in str(synced_at) else "%Y-%m-%d"
+        sync_dt   = datetime.strptime(str(synced_at), fmt)
+        sync_age  = datetime.now() - sync_dt
+        sync_hrs  = int(sync_age.total_seconds() / 3600)
+        sync_mins = int((sync_age.total_seconds() % 3600) / 60)
+        sync_label = f"{sync_hrs}h {sync_mins}m ago" if sync_hrs else f"{sync_mins}m ago"
+        sync_color = "#f87171" if sync_hrs >= 8 else ("#f5b942" if sync_hrs >= 4 else "#34d399")
+    except Exception:
+        sync_label = synced_at
+        sync_color = "#8a8c98"
+
+    gen_label = generated_at or datetime.now().strftime("%H:%M:%S")
+
+    # ── Market context strip ─────────────────────────────────────────────────
+    mkt_html = ""
+    if market:
+        SHOW_MKT = ["SPY", "QQQ", "^VIX", "GLD", "BTC-USD"]
+        mkt_items = ""
+        for ticker in SHOW_MKT:
+            m = market.get(ticker)
+            if not m: continue
+            chg  = m.get("change_pct", 0)
+            col  = "#34d399" if chg >= 0 else "#f87171"
+            arr  = "▲" if chg >= 0 else "▼"
+            name = m.get("name", ticker)
+            mkt_items += f'''
+          <div class="mkt-item">
+            <div class="mkt-name">{name}</div>
+            <div class="mkt-price">${m.get("price", 0):.2f}</div>
+            <div class="mkt-chg" style="color:{col}">{arr}{abs(chg):.2f}%</div>
+          </div>'''
+        if mkt_items:
+            mkt_html = f'<div class="mkt-strip">{mkt_items}</div>'
+
+    # ── Alert count for tab title ─────────────────────────────────────────────
+    alert_count = sum(1 for p in positions
+                      if sig_map.get(p["ticker"], {}).get("sell_signals"))
+    page_title = f"⚠️ {alert_count} alerts · Portfolio" if alert_count else "📦 Portfolio"
+
+    # ── Next CI time (8:30 PM HKT = 12:30 UTC) ──────────────────────────────
+    from datetime import timezone
+    hkt_now   = datetime.now()  # local time, assume HKT
+    next_ci   = "20:30 HKT"
+
+    # ── Status bar HTML ──────────────────────────────────────────────────────
+    status_bar = f'''
+    <div id="status-bar">
+      <span>📊 分析：{analysis_date} <span style="color:{"#f87171" if is_stale else "#34d399"}">{"⚠️ 已過期" if is_stale else "✅ 最新"}</span></span>
+      <span>🔗 IBKR：<span style="color:{sync_color}">{sync_label}</span></span>
+      <span>⏰ 生成：{gen_label}</span>
+      <span>🤖 CI 每日：{next_ci}</span>
+    </div>'''''''''
+
+
 
     # Sort: sell-signal first, then by daily P&L
     def sort_key(p):
@@ -201,7 +282,7 @@ def build_html(positions, account, sig_map, synced_at, analysis_date):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Portfolio · {synced_at}</title>
+<title>{page_title}</title>
 <style>
   * {{ box-sizing:border-box; margin:0; padding:0; }}
   body {{
@@ -293,6 +374,32 @@ def build_html(positions, account, sig_map, synced_at, analysis_date):
   }}
 
   .footer {{ margin-top:40px; text-align:center; font-size:11px; color:#3a3c4e; line-height:1.8; }}
+
+  /* Market strip */
+  .mkt-strip {{
+    display:flex; gap:0; overflow-x:auto; margin-bottom:16px;
+    background:#161820; border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px; padding:0 4px;
+  }}
+  .mkt-item {{
+    display:flex; flex-direction:column; align-items:center;
+    padding:12px 14px; gap:3px; min-width:90px; flex-shrink:0;
+    border-right:1px solid rgba(255,255,255,0.04);
+  }}
+  .mkt-item:last-child {{ border-right:none; }}
+  .mkt-name {{ font-size:10px; color:#5a5c6e; text-transform:uppercase; letter-spacing:.05em; }}
+  .mkt-price {{ font-size:14px; font-weight:700; }}
+  .mkt-chg {{ font-size:11px; font-weight:600; }}
+
+  /* Status bar */
+  #status-bar {{
+    position:fixed; bottom:0; left:0; right:0;
+    background:#0a0c10; border-top:1px solid rgba(255,255,255,0.07);
+    padding:8px 20px; display:flex; gap:20px; flex-wrap:wrap;
+    font-size:11px; color:#5a5c6e; z-index:100;
+    align-items:center;
+  }}
+  #status-bar span {{ white-space:nowrap; }}
 </style>
 </head>
 <body>
@@ -300,12 +407,13 @@ def build_html(positions, account, sig_map, synced_at, analysis_date):
   <div class="header">
     <h1>📦 My Portfolio</h1>
     <div class="meta">
-      IBKR 同步：{synced_at} &nbsp;·&nbsp;
-      信號資料：{analysis_date} &nbsp;·&nbsp;
-      信號匹配：{matched_count}/{len(positions)} 持倉<br>
-      🔒 本機私有 · 不上傳 GitHub · 不推送 gh-pages
+      信號匹配：{matched_count}/{len(positions)} 持倉 &nbsp;·&nbsp;
+      🔒 本機私有 · 不上傳
     </div>
   </div>
+
+  {stale_banner}
+  {mkt_html}
 
   <div class="account-bar">
     <div class="acct-block">
@@ -349,6 +457,7 @@ def build_html(positions, account, sig_map, synced_at, analysis_date):
     建議行動僅供參考，不構成投資建議 · 所有交易決定由用戶自行負責
   </div>
 </div>
+{status_bar}
 </body>
 </html>"""
 
@@ -378,8 +487,11 @@ def main():
     if missing:
         print(f"   No signal data yet: {missing} (will appear after next pipeline run)")
 
+    market       = analysis.get("market", {})
+    generated_at = datetime.now().strftime("%H:%M:%S")
     print("Generating portfolio.html…")
-    html = build_html(positions, account, sig_map, synced_at, analysis_date)
+    html = build_html(positions, account, sig_map, synced_at, analysis_date,
+                      market=market, generated_at=generated_at)
     os.makedirs("outputs", exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
