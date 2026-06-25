@@ -214,6 +214,10 @@ def _run(cfg: dict) -> None:
     threshold    = cfg.get("analysis", {}).get("signal_threshold_alert", 70)
     finnhub_key  = cfg["gemini"].get("finnhub_api_key", "")
 
+    # Load IBKR positions before loop — ibkr_positions.get(ticker) used per-stock
+    _ibkr = load_json_file(IBKR_POSITIONS_FILE, {})
+    ibkr_positions = {p["ticker"]: p for p in _ibkr.get("positions", [])}
+
     for item in analysis_watchlist:
         ticker = item["ticker"]
         asset_type = item.get("type", "stock")
@@ -409,8 +413,6 @@ def _run(cfg: dict) -> None:
     report_url = os.getenv("REPORT_URL", "")
     # Same Action Box the dashboard just rendered — one source of truth
     _ab = load_json_file(os.path.join("outputs", "action_box.json"), None)
-    _ibkr = load_json_file(IBKR_POSITIONS_FILE, {})
-    ibkr_positions = {p["ticker"]: p for p in _ibkr.get("positions", [])}  # ticker → position dict
     message = format_daily_message(today, morning_brief, stock_results, report_url,
                                    action_box=_ab)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)
