@@ -11,9 +11,10 @@ import os
 import webbrowser
 from datetime import datetime, date, timedelta
 
-POSITIONS_FILE = os.path.join("outputs", "ibkr_positions.json")
-ANALYSIS_FILE  = os.path.join("outputs", "last_analysis.json")
-OUTPUT_FILE    = os.path.join("outputs", "portfolio.html")
+POSITIONS_FILE  = os.path.join("outputs", "ibkr_positions.json")
+ANALYSIS_FILE   = os.path.join("outputs", "last_analysis.json")
+OUTPUT_FILE     = os.path.join("outputs", "portfolio.html")
+PNL_HISTORY_FILE = os.path.join("outputs", "pnl_history.json")
 
 
 def _load(path, default):
@@ -155,6 +156,7 @@ def _build_card(p: dict, sig: dict | None) -> str:
         <div style="text-align:right">
           <div class="pos-price">${price:.2f}</div>
           <div style="font-size:11px;color:#5a5c6e;margin-top:2px">{strength}</div>
+          {sig.get("price_sparkline_svg","") if has_sig else ""}
         </div>
       </div>
 
@@ -199,6 +201,94 @@ def _build_card(p: dict, sig: dict | None) -> str:
       {ai_html}
     </div>"""
 
+
+
+
+def _update_pnl_history(positions: list, total_upnl: float, total_dpnl: float):
+    """Persist daily P&L snapshot for sparkline history."""
+    history = _load(PNL_HISTORY_FILE, {})
+    today = date.today().isoformat()
+    history[today] = {
+        "total_upnl":  round(total_upnl, 2),
+        "total_dpnl":  round(total_dpnl, 2),
+        "positions": [
+            {"ticker": p.get("ticker"), "upnl": round(p.get("unrealized_pnl", 0), 2),
+             "price": round(p.get("market_price", 0), 2)}
+            for p in positions
+        ]
+    }
+    # Keep last 30 days
+    if len(history) > 30:
+        oldest = sorted(history.keys())[0]
+        del history[oldest]
+    try:
+        os.makedirs("outputs", exist_ok=True)
+        with open(PNL_HISTORY_FILE, "w") as f:
+            json.dump(history, f, indent=2)
+    except OSError:
+        pass
+    return history
+
+
+def _build_pnl_sparkline(history: dict, width=120, height=32) -> str:
+    """Build SVG sparkline from pnl_history for total unrealized P&L."""
+    if not history or len(history) < 2:
+        return ""
+    dates  = sorted(history.keys())[-14:]
+    values = [history[d]["total_upnl"] for d in dates]
+    mn, mx = min(values), max(values)
+    rng = mx - mn or 1
+    pad = 3
+    w   = width - pad * 2
+    h   = height - pad * 2
+    pts = []
+    for i, v in enumerate(values):
+        x = pad + (i / (len(values) - 1)) * w
+        y = pad + h - ((v - mn) / rng) * h
+        pts.append(f"{x:.1f},{y:.1f}")
+    latest = values[-1]
+    color  = "#34d399" if latest >= 0 else "#f87171"
+    pts_str = " ".join(pts)
+    return (
+        f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
+        f'xmlns="http://www.w3.org/2000/svg">'
+        f'<polyline points="{pts_str}" fill="none" stroke="{color}" '
+        f'stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>'
+        f'</svg>'
+    )
+
+
+def _build_weight_bar(positions: list, total_mktval: float) -> str:
+    """Build portfolio allocation bar HTML."""
+    if total_mktval <= 0:
+        return ""
+    COLORS = ["#63b3ed","#34d399","#f5b942","#fb923c","#a78bfa","#f472b6","#38bdf8","#4ade80"]
+    segments = ""
+    labels   = ""
+    for i, p in enumerate(positions):
+        pct   = (p.get("market_value", 0) / total_mktval) * 100
+        color = COLORS[i % len(COLORS)]
+        upnl  = p.get("unrealized_pnl", 0)
+        border_color = "rgba(52,211,153,0.4)" if upnl >= 0 else "rgba(248,113,113,0.4)"
+        segments += (
+            f'<div title="{p['ticker']} {pct:.1f}%" '
+            f'style="width:{pct:.1f}%;background:{color};opacity:0.85"></div>'
+        )
+        labels += (
+            f'<div style="display:flex;align-items:center;gap:5px;font-size:11px">'
+            f'<div style="width:8px;height:8px;border-radius:2px;background:{color};flex-shrink:0"></div>'
+            f'<span style="color:#8a8c98">{p["ticker"]}</span>'
+            f'<span style="color:#5a5c6e">{pct:.0f}%</span>'
+            f'</div>'
+        )
+    return (
+        f'<div style="background:#161820;border:1px solid rgba(255,255,255,0.06);'
+        f'border-radius:12px;padding:14px 16px;margin-bottom:20px">'
+        f'<div style="display:flex;gap:1px;height:8px;border-radius:5px;overflow:hidden;margin-bottom:10px">'
+        f'{segments}</div>'
+        f'<div style="display:flex;gap:12px;flex-wrap:wrap">{labels}</div>'
+        f'</div>'
+    )
 
 def build_html(positions, account, sig_map, synced_at, analysis_date, market=None, generated_at=None):
     total_upnl   = sum(p.get("unrealized_pnl", 0) for p in positions)
@@ -301,6 +391,16 @@ def build_html(positions, account, sig_map, synced_at, analysis_date, market=Non
     upnl_color = _pnl_color(total_upnl)
     dpnl_color = _pnl_color(total_dpnl)
     matched_count = sum(1 for p in positions if p["ticker"] in sig_map)
+
+    # P2: Weight bar + P&L history sparkline
+    weight_bar_section = _build_weight_bar(sorted_pos, total_mktval)
+    pnl_history  = _update_pnl_history(positions, total_upnl, total_dpnl)
+    pnl_sparkline = _build_pnl_sparkline(pnl_history)
+    pnl_spark_html = (
+        f'<div style="display:flex;align-items:center;gap:8px">' +
+        pnl_sparkline +
+        f'<span style="font-size:10px;color:#5a5c6e">14d</span></div>'
+    ) if pnl_sparkline else ""
 
     return f"""<!DOCTYPE html>
 <html lang="zh-TW">
@@ -478,7 +578,10 @@ def build_html(positions, account, sig_map, synced_at, analysis_date, market=Non
       <div class="sum-label">持倉佔比</div>
       <div class="sum-val">{(total_mktval / (net_liq / 7.8) * 100) if net_liq else 0:.0f}%</div>
     </div>
+    {f'<div class="sum-item"><div class="sum-label">浮盈走勢 14d</div>{pnl_spark_html}</div>' if pnl_spark_html else ""}
   </div>
+
+  {weight_bar_section}
 
   <div class="section-title">持倉明細 · 信號分析 · 建議行動</div>
   <div class="pos-grid">{cards_html}</div>
