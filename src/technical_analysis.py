@@ -171,21 +171,27 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
             score += 20
             signals.append("✅ MACD 金叉且動能擴張（0軸以上）")
         else:
-            score += 12  # cross below zero — discounted
-            signals.append("🟡 MACD 金叉動能擴張（0軸以下，力度打折）")
+            score += 0   # 0軸以下金叉 = 誘多陷阱，不加分
+            signals.append("⚠️ MACD 金叉在0軸以下 — 慎防誘多陷阱，趨勢仍偏空")
     elif macd_line > macd_sig and macd_h > 0:
         if macd_above_zero:
             score += 12
             signals.append("🟡 MACD 金叉（動能略收）")
         else:
-            score += 6   # cross below zero — halved
-            signals.append("🟡 MACD 金叉（0軸以下，信號偏弱）")
+            score += 0   # 0軸以下金叉 = 無效訊號
+            signals.append("⚠️ MACD 金叉（0軸以下，訊號無效）— 等待突破0軸確認")
     elif macd_h > prev_macd_h and macd_h < 0:
         score += 8
         signals.append("🟡 MACD 死叉收斂（底部跡象）")
     else:
         score += 0
         signals.append("❌ MACD 偏空")
+
+    # Zero-axis cross-down sell signal: MACD line drops below 0 this bar
+    prev_macd_line = float(df["MACD"].iloc[-2]) if len(df) >= 2 else macd_line
+    macd_crossed_below_zero = prev_macd_line >= 0 and macd_line < 0
+    if macd_crossed_below_zero:
+        signals.append("🔴 MACD 跌穿0軸 — 趨勢轉空確認，宜觀望/減倉（0軸理論）")
 
     # 4. Volume
     vol_ratio = latest["Vol_ratio"]
