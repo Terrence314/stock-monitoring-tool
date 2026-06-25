@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-26 04:57",
+ "ts": "2026-06-26 05:42",
  "buys": [
   {
    "ticker": "MRK",
@@ -20,22 +20,16 @@
    "expiry": "07-09"
   },
   {
-   "ticker": "SOXX",
-   "price": 625.2000122070312,
+   "ticker": "PWR",
+   "price": 718.5900268554688,
    "score": 78,
-   "reason": "Score 78 · BB 0.76 · RSI 59",
-   "stop": 575.18,
-   "target": 700.22,
+   "reason": "Score 78 · BB 0.66 · RSI 53",
+   "stop": 661.1,
+   "target": 804.82,
    "expiry": "07-09"
   }
  ],
- "sells": [
-  {
-   "ticker": "ARKK",
-   "float_pct": -4.6,
-   "why": "score 17"
-  }
- ],
+ "sells": [],
  "no_action": false,
  "breaker_pct": -2.31,
  "breaker_limit": -5.0,

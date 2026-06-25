@@ -15006,5 +15006,100 @@
     "type": "start",
     "price": 121.95,
     "score": 10
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "PWR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 718.59
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "PWR",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 718.59,
+    "score": 78
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "SOXX",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 625.2
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "SOXX",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 625.2,
+    "score": 78
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "SPMO",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 159.64,
+    "score": 90
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "SPMO",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 159.64
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "QCOM",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "end",
+    "price": 204.9
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "MTD",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 1243.42,
+    "score": 67
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "MTD",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 1243.42,
+    "score": 67
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "MTD",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 1243.42,
+    "score": 67
+  },
+  {
+    "date": "2026-06-25",
+    "ticker": "VOO",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 675.71,
+    "score": 57
   }
 ]

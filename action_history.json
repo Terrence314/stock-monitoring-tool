@@ -1146,5 +1146,33 @@
    "SOXX"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-26 05:42",
+  "buys": [
+   {
+    "ticker": "MRK",
+    "score": 90,
+    "price": 125.44999694824219
+   },
+   {
+    "ticker": "WY",
+    "score": 80,
+    "price": 25.760000228881836
+   },
+   {
+    "ticker": "PWR",
+    "score": 78,
+    "price": 718.5900268554688
+   }
+  ],
+  "sells": [],
+  "added": [
+   "PWR"
+  ],
+  "removed": [
+   "ARKK",
+   "SOXX"
+  ]
  }
 ]

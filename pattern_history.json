@@ -490,7 +490,7 @@
     },
     "MACD Bull": {
       "start": "2026-06-18",
-      "end": null
+      "end": "2026-06-25"
     },
     "Above MA60": {
       "start": "2026-06-17",
@@ -505,8 +505,8 @@
       "end": "2026-06-11"
     },
     "MACD Bear": {
-      "start": "2026-06-11",
-      "end": "2026-06-18"
+      "start": "2026-06-25",
+      "end": null
     }
   },
   "ARKK": {
@@ -2025,6 +2025,10 @@
     "RSI Oversold Bounce": {
       "start": "2026-06-11",
       "end": "2026-06-11"
+    },
+    "Volume Breakout": {
+      "start": "2026-06-25",
+      "end": null
     }
   },
   "VT": {
@@ -2736,7 +2740,7 @@
     },
     "Volume Breakout": {
       "start": "2026-06-19",
-      "end": null
+      "end": "2026-06-25"
     }
   },
   "SWKS": {
@@ -3133,8 +3137,8 @@
       "end": null
     },
     "MACD Bull": {
-      "start": "2026-06-17",
-      "end": "2026-06-25"
+      "start": "2026-06-25",
+      "end": null
     },
     "Above MA60": {
       "start": "2026-06-03",
@@ -3150,7 +3154,7 @@
     },
     "MACD Bear": {
       "start": "2026-06-25",
-      "end": null
+      "end": "2026-06-25"
     }
   },
   "STX": {
@@ -4688,10 +4692,14 @@
     },
     "MACD Bull": {
       "start": "2026-06-22",
-      "end": null
+      "end": "2026-06-25"
     },
     "Above MA60": {
       "start": "2026-06-22",
+      "end": null
+    },
+    "MACD Bear": {
+      "start": "2026-06-25",
       "end": null
     }
   },
@@ -4900,6 +4908,20 @@
     }
   },
   "IR": {
+    "Golden Cross": {
+      "start": "2026-06-25",
+      "end": null
+    },
+    "MACD Bull": {
+      "start": "2026-06-25",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-06-25",
+      "end": null
+    }
+  },
+  "MTD": {
     "Golden Cross": {
       "start": "2026-06-25",
       "end": null
