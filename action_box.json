@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-26 04:49",
+ "ts": "2026-06-26 04:57",
  "buys": [
   {
    "ticker": "MRK",
@@ -32,12 +32,12 @@
  "sells": [
   {
    "ticker": "ARKK",
-   "float_pct": -4.5,
+   "float_pct": -4.6,
    "why": "score 17"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.34,
+ "breaker_pct": -2.31,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 14,
