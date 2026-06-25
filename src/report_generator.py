@@ -1548,6 +1548,17 @@ body.beginner-mode .beginner-only { display: block; }
               {% elif s.get('badge') == 'RETURN' %}
                 <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(177,140,255,0.15);color:var(--purple);border:1px solid rgba(177,140,255,0.3);font-weight:700;letter-spacing:.04em">↩ RETURN</span>
               {% endif %}
+              <!-- IBKR position badge -->
+              {% set _pos = s.get('ibkr_position') %}
+              {% if _pos %}
+                {% set _pnl = _pos.get('unrealized_pnl', 0) %}
+                {% set _pnl_color = '#34d399' if _pnl >= 0 else '#f87171' %}
+                {% set _pnl_str = ('+$' + '%.2f'|format(_pnl)) if _pnl >= 0 else ('-$' + '%.2f'|format(_pnl|abs)) %}
+                <span title="IBKR持倉：{{ _pos.get('qty') }}股 · 均價${{ '%.2f'|format(_pos.get('avg_cost', 0)) }} · 浮盈{{ _pnl_str }}"
+                  style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(99,179,237,0.13);color:#63b3ed;border:1px solid rgba(99,179,237,0.3);font-weight:700;cursor:default;white-space:nowrap">
+                  📦 ×{{ _pos.get('qty') }} <span style="color:{{ _pnl_color }}">{{ _pnl_str }}</span>
+                </span>
+              {% endif %}
               <!-- Star/favourite button -->
               <button class="star-btn" data-ticker="{{ s.ticker }}"
                 onclick="toggleFavourite('{{ s.ticker }}')"
@@ -3386,6 +3397,7 @@ def generate_dashboard(
     broad_top100: list | None = None,
     supabase_url: str = "",
     supabase_anon_key: str = "",
+    ibkr_account: dict | None = None,
 ) -> str:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -3495,6 +3507,7 @@ def generate_dashboard(
         etf_panel_items=etf_panel_items,
         supabase_url=supabase_url,
         supabase_anon_key=supabase_anon_key,
+        ibkr_account=ibkr_account or {},
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"

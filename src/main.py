@@ -18,7 +18,8 @@ from tier2_manager import get_tier2_list, load_favourites
 
 
 SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
-ALERT_HISTORY_FILE = os.path.join("outputs", "alert_history.json")
+ALERT_HISTORY_FILE  = os.path.join("outputs", "alert_history.json")
+IBKR_POSITIONS_FILE = os.path.join("outputs", "ibkr_positions.json")
 HISTORY_KEEP_DAYS  = 30
 ALERT_KEEP_ENTRIES = 30
 
@@ -322,6 +323,8 @@ def _run(cfg: dict) -> None:
                 "is_core":          item.get("is_core", False),
                 "badge":            item.get("badge"),
                 "consecutive_days": item.get("consecutive_days", 1),
+                # IBKR position data (None if not held)
+                "ibkr_position":    ibkr_positions.get(ticker),
             })
             flag = " 🔥" if ta["score"] >= threshold else ""
             print(f"信號 {ta['score']}/100{flag}")
@@ -364,6 +367,7 @@ def _run(cfg: dict) -> None:
         broad_top100=broad_top100,
         supabase_url=os.getenv('SUPABASE_URL', ''),
         supabase_anon_key=os.getenv('SUPABASE_ANON_KEY', ''),
+        ibkr_account=_ibkr.get("account"),
     )
     print(f"      報告已儲存：{report_path}")
 
@@ -388,6 +392,8 @@ def _run(cfg: dict) -> None:
     report_url = os.getenv("REPORT_URL", "")
     # Same Action Box the dashboard just rendered — one source of truth
     _ab = load_json_file(os.path.join("outputs", "action_box.json"), None)
+    _ibkr = load_json_file(IBKR_POSITIONS_FILE, {})
+    ibkr_positions = {p["ticker"]: p for p in _ibkr.get("positions", [])}  # ticker → position dict
     message = format_daily_message(today, morning_brief, stock_results, report_url,
                                    action_box=_ab)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)

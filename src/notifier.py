@@ -142,6 +142,12 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
         if s.get("ai_view"):
             short_view = s["ai_view"][:80] + "…" if len(s["ai_view"]) > 80 else s["ai_view"]
             lines.append(f"   <i>{short_view}</i>")
+        # IBKR position annotation
+        _pos = s.get("ibkr_position")
+        if _pos:
+            _pnl = _pos.get("unrealized_pnl", 0)
+            _pnl_str = f"+${_pnl:.2f}" if _pnl >= 0 else f"-${abs(_pnl):.2f}"
+            lines.append(f"   📦 持倉 ×{_pos.get('qty')} · 均${_pos.get('avg_cost', 0):.2f} · 浮盈 {_pnl_str}")
         lines.append("")
 
     if report_url:
