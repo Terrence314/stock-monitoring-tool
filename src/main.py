@@ -78,7 +78,19 @@ def load_config(path: str = "config/config.json") -> dict:
     with open(path, encoding="utf-8") as f:
         cfg = json.load(f)
 
-    # Env vars override config file — safe for GitHub Actions secrets
+    # Load local secrets.json first (local dev), then env vars override (CI)
+    _secrets_path = os.path.join(os.path.dirname(path), "..", "config", "secrets.json")
+    try:
+        with open(_secrets_path) as _sf:
+            _sec = json.load(_sf)
+        if _sec.get("telegram_bot_token"):  cfg["telegram"]["bot_token"] = _sec["telegram_bot_token"]
+        if _sec.get("telegram_chat_id"):    cfg["telegram"]["chat_id"]   = _sec["telegram_chat_id"]
+        if _sec.get("gemini_api_key"):      cfg["gemini"]["api_key"]     = _sec["gemini_api_key"]
+        if _sec.get("finnhub_api_key"):     cfg["gemini"]["finnhub_api_key"] = _sec["finnhub_api_key"]
+    except (OSError, json.JSONDecodeError):
+        pass  # no local secrets file — rely on env vars (CI mode)
+
+    # Env vars override config file and secrets.json — safe for GitHub Actions secrets
     cfg["telegram"]["bot_token"]     = os.getenv("TELEGRAM_BOT_TOKEN") or cfg["telegram"]["bot_token"]
     cfg["telegram"]["chat_id"]       = os.getenv("TELEGRAM_CHAT_ID")   or cfg["telegram"]["chat_id"]
     cfg["gemini"]["api_key"]         = os.getenv("GEMINI_API_KEY")      or cfg["gemini"]["api_key"]
