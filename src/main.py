@@ -58,11 +58,14 @@ def update_alert_history(today_str: str, stock_results: list, threshold: int) ->
     existing_keys = {(a["date"], a["ticker"]) for a in alerts}
     for s in stock_results:
         if s["score"] >= threshold and (today_str, s["ticker"]) not in existing_keys:
+            macd_confirmed = (s.get("macd") or 0) > 0
+            quality = "confirmed" if macd_confirmed else "caution"
             alerts.append({
                 "date":     today_str,
                 "ticker":   s["ticker"],
                 "score":    s["score"],
                 "strength": s["strength"],
+                "quality":  quality,
             })
     # Trim to most recent entries
     alerts = alerts[-ALERT_KEEP_ENTRIES:]
@@ -210,7 +213,10 @@ def _run(cfg: dict) -> None:
 
             # ── Deep dive for high-signal stocks (score ≥65) ──────────────
             deep = {"thesis": "", "risks": "", "entry": ""}
-            if ta["score"] >= 65:
+            macd_above_zero = (ta.get("macd") or 0) > 0
+            if ta["score"] >= 65 and (macd_above_zero or ta["score"] >= 80):
+                # Only deep dive when MACD confirms trend (above 0) or score is very high
+                # Below-zero MACD at borderline scores = likely bull trap, skip deep dive
                 try:
                     deep = run_stock_deep_dive(model, ticker, data["name"], data, ta)
                 except Exception as dd_err:

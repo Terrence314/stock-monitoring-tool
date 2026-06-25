@@ -1254,12 +1254,18 @@ body.beginner-mode .beginner-only { display: block; }
   <div class="timeline">
     {% for a in (alert_history[-10:] | reverse) %}
       {% set ac = 'high' if a.score >= 60 else ('mid' if a.score >= 40 else 'low') %}
+      {% set q = a.get('quality', 'confirmed') %}
       <div class="timeline-row">
         <span class="timeline-dot {{ ac }}"></span>
         <span class="timeline-date">{{ a.date }}</span>
         <span class="timeline-ticker">{{ a.ticker }}</span>
         <span class="num" style="color: {{ '#34d399' if a.score >= 60 else ('#f5b942' if a.score >= 40 else '#f87171') }}; font-size: 13px; font-weight: 700">{{ a.score }}</span>
         <span class="strength-badge {{ ac }}">{{ a.strength }}</span>
+        {% if q == 'caution' %}
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.3)">⚠️ 0軸以下</span>
+        {% else %}
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        {% endif %}
       </div>
     {% endfor %}
   </div>

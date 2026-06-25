@@ -73,14 +73,18 @@ def run_stock_quick_view(model, ticker: str, name: str, stock_data: dict, ta: di
     kd_info = ""
     if ta.get("kd_k") is not None:
         kd_info = f"\nKD-K：{ta['kd_k']} | KD-D：{ta['kd_d']}"
+    macd_line = ta.get("macd") or 0
+    macd_zone = "0軸以上（趨勢偏多）" if macd_line > 0 else "0軸以下（趨勢偏空）"
+    signals_summary = " | ".join(ta.get("signals", [])[:4]) if ta.get("signals") else "無"
     prompt = f"""股票：{ticker}（{name}）
 現價：${stock_data['current_price']:.2f}  漲跌：{change:+.2f}%
 MA5：{ta['ma5']} | MA20：{ta['ma20']} | MA60：{ta['ma60']}
-RSI：{ta['rsi']} | MACD Hist：{ta['macd_hist']} | 量比：{ta['vol_ratio']}×{{bb_info}}{{kd_info}}
+RSI：{ta['rsi']} | MACD：{ta.get('macd', 'N/A')}（{macd_zone}）| MACD Hist：{ta['macd_hist']} | 量比：{ta['vol_ratio']}×{bb_info}{kd_info}
 技術信號分數：{ta['score']}/100（{ta['strength']}）
+主要信號：{signals_summary}
 
 請用繁體中文，120 字以內，分四點回答（每點一行，直接給結論，不要標題符號）：
-①盤面強弱：目前趨勢方向與動能強弱
+①盤面強弱：目前趨勢方向與動能強弱（需判斷MACD是否在0軸以上確認趨勢）
 ②關鍵價位：最近支撐位與壓力位（給具體數字）
 ③高機率劇本：未來3–5個交易日最可能走勢
 ④主要風險：一個最需警惕的下行風險"""
@@ -96,11 +100,18 @@ def run_stock_deep_dive(model, ticker: str, name: str, stock_data: dict, ta: dic
     price = stock_data["current_price"]
     change = stock_data["price_change_pct"]
 
+    macd_line = ta.get("macd") or 0
+    macd_zone = "0軸以上（趨勢多頭確認）" if macd_line > 0 else "0軸以下（趨勢仍偏空，入場需謹慎）"
+    signals_text = "\n".join(f"  • {s}" for s in ta.get("signals", [])[:6]) if ta.get("signals") else "  無"
     prompt = f"""股票：{ticker}（{name}）
 現價：${price:.2f}  漲跌：{change:+.2f}%
 MA5：{ta['ma5']} | MA20：{ta['ma20']} | MA60：{ta['ma60']}
-RSI：{ta['rsi']} | MACD：{ta['macd']} | MACD Signal：{ta['macd_signal']}
+RSI：{ta['rsi']} | MACD：{ta['macd']}（{macd_zone}）| MACD Signal：{ta['macd_signal']}
 技術信號分數：{ta['score']}/100（{ta['strength']}）
+當前技術信號：
+{signals_text}
+
+重要提示：若 MACD 在 0 軸以下，即使有金叉也屬誘多陷阱，擇時建議須反映此風險。
 
 你是一位機構交易員，請以繁體中文分析 {ticker}，分三段回答：
 
@@ -108,7 +119,7 @@ RSI：{ta['rsi']} | MACD：{ta['macd']} | MACD Signal：{ta['macd_signal']}
 
 【風險矩陣】約100字：3個風險（宏觀/行業/公司各一），每個附先行指標
 
-【擇時建議】約80字：建議買入區間、止損位及邏輯、第一/第二目標價、風險回報比"""
+【擇時建議】約80字：建議買入區間、止損位及邏輯、第一/第二目標價、風險回報比。若MACD在0軸以下，須明確說明「等待0軸突破確認後再入場」"""
 
     raw = _call(model, prompt)
 
