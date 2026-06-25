@@ -1,34 +1,43 @@
 {
- "ts": "2026-06-26 02:10",
+ "ts": "2026-06-26 04:47",
  "buys": [
   {
    "ticker": "MRK",
-   "price": 124.31999969482422,
-   "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.10",
-   "stop": 114.37,
-   "target": 139.24,
+   "price": 125.44999694824219,
+   "score": 90,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
+   "stop": 115.41,
+   "target": 140.5,
    "expiry": "07-09"
   },
   {
    "ticker": "WY",
-   "price": 25.59000015258789,
+   "price": 25.760000228881836,
    "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.14",
-   "stop": 23.54,
-   "target": 28.66,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.19",
+   "stop": 23.7,
+   "target": 28.85,
+   "expiry": "07-09"
+  },
+  {
+   "ticker": "SOXX",
+   "price": 625.2000122070312,
+   "score": 78,
+   "reason": "Score 78 · BB 0.76 · RSI 59",
+   "stop": 575.18,
+   "target": 700.22,
    "expiry": "07-09"
   }
  ],
  "sells": [
   {
    "ticker": "ARKK",
-   "float_pct": -4.0,
+   "float_pct": -4.5,
    "why": "score 17"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.35,
+ "breaker_pct": -2.34,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 14,
