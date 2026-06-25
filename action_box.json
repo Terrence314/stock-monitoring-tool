@@ -1,51 +1,40 @@
 {
- "ts": "2026-06-25 07:04",
+ "ts": "2026-06-25 23:29",
  "buys": [
   {
-   "ticker": "TLT",
-   "price": 87.37999725341797,
-   "score": 92,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.13",
-   "stop": 80.39,
-   "target": 97.87,
-   "expiry": "07-08"
+   "ticker": "MRK",
+   "price": 123.83999633789062,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.08",
+   "stop": 113.93,
+   "target": 138.7,
+   "expiry": "07-09"
   },
   {
-   "ticker": "BKNG",
-   "price": 181.25,
-   "score": 85,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.16",
-   "stop": 166.75,
-   "target": 203.0,
-   "expiry": "07-08"
+   "ticker": "NCLH",
+   "price": 21.29759979248047,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 0.97",
+   "stop": 19.59,
+   "target": 23.85,
+   "expiry": "07-09"
   },
   {
-   "ticker": "RUN",
-   "price": 14.420000076293945,
-   "score": 84,
-   "reason": "Score 84 · BB 0.60 · RSI 56",
-   "stop": 13.27,
-   "target": 16.15,
-   "expiry": "07-08"
+   "ticker": "WY",
+   "price": 25.514999389648438,
+   "score": 80,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.11",
+   "stop": 23.47,
+   "target": 28.58,
+   "expiry": "07-09"
   }
  ],
- "sells": [
-  {
-   "ticker": "VOO",
-   "float_pct": -1.8,
-   "why": "score 17"
-  },
-  {
-   "ticker": "QQQ",
-   "float_pct": -4.1,
-   "why": "score 17"
-  }
- ],
+ "sells": [],
  "no_action": false,
  "breaker_pct": -2.73,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 13,
+ "gate_day": 14,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,

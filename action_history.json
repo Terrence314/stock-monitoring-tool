@@ -1035,5 +1035,38 @@
   "removed": [
    "BIIB"
   ]
+ },
+ {
+  "ts": "2026-06-25 23:29",
+  "buys": [
+   {
+    "ticker": "MRK",
+    "score": 80,
+    "price": 123.83999633789062
+   },
+   {
+    "ticker": "NCLH",
+    "score": 80,
+    "price": 21.29759979248047
+   },
+   {
+    "ticker": "WY",
+    "score": 80,
+    "price": 25.514999389648438
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MRK",
+   "NCLH",
+   "WY"
+  ],
+  "removed": [
+   "BKNG",
+   "QQQ",
+   "RUN",
+   "TLT",
+   "VOO"
+  ]
  }
 ]
