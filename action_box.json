@@ -1,28 +1,34 @@
 {
- "ts": "2026-06-25 23:44",
+ "ts": "2026-06-26 02:10",
  "buys": [
   {
    "ticker": "MRK",
-   "price": 123.9800033569336,
+   "price": 124.31999969482422,
    "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.08",
-   "stop": 114.06,
-   "target": 138.86,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.10",
+   "stop": 114.37,
+   "target": 139.24,
    "expiry": "07-09"
   },
   {
-   "ticker": "NCLH",
-   "price": 21.264999389648438,
+   "ticker": "WY",
+   "price": 25.59000015258789,
    "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.96",
-   "stop": 19.56,
-   "target": 23.82,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.14",
+   "stop": 23.54,
+   "target": 28.66,
    "expiry": "07-09"
   }
  ],
- "sells": [],
+ "sells": [
+  {
+   "ticker": "ARKK",
+   "float_pct": -4.0,
+   "why": "score 17"
+  }
+ ],
  "no_action": false,
- "breaker_pct": -2.3,
+ "breaker_pct": -2.35,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 14,

@@ -1088,5 +1088,33 @@
   "removed": [
    "WY"
   ]
+ },
+ {
+  "ts": "2026-06-26 02:10",
+  "buys": [
+   {
+    "ticker": "MRK",
+    "score": 80,
+    "price": 124.31999969482422
+   },
+   {
+    "ticker": "WY",
+    "score": 80,
+    "price": 25.59000015258789
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "ARKK",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "ARKK",
+   "WY"
+  ],
+  "removed": [
+   "NCLH"
+  ]
  }
 ]
