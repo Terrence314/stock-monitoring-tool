@@ -86,6 +86,28 @@ def _build_card(p: dict, sig: dict | None) -> str:
     sell_sigs = sig.get("sell_signals", []) if has_sig else []
     ai_view  = sig.get("ai_view", "") if has_sig else ""
 
+    # Score delta from sparkline history ([-2] = prev day, [-1] = current)
+    score_delta_html = ""
+    if has_sig and score is not None:
+        sp = sig.get("sparkline_points", [])
+        if len(sp) >= 2:
+            prev_score = sp[-2]
+            delta = score - prev_score
+            if abs(delta) >= 2:  # only show meaningful change
+                d_col = "#34d399" if delta > 0 else "#f87171"
+                d_arr = "↑" if delta > 0 else "↓"
+                score_delta_html = f'<span style="font-size:11px;color:{d_col};font-weight:700;margin-left:6px">{d_arr}{abs(delta):.0f}</span>'
+
+    # Signal freshness badge
+    sig_date = sig.get("_analysis_date", "") if has_sig else ""
+    freshness_html = ""
+    if sig_date:
+        today_s = date.today().isoformat()
+        is_fresh = sig_date == today_s
+        f_color = "#34d399" if is_fresh else "#f5b942"
+        f_label = "今日" if is_fresh else sig_date
+        freshness_html = f'<span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.04);color:{f_color};border:1px solid {f_color}33">📡 {f_label}</span>'
+
     macd_above = (macd or 0) > 0 if macd is not None else None
     macd_zone_txt = ("0軸以上 ✅" if macd_above else "0軸以下 ⚠️") if macd is not None else "—"
     macd_zone_color = ("#34d399" if macd_above else "#fb923c") if macd is not None else "#5a5c6e"
@@ -116,7 +138,7 @@ def _build_card(p: dict, sig: dict | None) -> str:
         ai_html = f'<div class="ai-view">💬 {ai_snippet}</div>'
 
     card_border = "rgba(248,113,113,0.35)" if sell_sigs else ("rgba(255,255,255,0.06)" if has_sig else "rgba(255,255,255,0.04)")
-    score_display = f'{score}<span style="font-size:11px;opacity:.5">/100</span>' if score is not None else '<span style="font-size:14px;color:#5a5c6e">N/A</span>'
+    score_display = f'{score}<span style="font-size:11px;opacity:.5">/100</span>{score_delta_html}' if score is not None else '<span style="font-size:14px;color:#5a5c6e">N/A</span>'
     score_color = _score_color(score) if score is not None else "#5a5c6e"
 
     return f"""
@@ -124,7 +146,10 @@ def _build_card(p: dict, sig: dict | None) -> str:
       <div class="pos-head">
         <div class="pos-tile">{ticker[:3]}</div>
         <div class="pos-info">
-          <div class="pos-ticker">{ticker}</div>
+          <div class="pos-ticker" style="display:flex;align-items:center;gap:8px">
+            {ticker}
+            {freshness_html}
+          </div>
           <div class="pos-sub">{qty} 股 · 均價 ${avg:.2f} · {cur}</div>
         </div>
         <div style="text-align:right">
@@ -428,6 +453,12 @@ def build_html(positions, account, sig_map, synced_at, analysis_date, market=Non
       <div class="acct-label">持倉市值</div>
       <div class="acct-val">USD {total_mktval:,.0f}</div>
     </div>
+    <div class="acct-block" style="border-color:{'rgba(248,113,113,0.35)' if alert_count else 'rgba(52,211,153,0.2)'}">
+      <div class="acct-label">需關注</div>
+      <div class="acct-val" style="color:{'#f87171' if alert_count else '#34d399'}">
+        {'⚠️ ' + str(alert_count) + ' 持倉' if alert_count else '✅ 全清'}
+      </div>
+    </div>
   </div>
 
   <div class="summary-strip">
@@ -478,8 +509,11 @@ def main():
     print("Loading signal analysis…")
     analysis     = _load(ANALYSIS_FILE, {})
     stocks       = analysis.get("stock_results", [])
+    _adate = analysis.get("date", "")
+    for s in stocks:
+        s["_analysis_date"] = _adate
     sig_map      = {s["ticker"]: s for s in stocks}
-    analysis_date = analysis.get("date", "unknown")
+    analysis_date = _adate or "unknown"
 
     matched = [p["ticker"] for p in positions if p["ticker"] in sig_map]
     missing = [p["ticker"] for p in positions if p["ticker"] not in sig_map]
