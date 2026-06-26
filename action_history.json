@@ -1238,5 +1238,34 @@
    "SOXX",
    "WY"
   ]
+ },
+ {
+  "ts": "2026-06-27 01:48",
+  "buys": [
+   {
+    "ticker": "PSA",
+    "score": 80,
+    "price": 324.5199890136719
+   },
+   {
+    "ticker": "SOFI",
+    "score": 80,
+    "price": 17.80500030517578
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "SOFI"
+  ],
+  "removed": []
  }
 ]
