@@ -55,7 +55,13 @@ def fetch_positions() -> dict:
     pos_raw = _get(f"/portfolio/{account_id}/positions/0")
     positions = []
     for p in pos_raw or []:
-        ticker = p.get("ticker", p.get("contractDesc", "")).split()[0]  # strip exchange suffix
+        # Preserve exchange suffix for LSE/international tickers (e.g. SPYL.L)
+        desc = p.get("ticker", p.get("contractDesc", ""))
+        base = desc.split()[0]
+        # Re-append .L for LSE tickers (contractDesc contains @LSEETF)
+        if "@LSEETF" in desc or "@LSE" in desc:
+            base = base + ".L"
+        ticker = base
         positions.append({
             "ticker":         ticker,
             "qty":            p.get("position", 0),
