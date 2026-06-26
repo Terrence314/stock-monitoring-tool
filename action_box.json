@@ -1,38 +1,25 @@
 {
- "ts": "2026-06-26 17:29",
+ "ts": "2026-06-26 23:14",
  "buys": [
   {
-   "ticker": "MRK",
-   "price": 125.44999694824219,
-   "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
-   "stop": 115.41,
-   "target": 140.5,
-   "expiry": "07-10"
-  },
-  {
-   "ticker": "WY",
-   "price": 25.760000228881836,
+   "ticker": "PSA",
+   "price": 324.739990234375,
    "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.19",
-   "stop": 23.7,
-   "target": 28.85,
-   "expiry": "07-10"
-  },
-  {
-   "ticker": "SOXX",
-   "price": 625.2000122070312,
-   "score": 78,
-   "reason": "Score 78 · BB 0.76 · RSI 59",
-   "stop": 575.18,
-   "target": 700.22,
+   "reason": "Score 80 · BB 0.78 · RSI 64",
+   "stop": 298.76,
+   "target": 363.71,
    "expiry": "07-10"
   }
  ],
  "sells": [
   {
-   "ticker": "ARKK",
-   "float_pct": -4.6,
+   "ticker": "VOO",
+   "float_pct": -1.8,
+   "why": "score 27"
+  },
+  {
+   "ticker": "QQQ",
+   "float_pct": -3.3,
    "why": "score 17"
   }
  ],

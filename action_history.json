@@ -1207,5 +1207,36 @@
   "removed": [
    "PWR"
   ]
+ },
+ {
+  "ts": "2026-06-26 23:14",
+  "buys": [
+   {
+    "ticker": "PSA",
+    "score": 80,
+    "price": 324.739990234375
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 27"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "PSA",
+   "QQQ",
+   "VOO"
+  ],
+  "removed": [
+   "ARKK",
+   "MRK",
+   "SOXX",
+   "WY"
+  ]
  }
 ]
