@@ -1,30 +1,30 @@
 {
- "ts": "2026-06-26 23:14",
+ "ts": "2026-06-26 23:24",
  "buys": [
   {
    "ticker": "PSA",
-   "price": 324.739990234375,
+   "price": 325.7200012207031,
    "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 64",
-   "stop": 298.76,
-   "target": 363.71,
+   "reason": "Score 80 · BB 0.80 · RSI 65",
+   "stop": 299.66,
+   "target": 364.81,
    "expiry": "07-10"
   }
  ],
  "sells": [
   {
    "ticker": "VOO",
-   "float_pct": -1.8,
-   "why": "score 27"
+   "float_pct": -2.2,
+   "why": "score 17"
   },
   {
    "ticker": "QQQ",
-   "float_pct": -3.3,
+   "float_pct": -4.2,
    "why": "score 17"
   }
  ],
  "no_action": false,
- "breaker_pct": -2.74,
+ "breaker_pct": -2.83,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 15,
