@@ -207,6 +207,15 @@ def _run(cfg: dict) -> None:
         analysis_watchlist = cfg["watchlist"]
         broad_top100 = []
 
+    # Force-include IBKR-held tickers regardless of Tier 2 score
+    _held_tickers = {item["ticker"] for item in cfg["watchlist"] if item.get("ibkr_held")}
+    _current_tickers = {item["ticker"] for item in analysis_watchlist}
+    for item in cfg["watchlist"]:
+        if item.get("ibkr_held") and item["ticker"] not in _current_tickers:
+            analysis_watchlist.append({**item, "is_favourite": True, "is_core": False,
+                                        "badge": "IBKR", "consecutive_days": 1, "broad_score": 0})
+            print(f"      ✅ Force-added IBKR holding: {item['ticker']}")
+
     # ── 4. Tier 2 full analysis (TA + Gemini) ───────────────────────────────
     print(f"[4/5] 深度分析 {len(analysis_watchlist)} 檔 Tier 2 股票…")
     stock_results = []
