@@ -1,22 +1,13 @@
 {
- "ts": "2026-06-27 01:58",
+ "ts": "2026-06-27 03:48",
  "buys": [
   {
    "ticker": "PSA",
-   "price": 324.6099853515625,
+   "price": 322.45001220703125,
    "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 64",
-   "stop": 298.64,
-   "target": 363.56,
-   "expiry": "07-10"
-  },
-  {
-   "ticker": "SOFI",
-   "price": 17.795000076293945,
-   "score": 80,
-   "reason": "Score 80 · BB 0.72 · RSI 57",
-   "stop": 16.37,
-   "target": 19.93,
+   "reason": "Score 80 · BB 0.73 · RSI 62",
+   "stop": 296.65,
+   "target": 361.14,
    "expiry": "07-10"
   }
  ],
@@ -33,7 +24,7 @@
   }
  ],
  "no_action": false,
- "breaker_pct": -2.68,
+ "breaker_pct": -2.69,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 15,

@@ -1267,5 +1267,29 @@
    "SOFI"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-06-27 03:48",
+  "buys": [
+   {
+    "ticker": "PSA",
+    "score": 80,
+    "price": 322.45001220703125
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 17"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [],
+  "removed": [
+   "SOFI"
+  ]
  }
 ]
