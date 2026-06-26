@@ -15561,5 +15561,161 @@
     "direction": "buy",
     "type": "end",
     "price": 672.8
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "VLO",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 259.61
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "VLO",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 259.61,
+    "score": 72
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "IONS",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 80.5,
+    "score": 65
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "MRNA",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 66.54
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "LLY",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 1206.3,
+    "score": 58
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "LLY",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 1206.3
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "OEF",
+    "pattern": "BB Walking Down",
+    "direction": "sell",
+    "type": "end",
+    "price": 359.07
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "MGK",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "start",
+    "price": 84.7,
+    "score": 18
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "VONG",
+    "pattern": "BB Walking Down",
+    "direction": "sell",
+    "type": "end",
+    "price": 122.67
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "GOOGL",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "end",
+    "price": 341.48
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "GOOGL",
+    "pattern": "Below MA60",
+    "direction": "sell",
+    "type": "start",
+    "price": 341.48,
+    "score": 10
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "GOOGL",
+    "pattern": "BB Walking Down",
+    "direction": "sell",
+    "type": "start",
+    "price": 341.48,
+    "score": 10
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "IBKR",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 90.22,
+    "score": 25
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "IBKR",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 90.22,
+    "score": 25
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "IBKR",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 90.22,
+    "score": 25
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "SPYL.L",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 18.23,
+    "score": 37
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "SPYL.L",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 18.23,
+    "score": 37
+  },
+  {
+    "date": "2026-06-26",
+    "ticker": "SPYL.L",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.23,
+    "score": 37
   }
 ]
