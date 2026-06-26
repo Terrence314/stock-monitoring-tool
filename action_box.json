@@ -1,5 +1,5 @@
 {
- "ts": "2026-06-26 07:22",
+ "ts": "2026-06-26 17:29",
  "buys": [
   {
    "ticker": "MRK",
@@ -8,7 +8,7 @@
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
    "stop": 115.41,
    "target": 140.5,
-   "expiry": "07-09"
+   "expiry": "07-10"
   },
   {
    "ticker": "WY",
@@ -17,7 +17,7 @@
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.19",
    "stop": 23.7,
    "target": 28.85,
-   "expiry": "07-09"
+   "expiry": "07-10"
   },
   {
    "ticker": "SOXX",
@@ -26,7 +26,7 @@
    "reason": "Score 78 · BB 0.76 · RSI 59",
    "stop": 575.18,
    "target": 700.22,
-   "expiry": "07-09"
+   "expiry": "07-10"
   }
  ],
  "sells": [
@@ -40,7 +40,7 @@
  "breaker_pct": -2.74,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 14,
+ "gate_day": 15,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,
