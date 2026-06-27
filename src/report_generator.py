@@ -891,12 +891,7 @@ body.beginner-mode .beginner-only { display: block; }
         </span>
       </div>
       {% endif %}
-      {% if action_box.breaker_trip %}
-      <div style="padding:10px 12px;border-radius:10px;background:rgba(90,92,110,0.15);border:1px solid rgba(90,92,110,0.3);margin-bottom:10px;text-align:center">
-        <span style="font-size:24px">🔒</span>
-        <div style="color:#8a8c98;font-size:12px;margin-top:6px">斷路器觸發期間暫停顯示訊號清單 — 紙上交易繼續在 paper account 執行</div>
-      </div>
-      {% elif action_box.no_action %}
+      {% if action_box.no_action %}
       <div style="padding:10px 12px;border-radius:10px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);margin-bottom:10px">
         <span style="color:var(--up);font-weight:600">✅ 今日無行動</span>
         <span style="color:var(--text-2);font-size:12px"> — 無股票合資格入場，持倉無賣出訊號。乜都唔做都係一個決定。</span>
