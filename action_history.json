@@ -1329,5 +1329,41 @@
   "removed": [
    "PSA"
   ]
+ },
+ {
+  "ts": "2026-06-27 21:24",
+  "buys": [
+   {
+    "ticker": "VLO",
+    "score": 92,
+    "price": 259.3699951171875
+   },
+   {
+    "ticker": "PSA",
+    "score": 90,
+    "price": 324.3900146484375
+   },
+   {
+    "ticker": "SOFI",
+    "score": 90,
+    "price": 17.8799991607666
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 27"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "PSA"
+  ],
+  "removed": [
+   "FLR"
+  ]
  }
 ]
