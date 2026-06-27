@@ -1365,5 +1365,41 @@
   "removed": [
    "FLR"
   ]
+ },
+ {
+  "ts": "2026-06-27 21:58",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "ARKK",
+    "why": "score 8"
+   },
+   {
+    "ticker": "SPG",
+    "why": "score 12"
+   },
+   {
+    "ticker": "LYFT",
+    "why": "score 22"
+   },
+   {
+    "ticker": "VOO",
+    "why": "score 8"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 8"
+   }
+  ],
+  "added": [
+   "ARKK",
+   "LYFT",
+   "SPG"
+  ],
+  "removed": [
+   "PSA",
+   "SOFI",
+   "VLO"
+  ]
  }
 ]
