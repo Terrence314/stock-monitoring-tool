@@ -1,35 +1,31 @@
 {
- "ts": "2026-06-27 22:30",
- "buys": [
+ "ts": "2026-06-27 22:37",
+ "buys": [],
+ "sells": [
   {
-   "ticker": "VLO",
-   "price": 259.3699951171875,
-   "score": 92,
-   "reason": "Score 92 · BB 0.76 · RSI 58",
-   "stop": 238.62,
-   "target": 290.49,
-   "expiry": "07-10"
+   "ticker": "ARKK",
+   "float_pct": -2.6,
+   "why": "score 3"
   },
   {
-   "ticker": "FLR",
-   "price": 53.63999938964844,
-   "score": 84,
-   "reason": "Score 84 · BB 0.80 · RSI 62",
-   "stop": 49.35,
-   "target": 60.08,
-   "expiry": "07-10"
-  }
- ],
- "sells": [
+   "ticker": "SPG",
+   "float_pct": 7.4,
+   "why": "score 12"
+  },
+  {
+   "ticker": "LYFT",
+   "float_pct": -0.1,
+   "why": "score 22"
+  },
   {
    "ticker": "VOO",
    "float_pct": -2.6,
-   "why": "score 27"
+   "why": "score 3"
   },
   {
    "ticker": "QQQ",
    "float_pct": -4.6,
-   "why": "score 17"
+   "why": "score 3"
   }
  ],
  "no_action": false,

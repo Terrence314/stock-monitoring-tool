@@ -1511,5 +1511,40 @@
    "LYFT",
    "SPG"
   ]
+ },
+ {
+  "ts": "2026-06-27 22:37",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "ARKK",
+    "why": "score 3"
+   },
+   {
+    "ticker": "SPG",
+    "why": "score 12"
+   },
+   {
+    "ticker": "LYFT",
+    "why": "score 22"
+   },
+   {
+    "ticker": "VOO",
+    "why": "score 3"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 3"
+   }
+  ],
+  "added": [
+   "ARKK",
+   "LYFT",
+   "SPG"
+  ],
+  "removed": [
+   "FLR",
+   "VLO"
+  ]
  }
 ]
