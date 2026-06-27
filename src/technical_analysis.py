@@ -181,8 +181,8 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
             score += 0   # 0軸以下金叉 = 無效訊號
             signals.append("⚠️ MACD 金叉（0軸以下，訊號無效）— 等待突破0軸確認")
     elif macd_h > prev_macd_h and macd_h < 0:
-        score += 8
-        signals.append("🟡 MACD 死叉收斂（底部跡象）")
+        score += 3  # convergence = slightly less bearish, not a buy signal
+        signals.append("🟡 MACD 死叉收斂（底部跡象，非買入訊號）")
     else:
         score += 0
         signals.append("❌ MACD 偏空")
@@ -201,9 +201,12 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
     elif vol_ratio >= 1.0:
         score += 10
         signals.append(f"🟡 量能正常（{vol_ratio:.1f}× 均量）")
-    else:
+    elif vol_ratio >= 0.5:
         score += 0
         signals.append(f"⚠️ 量能不足（{vol_ratio:.1f}× 均量）")
+    else:
+        score = max(score - 10, 0)  # extreme low volume = signal reliability penalty
+        signals.append(f"🔴 極度縮量（{vol_ratio:.1f}× 均量）— 訊號可信度低，慎追")
 
     # 5. Distance from MA60
     if pd.isna(m60) or m60 == 0:

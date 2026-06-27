@@ -864,6 +864,15 @@ body.beginner-mode .beginner-only { display: block; }
   <!-- ─── LEFT COLUMN ───────────────────────────────────────────── -->
   <div class="page-left">
 
+    {% if risk_off_regime %}
+    <div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);border-radius:10px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:18px">⚠️</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#f87171">Risk-Off 市場環境</div>
+        <div style="font-size:11px;color:#8a8c98;margin-top:2px">大市指數評分偏低 — 所有訊號可信度下降，建議減少新倉，以防守為主</div>
+      </div>
+    </div>
+    {% endif %}
     <!-- ── 今日行動 ACTION BOX ─────────────────────────────────── -->
     {% if action_box %}
     <section class="card" style="border:1px solid {{ '#f87171' if action_box.breaker_trip else 'rgba(122,162,255,0.35)' }};background:linear-gradient(180deg,rgba(122,162,255,0.05),transparent)">
@@ -882,7 +891,12 @@ body.beginner-mode .beginner-only { display: block; }
         </span>
       </div>
       {% endif %}
-      {% if action_box.no_action %}
+      {% if action_box.breaker_trip %}
+      <div style="padding:10px 12px;border-radius:10px;background:rgba(90,92,110,0.15);border:1px solid rgba(90,92,110,0.3);margin-bottom:10px;text-align:center">
+        <span style="font-size:24px">🔒</span>
+        <div style="color:#8a8c98;font-size:12px;margin-top:6px">斷路器觸發期間暫停顯示訊號清單 — 紙上交易繼續在 paper account 執行</div>
+      </div>
+      {% elif action_box.no_action %}
       <div style="padding:10px 12px;border-radius:10px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);margin-bottom:10px">
         <span style="color:var(--up);font-weight:600">✅ 今日無行動</span>
         <span style="color:var(--text-2);font-size:12px"> — 無股票合資格入場，持倉無賣出訊號。乜都唔做都係一個決定。</span>
@@ -3105,6 +3119,11 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         label = v.get("label", "")
         if s["ticker"] in held:
             continue
+        vol_ok = (s.get("vol_ratio") or 0) >= 1.0
+        # BB squeeze without volume expansion = false breakout risk
+        is_squeeze = "BREAKOUT" in label
+        if is_squeeze and not vol_ok:
+            continue  # require vol confirmation on squeeze breakouts
         if ("GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label) and s.get("score", 0) >= 70:
             px = s.get("price") or 0
             # Order ticket numbers — same rules the paper engine enforces
@@ -3404,6 +3423,12 @@ def generate_dashboard(
     stocks_sorted = sorted(stock_results, key=lambda x: x["score"], reverse=True)
     brief_sections = _parse_brief(morning_brief)
 
+    # Market regime flag: if top broad-market ETFs average score < 35, it's Risk-Off
+    _market_tickers = {"SPY", "QQQ", "IWM", "VTI"}
+    _market_stocks  = [s for s in stocks_sorted if s["ticker"] in _market_tickers]
+    _market_avg     = (sum(s["score"] for s in _market_stocks) / len(_market_stocks)) if _market_stocks else 50
+    risk_off_regime = _market_avg < 35
+
     # Sparklines
     if score_history:
         _build_sparklines(stocks_sorted, score_history)
@@ -3508,6 +3533,7 @@ def generate_dashboard(
         supabase_url=supabase_url,
         supabase_anon_key=supabase_anon_key,
         ibkr_account=ibkr_account or {},
+        risk_off_regime=risk_off_regime,
     )
 
     filename = f"report_{datetime.now().strftime('%Y%m%d')}.html"
