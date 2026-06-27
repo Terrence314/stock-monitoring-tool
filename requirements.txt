@@ -6,3 +6,5 @@ jinja2>=3.1.4
 python-dotenv>=1.0.1
 finnhub-python>=2.4.20
 ib_async>=2.0.1
+polygon-api-client>=1.14.0
+optuna>=3.6.0

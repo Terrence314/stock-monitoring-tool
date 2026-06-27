@@ -5,6 +5,11 @@ import json
 from datetime import datetime, timedelta
 
 try:
+    from polygon_fetcher import fetch_stock_data_polygon as _polygon_fetch
+except ImportError:
+    _polygon_fetch = None
+
+try:
     import finnhub as _finnhub_module
     _FINNHUB_AVAILABLE = True
 except ImportError:
@@ -24,6 +29,14 @@ MARKET_INDICES = {
 
 
 def fetch_stock_data(ticker: str, period: str = "6mo") -> dict | None:
+    # Try Polygon.io first (better quality), fall back to yfinance
+    if _polygon_fetch:
+        try:
+            result = _polygon_fetch(ticker, period)
+            if result:
+                return result
+        except Exception:
+            pass  # fall through to yfinance
     try:
         stock = yf.Ticker(ticker)
         hist = stock.history(period=period)
