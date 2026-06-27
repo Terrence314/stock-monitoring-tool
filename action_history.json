@@ -1477,5 +1477,39 @@
    "SOFI",
    "VLO"
   ]
+ },
+ {
+  "ts": "2026-06-27 22:30",
+  "buys": [
+   {
+    "ticker": "VLO",
+    "score": 92,
+    "price": 259.3699951171875
+   },
+   {
+    "ticker": "FLR",
+    "score": 84,
+    "price": 53.63999938964844
+   }
+  ],
+  "sells": [
+   {
+    "ticker": "VOO",
+    "why": "score 27"
+   },
+   {
+    "ticker": "QQQ",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "FLR",
+   "VLO"
+  ],
+  "removed": [
+   "ARKK",
+   "LYFT",
+   "SPG"
+  ]
  }
 ]
