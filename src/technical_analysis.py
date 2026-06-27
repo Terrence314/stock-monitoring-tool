@@ -205,8 +205,8 @@ def calculate_indicators(history: pd.DataFrame) -> dict:
         score += 0
         signals.append(f"⚠️ 量能不足（{vol_ratio:.1f}× 均量）")
     else:
-        score = max(score - 10, 0)  # extreme low volume = signal reliability penalty
-        signals.append(f"🔴 極度縮量（{vol_ratio:.1f}× 均量）— 訊號可信度低，慎追")
+        score += 0  # no extra penalty — low vol already scores 0, label is the warning
+        signals.append(f"⚠️ 極度縮量（{vol_ratio:.1f}× 均量）— 量能確認前慎追")
 
     # 5. Distance from MA60
     if pd.isna(m60) or m60 == 0:
