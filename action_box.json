@@ -1,26 +1,16 @@
 {
- "ts": "2026-06-30 00:28",
- "buys": [
-  {
-   "ticker": "SOFI",
-   "price": 17.905000686645508,
-   "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 58",
-   "stop": 16.47,
-   "target": 20.05,
-   "expiry": "07-13"
-  }
- ],
+ "ts": "2026-06-30 00:39",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -2.77,
+ "no_action": true,
+ "breaker_pct": -2.34,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 18,
  "gate_days": 60,
  "gate_winrate": 0.0,
  "gate_pf": 0.0,
- "gate_pnl": -1015.55,
- "gate_trades": 7,
+ "gate_pnl": -1063.55,
+ "gate_trades": 9,
  "gate_ready": false
 }
