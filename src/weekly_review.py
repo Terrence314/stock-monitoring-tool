@@ -17,6 +17,7 @@ PORTFOLIO_FILE   = os.path.join("outputs", "paper_portfolio.json")
 REVIEW_FILE      = os.path.join("outputs", "weekly_review.json")
 CONFIG_FILE      = os.path.join("config", "config.json")
 SECRETS_FILE     = os.path.join("config", "secrets.json")
+DAY_TRADING_FILE = os.path.join("outputs", "day_trading_portfolio.json")
 
 # Validation gate thresholds (must match active-projects.md go-live gate)
 GATE_WIN_RATE    = 50.0   # %
@@ -61,6 +62,20 @@ def _exit_breakdown(closed: list) -> dict:
         r = t.get("exit_reason") or "unknown"
         reasons[r] = reasons.get(r, 0) + 1
     return reasons
+
+
+def _orb_stats(trades: list) -> dict:
+    if not trades:
+        return {"n": 0, "win_rate": None, "avg_pnl_pct": None, "total_pnl_pct": None}
+    wins  = [t for t in trades if (t.get("pnl_pct") or 0) > 0]
+    total = len(trades)
+    avg   = round(sum(t.get("pnl_pct", 0) for t in trades) / total, 2) if total else 0
+    return {
+        "n":           total,
+        "win_rate":    round(len(wins) / total * 100, 1) if total else None,
+        "avg_pnl_pct": avg,
+        "total_pnl_pct": round(sum(t.get("pnl_pct", 0) for t in trades), 2),
+    }
 
 
 def _paper_start_date(trades: list) -> str | None:
@@ -125,8 +140,14 @@ def build_review() -> dict:
     projected = _project_day60(closed, days_elapsed)
     status    = _go_live_status(win_rate, pf, days_elapsed)
 
+    # ORB day trading stats
+    orb_portfolio = _load(DAY_TRADING_FILE, {})
+    orb_trades    = orb_portfolio.get("trades", [])
+    orb           = _orb_stats(orb_trades)
+
     return {
         "generated_at":    datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "orb":             orb,
         "paper_start":     start_date,
         "days_elapsed":    days_elapsed,
         "days_remaining":  max(0, 60 - days_elapsed),
@@ -169,6 +190,16 @@ def format_telegram(r: dict) -> str:
 
     pnl_str = f"+${pnl:.2f}" if pnl >= 0 else f"-${abs(pnl):.2f}"
 
+    orb = r.get("orb", {})
+    orb_line = ""
+    if orb.get("n", 0) > 0:
+        orb_wr = f"{orb['win_rate']:.1f}%" if orb["win_rate"] is not None else "n/a"
+        orb_line = (
+            f"\n\n<b>⚡ ORB Day Trading</b>\n"
+            f"  Trades: {orb['n']} · WR: {orb_wr} · Avg: {orb['avg_pnl_pct']:+.2f}%"
+        )
+
+
     return (
         f"📊 <b>Weekly Review — Day {day}/60</b>\n"
         f"({left} days to go-live gate)\n\n"
@@ -180,6 +211,7 @@ def format_telegram(r: dict) -> str:
         f"<b>Exit breakdown</b>\n{exit_lines}"
         f"{proj_line}\n\n"
         f"<b>Go-live status</b>: {status}"
+        f"{orb_line}"
     )
 
 

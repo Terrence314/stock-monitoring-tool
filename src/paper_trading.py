@@ -812,10 +812,20 @@ def run_paper_trading(
         s["ticker"]: ((s.get("entry_verdict") or {}).get("label", ""))
         for s in stock_results
     }
+    # Weekly trend proxy: EMA200. Price below EMA200 = long-term downtrend → skip.
+    ema200_map = {s["ticker"]: (s.get("ema200") or 0) for s in stock_results}
 
     def _entry_timing_ok(tkr: str) -> bool:
         label = verdict_map.get(tkr, "")
-        return "GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label
+        verdict_ok = "GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label
+        if not verdict_ok:
+            return False
+        # Weekly trend gate: skip longs where price is below EMA200
+        ep = price_map.get(tkr, 0)
+        ema200 = ema200_map.get(tkr, 0)
+        if ema200 and ep and ep < ema200:
+            return False
+        return True
 
     for ticker, score in today_scores.items():
         if ticker == "SPY":
