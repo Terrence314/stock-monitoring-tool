@@ -532,6 +532,10 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <span style="font-family:var(--mono);font-size:10px;color:var(--up);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);padding:2px 7px;border-radius:4px">✅ TP +{{ take_profit_pct }}%</span>
         {% elif r == 'stop_loss' %}
         <span style="font-family:var(--mono);font-size:10px;color:var(--down);background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);padding:2px 7px;border-radius:4px">🛑 SL -{{ stop_loss_pct }}%</span>
+        {% elif r == 'macd_below_zero' %}
+        <span style="font-family:var(--mono);font-size:10px;color:#f59e0b;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);padding:2px 7px;border-radius:4px">📉 MACD 穿0軸</span>
+        {% elif r == 'signal_deterioration' %}
+        <span style="font-family:var(--mono);font-size:10px;color:#f59e0b;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);padding:2px 7px;border-radius:4px">⚠️ 訊號轉弱</span>
         {% else %}
         <span style="font-family:var(--mono);font-size:10px;color:var(--text-2);background:var(--elevated);border:1px solid var(--border);padding:2px 7px;border-radius:4px">⏱ {{ hold_days }}d hold</span>
         {% endif %}
@@ -579,7 +583,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
   <strong style="color:var(--text)">How paper trading works:</strong><br>
   <span style="color:var(--up)">↑ LONG</span> — score ≥ {{ buy_threshold }}: simulates buying ${{ notional|int }} at that day's close. Profit when price rises over the next {{ hold_days }} trading days.<br>
   <span style="color:var(--down)">↓ SHORT</span> — score ≤ {{ sell_threshold }}: simulates shorting ${{ notional|int }} at that day's close. Profit when price falls over the next {{ hold_days }} trading days.<br>
-  Positions close when: <span style="color:var(--up)">Take Profit +{{ take_profit_pct }}%</span> reached · <span style="color:var(--down)">Stop Loss -{{ stop_loss_pct }}%</span> hit · or after <span style="color:var(--amber)">{{ hold_days }} trading days</span> (whichever comes first).<br>
+  Positions close when: <span style="color:var(--up)">Take Profit +{{ take_profit_pct }}%</span> reached · <span style="color:var(--down)">Stop Loss -{{ stop_loss_pct }}%</span> hit · <span style="color:#f59e0b">MACD 穿0軸 or 訊號分數<50</span> · or after <span style="color:var(--amber)">{{ hold_days }} trading days</span> (whichever comes first).<br>
   No real money, no commissions, no slippage. Purpose: test whether signals reliably predict moves before going live.
 </div>
 
@@ -885,6 +889,39 @@ def run_paper_trading(
             trade["pnl_pct"]     = round(pct, 2)
 
     # Re-filter open trades after TP/SL check
+    open_trades = [t for t in trades if t["status"] == "open"]
+
+    # ── 4b-signal. Exit on signal deterioration (MACD below 0 OR score < 50) ──
+    # These are earlier exits than the hold period — the signal that opened
+    # the position has materially reversed, so we close rather than waiting.
+    macd_map = {s["ticker"]: (s.get("macd") or 0) for s in stock_results}
+    for trade in list(open_trades):
+        if trade.get("direction", "long") != "long":
+            continue
+        ticker       = trade["ticker"]
+        today_score  = today_scores.get(ticker)
+        macd_val     = macd_map.get(ticker)
+        exit_reason  = None
+        if macd_val is not None and macd_val < 0:
+            exit_reason = "macd_below_zero"
+        elif today_score is not None and today_score < 50:
+            exit_reason = "signal_deterioration"
+        if not exit_reason:
+            continue
+        cp  = price_map.get(ticker) or trade.get("current_price") or trade["entry_price"]
+        ep  = trade["entry_price"]
+        pct = (cp - ep) / ep * 100
+        trade.update({
+            "status":      "closed",
+            "exit_date":   today_str,
+            "exit_price":  round(cp, 2),
+            "exit_reason": exit_reason,
+            "pnl":         round((cp - ep) * trade["shares"], 2),
+            "pnl_pct":     round(pct, 2),
+        })
+        print(f"  [paper_trading] {ticker} signal exit ({exit_reason}): {pct:+.1f}%")
+
+    # Re-filter after signal exits
     open_trades = [t for t in trades if t["status"] == "open"]
 
     # ── 4b. Identify positions ready to close by hold period ──────────────────
