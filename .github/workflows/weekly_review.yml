@@ -1,0 +1,56 @@
+name: Weekly Paper Trading Review
+
+on:
+  schedule:
+    # Sunday 01:00 UTC = Sunday 9:00 AM HKT
+    - cron: "0 1 * * 0"
+  workflow_dispatch:
+    # Manual trigger for testing
+
+# Only one review runs at a time
+concurrency:
+  group: weekly-review
+  cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt -q
+
+      - name: Fetch paper portfolio from GitHub Pages
+        run: |
+          BASE="https://terrence314.github.io/stock-monitoring-tool"
+          mkdir -p outputs
+          for FILE in paper_portfolio.json; do
+            URL="$BASE/$FILE"
+            if curl -sf "$URL" -o "outputs/$FILE"; then
+              echo "✅ $FILE loaded"
+            else
+              echo "⚠️ $FILE not found on gh-pages — using empty default"
+              echo '{"trades":[]}' > "outputs/$FILE"
+            fi
+          done
+
+      - name: Run weekly review
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          PYTHONPATH=src python3 src/weekly_review.py
