@@ -30,8 +30,8 @@ STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
 
 # ── Strategy settings ──────────────────────────────────────────────────────────
 LONG_ONLY            = True   # no short positions; model is a long trend-follower
-REGIME_FLOOR         = 50    # SPY score below this → no new longs (market too weak)
-REGIME_NORMAL        = 65    # SPY score below this → only high-conviction longs (≥80)
+REGIME_FLOOR         = 35    # SPY score below this → no new longs (extreme bear only)
+REGIME_NORMAL        = 50    # SPY score below this → only high-conviction longs (≥80)
 HIGH_CONVICTION_MIN  = 80    # minimum score for transitional-market entries
 
 

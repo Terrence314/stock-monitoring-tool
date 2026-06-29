@@ -22,6 +22,9 @@ SECRETS_FILE     = os.path.join("config", "secrets.json")
 GATE_WIN_RATE    = 50.0   # %
 GATE_PROFIT_FACTOR = 1.3
 
+# Strategy unified and restarted June 13 — ignore pre-reset trades for gate calc
+VALIDATION_START = "2026-06-13"
+
 
 def _load(path, default):
     try:
@@ -61,8 +64,7 @@ def _exit_breakdown(closed: list) -> dict:
 
 
 def _paper_start_date(trades: list) -> str | None:
-    valid = [t["signal_date"] for t in trades if t.get("signal_date")]
-    return min(valid) if valid else None
+    return VALIDATION_START  # strategy reset June 13; ignore pre-reset trades
 
 
 def _days_into_validation(start_str: str) -> int:
@@ -105,7 +107,8 @@ def build_review() -> dict:
     portfolio = _load(PORTFOLIO_FILE, {})
     all_trades = portfolio.get("trades", [])
     closed     = [t for t in all_trades if t.get("status") == "closed"
-                  and "force_close" not in (t.get("exit_reason") or "")]
+                  and "force_close" not in (t.get("exit_reason") or "")
+                  and (t.get("signal_date") or "") >= VALIDATION_START]
 
     start_date   = _paper_start_date(all_trades)
     days_elapsed = _days_into_validation(start_date) if start_date else 0
