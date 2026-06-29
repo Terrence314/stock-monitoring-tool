@@ -1,46 +1,17 @@
 {
- "ts": "2026-06-29 20:26",
+ "ts": "2026-06-30 00:28",
  "buys": [
   {
-   "ticker": "VLO",
-   "price": 259.3699951171875,
-   "score": 92,
-   "reason": "Score 92 · BB 0.76 · RSI 58",
-   "stop": 238.62,
-   "target": 290.49,
-   "expiry": "07-13"
-  },
-  {
-   "ticker": "PSA",
-   "price": 324.3900146484375,
-   "score": 90,
-   "reason": "Score 90 · BB 0.77 · RSI 64",
-   "stop": 298.44,
-   "target": 363.32,
-   "expiry": "07-13"
-  },
-  {
    "ticker": "SOFI",
-   "price": 17.8799991607666,
-   "score": 90,
-   "reason": "Score 90 · BB 0.75 · RSI 58",
-   "stop": 16.45,
-   "target": 20.03,
+   "price": 17.905000686645508,
+   "score": 80,
+   "reason": "Score 80 · BB 0.77 · RSI 58",
+   "stop": 16.47,
+   "target": 20.05,
    "expiry": "07-13"
   }
  ],
- "sells": [
-  {
-   "ticker": "VOO",
-   "float_pct": -2.6,
-   "why": "score 27"
-  },
-  {
-   "ticker": "QQQ",
-   "float_pct": -4.6,
-   "why": "score 17"
-  }
- ],
+ "sells": [],
  "no_action": false,
  "breaker_pct": -2.77,
  "breaker_limit": -5.0,

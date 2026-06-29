@@ -1586,5 +1586,23 @@
    "LYFT",
    "SPG"
   ]
+ },
+ {
+  "ts": "2026-06-30 00:28",
+  "buys": [
+   {
+    "ticker": "SOFI",
+    "score": 80,
+    "price": 17.905000686645508
+   }
+  ],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "PSA",
+   "QQQ",
+   "VLO",
+   "VOO"
+  ]
  }
 ]
