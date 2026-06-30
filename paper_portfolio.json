@@ -390,14 +390,14 @@
       "shares": 89.073633,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 16.26,
-      "current_date": "2026-06-17",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-06-30",
+      "exit_price": 17.03,
+      "exit_reason": "hold_period",
+      "current_price": 17.03,
+      "current_date": "2026-06-30",
+      "pnl": 16.92,
+      "pnl_pct": 1.13,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -533,8 +533,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 15.25,
-      "current_date": "2026-06-29",
+      "current_price": 14.93,
+      "current_date": "2026-06-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -626,8 +626,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1125.08,
-      "current_date": "2026-06-26",
+      "current_price": 1128.93,
+      "current_date": "2026-06-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -704,7 +704,32 @@
         "MACD Bull",
         "Above MA60"
       ]
+    },
+    {
+      "id": "RH-2026-06-30",
+      "ticker": "RH",
+      "direction": "long",
+      "signal_date": "2026-06-30",
+      "entry_price": 165.62,
+      "shares": 9.056877,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 165.62,
+      "current_date": "2026-06-30",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60",
+        "BB Squeeze Breakout Up",
+        "BB Walking Up"
+      ]
     }
   ],
-  "last_updated": "2026-06-29"
+  "last_updated": "2026-06-30"
 }
