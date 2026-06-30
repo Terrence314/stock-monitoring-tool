@@ -1,19 +1,37 @@
 {
- "ts": "2026-07-01 03:57",
+ "ts": "2026-07-01 05:28",
  "buys": [
   {
+   "ticker": "PANW",
+   "price": 341.0199890136719,
+   "score": 75,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
+   "stop": 313.74,
+   "target": 381.94,
+   "expiry": "07-14"
+  },
+  {
+   "ticker": "AMD",
+   "price": 580.9099731445312,
+   "score": 73,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.01",
+   "stop": 534.44,
+   "target": 650.62,
+   "expiry": "07-14"
+  },
+  {
    "ticker": "AXON",
-   "price": 561.5499877929688,
+   "price": 560.6099853515625,
    "score": 70,
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.18",
-   "stop": 516.63,
-   "target": 628.94,
+   "stop": 515.76,
+   "target": 627.88,
    "expiry": "07-14"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": 1.9,
+ "breaker_pct": 1.83,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 19,
