@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-01 01:53",
- "buys": [],
+ "ts": "2026-07-01 03:57",
+ "buys": [
+  {
+   "ticker": "AXON",
+   "price": 561.5499877929688,
+   "score": 70,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.18",
+   "stop": 516.63,
+   "target": 628.94,
+   "expiry": "07-14"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": 1.87,
+ "no_action": false,
+ "breaker_pct": 1.9,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 19,
