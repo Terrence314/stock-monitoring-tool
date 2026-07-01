@@ -1,32 +1,23 @@
 {
- "ts": "2026-07-01 07:12",
+ "ts": "2026-07-01 23:24",
  "buys": [
   {
-   "ticker": "PANW",
-   "price": 341.0199890136719,
-   "score": 75,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
-   "stop": 313.74,
-   "target": 381.94,
-   "expiry": "07-14"
+   "ticker": "AXP",
+   "price": 345.260009765625,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 68",
+   "stop": 317.64,
+   "target": 386.69,
+   "expiry": "07-15"
   },
   {
-   "ticker": "AMD",
-   "price": 580.9099731445312,
-   "score": 73,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.01",
-   "stop": 534.44,
-   "target": 650.62,
-   "expiry": "07-14"
-  },
-  {
-   "ticker": "AXON",
-   "price": 560.6099853515625,
-   "score": 70,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.18",
-   "stop": 515.76,
-   "target": 627.88,
-   "expiry": "07-14"
+   "ticker": "MPC",
+   "price": 260.0299987792969,
+   "score": 80,
+   "reason": "Score 80 · BB 0.63 · RSI 56",
+   "stop": 239.23,
+   "target": 291.23,
+   "expiry": "07-15"
   }
  ],
  "sells": [],
@@ -34,7 +25,7 @@
  "breaker_pct": 1.8,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 19,
+ "gate_day": 20,
  "gate_days": 60,
  "gate_winrate": 10.0,
  "gate_pf": 0.02,
