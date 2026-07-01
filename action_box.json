@@ -1,22 +1,13 @@
 {
- "ts": "2026-07-01 23:24",
+ "ts": "2026-07-01 23:42",
  "buys": [
   {
-   "ticker": "AXP",
-   "price": 345.260009765625,
-   "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 68",
-   "stop": 317.64,
-   "target": 386.69,
-   "expiry": "07-15"
-  },
-  {
    "ticker": "MPC",
-   "price": 260.0299987792969,
+   "price": 260.32000732421875,
    "score": 80,
-   "reason": "Score 80 · BB 0.63 · RSI 56",
-   "stop": 239.23,
-   "target": 291.23,
+   "reason": "Score 80 · BB 0.64 · RSI 56",
+   "stop": 239.49,
+   "target": 291.56,
    "expiry": "07-15"
   }
  ],
