@@ -1,19 +1,28 @@
 {
- "ts": "2026-07-02 01:55",
+ "ts": "2026-07-02 03:55",
  "buys": [
   {
    "ticker": "MPC",
-   "price": 260.82000732421875,
+   "price": 263.0899963378906,
    "score": 80,
-   "reason": "Score 80 · BB 0.65 · RSI 57",
-   "stop": 239.95,
-   "target": 292.12,
+   "reason": "Score 80 · BB 0.72 · RSI 58",
+   "stop": 242.04,
+   "target": 294.66,
+   "expiry": "07-15"
+  },
+  {
+   "ticker": "PINS",
+   "price": 21.885000228881836,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 58",
+   "stop": 20.13,
+   "target": 24.51,
    "expiry": "07-15"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": 3.08,
+ "breaker_pct": 3.35,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 20,
