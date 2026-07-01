@@ -1,28 +1,37 @@
 {
- "ts": "2026-07-02 03:55",
+ "ts": "2026-07-02 05:28",
  "buys": [
   {
    "ticker": "MPC",
-   "price": 263.0899963378906,
+   "price": 264.8699951171875,
    "score": 80,
-   "reason": "Score 80 · BB 0.72 · RSI 58",
-   "stop": 242.04,
-   "target": 294.66,
+   "reason": "Score 80 · BB 0.77 · RSI 60",
+   "stop": 243.68,
+   "target": 296.65,
    "expiry": "07-15"
   },
   {
    "ticker": "PINS",
-   "price": 21.885000228881836,
+   "price": 21.889999389648438,
    "score": 80,
    "reason": "Score 80 · BB 0.78 · RSI 58",
-   "stop": 20.13,
-   "target": 24.51,
+   "stop": 20.14,
+   "target": 24.52,
+   "expiry": "07-15"
+  },
+  {
+   "ticker": "JPM",
+   "price": 334.07000732421875,
+   "score": 80,
+   "reason": "Score 80 · BB 0.77 · RSI 63",
+   "stop": 307.34,
+   "target": 374.16,
    "expiry": "07-15"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": 3.35,
+ "breaker_pct": 3.3,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 20,
