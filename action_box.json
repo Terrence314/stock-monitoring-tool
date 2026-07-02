@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-03 03:24",
- "buys": [],
+ "ts": "2026-07-03 05:07",
+ "buys": [
+  {
+   "ticker": "PINS",
+   "price": 22.06999969482422,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 59",
+   "stop": 20.3,
+   "target": 24.72,
+   "expiry": "07-16"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": 2.29,
+ "no_action": false,
+ "breaker_pct": 2.71,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 21,
