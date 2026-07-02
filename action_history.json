@@ -1741,26 +1741,14 @@
   "removed": []
  },
  {
-  "ts": "2026-07-02 22:44",
-  "buys": [
-   {
-    "ticker": "PINS",
-    "score": 80,
-    "price": 22.020000457763672
-   },
-   {
-    "ticker": "TWLO",
-    "score": 80,
-    "price": 209.35000610351562
-   }
-  ],
+  "ts": "2026-07-02 23:15",
+  "buys": [],
   "sells": [],
-  "added": [
-   "TWLO"
-  ],
+  "added": [],
   "removed": [
    "JPM",
-   "MPC"
+   "MPC",
+   "PINS"
   ]
  }
 ]
