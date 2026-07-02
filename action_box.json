@@ -1,32 +1,23 @@
 {
- "ts": "2026-07-02 07:16",
+ "ts": "2026-07-02 22:44",
  "buys": [
   {
-   "ticker": "MPC",
-   "price": 264.8699951171875,
-   "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 60",
-   "stop": 243.68,
-   "target": 296.65,
-   "expiry": "07-15"
-  },
-  {
    "ticker": "PINS",
-   "price": 21.889999389648438,
+   "price": 22.020000457763672,
    "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 58",
-   "stop": 20.14,
-   "target": 24.52,
-   "expiry": "07-15"
+   "reason": "Score 80 · BB 0.79 · RSI 59",
+   "stop": 20.26,
+   "target": 24.66,
+   "expiry": "07-16"
   },
   {
-   "ticker": "JPM",
-   "price": 334.07000732421875,
+   "ticker": "TWLO",
+   "price": 209.35000610351562,
    "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 63",
-   "stop": 307.34,
-   "target": 374.16,
-   "expiry": "07-15"
+   "reason": "Score 80 · BB 0.64 · RSI 61",
+   "stop": 192.6,
+   "target": 234.47,
+   "expiry": "07-16"
   }
  ],
  "sells": [],
@@ -34,7 +25,7 @@
  "breaker_pct": 3.13,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 20,
+ "gate_day": 21,
  "gate_days": 60,
  "gate_winrate": 10.0,
  "gate_pf": 0.02,
