@@ -1,5 +1,5 @@
 {
- "ts": "2026-07-03 07:07",
+ "ts": "2026-07-03 22:48",
  "buys": [
   {
    "ticker": "PINS",
@@ -8,15 +8,24 @@
    "reason": "Score 80 · BB 0.80 · RSI 59",
    "stop": 20.3,
    "target": 24.72,
-   "expiry": "07-16"
+   "expiry": "07-17"
+  },
+  {
+   "ticker": "TWLO",
+   "price": 209.30999755859375,
+   "score": 80,
+   "reason": "Score 80 · BB 0.64 · RSI 61",
+   "stop": 192.57,
+   "target": 234.43,
+   "expiry": "07-17"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": 2.71,
+ "breaker_pct": 3.36,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 21,
+ "gate_day": 22,
  "gate_days": 60,
  "gate_winrate": 10.0,
  "gate_pf": 0.02,
