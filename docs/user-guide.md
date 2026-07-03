@@ -1,5 +1,5 @@
 # 📘 Stock Monitoring Tool — Complete User Guide
-> Version 2026-06-12 · for Terrence · everything in one document
+> Version 2026-07-04 (stop/target text corrected to −8%/+12% to match code) · for Terrence · everything in one document
 
 ---
 
@@ -29,7 +29,7 @@ your hands move it.**
 
 1. Open **https://terrence314.github.io/stock-monitoring-tool/**
 2. Read the **⚡ 今日行動 Action Box** at the top:
-   - 🟢 **BUY XXX — $1,000 · 止損−5% · 持有≤10日** → agree? Place the paper trade in IBKR. Disagree? Skip.
+   - 🟢 **BUY XXX — $1,000 · 止損−8% · 目標+12% · 持有≤10日** → agree? Place the paper trade in IBKR. Disagree? Skip.
    - 🔴 **SELL XXX — 持倉轉弱** → consider closing that position
    - ✅ **今日無行動** → close the page. Done.
 3. Check the two status lines under the actions:
@@ -131,7 +131,7 @@ Alert hygiene: 4-hour cooldown per ticker per rule — you get ONE ping per even
 
 ### How the simulator works
 - Opens $1,000 virtual positions on score ≥70 (long only, no shorts)
-- Auto-closes: +8% take profit / −5% stop loss / 10 trading days max hold
+- Auto-closes: +12% take profit / −8% stop loss / 10 trading days max hold (same rules as the order tickets)
 - SPY regime gate: bear market (SPY score <40) = no new buys
 - Track record on the paper trading page (linked from dashboard)
 
@@ -146,7 +146,7 @@ Progress shows in the Action Box daily. The decision makes itself from data.
 
 ### When gate opens — the plan
 - Start under HK$50k, ~HK$8k per position
-- Same rules as paper: −5% stop, ≤10 day hold, max 5-6 concurrent positions
+- Same rules as paper: −8% stop / +12% target, ≤10 day hold, max 5-6 concurrent positions
 - −5% monthly circuit breaker stays — tool shows 🛑 STOP TRADING, you stop
 
 ---

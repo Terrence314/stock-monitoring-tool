@@ -9,3 +9,5 @@ __pycache__/
 # Real financial data — never commit to public repo
 data/portfolio_transactions.json
 config/secrets.json
+outputs/portfolio.html
+outputs/ibkr_positions.json

@@ -334,6 +334,24 @@ def build_html(positions, account, sig_map, synced_at, analysis_date, market=Non
     except Exception:
         sync_label = synced_at
         sync_color = "#8a8c98"
+        sync_hrs   = None
+
+    # Prominent banner when IBKR data is over a day old (or age unknown)
+    sync_days = (sync_hrs // 24) if sync_hrs is not None else None
+    if sync_days is None or sync_days >= 1:
+        age_txt = f"{sync_days} 天前" if sync_days is not None else "未知"
+        stale_banner += f'''
+    <div style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.35);
+      border-radius:10px;padding:12px 16px;margin-bottom:16px;
+      display:flex;align-items:center;gap:10px">
+      <span style="font-size:18px">🛑</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#f87171">IBKR 數據過舊 — 上次同步：{synced_at}（{age_txt}）</div>
+        <div style="font-size:11px;color:#8a8c98;margin-top:2px">
+          金額與持倉非即時。開啟 IB Gateway 後執行：<code style="color:#e7e8ec">python3 src/ibkr_sync.py</code>
+        </div>
+      </div>
+    </div>'''
 
     gen_label = generated_at or datetime.now().strftime("%H:%M:%S")
 
