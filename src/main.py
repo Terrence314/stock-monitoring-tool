@@ -8,6 +8,7 @@ from technical_analysis import calculate_indicators
 from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_stock_deep_dive, run_news_sentiment, run_hk_morning_brief
 from report_generator import generate_dashboard
 from notifier import send_telegram, send_health_alert, format_daily_message, format_ibkr_pnl_alert
+from signal_validator import validate_signals
 from backtest import run_backtest
 from paper_trading import run_paper_trading
 from pattern_engine import run_pattern_scan, format_pattern_alert, get_todays_new_events
@@ -422,6 +423,19 @@ def _run(cfg: dict) -> None:
     report_url = os.getenv("REPORT_URL", "")
     # Same Action Box the dashboard just rendered — one source of truth
     _ab = load_json_file(os.path.join("outputs", "action_box.json"), None)
+
+    # ── Loop 2: Pre-Telegram signal validator ─────────────────────────────────
+    if _ab:
+        _ab, _blocked = validate_signals(_ab, stock_results)
+        if _blocked:
+            blocked_summary = ", ".join(
+                f"{b['ticker']} ({b['reason']})" for b in _blocked
+            )
+            print(f"      [validator] ❌ Blocked: {blocked_summary}")
+        passed = _ab.get("validator", {}).get("passed", 0)
+        print(f"      [validator] ✅ {passed} BUY(s) passed validation")
+    # ─────────────────────────────────────────────────────────────────────────
+
     message = format_daily_message(today, morning_brief, stock_results, report_url,
                                    action_box=_ab)
     ok = send_telegram(cfg["telegram"]["bot_token"], cfg["telegram"]["chat_id"], message)
