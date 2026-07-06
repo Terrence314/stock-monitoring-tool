@@ -1,12 +1,22 @@
 {
- "ts": "2026-07-04 22:06",
- "buys": [],
+ "ts": "2026-07-07 00:04",
+ "buys": [
+  {
+   "ticker": "APP",
+   "price": 543.22998046875,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 57",
+   "stop": 499.77,
+   "target": 608.42,
+   "expiry": "07-20"
+  }
+ ],
  "sells": [],
- "no_action": true,
+ "no_action": false,
  "breaker_pct": 1.93,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 23,
+ "gate_day": 25,
  "gate_days": 60,
  "gate_winrate": 8.3,
  "gate_pf": 0.02,
