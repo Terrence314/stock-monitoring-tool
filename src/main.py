@@ -425,15 +425,22 @@ def _run(cfg: dict) -> None:
     _ab = load_json_file(os.path.join("outputs", "action_box.json"), None)
 
     # ── Loop 2: Pre-Telegram signal validator ─────────────────────────────────
+    # Validator failure must degrade gracefully, never kill the daily Telegram:
+    # an unhandled exception here previously aborted _run before send_telegram,
+    # losing the whole day's message (SELLs and report included).
     if _ab:
-        _ab, _blocked = validate_signals(_ab, stock_results)
-        if _blocked:
-            blocked_summary = ", ".join(
-                f"{b['ticker']} ({b['reason']})" for b in _blocked
-            )
-            print(f"      [validator] ❌ Blocked: {blocked_summary}")
-        passed = _ab.get("validator", {}).get("passed", 0)
-        print(f"      [validator] ✅ {passed} BUY(s) passed validation")
+        try:
+            _ab, _blocked = validate_signals(_ab, stock_results)
+            if _blocked:
+                blocked_summary = ", ".join(
+                    f"{b['ticker']} ({b['reason']})" for b in _blocked
+                )
+                print(f"      [validator] ❌ Blocked: {blocked_summary}")
+            passed = _ab.get("validator", {}).get("passed", 0)
+            print(f"      [validator] ✅ {passed} BUY(s) passed validation")
+        except Exception as e:
+            print(f"      [validator] ⚠️ 驗證器異常，本日 BUY 未經驗證照發：{type(e).__name__}: {e}")
+            _ab = {**_ab, "validator": {"error": f"{type(e).__name__}: {e}"}}
     # ─────────────────────────────────────────────────────────────────────────
 
     message = format_daily_message(today, morning_brief, stock_results, report_url,

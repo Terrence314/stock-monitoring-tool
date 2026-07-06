@@ -68,8 +68,10 @@ def _load_open_tickers(portfolio_path: str = PORTFOLIO_FILE) -> set:
     try:
         with open(portfolio_path, encoding="utf-8") as f:
             trades = json.load(f).get("trades", [])
-        return {t["ticker"] for t in trades if t.get("status") == "open"}
-    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        # t.get(): one malformed row must not raise and wipe the guard for all tickers
+        return {t.get("ticker") for t in trades
+                if t.get("status") == "open" and t.get("ticker")}
+    except (FileNotFoundError, json.JSONDecodeError, AttributeError):
         return set()
 
 
@@ -103,14 +105,31 @@ def _get_earnings_date(ticker: str) -> date | None:
     return None
 
 
+def _trading_day_delta(today: date, target: date) -> int:
+    """Signed count of weekdays (Mon-Fri) from today to target.
+    Positive = target in the future. US market holidays not modeled —
+    a holiday counts as a trading day, which errs on the blocking side."""
+    if target == today:
+        return 0
+    step = 1 if target > today else -1
+    d, n = today, 0
+    while d != target:
+        d += timedelta(days=step)
+        if d.weekday() < 5:
+            n += step
+    return n
+
+
 def _is_earnings_risk(ticker: str, today: date, window: int = EARNINGS_WINDOW) -> tuple[bool, str]:
     """Return (is_risky, reason_string)."""
     ed = _get_earnings_date(ticker)
     if ed is None:
         return False, ""
-    delta = (ed - today).days
+    # Trading-day distance, not calendar days: Friday earnings before a Monday
+    # run is 1 trading day away and must block (calendar delta of 3 missed it).
+    delta = _trading_day_delta(today, ed)
     if abs(delta) <= window:
-        direction = "today" if delta == 0 else (f"in {delta}d" if delta > 0 else f"{abs(delta)}d ago")
+        direction = "today" if delta == 0 else (f"in {delta} trading day(s)" if delta > 0 else f"{abs(delta)} trading day(s) ago")
         return True, f"earnings {direction} ({ed})"
     return False, ""
 
@@ -250,7 +269,10 @@ def _append_validator_log(date_str: str, passed: list, blocked: list, cautions: 
         # Keep last 60 entries
         log = log[-60:]
         os.makedirs(os.path.dirname(VALIDATOR_LOG) or ".", exist_ok=True)
-        with open(VALIDATOR_LOG, "w", encoding="utf-8") as f:
+        # Atomic write: tmp + os.replace so a crash mid-write can't truncate the log
+        tmp_path = VALIDATOR_LOG + ".tmp"
+        with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump(log, f, ensure_ascii=False, indent=2)
+        os.replace(tmp_path, VALIDATOR_LOG)
     except Exception as e:
         logger.warning(f"  [validator] log write failed: {e}")
