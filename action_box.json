@@ -1,13 +1,22 @@
 {
- "ts": "2026-07-07 00:04",
+ "ts": "2026-07-07 00:20",
  "buys": [
   {
    "ticker": "APP",
-   "price": 543.22998046875,
+   "price": 543.3800048828125,
    "score": 80,
    "reason": "Score 80 · BB 0.78 · RSI 57",
-   "stop": 499.77,
-   "target": 608.42,
+   "stop": 499.91,
+   "target": 608.59,
+   "expiry": "07-20"
+  },
+  {
+   "ticker": "JPM",
+   "price": 336.3599853515625,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 65",
+   "stop": 309.45,
+   "target": 376.72,
    "expiry": "07-20"
   }
  ],
