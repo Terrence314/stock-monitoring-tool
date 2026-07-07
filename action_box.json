@@ -1,16 +1,16 @@
 {
- "ts": "2026-07-07 23:31",
+ "ts": "2026-07-07 23:44",
  "buys": [],
  "sells": [],
  "no_action": true,
- "breaker_pct": 2.1,
+ "breaker_pct": -2.01,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 26,
  "gate_days": 60,
- "gate_winrate": 8.3,
- "gate_pf": 0.02,
- "gate_pnl": -1106.3,
- "gate_trades": 12,
+ "gate_winrate": 25.0,
+ "gate_pf": 0.17,
+ "gate_pnl": -1721.6,
+ "gate_trades": 20,
  "gate_ready": false
 }
