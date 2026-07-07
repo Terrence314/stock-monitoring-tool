@@ -1,19 +1,19 @@
 {
- "ts": "2026-07-08 03:56",
+ "ts": "2026-07-08 05:24",
  "buys": [
   {
    "ticker": "CIBR",
-   "price": 92.30000305175781,
+   "price": 92.20999908447266,
    "score": 70,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.96",
-   "stop": 84.92,
-   "target": 103.38,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 0.95",
+   "stop": 84.83,
+   "target": 103.28,
    "expiry": "07-21"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -1.88,
+ "breaker_pct": -2.09,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 26,
