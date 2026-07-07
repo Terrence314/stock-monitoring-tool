@@ -1,31 +1,12 @@
 {
- "ts": "2026-07-07 06:14",
- "buys": [
-  {
-   "ticker": "PATH",
-   "price": 11.829999923706055,
-   "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.02",
-   "stop": 10.88,
-   "target": 13.25,
-   "expiry": "07-20"
-  },
-  {
-   "ticker": "APP",
-   "price": 543.7899780273438,
-   "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 57",
-   "stop": 500.29,
-   "target": 609.04,
-   "expiry": "07-20"
-  }
- ],
+ "ts": "2026-07-07 23:31",
+ "buys": [],
  "sells": [],
- "no_action": false,
+ "no_action": true,
  "breaker_pct": 2.1,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 25,
+ "gate_day": 26,
  "gate_days": 60,
  "gate_winrate": 8.3,
  "gate_pf": 0.02,
