@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-09 03:25",
- "buys": [],
+ "ts": "2026-07-09 05:08",
+ "buys": [
+  {
+   "ticker": "NET",
+   "price": 273.3999938964844,
+   "score": 90,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.12",
+   "stop": 251.53,
+   "target": 306.21,
+   "expiry": "07-22"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -2.21,
+ "no_action": false,
+ "breaker_pct": -2.14,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 27,
