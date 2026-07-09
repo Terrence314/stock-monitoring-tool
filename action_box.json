@@ -1,9 +1,9 @@
 {
- "ts": "2026-07-10 01:55",
+ "ts": "2026-07-10 03:45",
  "buys": [
   {
    "ticker": "RIVN",
-   "price": 18.065000534057617,
+   "price": 18.059999465942383,
    "score": 90,
    "reason": "Score 90 · BB 0.79 · RSI 57",
    "stop": 16.62,
@@ -13,7 +13,7 @@
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -1.66,
+ "breaker_pct": -1.46,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 28,
