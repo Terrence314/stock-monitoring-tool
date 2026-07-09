@@ -1,19 +1,28 @@
 {
- "ts": "2026-07-10 03:45",
+ "ts": "2026-07-10 05:23",
  "buys": [
   {
    "ticker": "RIVN",
-   "price": 18.059999465942383,
-   "score": 90,
-   "reason": "Score 90 · BB 0.79 · RSI 57",
-   "stop": 16.62,
-   "target": 20.23,
+   "price": 18.1200008392334,
+   "score": 100,
+   "reason": "Score 100 · BB 0.80 · RSI 57",
+   "stop": 16.67,
+   "target": 20.29,
+   "expiry": "07-23"
+  },
+  {
+   "ticker": "VTI",
+   "price": 371.45001220703125,
+   "score": 82,
+   "reason": "Score 82 · BB 0.80 · RSI 58",
+   "stop": 341.73,
+   "target": 416.02,
    "expiry": "07-23"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -1.46,
+ "breaker_pct": -1.44,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 28,
