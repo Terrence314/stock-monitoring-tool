@@ -1,19 +1,28 @@
 {
- "ts": "2026-07-09 21:48",
+ "ts": "2026-07-09 23:45",
  "buys": [
   {
    "ticker": "MDB",
-   "price": 360.9399108886719,
+   "price": 361.1700134277344,
    "score": 80,
    "reason": "Score 80 · BB 0.76 · RSI 59",
-   "stop": 332.06,
-   "target": 404.25,
+   "stop": 332.28,
+   "target": 404.51,
+   "expiry": "07-23"
+  },
+  {
+   "ticker": "IBKR",
+   "price": 96.33999633789062,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 60",
+   "stop": 88.63,
+   "target": 107.9,
    "expiry": "07-23"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -2.01,
+ "breaker_pct": -2.13,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 28,
