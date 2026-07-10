@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-11 03:26",
- "buys": [],
+ "ts": "2026-07-11 05:06",
+ "buys": [
+  {
+   "ticker": "TXN",
+   "price": 311.4599914550781,
+   "score": 80,
+   "reason": "Score 80 · BB 0.67 · RSI 55",
+   "stop": 286.54,
+   "target": 348.84,
+   "expiry": "07-24"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -1.24,
+ "no_action": false,
+ "breaker_pct": -1.31,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 29,
