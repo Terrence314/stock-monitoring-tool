@@ -19949,5 +19949,311 @@
     "direction": "sell",
     "type": "end",
     "price": 96.34
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "U",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 31.06
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "DKNG",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 26.97
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "DXCM",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 74.53,
+    "score": 80
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "DXCM",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 74.53
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "HPQ",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 24.62
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "NTAP",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "end",
+    "price": 172.99
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "SHOP",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 124.63
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "TWLO",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 219.6,
+    "score": 80
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "UPS",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 112.83
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "EXPE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 271.74
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "KO",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 83.44
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "MTD",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 1286.95
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "NSC",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 326.96
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "SYK",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 330.22
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "ZBH",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 90.9
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "MDT",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 82.89
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "PGR",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 229.99
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "RACE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 377.14
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "AMD",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 546.9
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "ETSY",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 78.99
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "ETSY",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 78.99,
+    "score": 63
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "ETSY",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "end",
+    "price": 78.99
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "ETSY",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 78.99
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "IP",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 38.09
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "IP",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 38.09,
+    "score": 63
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "MS",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 222.5
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "MS",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 222.5,
+    "score": 63
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "JPM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 337.54
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "JPM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 337.54,
+    "score": 63
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "MPC",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 281.9,
+    "score": 60
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "NTNX",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 56.26
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "PSX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 189.29,
+    "score": 60
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "GLD",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "end",
+    "price": 376.14
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "IBKR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 94.49
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "IBKR",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 94.49,
+    "score": 32
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "SPYL.L",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.63,
+    "score": 72
+  },
+  {
+    "date": "2026-07-10",
+    "ticker": "SPYL.L",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 18.63
   }
 ]

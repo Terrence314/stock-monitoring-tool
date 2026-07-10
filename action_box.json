@@ -1,23 +1,32 @@
 {
- "ts": "2026-07-10 07:11",
+ "ts": "2026-07-10 23:16",
  "buys": [
   {
-   "ticker": "RIVN",
-   "price": 18.1200008392334,
-   "score": 100,
-   "reason": "Score 100 · BB 0.80 · RSI 57",
-   "stop": 16.67,
-   "target": 20.29,
-   "expiry": "07-23"
+   "ticker": "ABNB",
+   "price": 148.57000732421875,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 60",
+   "stop": 136.68,
+   "target": 166.4,
+   "expiry": "07-24"
   },
   {
-   "ticker": "VTI",
-   "price": 371.45001220703125,
-   "score": 82,
-   "reason": "Score 82 · BB 0.80 · RSI 58",
-   "stop": 341.73,
-   "target": 416.02,
-   "expiry": "07-23"
+   "ticker": "DKNG",
+   "price": 26.96500015258789,
+   "score": 80,
+   "reason": "Score 80 · BB 0.58 · RSI 55",
+   "stop": 24.81,
+   "target": 30.2,
+   "expiry": "07-24"
+  },
+  {
+   "ticker": "DXCM",
+   "price": 74.5250015258789,
+   "score": 80,
+   "reason": "Score 80 · BB 0.79 · RSI 59",
+   "stop": 68.56,
+   "target": 83.47,
+   "expiry": "07-24"
   }
  ],
  "sells": [],
@@ -25,7 +34,7 @@
  "breaker_pct": -1.38,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 28,
+ "gate_day": 29,
  "gate_days": 60,
  "gate_winrate": 25.0,
  "gate_pf": 0.17,
