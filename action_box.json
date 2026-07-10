@@ -1,44 +1,16 @@
 {
- "ts": "2026-07-10 23:16",
- "buys": [
-  {
-   "ticker": "ABNB",
-   "price": 148.57000732421875,
-   "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 60",
-   "stop": 136.68,
-   "target": 166.4,
-   "expiry": "07-24"
-  },
-  {
-   "ticker": "DKNG",
-   "price": 26.96500015258789,
-   "score": 80,
-   "reason": "Score 80 · BB 0.58 · RSI 55",
-   "stop": 24.81,
-   "target": 30.2,
-   "expiry": "07-24"
-  },
-  {
-   "ticker": "DXCM",
-   "price": 74.5250015258789,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 59",
-   "stop": 68.56,
-   "target": 83.47,
-   "expiry": "07-24"
-  }
- ],
+ "ts": "2026-07-10 23:32",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -1.38,
+ "no_action": true,
+ "breaker_pct": -1.04,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 29,
  "gate_days": 60,
- "gate_winrate": 25.0,
+ "gate_winrate": 23.8,
  "gate_pf": 0.17,
- "gate_pnl": -1721.6,
- "gate_trades": 20,
+ "gate_pnl": -1750.48,
+ "gate_trades": 21,
  "gate_ready": false
 }
