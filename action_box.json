@@ -1,6 +1,15 @@
 {
- "ts": "2026-07-11 06:59",
+ "ts": "2026-07-12 02:42",
  "buys": [
+  {
+   "ticker": "PNC",
+   "price": 251.91000366210938,
+   "score": 82,
+   "reason": "Score 82 · BB 0.79 · RSI 66",
+   "stop": 231.76,
+   "target": 282.14,
+   "expiry": "07-24"
+  },
   {
    "ticker": "TXN",
    "price": 311.4599914550781,
@@ -16,7 +25,7 @@
  "breaker_pct": -1.38,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 29,
+ "gate_day": 30,
  "gate_days": 60,
  "gate_winrate": 23.8,
  "gate_pf": 0.17,
