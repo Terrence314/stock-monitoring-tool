@@ -1,19 +1,9 @@
 {
- "ts": "2026-07-15 03:39",
- "buys": [
-  {
-   "ticker": "DDOG",
-   "price": 266.739990234375,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 65",
-   "stop": 245.4,
-   "target": 298.75,
-   "expiry": "07-28"
-  }
- ],
+ "ts": "2026-07-15 05:00",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -0.89,
+ "no_action": true,
+ "breaker_pct": -0.85,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 33,
