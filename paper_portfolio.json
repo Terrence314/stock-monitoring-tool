@@ -691,14 +691,14 @@
       "shares": 83.775478,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 18.78,
-      "current_date": "2026-07-11",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-07-14",
+      "exit_price": 18.62,
+      "exit_reason": "hold_period",
+      "current_price": 18.62,
+      "current_date": "2026-07-14",
+      "pnl": 59.9,
+      "pnl_pct": 3.99,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -718,8 +718,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 161.82,
-      "current_date": "2026-07-13",
+      "current_price": 165.49,
+      "current_date": "2026-07-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -816,8 +816,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 218.24,
-      "current_date": "2026-07-13",
+      "current_price": 219.57,
+      "current_date": "2026-07-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -839,8 +839,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 193.73,
-      "current_date": "2026-07-13",
+      "current_price": 192.15,
+      "current_date": "2026-07-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -886,8 +886,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 55.22,
-      "current_date": "2026-07-13",
+      "current_price": 55.79,
+      "current_date": "2026-07-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -911,8 +911,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 30.89,
-      "current_date": "2026-07-11",
+      "current_price": 31.42,
+      "current_date": "2026-07-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1038,7 +1038,32 @@
         "MACD Bull",
         "Above MA60"
       ]
+    },
+    {
+      "id": "D-2026-07-14",
+      "ticker": "D",
+      "direction": "long",
+      "signal_date": "2026-07-14",
+      "entry_price": 71.47,
+      "shares": 20.987827,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 71.47,
+      "current_date": "2026-07-14",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60",
+        "BB Squeeze Breakout Up",
+        "BB Walking Up"
+      ]
     }
   ],
-  "last_updated": "2026-07-13"
+  "last_updated": "2026-07-14"
 }
