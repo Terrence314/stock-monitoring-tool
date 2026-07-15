@@ -1,19 +1,28 @@
 {
- "ts": "2026-07-16 04:08",
+ "ts": "2026-07-16 06:00",
  "buys": [
   {
    "ticker": "TGT",
-   "price": 138.2550048828125,
+   "price": 138.2899932861328,
    "score": 80,
    "reason": "Score 80 · BB 0.80 · RSI 61",
-   "stop": 127.19,
-   "target": 154.85,
+   "stop": 127.23,
+   "target": 154.88,
+   "expiry": "07-29"
+  },
+  {
+   "ticker": "RBLX",
+   "price": 57.06999969482422,
+   "score": 80,
+   "reason": "Score 80 · BB 0.77 · RSI 62",
+   "stop": 52.5,
+   "target": 63.92,
    "expiry": "07-29"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -1.02,
+ "breaker_pct": -0.93,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 34,
