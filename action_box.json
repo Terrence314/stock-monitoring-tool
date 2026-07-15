@@ -1,28 +1,19 @@
 {
- "ts": "2026-07-15 22:25",
+ "ts": "2026-07-15 22:51",
  "buys": [
   {
-   "ticker": "ALGN",
-   "price": 183.3699951171875,
+   "ticker": "MTD",
+   "price": 1318.840087890625,
    "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 56",
-   "stop": 168.7,
-   "target": 205.37,
-   "expiry": "07-29"
-  },
-  {
-   "ticker": "RIVN",
-   "price": 18.389999389648438,
-   "score": 80,
-   "reason": "Score 80 · BB 0.78 · RSI 57",
-   "stop": 16.92,
-   "target": 20.6,
+   "reason": "Score 80 · BB 0.80 · RSI 66",
+   "stop": 1213.33,
+   "target": 1477.1,
    "expiry": "07-29"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -0.76,
+ "breaker_pct": -0.34,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 34,
