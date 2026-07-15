@@ -20856,5 +20856,221 @@
     "type": "start",
     "price": 356.19,
     "score": 20
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "ESTC",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 63.9,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "ESTC",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 63.9,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "JPM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 346.4,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "JPM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 346.4
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PINS",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 23.34
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PTON",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.34,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PTON",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 6.34,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "TGT",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 138.62
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "UPS",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 114.84,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PNC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 250.61
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PNC",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 250.61,
+    "score": 40
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "RBLX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 56.42
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "VEEV",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 198.88
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PANW",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 359.76,
+    "score": 70
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "PANW",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 359.76
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "HUBS",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 223.87,
+    "score": 65
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "HUBS",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 223.87,
+    "score": 65
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "HUBS",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 223.87,
+    "score": 65
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "HUBS",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 223.87,
+    "score": 65
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "VLO",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "start",
+    "price": 295.64,
+    "score": 60
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "GOOGL",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 365.1,
+    "score": 20
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "GOOGL",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 365.1
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "IBKR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 96.59,
+    "score": 80
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "IBKR",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 96.59
+  },
+  {
+    "date": "2026-07-15",
+    "ticker": "SPYL.L",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.72,
+    "score": 72
   }
 ]

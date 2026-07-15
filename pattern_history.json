@@ -120,7 +120,7 @@
   "GOOGL": {
     "Death Cross": {
       "start": "2026-07-14",
-      "end": null
+      "end": "2026-07-15"
     },
     "MACD Bear": {
       "start": "2026-05-29",
@@ -147,8 +147,8 @@
       "end": null
     },
     "Golden Cross": {
-      "start": "2026-07-06",
-      "end": "2026-07-14"
+      "start": "2026-07-15",
+      "end": null
     }
   },
   "PLTR": {
@@ -835,8 +835,8 @@
       "end": null
     },
     "BB Walking Up": {
-      "start": "2026-05-30",
-      "end": "2026-06-09"
+      "start": "2026-07-15",
+      "end": null
     },
     "MACD Bear": {
       "start": "2026-06-22",
@@ -950,7 +950,7 @@
     },
     "MACD Bull": {
       "start": "2026-05-30",
-      "end": null
+      "end": "2026-07-15"
     },
     "Above MA60": {
       "start": "2026-05-30",
@@ -963,6 +963,10 @@
     "Volume Breakdown": {
       "start": "2026-06-19",
       "end": "2026-06-22"
+    },
+    "MACD Bear": {
+      "start": "2026-07-15",
+      "end": null
     }
   },
   "RDDT": {
@@ -1193,12 +1197,16 @@
       "end": null
     },
     "BB Walking Up": {
-      "start": "2026-06-01",
-      "end": "2026-07-09"
+      "start": "2026-07-15",
+      "end": null
     },
     "RSI Overbought": {
       "start": "2026-06-02",
       "end": "2026-07-09"
+    },
+    "BB Squeeze Breakout Up": {
+      "start": "2026-07-15",
+      "end": null
     }
   },
   "F": {
@@ -1389,8 +1397,8 @@
       "end": null
     },
     "MACD Bull": {
-      "start": "2026-06-29",
-      "end": "2026-07-14"
+      "start": "2026-07-15",
+      "end": null
     },
     "Above MA60": {
       "start": "2026-05-30",
@@ -1406,7 +1414,7 @@
     },
     "MACD Bear": {
       "start": "2026-07-14",
-      "end": null
+      "end": "2026-07-15"
     },
     "BB Squeeze Breakout Up": {
       "start": "2026-06-30",
@@ -2432,7 +2440,7 @@
     },
     "BB Walking Up": {
       "start": "2026-07-07",
-      "end": null
+      "end": "2026-07-15"
     }
   },
   "PSX": {
@@ -2837,6 +2845,10 @@
     "Death Cross": {
       "start": "2026-06-26",
       "end": "2026-06-29"
+    },
+    "RSI Overbought": {
+      "start": "2026-07-15",
+      "end": null
     }
   },
   "CARR": {
@@ -3689,8 +3701,8 @@
       "end": null
     },
     "MACD Bull": {
-      "start": "2026-06-04",
-      "end": "2026-07-10"
+      "start": "2026-07-15",
+      "end": null
     },
     "Above MA60": {
       "start": "2026-06-04",
@@ -3702,7 +3714,7 @@
     },
     "MACD Bear": {
       "start": "2026-07-10",
-      "end": null
+      "end": "2026-07-15"
     }
   },
   "U": {
@@ -4500,7 +4512,7 @@
     },
     "BB Walking Up": {
       "start": "2026-06-25",
-      "end": null
+      "end": "2026-07-15"
     }
   },
   "AXON": {
@@ -5286,7 +5298,7 @@
     },
     "MACD Bear": {
       "start": "2026-07-10",
-      "end": null
+      "end": "2026-07-15"
     },
     "Above MA60": {
       "start": "2026-06-26",
@@ -5297,8 +5309,8 @@
       "end": "2026-07-07"
     },
     "MACD Bull": {
-      "start": "2026-07-09",
-      "end": "2026-07-10"
+      "start": "2026-07-15",
+      "end": null
     }
   },
   "SPYL.L": {
@@ -5320,6 +5332,10 @@
     },
     "MACD Bull": {
       "start": "2026-07-10",
+      "end": null
+    },
+    "BB Squeeze Breakout Up": {
+      "start": "2026-07-15",
       "end": null
     }
   },
@@ -5374,7 +5390,7 @@
     },
     "BB Walking Up": {
       "start": "2026-07-01",
-      "end": null
+      "end": "2026-07-15"
     }
   },
   "PH": {
@@ -5425,6 +5441,14 @@
     "MACD Bull": {
       "start": "2026-07-01",
       "end": null
+    },
+    "BB Squeeze Breakout Up": {
+      "start": "2026-07-15",
+      "end": null
+    },
+    "BB Walking Up": {
+      "start": "2026-07-15",
+      "end": null
     }
   },
   "VEEV": {
@@ -5442,7 +5466,7 @@
     },
     "BB Walking Up": {
       "start": "2026-07-02",
-      "end": null
+      "end": "2026-07-15"
     }
   },
   "EBAY": {
@@ -5854,6 +5878,24 @@
     },
     "Above MA60": {
       "start": "2026-07-14",
+      "end": null
+    }
+  },
+  "HUBS": {
+    "Golden Cross": {
+      "start": "2026-07-15",
+      "end": null
+    },
+    "MACD Bull": {
+      "start": "2026-07-15",
+      "end": null
+    },
+    "Above MA60": {
+      "start": "2026-07-15",
+      "end": null
+    },
+    "BB Walking Up": {
+      "start": "2026-07-15",
       "end": null
     }
   }
