@@ -1,5 +1,5 @@
 {
- "ts": "2026-07-16 06:00",
+ "ts": "2026-07-16 07:00",
  "buys": [
   {
    "ticker": "TGT",
@@ -20,9 +20,15 @@
    "expiry": "07-29"
   }
  ],
- "sells": [],
+ "sells": [
+  {
+   "ticker": "SPYL.L",
+   "float_pct": -0.2,
+   "why": "score 12"
+  }
+ ],
  "no_action": false,
- "breaker_pct": -0.93,
+ "breaker_pct": -0.92,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 34,
