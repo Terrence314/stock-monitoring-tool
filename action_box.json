@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-16 00:22",
- "buys": [],
+ "ts": "2026-07-16 02:08",
+ "buys": [
+  {
+   "ticker": "TGT",
+   "price": 137.80999755859375,
+   "score": 80,
+   "reason": "Score 80 · BB 0.78 · RSI 60",
+   "stop": 126.79,
+   "target": 154.35,
+   "expiry": "07-29"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -0.54,
+ "no_action": false,
+ "breaker_pct": -0.84,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 34,
