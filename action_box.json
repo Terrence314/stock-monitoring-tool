@@ -1,19 +1,9 @@
 {
- "ts": "2026-07-15 22:51",
- "buys": [
-  {
-   "ticker": "MTD",
-   "price": 1318.840087890625,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 66",
-   "stop": 1213.33,
-   "target": 1477.1,
-   "expiry": "07-29"
-  }
- ],
+ "ts": "2026-07-16 00:22",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -0.34,
+ "no_action": true,
+ "breaker_pct": -0.54,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 34,
