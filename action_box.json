@@ -1,28 +1,9 @@
 {
- "ts": "2026-07-17 02:08",
- "buys": [
-  {
-   "ticker": "UNH",
-   "price": 429.17999267578125,
-   "score": 83,
-   "reason": "Score 83 · BB 0.75 · RSI 59",
-   "stop": 394.85,
-   "target": 480.68,
-   "expiry": "07-30"
-  },
-  {
-   "ticker": "WELL",
-   "price": 239.30999755859375,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 66",
-   "stop": 220.17,
-   "target": 268.03,
-   "expiry": "07-30"
-  }
- ],
+ "ts": "2026-07-17 04:03",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -0.63,
+ "no_action": true,
+ "breaker_pct": -0.58,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 35,
