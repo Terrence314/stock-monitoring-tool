@@ -1,37 +1,40 @@
 {
- "ts": "2026-07-16 07:00",
+ "ts": "2026-07-16 22:38",
  "buys": [
   {
-   "ticker": "TGT",
-   "price": 138.2899932861328,
+   "ticker": "KO",
+   "price": 84.01000213623047,
    "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 61",
-   "stop": 127.23,
-   "target": 154.88,
-   "expiry": "07-29"
+   "reason": "Score 80 · BB 0.79 · RSI 58",
+   "stop": 77.29,
+   "target": 94.09,
+   "expiry": "07-30"
   },
   {
-   "ticker": "RBLX",
-   "price": 57.06999969482422,
+   "ticker": "MTD",
+   "price": 1330.7149658203125,
    "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 62",
-   "stop": 52.5,
-   "target": 63.92,
-   "expiry": "07-29"
-  }
- ],
- "sells": [
+   "reason": "Score 80 · BB 0.79 · RSI 68",
+   "stop": 1224.26,
+   "target": 1490.4,
+   "expiry": "07-30"
+  },
   {
-   "ticker": "SPYL.L",
-   "float_pct": -0.2,
-   "why": "score 12"
+   "ticker": "WELL",
+   "price": 238.61000061035156,
+   "score": 80,
+   "reason": "Score 80 · BB 0.79 · RSI 66",
+   "stop": 219.52,
+   "target": 267.24,
+   "expiry": "07-30"
   }
  ],
+ "sells": [],
  "no_action": false,
  "breaker_pct": -0.92,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 34,
+ "gate_day": 35,
  "gate_days": 60,
  "gate_winrate": 27.3,
  "gate_pf": 0.19,
