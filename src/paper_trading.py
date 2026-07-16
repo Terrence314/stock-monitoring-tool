@@ -16,6 +16,7 @@ GitHub Pages and restored via curl before each pipeline run.
 import os
 import json
 from datetime import datetime, timedelta, timezone
+import pandas as pd
 import yfinance as yf
 from jinja2 import Template
 
@@ -25,6 +26,7 @@ SELL_THRESHOLD   = 30       # kept for backtest compat — shorts disabled (LONG
 SIGNAL_THRESHOLD = BUY_THRESHOLD   # kept for backtest compat
 NOTIONAL         = 1000.0   # USD base notional per trade (scaled by conviction)
 HOLD_DAYS        = 10       # trading days before auto-close (fallback)
+MAX_PER_SECTOR   = 2        # max open longs per sector (2026-06-19: 4 semis opened together, all lost)
 TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% price move
 STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
 
@@ -125,6 +127,122 @@ def _get_exit_price(ticker: str, exit_date: str, series: dict) -> float | None:
         if d >= exit_date:
             return series[d]
     return None
+
+
+def _sector_cap_ok(ticker: str, sector_map: dict, trades: list) -> bool:
+    """True if opening a long in this ticker keeps its sector under MAX_PER_SECTOR.
+
+    Fail-open: tickers with no sector data ("Unknown"/missing) are never blocked.
+    Legacy trades without a stored 'sector' field fall back to sector_map.
+    """
+    sector = sector_map.get(ticker, "Unknown")
+    if not sector or sector == "Unknown":
+        return True
+    open_in_sector = sum(
+        1 for t in trades
+        if t.get("status") == "open"
+        and t.get("direction", "long") == "long"
+        and (t.get("sector") or sector_map.get(t.get("ticker"), "Unknown")) == sector
+    )
+    return open_in_sector < MAX_PER_SECTOR
+
+
+def _fetch_ohlc_bulk(tickers: list, start_date: str) -> dict:
+    """Bulk-fetch daily low/high/close for tickers from start_date to today.
+
+    Returns {ticker: {date_str: {"low": float, "high": float, "close": float}}}.
+    """
+    if not tickers:
+        return {}
+
+    def _to_str(ts) -> str:
+        return str(ts.date()) if hasattr(ts, "date") else str(ts)[:10]
+
+    raw = yf.download(
+        tickers, start=start_date,
+        auto_adjust=True, progress=False, threads=True,
+    )
+    result: dict = {}
+    # yfinance returns MultiIndex columns for list input (even a 1-element
+    # list on recent versions) — detect by column type, not ticker count.
+    is_multi = isinstance(raw.columns, pd.MultiIndex)
+    for t in tickers:
+        try:
+            if is_multi:
+                low, high, close = raw["Low"][t], raw["High"][t], raw["Close"][t]
+            else:
+                low, high, close = raw["Low"], raw["High"], raw["Close"]
+        except (KeyError, TypeError):
+            continue
+        bars = {}
+        for d in low.dropna().index:
+            ds = _to_str(d)
+            try:
+                bars[ds] = {
+                    "low":   float(low[d]),
+                    "high":  float(high[d]),
+                    "close": float(close[d]),
+                }
+            except (KeyError, TypeError, ValueError):
+                continue
+        if bars:
+            result[t] = bars
+    return result
+
+
+def _apply_ohlc_stops(open_trades: list, ohlc: dict, today_str: str) -> int:
+    """Enforce stop-loss/take-profit against daily lows/highs since entry.
+
+    Tickers that rotate out of the daily broad-scan watchlist stop appearing
+    in stock_results, so the price-based TP/SL checks never see them again —
+    losses ran to -19.7% (MRVL) and -22.1% (ON) past the -8% stop before the
+    hold-period close caught them. This walks each open long's daily bars
+    since entry and closes at the stop/target price on the first breach day.
+
+    Mutates trades in place. Returns the number of positions closed.
+    ponytail: long-only (engine is LONG_ONLY; legacy shorts keep old checks).
+    Entry-day bar is skipped — its low can predate the intraday entry.
+    """
+    closed = 0
+    for trade in open_trades:
+        if trade.get("direction", "long") != "long":
+            continue
+        bars = ohlc.get(trade["ticker"])
+        if not bars:
+            continue
+        ep = trade["entry_price"]
+        if not ep or ep <= 0:
+            continue
+        stop_price   = ep * (1 - STOP_LOSS_PCT / 100)
+        target_price = ep * (1 + TAKE_PROFIT_PCT / 100)
+        last_day = None
+        for day in sorted(bars.keys()):
+            if day <= trade["signal_date"] or day > today_str:
+                continue
+            bar = bars[day]
+            # Conservative ordering: assume the stop was hit before the target
+            if bar["low"] <= stop_price:
+                exit_price, reason = stop_price, "stop_loss"
+            elif bar["high"] >= target_price:
+                exit_price, reason = target_price, "take_profit"
+            else:
+                last_day = day
+                continue
+            trade.update({
+                "status":      "closed",
+                "exit_date":   day,
+                "exit_price":  round(exit_price, 2),
+                "exit_reason": reason,
+                "pnl":         round((exit_price - ep) * trade["shares"], 2),
+                "pnl_pct":     round((exit_price - ep) / ep * 100, 2),
+            })
+            closed += 1
+            break
+        else:
+            if last_day:
+                trade["current_price"] = round(bars[last_day]["close"], 2)
+                trade["current_date"]  = last_day
+    return closed
 
 
 # ── Stats helpers ──────────────────────────────────────────────────────────────
@@ -749,6 +867,10 @@ def run_paper_trading(
         for s in stock_results
         if s.get("price") and float(s["price"]) > 0
     }
+    sector_map = {
+        s["ticker"]: (s.get("sector") or "Unknown")
+        for s in stock_results
+    }
 
     # ── 1. Open new positions ──────────────────────────────────────────────────
     new_count = 0
@@ -764,6 +886,11 @@ def run_paper_trading(
         if direction == "long"  and ticker in open_long_tickers:
             return
         if direction == "short" and ticker in open_short_tickers:
+            return
+        # Sector concentration cap — max MAX_PER_SECTOR open longs per sector
+        if direction == "long" and not _sector_cap_ok(ticker, sector_map, trades):
+            print(f"  [paper_trading] {ticker} skipped — sector cap "
+                  f"({MAX_PER_SECTOR} open in {sector_map.get(ticker)})")
             return
         pos_notional = _notional_for_score(score)
         shares = round(pos_notional / entry_price, 6)
@@ -790,6 +917,7 @@ def run_paper_trading(
             "pnl":               None,
             "pnl_pct":           None,
             "patterns_triggered": patterns_triggered,
+            "sector":            sector_map.get(ticker, "Unknown"),
         })
         new_count += 1
 
@@ -870,6 +998,23 @@ def run_paper_trading(
         if cp and cp > 0:
             trade["current_price"] = round(cp, 2)
             trade["current_date"] = today_str
+
+    # ── 4a-pre. History-based TP/SL sweep (covers watchlist-rotation orphans) ──
+    # Open positions whose tickers left the daily watchlist get no live price
+    # above, so the checks below never fire for them. Walk daily bars since
+    # entry and close at the stop/target price on the first breach day.
+    try:
+        if open_trades:
+            earliest_open = min(t["signal_date"] for t in open_trades)
+            ohlc = _fetch_ohlc_bulk(
+                sorted({t["ticker"] for t in open_trades}), earliest_open
+            )
+            swept = _apply_ohlc_stops(open_trades, ohlc, today_str)
+            if swept:
+                print(f"  [paper_trading] history sweep closed {swept} position(s) at stop/target")
+            open_trades = [t for t in trades if t["status"] == "open"]
+    except Exception as sweep_err:
+        print(f"  [paper_trading] ⚠️ history TP/SL sweep skipped: {sweep_err}")
 
     # ── 4a. Check Take-Profit / Stop-Loss on open positions ───────────────────
     for trade in open_trades:

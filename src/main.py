@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from data_fetcher import fetch_stock_data, fetch_market_overview, fetch_finnhub_data, fetch_fear_greed, fetch_hk_indicators
 from technical_analysis import calculate_indicators
-from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_stock_deep_dive, run_news_sentiment, run_hk_morning_brief
+from ai_analysis import setup_gemini, run_morning_brief, run_stock_quick_view, run_stock_deep_dive, run_news_sentiment, run_hk_morning_brief, _call as ai_call_raw
 from report_generator import generate_dashboard
 from notifier import send_telegram, send_health_alert, format_daily_message, format_ibkr_pnl_alert
 from signal_validator import validate_signals
@@ -430,7 +430,10 @@ def _run(cfg: dict) -> None:
     # losing the whole day's message (SELLs and report included).
     if _ab:
         try:
-            _ab, _blocked = validate_signals(_ab, stock_results)
+            # Check 4 (AI bull/bear review) only when Gemini is available;
+            # validator fails safe internally if the API errors mid-run.
+            _ai = (lambda p: ai_call_raw(model, p)) if model else None
+            _ab, _blocked = validate_signals(_ab, stock_results, ai_call=_ai)
             if _blocked:
                 blocked_summary = ", ".join(
                     f"{b['ticker']} ({b['reason']})" for b in _blocked

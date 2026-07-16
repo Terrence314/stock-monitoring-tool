@@ -1,0 +1,176 @@
+"""Tests for history-based stop-loss/take-profit enforcement (fix 2026-07-17).
+
+Bug: positions whose tickers rotate out of the daily broad-scan watchlist
+never receive price updates, so their stops are never evaluated — MRVL
+closed -19.7% and ON -22.1% as hold_period exits on 2026-07-06 despite the
+-8% stop. The fix walks daily OHLC history since entry and closes at the
+stop/target price on the day it was first breached.
+
+Run: python3 tests/test_paper_trading_exits.py
+No pytest dependency — plain asserts, exits non-zero on failure.
+"""
+
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+
+from paper_trading import _apply_ohlc_stops, STOP_LOSS_PCT, TAKE_PROFIT_PCT
+
+
+def _trade(ticker="TEST", entry=100.0, signal_date="2026-07-01", direction="long"):
+    return {
+        "id": f"{ticker}-{signal_date}",
+        "ticker": ticker,
+        "direction": direction,
+        "signal_date": signal_date,
+        "entry_price": entry,
+        "shares": 10.0,
+        "status": "open",
+        "exit_date": None,
+        "exit_price": None,
+        "exit_reason": None,
+        "current_price": entry,
+        "current_date": signal_date,
+        "pnl": None,
+        "pnl_pct": None,
+    }
+
+
+def _bar(low, high, close):
+    return {"low": low, "high": high, "close": close}
+
+
+def test_stop_breach_closes_at_stop_price():
+    """Low breaches -8% stop → closed as stop_loss at the stop price, on breach day."""
+    t = _trade(entry=100.0)
+    stop_price = 100.0 * (1 - STOP_LOSS_PCT / 100)  # 92.0
+    ohlc = {"TEST": {
+        "2026-07-02": _bar(97.0, 101.0, 98.0),
+        "2026-07-03": _bar(90.0, 99.0, 95.0),   # breach day
+        "2026-07-06": _bar(80.0, 92.0, 81.0),   # would be -19% by hold-period close
+    }}
+    closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
+    assert closed == 1, f"expected 1 close, got {closed}"
+    assert t["status"] == "closed"
+    assert t["exit_reason"] == "stop_loss"
+    assert t["exit_date"] == "2026-07-03", f"exit on breach day, got {t['exit_date']}"
+    assert abs(t["exit_price"] - stop_price) < 1e-9, f"exit at stop price, got {t['exit_price']}"
+    assert abs(t["pnl_pct"] + STOP_LOSS_PCT) < 1e-6, f"pnl_pct must be -{STOP_LOSS_PCT}, got {t['pnl_pct']}"
+
+
+def test_no_breach_stays_open_and_updates_price():
+    """No stop/target breach → position stays open, current_price = latest close."""
+    t = _trade(entry=100.0)
+    ohlc = {"TEST": {
+        "2026-07-02": _bar(96.0, 104.0, 103.0),
+        "2026-07-03": _bar(99.0, 105.0, 101.5),
+    }}
+    closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
+    assert closed == 0
+    assert t["status"] == "open"
+    assert t["current_price"] == 101.5, f"orphan price must refresh, got {t['current_price']}"
+    assert t["current_date"] == "2026-07-03"
+
+
+def test_target_breach_closes_at_target_price():
+    """High breaches +12% target → closed as take_profit at target price."""
+    t = _trade(entry=100.0)
+    target = 100.0 * (1 + TAKE_PROFIT_PCT / 100)  # 112.0
+    ohlc = {"TEST": {
+        "2026-07-02": _bar(101.0, 113.5, 112.5),
+    }}
+    closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
+    assert closed == 1
+    assert t["exit_reason"] == "take_profit"
+    assert abs(t["exit_price"] - target) < 1e-9
+    assert abs(t["pnl_pct"] - TAKE_PROFIT_PCT) < 1e-6
+
+
+def test_same_day_stop_and_target_prefers_stop():
+    """Both stop and target hit in one bar → conservative: stop_loss wins."""
+    t = _trade(entry=100.0)
+    ohlc = {"TEST": {"2026-07-02": _bar(90.0, 115.0, 100.0)}}
+    _apply_ohlc_stops([t], ohlc, "2026-07-07")
+    assert t["exit_reason"] == "stop_loss", f"got {t['exit_reason']}"
+
+
+def test_entry_day_bar_ignored():
+    """Entry-day low predates the intraday entry — must not trigger the stop."""
+    t = _trade(entry=100.0, signal_date="2026-07-01")
+    ohlc = {"TEST": {
+        "2026-07-01": _bar(85.0, 102.0, 100.0),  # entry-day dip, before our entry
+        "2026-07-02": _bar(98.0, 103.0, 102.0),
+    }}
+    closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
+    assert closed == 0
+    assert t["status"] == "open"
+
+
+def test_missing_history_leaves_trade_untouched():
+    """Ticker absent from OHLC data → no crash, trade untouched."""
+    t = _trade(ticker="GONE", entry=100.0)
+    closed = _apply_ohlc_stops([t], {}, "2026-07-07")
+    assert closed == 0
+    assert t["status"] == "open"
+    assert t["current_price"] == 100.0
+
+
+def test_short_positions_skipped():
+    """Engine is LONG_ONLY; shorts (legacy) are left for existing logic."""
+    t = _trade(entry=100.0, direction="short")
+    ohlc = {"TEST": {"2026-07-02": _bar(80.0, 120.0, 100.0)}}
+    closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
+    assert closed == 0
+    assert t["status"] == "open"
+
+
+def test_fetch_ohlc_bulk_handles_multiindex_single_ticker():
+    """Review finding: 1-element ticker list still returns MultiIndex columns
+    on recent yfinance — must not silently return {} for a lone open position."""
+    import pandas as pd
+    import paper_trading as pt
+
+    idx = pd.to_datetime(["2026-07-02", "2026-07-03"])
+    cols = pd.MultiIndex.from_product([["Low", "High", "Close"], ["TEST"]])
+    df = pd.DataFrame(
+        [[95.0, 105.0, 100.0], [96.0, 106.0, 101.0]], index=idx, columns=cols
+    )
+    orig = pt.yf.download
+    pt.yf.download = lambda *a, **k: df
+    try:
+        out = pt._fetch_ohlc_bulk(["TEST"], "2026-07-01")
+    finally:
+        pt.yf.download = orig
+    assert "TEST" in out, f"MultiIndex single-ticker frame must parse, got {out}"
+    assert out["TEST"]["2026-07-02"] == {"low": 95.0, "high": 105.0, "close": 100.0}
+
+
+def test_fetch_ohlc_bulk_handles_flat_columns():
+    """Older yfinance single-ticker shape (flat columns) must also parse."""
+    import pandas as pd
+    import paper_trading as pt
+
+    idx = pd.to_datetime(["2026-07-02"])
+    df = pd.DataFrame({"Low": [95.0], "High": [105.0], "Close": [100.0]}, index=idx)
+    orig = pt.yf.download
+    pt.yf.download = lambda *a, **k: df
+    try:
+        out = pt._fetch_ohlc_bulk(["TEST"], "2026-07-01")
+    finally:
+        pt.yf.download = orig
+    assert out.get("TEST", {}).get("2026-07-02") == {"low": 95.0, "high": 105.0, "close": 100.0}
+
+
+if __name__ == "__main__":
+    fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
+    failed = 0
+    for fn in fns:
+        try:
+            fn()
+            print(f"  ✅ {fn.__name__}")
+        except AssertionError as e:
+            failed += 1
+            print(f"  ❌ {fn.__name__}: {e}")
+    print(f"\n{len(fns) - failed}/{len(fns)} passed")
+    sys.exit(1 if failed else 0)

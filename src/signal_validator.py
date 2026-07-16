@@ -30,6 +30,7 @@ Returns:
 import os
 import json
 import logging
+import re
 from datetime import date, datetime, timedelta
 
 import yfinance as yf
@@ -167,15 +168,68 @@ def _check_gate_conditions(buy: dict, stock_results: list) -> tuple[bool, str]:
     return True, ""
 
 
+# ── Check 4: AI bull/bear review + verdict ─────────────────────────────────────
+# Ported from the seb.ai trading workflow (Review + Verdict stages, 2026-07-17):
+# force the strongest case FOR and AGAINST the trade from today's data only,
+# then demand an explicit verdict instead of averaging the two sides.
+
+_VERDICT_RE = re.compile(r"VERDICT[:：]\s*(APPROVED|NEEDS[_ ]REVIEW|REJECTED)", re.IGNORECASE)
+
+
+def _build_review_prompt(buy: dict, stock: dict) -> str:
+    ta_bits = []
+    for key in ("rsi", "macd", "macd_hist", "vol_ratio", "ma5", "ma20", "ma60"):
+        if stock.get(key) is not None:
+            ta_bits.append(f"{key.upper()}: {stock[key]}")
+    signals = " | ".join(stock.get("signals", [])[:6]) or "無"
+    verdict_label = (stock.get("entry_verdict") or {}).get("label", "")
+    return f"""你是嚴格的交易審查員。以下 BUY 信號已通過機械檢查，發出前需要最後審查。
+只可使用以下數據，不得引入外部資訊，不得預測價格。
+
+股票: {buy.get('ticker')}  現價: {buy.get('price')}  信號分數: {stock.get('score')}/100
+入場 verdict: {verdict_label}
+計劃: 止損 {buy.get('stop')} / 目標 {buy.get('target')}
+技術指標: {' | '.join(ta_bits) or '無'}
+今日信號: {signals}
+
+請完成:
+1.【多頭理據】用數據建立最強的看多理由（2-3句）
+2.【空頭理據】用數據建立最強的看空理由（2-3句）——認真攻擊這個交易
+3.【關鍵未知】一句
+4. 最後單獨一行輸出裁決（不要平均兩邊；空頭理據夠強就 REJECTED）:
+VERDICT: APPROVED 或 VERDICT: NEEDS_REVIEW 或 VERDICT: REJECTED"""
+
+
+def _ai_review(buy: dict, stock: dict, ai_call) -> tuple[str, str]:
+    """Run the bull/bear review through ai_call(prompt) -> str.
+
+    Returns (verdict, summary). verdict is APPROVED / NEEDS_REVIEW / REJECTED,
+    or UNAVAILABLE when the call fails or the response has no parseable
+    verdict — callers must fail safe (alert fires, tagged unreviewed).
+    """
+    try:
+        raw = ai_call(_build_review_prompt(buy, stock))
+        match = _VERDICT_RE.search(raw or "")
+        if not match:
+            return "UNAVAILABLE", (raw or "")[:300]
+        verdict = match.group(1).upper().replace(" ", "_")
+        return verdict, raw[:300]
+    except Exception as e:
+        logger.warning(f"  [validator] AI review failed: {e}")
+        return "UNAVAILABLE", str(e)[:300]
+
+
 # ── Main validator ─────────────────────────────────────────────────────────────
 
 def validate_signals(
     action_box: dict,
     stock_results: list,
     portfolio_path: str = PORTFOLIO_FILE,
+    ai_call=None,
 ) -> tuple[dict, list]:
     """
-    Validate each BUY in action_box against 3 checks.
+    Validate each BUY in action_box against 3 mechanical checks, plus an
+    optional AI bull/bear review (Check 4) when ai_call is provided.
     Returns (updated_action_box, blocked_list).
     """
     today = date.today()
@@ -211,6 +265,24 @@ def validate_signals(
         if earn_risk:
             block_reasons.append(earn_reason)
 
+        # Check 4: AI bull/bear review — only on buys that pass checks 1-3
+        buy_cautions = list(caution_tags)
+        if not block_reasons and ai_call is not None:
+            stock = next((s for s in stock_results if s.get("ticker") == ticker), None)
+            if stock is None:
+                # No data to review against — don't feed the model blanks
+                verdict, summary = "UNAVAILABLE", "ticker missing from stock_results"
+            else:
+                verdict, summary = _ai_review(buy, stock, ai_call)
+            if verdict == "REJECTED":
+                block_reasons.append("AI review REJECTED")
+            elif verdict == "NEEDS_REVIEW":
+                buy_cautions.append("⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動")
+            elif verdict == "UNAVAILABLE":
+                buy_cautions.append("⚠️ AI review unavailable — 未經 AI 覆核")
+            if verdict != "UNAVAILABLE":
+                buy = {**buy, "ai_review": {"verdict": verdict, "summary": summary}}
+
         if block_reasons:
             reason_str = " | ".join(block_reasons)
             blocked.append({
@@ -221,9 +293,9 @@ def validate_signals(
             })
             logger.info(f"  [validator] ❌ BLOCKED {ticker}: {reason_str}")
         else:
-            # Pass — annotate with any global caution tags
-            if caution_tags:
-                buy = {**buy, "caution": " | ".join(caution_tags)}
+            # Pass — annotate with any global + per-buy caution tags
+            if buy_cautions:
+                buy = {**buy, "caution": " | ".join(buy_cautions)}
             validated_buys.append(buy)
             logger.info(f"  [validator] ✅ PASSED  {ticker}")
 
