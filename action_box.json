@@ -1,19 +1,28 @@
 {
- "ts": "2026-07-17 00:24",
+ "ts": "2026-07-17 02:08",
  "buys": [
   {
-   "ticker": "ZBH",
-   "price": 92.36000061035156,
+   "ticker": "UNH",
+   "price": 429.17999267578125,
+   "score": 83,
+   "reason": "Score 83 · BB 0.75 · RSI 59",
+   "stop": 394.85,
+   "target": 480.68,
+   "expiry": "07-30"
+  },
+  {
+   "ticker": "WELL",
+   "price": 239.30999755859375,
    "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 57",
-   "stop": 84.97,
-   "target": 103.44,
+   "reason": "Score 80 · BB 0.80 · RSI 66",
+   "stop": 220.17,
+   "target": 268.03,
    "expiry": "07-30"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -0.62,
+ "breaker_pct": -0.63,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 35,
