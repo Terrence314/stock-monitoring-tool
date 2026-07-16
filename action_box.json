@@ -1,36 +1,8 @@
 {
- "ts": "2026-07-16 22:38",
- "buys": [
-  {
-   "ticker": "KO",
-   "price": 84.01000213623047,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 58",
-   "stop": 77.29,
-   "target": 94.09,
-   "expiry": "07-30"
-  },
-  {
-   "ticker": "MTD",
-   "price": 1330.7149658203125,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 68",
-   "stop": 1224.26,
-   "target": 1490.4,
-   "expiry": "07-30"
-  },
-  {
-   "ticker": "WELL",
-   "price": 238.61000061035156,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 66",
-   "stop": 219.52,
-   "target": 267.24,
-   "expiry": "07-30"
-  }
- ],
+ "ts": "2026-07-16 23:02",
+ "buys": [],
  "sells": [],
- "no_action": false,
+ "no_action": true,
  "breaker_pct": -0.92,
  "breaker_limit": -5.0,
  "breaker_trip": false,
