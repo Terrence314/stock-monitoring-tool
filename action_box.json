@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-16 23:02",
- "buys": [],
+ "ts": "2026-07-17 00:24",
+ "buys": [
+  {
+   "ticker": "ZBH",
+   "price": 92.36000061035156,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 57",
+   "stop": 84.97,
+   "target": 103.44,
+   "expiry": "07-30"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -0.92,
+ "no_action": false,
+ "breaker_pct": -0.62,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 35,
