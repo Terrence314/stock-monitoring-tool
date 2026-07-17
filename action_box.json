@@ -1,23 +1,14 @@
 {
- "ts": "2026-07-17 06:57",
+ "ts": "2026-07-17 22:16",
  "buys": [
   {
-   "ticker": "ITW",
-   "price": 282.9700012207031,
-   "score": 70,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.17",
-   "stop": 260.33,
-   "target": 316.93,
-   "expiry": "07-30"
-  },
-  {
-   "ticker": "BAC",
-   "price": 61.4900016784668,
-   "score": 70,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.96",
-   "stop": 56.57,
-   "target": 68.87,
-   "expiry": "07-30"
+   "ticker": "GD",
+   "price": 373.9549865722656,
+   "score": 80,
+   "reason": "Score 80 · BB 0.73 · RSI 63",
+   "stop": 344.04,
+   "target": 418.83,
+   "expiry": "07-31"
   }
  ],
  "sells": [],
@@ -25,7 +16,7 @@
  "breaker_pct": -0.72,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 35,
+ "gate_day": 36,
  "gate_days": 60,
  "gate_winrate": 27.3,
  "gate_pf": 0.19,

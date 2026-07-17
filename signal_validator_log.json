@@ -1,13 +1,16 @@
 [
   {
-    "date": "2026-07-16",
-    "ran_at": "2026-07-16 14:38",
-    "passed": [
-      "KO",
-      "MTD",
-      "WELL"
+    "date": "2026-07-17",
+    "ran_at": "2026-07-17 14:16",
+    "passed": [],
+    "blocked": [
+      {
+        "ticker": "GD",
+        "reason": "AI review REJECTED"
+      }
     ],
-    "blocked": [],
-    "cautions": []
+    "cautions": [
+      "⚠️ Monthly options expiry — expect elevated vol"
+    ]
   }
 ]
