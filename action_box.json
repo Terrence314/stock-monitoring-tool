@@ -1,26 +1,26 @@
 {
- "ts": "2026-07-17 22:16",
+ "ts": "2026-07-17 22:44",
  "buys": [
   {
-   "ticker": "GD",
-   "price": 373.9549865722656,
+   "ticker": "AIG",
+   "price": 80.12999725341797,
    "score": 80,
-   "reason": "Score 80 · BB 0.73 · RSI 63",
-   "stop": 344.04,
-   "target": 418.83,
+   "reason": "Score 80 · BB 0.78 · RSI 60",
+   "stop": 73.72,
+   "target": 89.75,
    "expiry": "07-31"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -0.72,
+ "breaker_pct": -2.08,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 36,
  "gate_days": 60,
- "gate_winrate": 27.3,
- "gate_pf": 0.19,
- "gate_pnl": -1690.58,
- "gate_trades": 22,
+ "gate_winrate": 27.6,
+ "gate_pf": 0.27,
+ "gate_pnl": -1898.02,
+ "gate_trades": 29,
  "gate_ready": false
 }
