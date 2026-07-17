@@ -1,19 +1,19 @@
 {
- "ts": "2026-07-18 00:46",
+ "ts": "2026-07-18 02:06",
  "buys": [
   {
    "ticker": "AIG",
-   "price": 80.19000244140625,
+   "price": 79.9000015258789,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 60",
-   "stop": 73.77,
-   "target": 89.81,
+   "reason": "Score 80 · BB 0.76 · RSI 59",
+   "stop": 73.51,
+   "target": 89.49,
    "expiry": "07-31"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -2.15,
+ "breaker_pct": -2.16,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 36,
