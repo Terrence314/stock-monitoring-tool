@@ -1,9 +1,19 @@
 {
- "ts": "2026-07-21 03:52",
- "buys": [],
+ "ts": "2026-07-21 05:13",
+ "buys": [
+  {
+   "ticker": "GTLB",
+   "price": 34.06999969482422,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 63",
+   "stop": 31.34,
+   "target": 38.16,
+   "expiry": "08-03"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -1.82,
+ "no_action": false,
+ "breaker_pct": -1.87,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 39,
