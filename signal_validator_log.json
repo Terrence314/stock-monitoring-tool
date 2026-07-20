@@ -1,16 +1,16 @@
 [
   {
-    "date": "2026-07-17",
-    "ran_at": "2026-07-17 14:16",
-    "passed": [],
+    "date": "2026-07-20",
+    "ran_at": "2026-07-20 14:42",
+    "passed": [
+      "MDT"
+    ],
     "blocked": [
       {
-        "ticker": "GD",
+        "ticker": "NTES",
         "reason": "AI review REJECTED"
       }
     ],
-    "cautions": [
-      "⚠️ Monthly options expiry — expect elevated vol"
-    ]
+    "cautions": []
   }
 ]
