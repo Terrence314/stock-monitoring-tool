@@ -1,35 +1,16 @@
 {
- "ts": "2026-07-20 22:42",
- "buys": [
-  {
-   "ticker": "MDT",
-   "price": 83.33000183105469,
-   "score": 80,
-   "reason": "Score 80 · BB 0.74 · RSI 56",
-   "stop": 76.66,
-   "target": 93.33,
-   "expiry": "08-03"
-  },
-  {
-   "ticker": "NTES",
-   "price": 134.1199951171875,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 62",
-   "stop": 123.39,
-   "target": 150.21,
-   "expiry": "08-03"
-  }
- ],
+ "ts": "2026-07-20 23:12",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "breaker_pct": -2.15,
+ "no_action": true,
+ "breaker_pct": -1.89,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 39,
  "gate_days": 60,
- "gate_winrate": 27.6,
- "gate_pf": 0.27,
- "gate_pnl": -1898.02,
- "gate_trades": 29,
+ "gate_winrate": 28.1,
+ "gate_pf": 0.29,
+ "gate_pnl": -1875.66,
+ "gate_trades": 32,
  "gate_ready": false
 }
