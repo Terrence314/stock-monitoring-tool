@@ -1,14 +1,14 @@
 {
- "ts": "2026-07-22 06:57",
+ "ts": "2026-07-22 22:38",
  "buys": [
   {
-   "ticker": "SPOT",
-   "price": 493.2300109863281,
-   "score": 92,
-   "reason": "Score 92 · BB 0.80 · RSI 58",
-   "stop": 453.77,
-   "target": 552.42,
-   "expiry": "08-04"
+   "ticker": "GS",
+   "price": 1099.8299560546875,
+   "score": 80,
+   "reason": "Score 80 · BB 0.75 · RSI 57",
+   "stop": 1011.84,
+   "target": 1231.81,
+   "expiry": "08-05"
   }
  ],
  "sells": [],
@@ -16,7 +16,7 @@
  "breaker_pct": -2.06,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 40,
+ "gate_day": 41,
  "gate_days": 60,
  "gate_winrate": 28.1,
  "gate_pf": 0.29,
