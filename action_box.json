@@ -1,22 +1,12 @@
 {
- "ts": "2026-07-23 07:03",
- "buys": [
-  {
-   "ticker": "GS",
-   "price": 1098.199951171875,
-   "score": 80,
-   "reason": "Score 80 · BB 0.74 · RSI 56",
-   "stop": 1010.34,
-   "target": 1229.98,
-   "expiry": "08-05"
-  }
- ],
+ "ts": "2026-07-23 22:44",
+ "buys": [],
  "sells": [],
- "no_action": false,
+ "no_action": true,
  "breaker_pct": -2.74,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 41,
+ "gate_day": 42,
  "gate_days": 60,
  "gate_winrate": 26.5,
  "gate_pf": 0.27,
