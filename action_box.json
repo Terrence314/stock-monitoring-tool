@@ -1,16 +1,26 @@
 {
- "ts": "2026-07-24 22:25",
- "buys": [],
+ "ts": "2026-07-24 22:54",
+ "buys": [
+  {
+   "ticker": "VRSK",
+   "price": 198.0800018310547,
+   "score": 80,
+   "reason": "Score 80 · BB 0.77 · RSI 60",
+   "stop": 182.23,
+   "target": 221.85,
+   "expiry": "08-07"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -3.18,
+ "no_action": false,
+ "breaker_pct": -3.34,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 43,
  "gate_days": 60,
- "gate_winrate": 25.0,
- "gate_pf": 0.25,
- "gate_pnl": -2355.65,
- "gate_trades": 36,
+ "gate_winrate": 25.6,
+ "gate_pf": 0.24,
+ "gate_pnl": -2516.94,
+ "gate_trades": 39,
  "gate_ready": false
 }
