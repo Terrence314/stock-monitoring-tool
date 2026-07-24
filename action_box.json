@@ -1,13 +1,31 @@
 {
- "ts": "2026-07-24 22:54",
+ "ts": "2026-07-25 00:41",
  "buys": [
   {
-   "ticker": "VRSK",
-   "price": 198.0800018310547,
+   "ticker": "AAPL",
+   "price": 333.8900146484375,
    "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 60",
-   "stop": 182.23,
-   "target": 221.85,
+   "reason": "Score 80 · BB 0.80 · RSI 66",
+   "stop": 307.18,
+   "target": 373.96,
+   "expiry": "08-07"
+  },
+  {
+   "ticker": "MCK",
+   "price": 837.7349853515625,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 62",
+   "stop": 770.72,
+   "target": 938.26,
+   "expiry": "08-07"
+  },
+  {
+   "ticker": "VRSK",
+   "price": 199.00999450683594,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 61",
+   "stop": 183.09,
+   "target": 222.89,
    "expiry": "08-07"
   }
  ],
