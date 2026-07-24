@@ -1,22 +1,12 @@
 {
- "ts": "2026-07-24 06:11",
- "buys": [
-  {
-   "ticker": "JPM",
-   "price": 349.8999938964844,
-   "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.94",
-   "stop": 321.91,
-   "target": 391.89,
-   "expiry": "08-06"
-  }
- ],
+ "ts": "2026-07-24 22:25",
+ "buys": [],
  "sells": [],
- "no_action": false,
+ "no_action": true,
  "breaker_pct": -3.18,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 42,
+ "gate_day": 43,
  "gate_days": 60,
  "gate_winrate": 25.0,
  "gate_pf": 0.25,
