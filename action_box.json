@@ -1,22 +1,22 @@
 {
- "ts": "2026-07-25 02:18",
+ "ts": "2026-07-25 04:19",
  "buys": [
   {
    "ticker": "AAPL",
-   "price": 332.7065124511719,
+   "price": 333.0199890136719,
    "score": 80,
    "reason": "Score 80 · BB 0.79 · RSI 65",
-   "stop": 306.09,
-   "target": 372.63,
+   "stop": 306.38,
+   "target": 372.98,
    "expiry": "08-07"
   },
   {
-   "ticker": "MCK",
-   "price": 835.4099731445312,
+   "ticker": "IP",
+   "price": 42.15999984741211,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 61",
-   "stop": 768.58,
-   "target": 935.66,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.33",
+   "stop": 38.79,
+   "target": 47.22,
    "expiry": "08-07"
   }
  ],
