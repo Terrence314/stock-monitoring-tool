@@ -2668,5 +2668,23 @@
    "TGT"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-07-28 03:26",
+  "buys": [
+   {
+    "ticker": "HUBS",
+    "score": 80,
+    "price": 223.1300048828125
+   }
+  ],
+  "sells": [],
+  "added": [
+   "HUBS"
+  ],
+  "removed": [
+   "TGT",
+   "WM"
+  ]
  }
 ]
