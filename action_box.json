@@ -1,28 +1,28 @@
 {
- "ts": "2026-07-27 23:42",
+ "ts": "2026-07-28 01:42",
  "buys": [
   {
    "ticker": "TGT",
-   "price": 139.8249969482422,
+   "price": 139.8000030517578,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 59",
-   "stop": 128.64,
-   "target": 156.6,
+   "reason": "Score 80 · BB 0.78 · RSI 59",
+   "stop": 128.62,
+   "target": 156.58,
    "expiry": "08-10"
   },
   {
    "ticker": "WM",
-   "price": 239.8000030517578,
+   "price": 239.27999877929688,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 61",
-   "stop": 220.62,
-   "target": 268.58,
+   "reason": "Score 80 · BB 0.77 · RSI 61",
+   "stop": 220.14,
+   "target": 267.99,
    "expiry": "08-10"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -3.34,
+ "breaker_pct": -3.26,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 46,
