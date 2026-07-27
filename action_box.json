@@ -1,19 +1,19 @@
 {
- "ts": "2026-07-28 03:26",
+ "ts": "2026-07-28 05:10",
  "buys": [
   {
    "ticker": "HUBS",
-   "price": 223.1300048828125,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 57",
-   "stop": 205.28,
-   "target": 249.91,
+   "price": 223.00999450683594,
+   "score": 90,
+   "reason": "Score 90 · BB 0.79 · RSI 57",
+   "stop": 205.17,
+   "target": 249.77,
    "expiry": "08-10"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -3.27,
+ "breaker_pct": -3.29,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 46,
