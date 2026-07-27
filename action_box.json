@@ -1,23 +1,14 @@
 {
- "ts": "2026-07-25 06:04",
+ "ts": "2026-07-27 23:27",
  "buys": [
   {
-   "ticker": "AAPL",
-   "price": 333.0199890136719,
+   "ticker": "WM",
+   "price": 239.81500244140625,
    "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 65",
-   "stop": 306.38,
-   "target": 372.98,
-   "expiry": "08-07"
-  },
-  {
-   "ticker": "IP",
-   "price": 42.15999984741211,
-   "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.33",
-   "stop": 38.79,
-   "target": 47.22,
-   "expiry": "08-07"
+   "reason": "Score 80 · BB 0.77 · RSI 61",
+   "stop": 220.63,
+   "target": 268.59,
+   "expiry": "08-10"
   }
  ],
  "sells": [],
@@ -25,7 +16,7 @@
  "breaker_pct": -3.34,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 43,
+ "gate_day": 46,
  "gate_days": 60,
  "gate_winrate": 25.6,
  "gate_pf": 0.24,
