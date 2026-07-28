@@ -1,19 +1,37 @@
 {
- "ts": "2026-07-29 03:22",
+ "ts": "2026-07-29 05:07",
  "buys": [
   {
    "ticker": "KO",
-   "price": 87.91999816894531,
+   "price": 88.2699966430664,
    "score": 100,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.26",
-   "stop": 80.89,
-   "target": 98.47,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.29",
+   "stop": 81.21,
+   "target": 98.86,
+   "expiry": "08-11"
+  },
+  {
+   "ticker": "BKNG",
+   "price": 199.30999755859375,
+   "score": 90,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.30",
+   "stop": 183.37,
+   "target": 223.23,
+   "expiry": "08-11"
+  },
+  {
+   "ticker": "CLX",
+   "price": 100.31999969482422,
+   "score": 90,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.09",
+   "stop": 92.29,
+   "target": 112.36,
    "expiry": "08-11"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -2.97,
+ "breaker_pct": -2.95,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 47,
