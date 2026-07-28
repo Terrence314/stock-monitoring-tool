@@ -1,8 +1,18 @@
 {
- "ts": "2026-07-28 23:05",
- "buys": [],
+ "ts": "2026-07-28 23:21",
+ "buys": [
+  {
+   "ticker": "KO",
+   "price": 89.27660369873047,
+   "score": 90,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.34",
+   "stop": 82.13,
+   "target": 99.99,
+   "expiry": "08-11"
+  }
+ ],
  "sells": [],
- "no_action": true,
+ "no_action": false,
  "breaker_pct": -3.29,
  "breaker_limit": -5.0,
  "breaker_trip": false,
