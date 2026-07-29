@@ -1,16 +1,26 @@
 {
- "ts": "2026-07-29 22:47",
- "buys": [],
+ "ts": "2026-07-29 23:08",
+ "buys": [
+  {
+   "ticker": "WM",
+   "price": 240.92999267578125,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 62",
+   "stop": 221.66,
+   "target": 269.84,
+   "expiry": "08-12"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "breaker_pct": -2.93,
+ "no_action": false,
+ "breaker_pct": -2.85,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 48,
  "gate_days": 60,
- "gate_winrate": 25.6,
- "gate_pf": 0.24,
- "gate_pnl": -2516.94,
- "gate_trades": 39,
+ "gate_winrate": 26.2,
+ "gate_pf": 0.25,
+ "gate_pnl": -2538.22,
+ "gate_trades": 42,
  "gate_ready": false
 }
