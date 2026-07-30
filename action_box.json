@@ -1,13 +1,13 @@
 {
- "ts": "2026-07-31 03:25",
+ "ts": "2026-07-31 05:09",
  "buys": [
   {
    "ticker": "RACE",
-   "price": 397.0050048828125,
+   "price": 397.7300109863281,
    "score": 100,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.99",
-   "stop": 365.24,
-   "target": 444.65,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.00",
+   "stop": 365.91,
+   "target": 445.46,
    "expiry": "08-13"
   },
   {
@@ -20,12 +20,12 @@
    "expiry": "08-13"
   },
   {
-   "ticker": "MA",
-   "price": 576.9998779296875,
-   "score": 70,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.12",
-   "stop": 530.84,
-   "target": 646.24,
+   "ticker": "SHW",
+   "price": 344.8399963378906,
+   "score": 80,
+   "reason": "Score 80 · BB 0.75 · RSI 58",
+   "stop": 317.25,
+   "target": 386.22,
    "expiry": "08-13"
   }
  ],
