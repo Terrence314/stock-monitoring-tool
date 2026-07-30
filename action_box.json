@@ -1,26 +1,26 @@
 {
- "ts": "2026-07-30 22:45",
+ "ts": "2026-07-30 23:10",
  "buys": [
   {
    "ticker": "RACE",
-   "price": 398.3299865722656,
+   "price": 395.7799987792969,
    "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.01",
-   "stop": 366.46,
-   "target": 446.13,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 0.97",
+   "stop": 364.12,
+   "target": 443.27,
    "expiry": "08-13"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -2.85,
+ "breaker_pct": -2.94,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 49,
  "gate_days": 60,
- "gate_winrate": 26.2,
- "gate_pf": 0.25,
- "gate_pnl": -2538.22,
- "gate_trades": 42,
+ "gate_winrate": 27.9,
+ "gate_pf": 0.26,
+ "gate_pnl": -2502.22,
+ "gate_trades": 43,
  "gate_ready": false
 }
