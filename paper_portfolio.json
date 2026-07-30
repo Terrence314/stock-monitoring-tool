@@ -1193,14 +1193,14 @@
       "shares": 18.00072,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 87.54,
-      "current_date": "2026-07-29",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-07-30",
+      "exit_price": 85.33,
+      "exit_reason": "signal_deterioration",
+      "current_price": 85.39,
+      "current_date": "2026-07-30",
+      "pnl": 36.0,
+      "pnl_pct": 2.4,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1233,5 +1233,5 @@
       "sector": "Communication Services"
     }
   ],
-  "last_updated": "2026-07-29"
+  "last_updated": "2026-07-30"
 }

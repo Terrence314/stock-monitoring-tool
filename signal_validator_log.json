@@ -1,11 +1,14 @@
 [
   {
-    "date": "2026-07-29",
-    "ran_at": "2026-07-29 14:47",
+    "date": "2026-07-30",
+    "ran_at": "2026-07-30 14:45",
     "passed": [],
-    "blocked": [],
-    "cautions": [
-      "⚠️ FOMC decision day (2026-07-29)"
-    ]
+    "blocked": [
+      {
+        "ticker": "RACE",
+        "reason": "AI review REJECTED"
+      }
+    ],
+    "cautions": []
   }
 ]

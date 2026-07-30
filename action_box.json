@@ -1,32 +1,14 @@
 {
- "ts": "2026-07-30 07:02",
+ "ts": "2026-07-30 22:45",
  "buys": [
   {
-   "ticker": "BIIB",
-   "price": 209.22999572753906,
-   "score": 100,
-   "reason": "Score 100 · BB 0.75 · RSI 56",
-   "stop": 192.49,
-   "target": 234.34,
-   "expiry": "08-12"
-  },
-  {
-   "ticker": "SPOT",
-   "price": 524.010009765625,
+   "ticker": "RACE",
+   "price": 398.3299865722656,
    "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.22",
-   "stop": 482.09,
-   "target": 586.89,
-   "expiry": "08-12"
-  },
-  {
-   "ticker": "EXPE",
-   "price": 304.2699890136719,
-   "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.26",
-   "stop": 279.93,
-   "target": 340.78,
-   "expiry": "08-12"
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.01",
+   "stop": 366.46,
+   "target": 446.13,
+   "expiry": "08-13"
   }
  ],
  "sells": [],
@@ -34,7 +16,7 @@
  "breaker_pct": -2.85,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 48,
+ "gate_day": 49,
  "gate_days": 60,
  "gate_winrate": 26.2,
  "gate_pf": 0.25,

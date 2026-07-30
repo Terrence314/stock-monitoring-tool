@@ -2798,5 +2798,24 @@
    "SPOT"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-07-30 22:45",
+  "buys": [
+   {
+    "ticker": "RACE",
+    "score": 90,
+    "price": 398.3299865722656
+   }
+  ],
+  "sells": [],
+  "added": [
+   "RACE"
+  ],
+  "removed": [
+   "BIIB",
+   "EXPE",
+   "SPOT"
+  ]
  }
 ]
