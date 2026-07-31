@@ -1,32 +1,23 @@
 {
- "ts": "2026-07-31 07:06",
+ "ts": "2026-07-31 23:02",
  "buys": [
   {
-   "ticker": "RACE",
-   "price": 397.7300109863281,
-   "score": 100,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.00",
-   "stop": 365.91,
-   "target": 445.46,
-   "expiry": "08-13"
-  },
-  {
-   "ticker": "SWK",
-   "price": 95.55000305175781,
+   "ticker": "DXCM",
+   "price": 82.0198974609375,
    "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 0.99",
-   "stop": 87.91,
-   "target": 107.02,
-   "expiry": "08-13"
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.23",
+   "stop": 75.46,
+   "target": 91.86,
+   "expiry": "08-14"
   },
   {
-   "ticker": "SHW",
-   "price": 344.8399963378906,
+   "ticker": "NTES",
+   "price": 132.27000427246094,
    "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 58",
-   "stop": 317.25,
-   "target": 386.22,
-   "expiry": "08-13"
+   "reason": "Score 80 · BB 0.69 · RSI 58",
+   "stop": 121.69,
+   "target": 148.14,
+   "expiry": "08-14"
   }
  ],
  "sells": [],
@@ -34,7 +25,7 @@
  "breaker_pct": -2.94,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 49,
+ "gate_day": 50,
  "gate_days": 60,
  "gate_winrate": 27.9,
  "gate_pf": 0.26,

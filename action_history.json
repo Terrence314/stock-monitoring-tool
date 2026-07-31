@@ -2870,5 +2870,30 @@
   "removed": [
    "MA"
   ]
+ },
+ {
+  "ts": "2026-07-31 23:02",
+  "buys": [
+   {
+    "ticker": "DXCM",
+    "score": 90,
+    "price": 82.0198974609375
+   },
+   {
+    "ticker": "NTES",
+    "score": 80,
+    "price": 132.27000427246094
+   }
+  ],
+  "sells": [],
+  "added": [
+   "DXCM",
+   "NTES"
+  ],
+  "removed": [
+   "RACE",
+   "SHW",
+   "SWK"
+  ]
  }
 ]

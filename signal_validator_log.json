@@ -1,11 +1,13 @@
 [
   {
-    "date": "2026-07-30",
-    "ran_at": "2026-07-30 14:45",
-    "passed": [],
+    "date": "2026-07-31",
+    "ran_at": "2026-07-31 15:03",
+    "passed": [
+      "DXCM"
+    ],
     "blocked": [
       {
-        "ticker": "RACE",
+        "ticker": "NTES",
         "reason": "AI review REJECTED"
       }
     ],
