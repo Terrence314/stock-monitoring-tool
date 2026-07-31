@@ -1,37 +1,37 @@
 {
- "ts": "2026-07-31 23:19",
+ "ts": "2026-08-01 01:29",
  "buys": [
   {
    "ticker": "DXCM",
-   "price": 82.0,
+   "price": 83.05500030517578,
    "score": 90,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.23",
-   "stop": 75.44,
-   "target": 91.84,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.28",
+   "stop": 76.41,
+   "target": 93.02,
+   "expiry": "08-14"
+  },
+  {
+   "ticker": "NOW",
+   "price": 111.28500366210938,
+   "score": 80,
+   "reason": "Score 80 · BB 0.74 · RSI 57",
+   "stop": 102.38,
+   "target": 124.64,
    "expiry": "08-14"
   },
   {
    "ticker": "NTES",
-   "price": 132.6750030517578,
+   "price": 133.0449981689453,
    "score": 80,
-   "reason": "Score 80 · BB 0.71 · RSI 59",
-   "stop": 122.06,
-   "target": 148.6,
-   "expiry": "08-14"
-  },
-  {
-   "ticker": "PATH",
-   "price": 12.486599922180176,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 60",
-   "stop": 11.49,
-   "target": 13.98,
+   "reason": "Score 80 · BB 0.73 · RSI 59",
+   "stop": 122.4,
+   "target": 149.01,
    "expiry": "08-14"
   }
  ],
  "sells": [],
  "no_action": false,
- "breaker_pct": -2.94,
+ "breaker_pct": 0.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 50,

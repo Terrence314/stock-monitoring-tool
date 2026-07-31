@@ -2920,5 +2920,32 @@
    "PATH"
   ],
   "removed": []
+ },
+ {
+  "ts": "2026-08-01 01:29",
+  "buys": [
+   {
+    "ticker": "DXCM",
+    "score": 90,
+    "price": 83.05500030517578
+   },
+   {
+    "ticker": "NOW",
+    "score": 80,
+    "price": 111.28500366210938
+   },
+   {
+    "ticker": "NTES",
+    "score": 80,
+    "price": 133.0449981689453
+   }
+  ],
+  "sells": [],
+  "added": [
+   "NOW"
+  ],
+  "removed": [
+   "PATH"
+  ]
  }
 ]
