@@ -1,31 +1,31 @@
 {
- "ts": "2026-08-01 03:23",
+ "ts": "2026-08-01 05:04",
  "buys": [
   {
    "ticker": "DXCM",
-   "price": 83.97000122070312,
+   "price": 83.44999694824219,
    "score": 100,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.31",
-   "stop": 77.25,
-   "target": 94.05,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.29",
+   "stop": 76.77,
+   "target": 93.46,
    "expiry": "08-14"
   },
   {
    "ticker": "NOW",
-   "price": 111.30999755859375,
+   "price": 111.2300033569336,
    "score": 80,
-   "reason": "Score 80 · BB 0.74 · RSI 57",
-   "stop": 102.41,
-   "target": 124.67,
+   "reason": "Score 80 · BB 0.73 · RSI 57",
+   "stop": 102.33,
+   "target": 124.58,
    "expiry": "08-14"
   },
   {
-   "ticker": "NTES",
-   "price": 133.25,
+   "ticker": "XLE",
+   "price": 59.54999923706055,
    "score": 80,
-   "reason": "Score 80 · BB 0.74 · RSI 59",
-   "stop": 122.59,
-   "target": 149.24,
+   "reason": "Score 80 · BB 0.80 · RSI 64",
+   "stop": 54.79,
+   "target": 66.7,
    "expiry": "08-14"
   }
  ],
