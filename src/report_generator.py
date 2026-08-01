@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import re
 from datetime import datetime, timedelta, timezone
@@ -939,12 +940,12 @@ body.beginner-mode .beginner-only { display: block; }
           斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
-        <span title="真錢上線門檻：60日驗證 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正。PF = 總贏錢÷總輸錢 — 突破型策略可以勝率四成但靠大贏單賺錢，單睇勝率會冤枉佢。">
+        <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即歷史止損修復（a0a50b86）之後開倉嘅單；之前 -8% 止損唔生效（最差走到 -22.1%），嗰批數據描述緊一個而家已經唔存在嘅風險模型。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
           真錢門檻 Day {{ action_box.gate_day }}/{{ action_box.gate_days }}
-          · 勝率 {{ action_box.gate_winrate if action_box.gate_winrate is not none else '—' }}%
+          · 勝率 {{ action_box.gate_winrate if action_box.gate_winrate is not none else '—' }}%{% if action_box.gate_ci_low is not none %} <span style="color:var(--muted)">[{{ action_box.gate_ci_low }}–{{ action_box.gate_ci_high }}]</span>{% endif %}
           · PF {{ action_box.gate_pf if action_box.gate_pf is not none else '—' }}
           · PnL ${{ action_box.gate_pnl }}
-          · {{ '🎓 GO-LIVE READY' if action_box.gate_ready else '🔬 驗證中 (' ~ action_box.gate_trades ~ ' 筆已平倉)' }}
+          · {% if action_box.gate_ready %}🎓 GO-LIVE READY{% elif not action_box.gate_enough %}<span style="color:var(--amber)">🔬 樣本不足 ({{ action_box.gate_trades }}/{{ action_box.gate_min_trades }} 筆已平倉)</span>{% else %}🔬 驗證中 ({{ action_box.gate_trades }} 筆已平倉){% endif %}
         </span>
       </div>
 
@@ -3045,8 +3046,18 @@ def _collect_headlines(stocks: list) -> list[dict]:
     return headlines
 
 
-GATE_START_DATE   = "2026-06-11"   # go-live validation window start (2 months)
+# Validation window restarts at the history-based stop fix (a0a50b86,
+# 2026-07-17). Before that date the -8% stop did not bind: 7 of 42 closed
+# trades ran past it, worst -22.1%, because tickers rotating out of the daily
+# watchlist stopped being price-checked. Those trades measure a risk model the
+# code no longer implements, so counting them toward a real-money decision
+# would validate something that cannot recur. Window membership keys on
+# signal_date (entry), not exit_date — the risk rules apply from entry.
+GATE_START_DATE   = "2026-07-17"
 GATE_DAYS         = 60
+GATE_MIN_TRADES   = 30             # no quality verdict below this sample size.
+                                   # Without a floor, two winners and zero
+                                   # losers satisfied quality_ok outright.
 GATE_MIN_WINRATE  = 50.0           # %
 GATE_MIN_PF       = 1.3            # profit factor alternative — win-rate-only
                                    # gates structurally fail breakout/trend styles
@@ -3215,18 +3226,38 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     days_in    = max(0, (_date.today() - gate_start).days)
     closed_in_window = [
         t for t in trades
-        if t.get("status") == "closed" and (t.get("exit_date") or "") >= GATE_START_DATE
+        if t.get("status") == "closed" and (t.get("signal_date") or "") >= GATE_START_DATE
     ]
+    n_window = len(closed_in_window)
     wins     = sum(1 for t in closed_in_window if (t.get("pnl") or 0) > 0)
-    winrate  = round(wins / len(closed_in_window) * 100, 1) if closed_in_window else None
+    winrate  = round(wins / n_window * 100, 1) if closed_in_window else None
     pnl_window = round(sum(t.get("pnl") or 0 for t in closed_in_window), 2)
     gross_win  = sum(t.get("pnl") or 0 for t in closed_in_window if (t.get("pnl") or 0) > 0)
     gross_loss = abs(sum(t.get("pnl") or 0 for t in closed_in_window if (t.get("pnl") or 0) < 0))
     profit_factor = (round(gross_win / gross_loss, 2) if gross_loss
                      else (None if not gross_win else float("inf")))
-    quality_ok = (
+
+    # 95% binomial confidence interval on the win rate. A point estimate alone
+    # hides how far it can move: at n=30 the interval is roughly +/-18pp, so
+    # the dashboard must show the range next to the number.
+    if n_window:
+        _p  = wins / n_window
+        _se = math.sqrt(_p * (1 - _p) / n_window)
+        ci_low  = round(max(0.0,   (_p - 1.96 * _se) * 100), 1)
+        ci_high = round(min(100.0, (_p + 1.96 * _se) * 100), 1)
+    else:
+        ci_low = ci_high = None
+
+    # Sample-size floor comes first: below it there is no quality verdict at
+    # all, pass or fail. An all-winners sample yields PF = inf, which used to
+    # be reported as a passing 99.0 — infinite PF means "no losses observed
+    # yet", which is a statement about sample size, not about edge.
+    enough_data = n_window >= GATE_MIN_TRADES
+    quality_ok = enough_data and (
         (winrate is not None and winrate > GATE_MIN_WINRATE)
-        or (profit_factor is not None and profit_factor >= GATE_MIN_PF)
+        or (profit_factor is not None
+            and profit_factor != float("inf")
+            and profit_factor >= GATE_MIN_PF)
     )
     gate_ready = (
         days_in >= GATE_DAYS
@@ -3252,7 +3283,14 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "gate_day":      min(days_in, GATE_DAYS),
         "gate_days":     GATE_DAYS,
         "gate_winrate":  winrate,
-        "gate_pf":       (profit_factor if profit_factor != float("inf") else 99.0),
+        "gate_ci_low":   ci_low,
+        "gate_ci_high":  ci_high,
+        "gate_min_trades": GATE_MIN_TRADES,
+        "gate_enough":   enough_data,
+        "gate_start":    GATE_START_DATE,
+        # inf is displayed as "—": no losses observed is a sample-size fact,
+        # not a profit factor, and it must never read as a passing score.
+        "gate_pf":       (profit_factor if profit_factor != float("inf") else None),
         "gate_pnl":      pnl_window,
         "gate_trades":   len(closed_in_window),
         "gate_ready":    gate_ready,
