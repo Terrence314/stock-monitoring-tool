@@ -846,6 +846,7 @@ def run_paper_trading(
     stock_results: list,        # today's full stock results (has live prices)
     output_dir: str = "outputs",
     active_patterns: dict = None,  # {ticker: [{name,...}]} from pattern_engine
+    blocked_tickers: set | None = None,  # vetoed by signal_validator
 ) -> str | None:
     """Run paper trading update and generate paper_trading.html.
 
@@ -854,6 +855,10 @@ def run_paper_trading(
     portfolio = _load_portfolio()
     trades: list = portfolio.get("trades", [])
     existing_ids = {t["id"] for t in trades}
+    # Tickers the pre-alert validator vetoed (earnings window, AI review
+    # REJECTED, …). The engine used to open these anyway, so the tracked
+    # record measured a strategy the user was never alerted to.
+    blocked_tickers = set(blocked_tickers or ())
 
     # Build per-direction open-position sets to prevent re-opening the same
     # ticker while a position is already live (the trade_id check only blocks
@@ -881,6 +886,10 @@ def run_paper_trading(
         suffix = "" if direction == "long" else "-S"
         trade_id = f"{ticker}{suffix}-{today_str}"
         if trade_id in existing_ids:
+            return
+        # Block anything the validator vetoed for this run
+        if ticker in blocked_tickers:
+            print(f"  [paper_trading] {ticker} skipped — blocked by signal validator")
             return
         # Block multi-day re-open while a position is already open
         if direction == "long"  and ticker in open_long_tickers:
@@ -923,7 +932,10 @@ def run_paper_trading(
 
     # ── Market regime gate: check SPY score before opening any longs ─────────────
     spy_result = next((s for s in stock_results if s.get("ticker") == "SPY"), None)
-    spy_score  = spy_result["score"] if spy_result else 55   # default to transitional if SPY missing
+    # Fail CLOSED when SPY is missing. The old default of 55 sat above
+    # REGIME_NORMAL, so a failed SPY fetch put the engine into normal buying —
+    # a risk gate whose failure mode was "trade as usual".
+    spy_score  = spy_result["score"] if spy_result else REGIME_FLOOR - 1
 
     if spy_score < REGIME_FLOOR:
         print(f"  [paper_trading] SPY score={spy_score} < {REGIME_FLOOR} — bear regime, no new longs")

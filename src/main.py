@@ -155,6 +155,19 @@ def _run(cfg: dict) -> None:
         print("請設定環境變數後重試。詳見 .env.example")
         sys.exit(1)
 
+    # Optional key — warn, never block. Without it fetch_finnhub_data() returns
+    # {} silently (see line ~258), so news / analyst ratings / P/E / 52-week
+    # range / earnings dates vanish from the AI input with no other trace.
+    # This went unnoticed in CI for ~2.5 months: refresh.py injects the key
+    # from secrets.json locally, but CI has no secrets.json and until this
+    # commit daily_analysis.yml never passed FINNHUB_API_KEY to the step —
+    # even though the GitHub secret has existed since 2026-05-17.
+    if not cfg["gemini"].get("finnhub_api_key"):
+        print("  ⚠️  FINNHUB_API_KEY 未設定 — 新聞、分析師評級、P/E、52週高低、"
+              "財報日期全部會留空，AI 分析只靠技術面。")
+        print("      本機：加到 secrets.json；CI：GitHub → Settings → "
+              "Secrets → Actions 加 FINNHUB_API_KEY")
+
     # ── 1. Setup AI ──────────────────────────────────────────────────────────
     print("\n[1/5] 初始化 Gemini AI…")
     model = setup_gemini(cfg["gemini"]["api_key"], cfg["gemini"].get("model", "gemini-2.5-flash")) if not skip_ai else None
@@ -345,6 +358,11 @@ def _run(cfg: dict) -> None:
                 "week52_low":       fh.get("week52_low"),
                 "next_earnings":    fh.get("next_earnings"),
                 "ohlc":             _ohlc,
+                # Long-term trend gate input. calculate_indicators has always
+                # returned this, but it was never copied here — so
+                # paper_trading._entry_timing_ok read None, fell back to 0 and
+                # the "skip longs below EMA200" filter never fired once.
+                "ema200":           ta.get("ema200"),
                 "open_price":       data.get("open", 0),
                 "high_price":       data.get("high", 0),
                 "low_price":        data.get("low", 0),
@@ -423,6 +441,7 @@ def _run(cfg: dict) -> None:
     report_url = os.getenv("REPORT_URL", "")
     # Same Action Box the dashboard just rendered — one source of truth
     _ab = load_json_file(os.path.join("outputs", "action_box.json"), None)
+    _blocked_tickers: set = set()
 
     # ── Loop 2: Pre-Telegram signal validator ─────────────────────────────────
     # Validator failure must degrade gracefully, never kill the daily Telegram:
@@ -439,8 +458,22 @@ def _run(cfg: dict) -> None:
                     f"{b['ticker']} ({b['reason']})" for b in _blocked
                 )
                 print(f"      [validator] ❌ Blocked: {blocked_summary}")
+                _blocked_tickers = {b["ticker"] for b in _blocked if b.get("ticker")}
             passed = _ab.get("validator", {}).get("passed", 0)
             print(f"      [validator] ✅ {passed} BUY(s) passed validation")
+
+            # Publish the VALIDATED box so the dashboard shows the same set as
+            # Telegram. Previously report_generator wrote the pre-validation
+            # box and nothing overwrote it, so a ticker the validator had
+            # REJECTED still rendered as a BUY on the public page.
+            try:
+                _ab_path = os.path.join("outputs", "action_box.json")
+                _tmp = _ab_path + ".tmp"
+                with open(_tmp, "w", encoding="utf-8") as f:
+                    json.dump(_ab, f, ensure_ascii=False, indent=1)
+                os.replace(_tmp, _ab_path)
+            except OSError as _e:
+                print(f"      [validator] ⚠️ 無法寫回 action_box.json：{_e}")
         except Exception as e:
             print(f"      [validator] ⚠️ 驗證器異常，本日 BUY 未經驗證照發：{type(e).__name__}: {e}")
             _ab = {**_ab, "validator": {"error": f"{type(e).__name__}: {e}"}}
@@ -490,7 +523,9 @@ def _run(cfg: dict) -> None:
     # Isolated try/except: same isolation principle as backtest
     try:
         today_scores = {s["ticker"]: s["score"] for s in stock_results}
-        run_paper_trading(today_key, today_scores, stock_results, active_patterns=active_patterns)
+        run_paper_trading(today_key, today_scores, stock_results,
+                          active_patterns=active_patterns,
+                          blocked_tickers=_blocked_tickers)
     except Exception as pt_err:
         print(f"  [paper_trading] ⚠️ skipped due to error: {pt_err}")
 

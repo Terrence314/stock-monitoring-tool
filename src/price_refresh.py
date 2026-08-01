@@ -230,6 +230,9 @@ def main():
                 "bb_lower_touch":            ta.get("bb_lower_touch", False),
                 "bb_upper_touch":            ta.get("bb_upper_touch", False),
                 "ohlc":             _ohlc,
+                # Recomputed from fresh bars — the EMA200 trend gate in
+                # paper_trading read None here and silently never fired.
+                "ema200":           ta.get("ema200"),
                 "open_price":       data.get("open", 0),
                 "high_price":       data.get("high", 0),
                 "low_price":        data.get("low", 0),

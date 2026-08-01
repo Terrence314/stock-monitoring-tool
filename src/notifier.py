@@ -99,9 +99,18 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
                 f"{tag}🟢 <b>BUY {b['ticker']}</b> 買入 ≤ ${b.get('price', 0):.2f}"
             )
             if b.get("stop"):
+                # Percentages, hold period and size all come from the Action
+                # Box, which derives them from paper_trading's constants.
+                # They were hardcoded here and the "$1,000" was wrong for
+                # every conviction-sized ($1.5k / $2k) trade.
+                _sp = action_box.get("stop_pct", 8)
+                _tp = action_box.get("target_pct", 12)
+                _hd = action_box.get("hold_days", 10)
+                _nt = b.get("notional")
                 lines.append(
-                    f"   止損 ${b['stop']:.2f} (−8%) · 目標 ${b.get('target', 0):.2f} (+12%)"
-                    f" · 期限 {b.get('expiry', '')}（10 交易日）· $1,000"
+                    f"   止損 ${b['stop']:.2f} (−{_sp:g}%) · 目標 ${b.get('target', 0):.2f} (+{_tp:g}%)"
+                    f" · 期限 {b.get('expiry', '')}（{_hd} 交易日）"
+                    + (f" · ${_nt:,.0f}" if _nt else "")
                 )
         for s in sells:
             lines.append(f"🔴 <b>SELL {s['ticker']}</b> — {s.get('why', '')}，持倉轉弱，考慮平倉")

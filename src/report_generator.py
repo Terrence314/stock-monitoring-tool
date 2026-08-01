@@ -4,6 +4,13 @@ import re
 from datetime import datetime, timedelta, timezone
 from jinja2 import Template
 from stock_detail import generate_stock_detail_page
+# Single source of truth for the trade plan — the Action Box ticket, the paper
+# engine and the Telegram message must never drift apart again.
+from paper_trading import (
+    STOP_LOSS_PCT, TAKE_PROFIT_PCT, HOLD_DAYS, BUY_THRESHOLD,
+    REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
+    _notional_for_score,
+)
 
 DASHBOARD_HTML = """<!DOCTYPE html>
 <html lang="zh-TW">
@@ -891,6 +898,15 @@ body.beginner-mode .beginner-only { display: block; }
         </span>
       </div>
       {% endif %}
+      {% if action_box.regime in ('bear', 'unknown') %}
+      <div style="padding:10px 12px;border-radius:10px;background:rgba(245,185,66,0.08);border:1px solid rgba(245,185,66,0.28);margin-bottom:10px">
+        <span style="color:var(--amber);font-weight:600">🚫 大市風控已封鎖新倉</span>
+        <span style="color:var(--text-2);font-size:12px">
+          {% if action_box.regime == 'bear' %} — SPY 評分 {{ action_box.regime_spy }} 低於 {{ action_box.regime_min_floor }}，熊市不開新多倉。引擎唔會入貨，所以呢度都唔會出單。
+          {% else %} — 攞唔到 SPY 評分，風控 fail-closed，今日唔出入場單。{% endif %}
+        </span>
+      </div>
+      {% endif %}
       {% if action_box.no_action %}
       <div style="padding:10px 12px;border-radius:10px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);margin-bottom:10px">
         <span style="color:var(--up);font-weight:600">✅ 今日無行動</span>
@@ -902,10 +918,10 @@ body.beginner-mode .beginner-only { display: block; }
         <strong style="color:var(--up)">🟢 BUY <a href="./{{ b.ticker }}.html" style="color:var(--up)">{{ b.ticker }}</a></strong>
         {% if action_box.breaker_trip %}<span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(245,185,66,0.15);color:var(--amber);border:1px solid rgba(245,185,66,0.3)">📝 紙上練習單</span>{% endif %}
         <span class="mono" style="font-size:12px;font-weight:700">買入 ≤ ${{ '%.2f'|format(b.price) if b.price else '—' }}</span>
-        <span class="mono" style="font-size:11px;color:var(--down)">止損 ${{ '%.2f'|format(b.stop) if b.stop else '—' }} (−8%)</span>
-        <span class="mono" style="font-size:11px;color:var(--up)">目標 ${{ '%.2f'|format(b.target) if b.target else '—' }} (+12%)</span>
-        <span class="mono" style="font-size:11px;color:var(--amber)">期限 {{ b.expiry }}（10 交易日）</span>
-        <span style="font-size:11px;color:var(--text-2)">$1,000 · score {{ b.score }} · {{ b.reason }}</span>
+        <span class="mono" style="font-size:11px;color:var(--down)">止損 ${{ '%.2f'|format(b.stop) if b.stop else '—' }} (−{{ '%g'|format(action_box.stop_pct) }}%)</span>
+        <span class="mono" style="font-size:11px;color:var(--up)">目標 ${{ '%.2f'|format(b.target) if b.target else '—' }} (+{{ '%g'|format(action_box.target_pct) }}%)</span>
+        <span class="mono" style="font-size:11px;color:var(--amber)">期限 {{ b.expiry }}（{{ action_box.hold_days }} 交易日）</span>
+        <span style="font-size:11px;color:var(--text-2)">{{ '${:,.0f}'.format(b.notional) if b.notional else '—' }} · score {{ b.score }} · {{ b.reason }}</span>
         <span style="flex-basis:100%;font-size:10px;color:var(--muted);padding-left:2px">📋 落單即設止損單 — 買入後馬上喺 IBKR 掛 stop order，唔好等</span>
       </div>
       {% endfor %}
@@ -3107,9 +3123,25 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     held          = {t["ticker"] for t in open_trades}
     by_ticker     = {s["ticker"]: s for s in stocks_sorted}
 
+    # ── Market regime gate — MUST match paper_trading.run_paper_trading ───────
+    # Without this the dashboard printed order tickets the engine then refused
+    # to open: SPY score 23 < REGIME_FLOOR held every entry for 12 days while
+    # the Action Box kept publishing BUYs. Fails CLOSED when SPY is missing —
+    # a risk gate whose failure mode is "trade normally" is the wrong default.
+    _spy = by_ticker.get("SPY")
+    spy_score = _spy.get("score") if _spy else None
+    if spy_score is None:
+        regime, min_score = "unknown", None
+    elif spy_score < REGIME_FLOOR:
+        regime, min_score = "bear", None
+    elif spy_score < REGIME_NORMAL:
+        regime, min_score = "transitional", HIGH_CONVICTION_MIN
+    else:
+        regime, min_score = "bull", BUY_THRESHOLD
+
     # ── BUY candidates ──
     buys = []
-    for s in stocks_sorted:
+    for s in stocks_sorted if min_score is not None else []:
         v = s.get("entry_verdict") or {}
         label = v.get("label", "")
         if s["ticker"] in held:
@@ -3119,23 +3151,27 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         is_squeeze = "BREAKOUT" in label
         if is_squeeze and not vol_ok:
             continue  # require vol confirmation on squeeze breakouts
-        if ("GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label) and s.get("score", 0) >= 70:
+        _score = s.get("score", 0)
+        if ("GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label) and _score >= min_score:
             px = s.get("price") or 0
-            # Order ticket numbers — same rules the paper engine enforces
-            # (paper_trading.py: STOP_LOSS_PCT=8, TAKE_PROFIT_PCT=12, HOLD_DAYS=10)
+            # Order ticket numbers derived from the paper engine's own
+            # constants — never re-typed here, so they cannot drift.
             expiry = _date.today()
             _td = 0
-            while _td < 10:
+            while _td < HOLD_DAYS:
                 expiry += timedelta(days=1)
                 if expiry.weekday() < 5:
                     _td += 1
             buys.append({
                 "ticker": s["ticker"],
                 "price":  px,
-                "score":  s.get("score"),
+                "score":  _score,
                 "reason": v.get("reason", ""),
-                "stop":   round(px * 0.92, 2) if px else None,
-                "target": round(px * 1.12, 2) if px else None,
+                "stop":   round(px * (1 - STOP_LOSS_PCT / 100), 2) if px else None,
+                "target": round(px * (1 + TAKE_PROFIT_PCT / 100), 2) if px else None,
+                # Conviction-weighted size the engine would actually open —
+                # the ticket used to hardcode "$1,000" for every score.
+                "notional": _notional_for_score(_score),
                 "expiry": expiry.strftime("%m-%d"),
             })
         if len(buys) >= 3:
@@ -3203,6 +3239,13 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "buys":          buys,
         "sells":         sells,
         "no_action":     not buys and not sells,
+        "regime":        regime,
+        "regime_spy":    spy_score,
+        "regime_min":    min_score,
+        "regime_min_floor": REGIME_FLOOR,
+        "stop_pct":      STOP_LOSS_PCT,
+        "target_pct":    TAKE_PROFIT_PCT,
+        "hold_days":     HOLD_DAYS,
         "breaker_pct":   breaker_pct,
         "breaker_limit": BREAKER_LIMIT_PCT,
         "breaker_trip":  breaker_trip,
