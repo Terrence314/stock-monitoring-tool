@@ -52,28 +52,6 @@ def load_favourites() -> list[str]:
     return []
 
 
-def save_favourites(tickers: list[str]) -> None:
-    """Persist starred ticker list."""
-    unique = list(dict.fromkeys(t.upper() for t in tickers))
-    os.makedirs("data", exist_ok=True)
-    _save_json(FAVOURITES_FILE, unique)
-
-
-def add_favourite(ticker: str) -> None:
-    favs = load_favourites()
-    t = ticker.upper()
-    if t not in favs:
-        favs.append(t)
-        save_favourites(favs)
-
-
-def remove_favourite(ticker: str) -> None:
-    favs = load_favourites()
-    t = ticker.upper()
-    updated = [f for f in favs if f != t]
-    save_favourites(updated)
-
-
 def load_history() -> dict:
     """Load Tier 2 membership history. Returns dict keyed by ticker symbol."""
     return _load_json(HISTORY_FILE, {})

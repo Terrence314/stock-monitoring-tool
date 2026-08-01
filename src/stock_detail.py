@@ -680,15 +680,6 @@ def _build_verdict(s: dict) -> dict:
     return     {"label": "弱勢回避",   "cls": "down",  "en": "AVOID"}
 
 
-# ── Analyst bar helper ────────────────────────────────────────────────────────
-
-def _analyst_total(s: dict) -> int:
-    ab = s.get("analyst_buy")  or 0
-    ah = s.get("analyst_hold") or 0
-    as_ = s.get("analyst_sell") or 0
-    return (ab or 0) + (ah or 0) + (as_ or 0)
-
-
 # ── HTML Template ─────────────────────────────────────────────────────────────
 
 DETAIL_HTML = """<!DOCTYPE html>

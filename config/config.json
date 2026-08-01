@@ -204,8 +204,6 @@
       "ibkr_held": true
     }
   ],
-  "language": "zh-TW",
-  "market": "US",
   "telegram": {
     "bot_token": "",
     "chat_id": ""
@@ -214,10 +212,6 @@
     "api_key": "",
     "model": "gemini-2.5-flash",
     "finnhub_api_key": ""
-  },
-  "schedule": {
-    "timezone": "Asia/Hong_Kong",
-    "cron_utc": "30 12 * * 1-5"
   },
   "analysis": {
     "history_period": "6mo",

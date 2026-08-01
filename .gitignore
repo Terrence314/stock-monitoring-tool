@@ -11,3 +11,6 @@ data/portfolio_transactions.json
 config/secrets.json
 outputs/portfolio.html
 outputs/ibkr_positions.json
+
+# Supabase CLI scratch state (project-ref, pooler-url, linked-project.json)
+supabase/.temp/

@@ -38,12 +38,6 @@ def load_transactions() -> list:
         return []
 
 
-def save_transactions(txns: list) -> None:
-    os.makedirs(os.path.dirname(TRANSACTIONS_FILE), exist_ok=True)
-    with open(TRANSACTIONS_FILE, "w", encoding="utf-8") as f:
-        json.dump({"transactions": txns}, f, ensure_ascii=False, indent=2)
-
-
 # ── FX rate ───────────────────────────────────────────────────────────────────
 
 def fetch_usdhkd() -> float:
