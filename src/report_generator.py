@@ -1821,7 +1821,9 @@ body.beginner-mode .beginner-only { display: block; }
         <td style="padding:9px 16px;color:var(--muted);font-family:var(--mono);font-size:11px">{{ loop.index }}</td>
         <td style="padding:9px 8px">
           <span style="font-family:var(--mono);font-weight:700;font-size:12px;color:var(--text)">
-            {% if in_tier2 %}<a href="./{{ r.ticker|lower }}.html" style="color:var(--blue);text-decoration:none">{{ r.ticker }}</a>
+            {# No |lower — stock_detail writes outputs/TICKER.html and GitHub
+               Pages is case-sensitive, so lowercasing 404'd all 70 links. #}
+            {% if in_tier2 %}<a href="./{{ r.ticker }}.html" style="color:var(--blue);text-decoration:none">{{ r.ticker }}</a>
             {% else %}{{ r.ticker }}{% endif %}
           </span>
         </td>
