@@ -1,16 +1,57 @@
+import html
+import time
+
 import requests
 from datetime import datetime
 
+SEND_RETRIES     = 3
+SEND_BACKOFF_SEC = 2
+
+
+def esc(value, limit: int | None = None) -> str:
+    """HTML-escape untrusted text for parse_mode=HTML.
+
+    Telegram rejects the WHOLE message with 400 if the text contains a stray
+    `<` or `&`, so one unescaped character from Gemini silently drops the
+    entire day's alert. Truncation happens BEFORE escaping so a cut can never
+    land inside an entity like `&amp;`.
+    """
+    s = "" if value is None else str(value)
+    if limit is not None and len(s) > limit:
+        s = s[:limit] + "…"
+    return html.escape(s, quote=False)
+
 
 def send_telegram(bot_token: str, chat_id: str, message: str) -> bool:
+    """Send with retry. A dropped alert is the whole failure mode for an
+    alerting system, and the previous version gave up after one attempt with
+    only a print to a CI log nobody reads.
+
+    On a 400 (malformed HTML) a retry cannot help, so it falls back to
+    plain text once — a readable unformatted alert beats no alert.
+    """
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     payload = {"chat_id": chat_id, "text": message, "parse_mode": "HTML"}
-    try:
-        r = requests.post(url, json=payload, timeout=15)
-        return r.json().get("ok", False)
-    except Exception as e:
-        print(f"  [notifier] Telegram error: {e}")
-        return False
+
+    for attempt in range(1, SEND_RETRIES + 1):
+        try:
+            r = requests.post(url, json=payload, timeout=15)
+            body = r.json()
+            if body.get("ok"):
+                return True
+            desc = str(body.get("description", ""))[:160]
+            print(f"  [notifier] Telegram rejected (try {attempt}/{SEND_RETRIES}): {desc}")
+            if r.status_code == 400 and payload.get("parse_mode"):
+                print("  [notifier] retrying once without HTML formatting")
+                payload = {"chat_id": chat_id, "text": message}
+                continue
+        except Exception as e:
+            print(f"  [notifier] Telegram error (try {attempt}/{SEND_RETRIES}): {e}")
+        if attempt < SEND_RETRIES:
+            time.sleep(SEND_BACKOFF_SEC * attempt)
+
+    print("  [notifier] ❌ Telegram send FAILED after all retries — alert lost")
+    return False
 
 
 def send_health_alert(bot_token: str, chat_id: str, issues: list) -> bool:
@@ -23,7 +64,7 @@ def send_health_alert(bot_token: str, chat_id: str, issues: list) -> bool:
         "",
     ]
     for i, issue in enumerate(issues, 1):
-        lines.append(f"{i}. {issue}")
+        lines.append(f"{i}. {esc(issue)}")
     lines += [
         "",
         "👉 請前往 GitHub Actions 查看完整日誌。",
@@ -55,9 +96,9 @@ def send_exit_alert(bot_token: str, chat_id: str, alerts: list, report_url: str 
         arrow = "▲" if chg >= 0 else "▼"
         is_held = a["ticker"] in held_tickers
         lines += [
-            f"⚠️ <b>{a['ticker']}</b>  ${a['price']:.2f}  {arrow}{abs(chg):.2f}%",
+            f"⚠️ <b>{esc(a['ticker'])}</b>  ${a['price']:.2f}  {arrow}{abs(chg):.2f}%",
             f"   信號：{a['prev_score']} → <b>{a['curr_score']}</b>  （↓{a['drop']} pts）",
-            f"   {a.get('prev_strength', '')} → {a.get('strength', '')}",
+            f"   {esc(a.get('prev_strength', ''))} → {esc(a.get('strength', ''))}",
             ("   🔴 你有持倉 — 持倉轉弱，考慮平倉" if is_held
              else "   ℹ️ 冇持倉 — 觀察名單轉弱，毋須行動"),
             "",
@@ -96,7 +137,7 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
         for b in buys:
             tag = "📝 " if tripped else ""
             lines.append(
-                f"{tag}🟢 <b>BUY {b['ticker']}</b> 買入 ≤ ${b.get('price', 0):.2f}"
+                f"{tag}🟢 <b>BUY {esc(b['ticker'])}</b> 買入 ≤ ${b.get('price', 0):.2f}"
             )
             if b.get("stop"):
                 # Percentages, hold period and size all come from the Action
@@ -113,7 +154,7 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
                     + (f" · ${_nt:,.0f}" if _nt else "")
                 )
         for s in sells:
-            lines.append(f"🔴 <b>SELL {s['ticker']}</b> — {s.get('why', '')}，持倉轉弱，考慮平倉")
+            lines.append(f"🔴 <b>SELL {esc(s['ticker'])}</b> — {esc(s.get('why', ''))}，持倉轉弱，考慮平倉")
         if not buys and not sells:
             lines.append("✅ 今日無行動 — 無合資格入場，持倉無賣出訊號")
         lines.append("")
@@ -130,7 +171,7 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
         brief_short = morning_brief[idx:idx + 300]
     elif len(morning_brief) > 400:
         brief_short = morning_brief[:400] + "…"
-    lines.append(brief_short)
+    lines.append(esc(brief_short))
 
     lines += [
         "",
@@ -145,18 +186,17 @@ def format_daily_message(date: str, morning_brief: str, stocks: list, report_url
         chg = s.get("price_change_pct", 0)
         arrow = "▲" if chg >= 0 else "▼"
         lines.append(
-            f"{emoji} <b>{s['ticker']}</b>  ${s['price']:.2f}  {arrow}{abs(chg):.2f}%"
-            f"  ｜  信號 <b>{sc}/100</b>  {s['strength']}"
+            f"{emoji} <b>{esc(s['ticker'])}</b>  ${s['price']:.2f}  {arrow}{abs(chg):.2f}%"
+            f"  ｜  信號 <b>{sc}/100</b>  {esc(s['strength'])}"
         )
         if s.get("ai_view"):
-            short_view = s["ai_view"][:80] + "…" if len(s["ai_view"]) > 80 else s["ai_view"]
-            lines.append(f"   <i>{short_view}</i>")
+            lines.append(f"   <i>{esc(s['ai_view'], 80)}</i>")
         # IBKR position annotation
         _pos = s.get("ibkr_position")
         if _pos:
-            _pnl = _pos.get("unrealized_pnl", 0)
-            _pnl_str = f"+${_pnl:.2f}" if _pnl >= 0 else f"-${abs(_pnl):.2f}"
-            lines.append(f"   📦 持倉 ×{_pos.get('qty')} · 均${_pos.get('avg_cost', 0):.2f} · 浮盈 {_pnl_str}")
+            _pnl = _pos.get("unrealized_pnl")
+            _pnl_str = "—" if _pnl is None else (f"+${_pnl:.2f}" if _pnl >= 0 else f"-${abs(_pnl):.2f}")
+            lines.append(f"   📦 持倉 ×{_pos.get('qty')} · 均${_pos.get('avg_cost') or 0:.2f} · 浮盈 {_pnl_str}")
         lines.append("")
 
     if report_url:
@@ -195,13 +235,16 @@ def format_ibkr_pnl_alert(positions: list, stock_results: list,
 
         alerts = []
 
-        # 1. Daily loss threshold
-        if dpnl < daily_loss_threshold:
+        # 1. Daily loss threshold. dpnl is None when IBKR reports the field
+        # as unavailable — unknown is not a loss, so skip rather than alert.
+        if dpnl is not None and dpnl < daily_loss_threshold:
             alerts.append(f"📉 今日虧損 ${dpnl:.2f}")
 
-        # 2. Unrealized drawdown %
-        cost_basis = avg * qty
-        if cost_basis > 0:
+        # 2. Unrealized drawdown %. abs() on the cost basis so a short
+        # position (IBKR reports negative qty) cannot invert the sign and
+        # report a losing short as a gain.
+        cost_basis = abs(avg * qty) if (avg is not None and qty) else 0
+        if cost_basis > 0 and upnl is not None:
             drawdown_pct = (upnl / cost_basis) * 100
             if drawdown_pct < drawdown_pct_threshold:
                 alerts.append(f"⚠️ 浮虧 {drawdown_pct:.1f}%（成本 ${cost_basis:.2f}）")
@@ -215,17 +258,17 @@ def format_ibkr_pnl_alert(positions: list, stock_results: list,
             # Check for bearish signals in signal list
             bearish = [s for s in ta_signals if any(w in s for w in ["❌", "🔴", "死叉", "跌穿", "爆量下跌"])]
             if sell_sigs:
-                alerts.append(f"🔴 賣出訊號：{sell_sigs[0][:60]}")
+                alerts.append(f"🔴 賣出訊號：{esc(sell_sigs[0], 60)}")
             elif bearish:
-                alerts.append(f"⚠️ 偏空信號：{bearish[0][:60]}")
+                alerts.append(f"⚠️ 偏空信號：{esc(bearish[0], 60)}")
             if score < 30 and qty > 0:
                 alerts.append(f"📊 信號評分偏低 {score}/100 — 持倉需留意")
 
         if alerts:
-            pnl_str = f"+${upnl:.2f}" if upnl >= 0 else f"-${abs(upnl):.2f}"
-            dpnl_str = f"+${dpnl:.2f}" if dpnl >= 0 else f"-${abs(dpnl):.2f}"
+            pnl_str  = "—" if upnl is None else (f"+${upnl:.2f}" if upnl >= 0 else f"-${abs(upnl):.2f}")
+            dpnl_str = "—" if dpnl is None else (f"+${dpnl:.2f}" if dpnl >= 0 else f"-${abs(dpnl):.2f}")
             lines.append(
-                f"📦 <b>{ticker}</b>  ×{qty} · 均${avg:.2f} · 現${price:.2f}"
+                f"📦 <b>{esc(ticker)}</b>  ×{qty} · 均${avg or 0:.2f} · 現${price or 0:.2f}"
                 f"  ｜  浮盈 <b>{pnl_str}</b>  今日 {dpnl_str}"
             )
             for a in alerts:

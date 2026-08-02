@@ -36,6 +36,23 @@ def _get(path: str) -> dict | list:
         return json.loads(resp.read())
 
 
+# IBKR returns ±DBL_MAX when a field is unavailable rather than omitting it.
+# Stored as-is, dailyPnL = -1.7976931348623157e+308 was compared against the
+# -$20 daily-loss threshold and fired a catastrophic-looking false alert.
+_IBKR_UNAVAILABLE = 1e12
+
+
+def _num(value, digits: int = 2) -> float | None:
+    """Round an IBKR numeric field, mapping its unavailable sentinel to None."""
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return None
+    if abs(v) > _IBKR_UNAVAILABLE:
+        return None
+    return round(v, digits)
+
+
 def fetch_positions() -> dict:
     # Get account ID
     accounts = _get("/portfolio/accounts")
@@ -65,11 +82,11 @@ def fetch_positions() -> dict:
         positions.append({
             "ticker":         ticker,
             "qty":            p.get("position", 0),
-            "avg_cost":       round(p.get("avgCost", 0), 4),
-            "market_price":   round(p.get("mktPrice", 0), 4),
-            "market_value":   round(p.get("mktValue", 0), 2),
-            "unrealized_pnl": round(p.get("unrealizedPnl", 0), 2),
-            "daily_pnl":      round(p.get("dailyPnL", 0), 2),
+            "avg_cost":       _num(p.get("avgCost"), 4),
+            "market_price":   _num(p.get("mktPrice"), 4),
+            "market_value":   _num(p.get("mktValue")),
+            "unrealized_pnl": _num(p.get("unrealizedPnl")),
+            "daily_pnl":      _num(p.get("dailyPnL")),
             "currency":       p.get("currency", "USD"),
         })
 
@@ -89,8 +106,10 @@ def main() -> None:
             json.dump(data, f, indent=2)
         print(f"✅ {len(data['positions'])} positions saved → {OUTPUT_FILE}")
         for p in data["positions"]:
-            pnl_str = f"+${p['unrealized_pnl']:.2f}" if p["unrealized_pnl"] >= 0 else f"-${abs(p['unrealized_pnl']):.2f}"
-            print(f"   {p['ticker']:6s} ×{p['qty']} @ ${p['avg_cost']:.2f}  now ${p['market_price']:.2f}  {pnl_str}")
+            _u = p["unrealized_pnl"]
+            pnl_str = "—" if _u is None else (f"+${_u:.2f}" if _u >= 0 else f"-${abs(_u):.2f}")
+            print(f"   {p['ticker']:6s} ×{p['qty']} @ ${p['avg_cost'] or 0:.2f}  "
+                  f"now ${p['market_price'] or 0:.2f}  {pnl_str}")
     except urllib.error.URLError as e:
         print(f"❌ Gateway unreachable: {e}")
         print("   Is IB Gateway running? (paper port 4002, Client Portal port 5000)")

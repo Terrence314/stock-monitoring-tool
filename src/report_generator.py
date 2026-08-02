@@ -1005,7 +1005,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
 
       <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-2)">
         <span title="本月已實現+未實現盈虧 ÷ 投入名義金額。觸及 −5% 即停止開新倉。">
-          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%
+          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '%+,.0f'|format(action_box.breaker_usd) }} 美元{% if action_box.breaker_base %} / 本月投入 ${{ '%,.0f'|format(action_box.breaker_base) }}{% endif %})</span>{% endif %}
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
         <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即歷史止損修復（a0a50b86）之後開倉嘅單；之前 -8% 止損唔生效（最差走到 -22.1%），嗰批數據描述緊一個而家已經唔存在嘅風險模型。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
@@ -3325,21 +3325,32 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
                 "why": f"score {s.get('score')}" + (" · BB walking down" if s.get("bb_walking_down") else ""),
             })
 
-    # ── Circuit breaker: this month realized + unrealized vs notional ──
+    # ── Circuit breaker: this month's realized + unrealized P&L ──
+    # Open positions used to contribute their FULL lifetime unrealized P&L to
+    # whatever month happened to be current, so a position opened in May was
+    # still moving August's breaker. Both branches now require the trade to
+    # belong to this month.
     month_key = datetime.now(tz=timezone(timedelta(hours=8))).strftime("%Y-%m")
     pnl_month, notional_month = 0.0, 0.0
     for t in trades:
         notional = t.get("notional") or 0
-        if t.get("status") == "closed" and (t.get("exit_date") or "").startswith(month_key):
+        status   = t.get("status")
+        if status == "closed" and (t.get("exit_date") or "").startswith(month_key):
             pnl_month      += t.get("pnl") or 0
             notional_month += notional
-        elif t.get("status") == "open":
+        elif status == "open" and (t.get("signal_date") or "").startswith(month_key):
             ep, cp = t.get("entry_price") or 0, t.get("current_price") or 0
             if ep and cp:
                 pnl_month      += (cp - ep) * (t.get("shares") or 0)
                 notional_month += notional
     breaker_pct  = round(pnl_month / notional_month * 100, 2) if notional_month else 0.0
     breaker_trip = breaker_pct <= BREAKER_LIMIT_PCT
+    # Dollars alongside the percentage. The denominator is capital DEPLOYED
+    # this month, not account equity, so a high-turnover month can post a
+    # small percentage on a large absolute loss — the figure that actually
+    # matters against a ~USD 4.5k account. Choosing an equity base is a
+    # policy call, so surface the dollars rather than silently pick one.
+    breaker_usd = round(pnl_month, 2)
 
     # ── Go-live gate progress ──
     gate_start = datetime.strptime(GATE_START_DATE, "%Y-%m-%d").date()
@@ -3398,6 +3409,8 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "target_pct":    TAKE_PROFIT_PCT,
         "hold_days":     HOLD_DAYS,
         "breaker_pct":   breaker_pct,
+        "breaker_usd":   breaker_usd,
+        "breaker_base":  round(notional_month, 2),
         "breaker_limit": BREAKER_LIMIT_PCT,
         "breaker_trip":  breaker_trip,
         "gate_day":      min(days_in, GATE_DAYS),

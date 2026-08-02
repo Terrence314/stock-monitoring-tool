@@ -135,8 +135,25 @@ def _is_earnings_risk(ticker: str, today: date, window: int = EARNINGS_WINDOW) -
     return False, ""
 
 
+FOMC_COVERED_YEARS = {d.year for d in FOMC_DATES_2026}
+
+
 def _is_fomc_risk(today: date) -> tuple[bool, str]:
-    """Return (is_risky, reason_string). Warns on FOMC day and day before."""
+    """Return (is_risky, reason_string). Warns on FOMC day and day before.
+
+    The table is hardcoded per year, so on 1 January it silently becomes a
+    no-op — no error, no log line, the gate just stops firing. Surface that
+    as a caution instead of failing open in silence.
+    """
+    if today.year not in FOMC_COVERED_YEARS:
+        logger.warning(
+            "  [validator] FOMC table covers %s only — no FOMC gate for %d. "
+            "Update FOMC_DATES_* from federalreserve.gov.",
+            sorted(FOMC_COVERED_YEARS), today.year,
+        )
+        return True, (f"⚠️ FOMC 日程表未更新（只涵蓋 {sorted(FOMC_COVERED_YEARS)}）— "
+                      f"{today.year} 年無法檢查議息日")
+
     tomorrow = today + timedelta(days=1)
     if today in FOMC_DATES_2026:
         return True, f"FOMC decision day ({today})"
