@@ -1,13 +1,17 @@
 [
   {
-    "date": "2026-07-31",
-    "ran_at": "2026-07-31 15:03",
+    "date": "2026-08-02",
+    "ran_at": "2026-08-02 13:26",
     "passed": [
       "DXCM"
     ],
     "blocked": [
       {
-        "ticker": "NTES",
+        "ticker": "PSX",
+        "reason": "AI review REJECTED"
+      },
+      {
+        "ticker": "LYFT",
         "reason": "AI review REJECTED"
       }
     ],

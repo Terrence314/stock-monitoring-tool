@@ -1231,7 +1231,131 @@
         "Above MA60"
       ],
       "sector": "Communication Services"
+    },
+    {
+      "id": "DXCM-2026-08-02",
+      "ticker": "DXCM",
+      "direction": "long",
+      "signal_date": "2026-08-02",
+      "entry_price": 83.45,
+      "shares": 23.966448,
+      "notional": 2000.0,
+      "score": 100,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 83.45,
+      "current_date": "2026-08-02",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Volume Breakout",
+        "Above MA60",
+        "BB Squeeze Breakout Up"
+      ],
+      "sector": "Healthcare"
+    },
+    {
+      "id": "MTD-2026-08-02",
+      "ticker": "MTD",
+      "direction": "long",
+      "signal_date": "2026-08-02",
+      "entry_price": 1416.3,
+      "shares": 1.059098,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 1416.3,
+      "current_date": "2026-08-02",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60",
+        "BB Squeeze Breakout Up",
+        "BB Walking Up"
+      ],
+      "sector": "Healthcare"
+    },
+    {
+      "id": "NOW-2026-08-02",
+      "ticker": "NOW",
+      "direction": "long",
+      "signal_date": "2026-08-02",
+      "entry_price": 111.23,
+      "shares": 13.48557,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 111.23,
+      "current_date": "2026-08-02",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Technology"
+    },
+    {
+      "id": "NTES-2026-08-02",
+      "ticker": "NTES",
+      "direction": "long",
+      "signal_date": "2026-08-02",
+      "entry_price": 133.27,
+      "shares": 11.255346,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 133.27,
+      "current_date": "2026-08-02",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Communication Services"
+    },
+    {
+      "id": "XLE-2026-08-02",
+      "ticker": "XLE",
+      "direction": "long",
+      "signal_date": "2026-08-02",
+      "entry_price": 59.55,
+      "shares": 25.188917,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 59.55,
+      "current_date": "2026-08-02",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Unknown"
     }
   ],
-  "last_updated": "2026-07-31"
+  "last_updated": "2026-08-02"
 }

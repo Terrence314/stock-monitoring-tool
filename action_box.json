@@ -1,5 +1,5 @@
 {
- "ts": "2026-08-01 06:13",
+ "ts": "2026-08-02 21:25",
  "buys": [
   {
    "ticker": "DXCM",
@@ -8,37 +8,52 @@
    "reason": "BB squeeze just fired upward — bands expanding, BB 1.29",
    "stop": 76.77,
    "target": 93.46,
-   "expiry": "08-14"
-  },
-  {
-   "ticker": "NOW",
-   "price": 111.2300033569336,
-   "score": 80,
-   "reason": "Score 80 · BB 0.73 · RSI 57",
-   "stop": 102.33,
-   "target": 124.58,
-   "expiry": "08-14"
-  },
-  {
-   "ticker": "XLE",
-   "price": 59.54999923706055,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 64",
-   "stop": 54.79,
-   "target": 66.7,
-   "expiry": "08-14"
+   "notional": 2000.0,
+   "expiry": "08-14",
+   "ai_review": {
+    "verdict": "APPROVED",
+    "summary": "1. 【多頭理據】DXCM 呈現強勁的多頭排列（價格 83.45 > MA5 76.27 > MA20 74.55 > MA60 71.15），並伴隨 2.5 倍的爆量，顯示市場對此突破（BREAKOUT）的強烈支持。RSI 動能持續走強至 68.55，且 MACD 金叉位於 0 軸上方並動能擴張，表明多頭趨勢正在加速。\n2. 【空頭理據】該交易的止損點 76.77 相對於當前價格 83.45 較遠，若跌破止損位將造成較大損失。儘管有多頭信號，但目前 KD 指標顯示 K 值已達 73.9，D 值為 62.6，接近超買區間，存在潛在回調風險，且當前價格較 MA60 高出 17.3%，可能存在過度"
+   }
   }
  ],
  "sells": [],
  "no_action": false,
+ "regime": "bull",
+ "regime_spy": 57,
+ "regime_min": 70,
+ "regime_min_floor": 35,
+ "stop_pct": 8.0,
+ "target_pct": 12.0,
+ "hold_days": 10,
  "breaker_pct": 0.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 50,
+ "gate_day": 16,
  "gate_days": 60,
- "gate_winrate": 27.9,
- "gate_pf": 0.26,
- "gate_pnl": -2502.22,
- "gate_trades": 43,
- "gate_ready": false
+ "gate_winrate": 50.0,
+ "gate_ci_low": 0.0,
+ "gate_ci_high": 100.0,
+ "gate_min_trades": 30,
+ "gate_enough": false,
+ "gate_start": "2026-07-17",
+ "gate_pf": 0.3,
+ "gate_pnl": -84.0,
+ "gate_trades": 2,
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-08-02 13:26",
+  "passed": 1,
+  "blocked": 2,
+  "blocked_list": [
+   {
+    "ticker": "PSX",
+    "reason": "AI review REJECTED"
+   },
+   {
+    "ticker": "LYFT",
+    "reason": "AI review REJECTED"
+   }
+  ],
+  "caution_tags": []
+ }
 }
