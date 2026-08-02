@@ -737,9 +737,58 @@ body {
 }
 
 /* ── EXPERT / BEGINNER TOGGLE ──────────────────────────────────────── */
+/* Simple is the DEFAULT view: the page opens on the decision (today's
+   tickets, market state, alerts, favourites) and the dense reference
+   sections — watchlist, brief, headlines, sectors, ETFs, the 700KB card
+   grid, universe, HK — stay one tap away behind Expert. The class is
+   applied inline in <head> so there is no flash of the expert layout. */
 .beginner-only { display: none; }
 body.beginner-mode .expert-only  { display: none !important; }
 body.beginner-mode .beginner-only { display: block; }
+
+/* Restoring the page to something a phone can navigate. The old rule was
+   `.nav-pills { display: none }` with nothing in its place, so all 14
+   destinations — including four standalone pages with no other link —
+   simply vanished below 900px. */
+.mobile-nav { display: none; }
+@media (max-width: 900px) {
+  .mobile-nav {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .mobile-nav a {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 8px 4px; text-decoration: none; color: var(--text-2);
+    font-size: 10px; line-height: 1.2; background: none; border: 0;
+    font-family: inherit; cursor: pointer;
+  }
+  .mobile-nav a .mn-ico { font-size: 17px; line-height: 1; }
+  .mobile-nav a:active { background: var(--elevated); }
+  /* Bottom bar must never sit on top of the last section. */
+  body { padding-bottom: 68px; }
+  /* "More" sheet — every destination the bar does not carry. */
+  .more-sheet {
+    display: none; position: fixed; inset: 0; z-index: 210;
+    background: rgba(0,0,0,0.6);
+  }
+  .more-sheet.open { display: block; }
+  .more-sheet-inner {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--surface); border-top: 1px solid var(--border);
+    border-radius: 14px 14px 0 0; padding: 16px 16px 26px;
+    max-height: 78vh; overflow-y: auto;
+  }
+  .more-sheet-inner a {
+    display: block; padding: 13px 10px; color: var(--text);
+    text-decoration: none; border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .more-sheet-inner a:last-child { border-bottom: 0; }
+  /* The readability toggle belongs on the small screen most of all. */
+  #mode-toggle.mob-hide { display: inline-flex !important; }
+}
 
 .beg-verdict {
   padding: 10px 14px; border-radius: 8px;
@@ -776,8 +825,25 @@ body.beginner-mode .beginner-only { display: block; }
 }
 .run-btn:hover { background: rgba(52,211,153,0.14); border-color: rgba(52,211,153,0.45); }
 </style>
+<script>
+/* Simple is the default view. Applied before first paint so the dense
+   Expert layout never flashes; an explicit saved preference wins. */
+(function() {
+  var mode;
+  try { mode = localStorage.getItem('signalViewMode'); } catch (e) {}
+  if (mode !== 'expert') {
+    document.documentElement.setAttribute('data-boot-mode', 'beginner');
+  }
+})();
+</script>
 </head>
 <body>
+<script>
+if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
+  document.body.classList.add('beginner-mode');
+}
+</script>
+<a id="top"></a>
 
 <!-- ─── TOP HEADER ─────────────────────────────────────────────────── -->
 <header class="top">
@@ -803,7 +869,9 @@ body.beginner-mode .beginner-only { display: block; }
       <a class="nav-pill" href="./backtest.html">Backtest</a>
       <a class="nav-pill" href="./paper_trading.html">📋 Paper Trade</a>
       <a class="nav-pill" href="./pattern_backtest.html">🔬 Patterns</a>
-      <a class="nav-pill" href="./portfolio.html">💼 Portfolio</a>
+      {# 💼 Portfolio pill removed: portfolio.html holds real IBKR holdings
+         and is deliberately never published, so this link 404'd for every
+         visitor. Run refresh.py locally to generate and open it. #}
       <a class="nav-pill" href="#hkbrief">🇭🇰 港股</a>
     </nav>
 
@@ -1017,9 +1085,13 @@ body.beginner-mode .beginner-only { display: block; }
             {% endif %}
           {% endif %}
         </div>
-        <div class="kpi-val" style="{% if fg_value is not none %}color:{% if fg_value >= 60 %}var(--up){% elif fg_value >= 40 %}var(--amber){% else %}var(--down){% endif %}{% endif %}">{{ fg_value if fg_value is not none else '—' }}</div>
-        <div class="kpi-sub">{{ fg_label if fg_label else 'CNN index · /100' }}</div>
+        {# An em-dash reads as "still loading". When the source is down, say
+           so — CNN now returns HTTP 418 to this fetcher, so the tile has been
+           permanently blank rather than pending. #}
+        <div class="kpi-val" style="{% if fg_value is not none %}color:{% if fg_value >= 60 %}var(--up){% elif fg_value >= 40 %}var(--amber){% else %}var(--down){% endif %}{% else %}color:var(--muted);font-size:20px{% endif %}">{{ fg_value if fg_value is not none else '無數據' }}</div>
+        <div class="kpi-sub">{% if fg_value is not none %}{{ fg_label if fg_label else 'CNN index · /100' }}{% else %}<span style="color:var(--amber)">CNN 數據源已封鎖</span>{% endif %}</div>
       </div>
+      {% if fg_value is not none %}
       <div class="kpi" title="Change in Fear &amp; Greed Index vs. the same time last week. Rising = sentiment improving; falling = market getting more fearful.">
         <div class="kpi-head">
           <span class="kpi-label">F&amp;G change</span>
@@ -1030,6 +1102,7 @@ body.beginner-mode .beginner-only { display: block; }
         <div class="kpi-val" style="{% if fg_delta is not none %}color:{% if fg_delta >= 0 %}var(--up){% else %}var(--down){% endif %}{% endif %}">{{ ('+' if fg_delta and fg_delta >= 0 else '') + (fg_delta|string) if fg_delta is not none else '—' }}</div>
         <div class="kpi-sub">vs. past week</div>
       </div>
+      {% endif %}
     </section>
 
     <!-- Mid-row: SPY chart + Signal distribution + Sector rotation -->
@@ -1106,7 +1179,7 @@ body.beginner-mode .beginner-only { display: block; }
     </div><!-- /.mid-row -->
 
     <!-- Watchlist table -->
-    <section id="watchlist" class="card card-pad-0">
+    <section id="watchlist" class="card card-pad-0 expert-only">
       <div class="card-head">
         <div>
           <span class="card-title">Watchlist</span><span style="font-size:10px;color:var(--muted);margin-left:10px">排名只反映趨勢強度，唔係買入指令 — 買咩睇頂部 ⚡ 今日行動</span>
@@ -1186,7 +1259,7 @@ body.beginner-mode .beginner-only { display: block; }
   <div class="page-right">
 
     <!-- AI Morning Brief -->
-    <section id="brief" class="card">
+    <section id="brief" class="card expert-only">
       <div class="brief-head">
         <div class="brief-icon">✦</div>
         <div>
@@ -1209,7 +1282,7 @@ body.beginner-mode .beginner-only { display: block; }
     </section>
 
     <!-- Headlines -->
-    <section id="headlines" class="card">
+    <section id="headlines" class="card expert-only">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
         <span class="card-title">Headlines</span>
         <span style="font-family:var(--mono);font-size:10px;color:var(--text-2)">finnhub · yfinance</span>
@@ -1236,7 +1309,7 @@ body.beginner-mode .beginner-only { display: block; }
 </div><!-- /.page-grid -->
 
 <!-- ─── SECTOR HEATMAP ─────────────────────────────────────────────── -->
-<section id="sectors" class="card">
+<section id="sectors" class="card expert-only">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <div>
       <span class="card-title">Sector signal heatmap</span>
@@ -1335,7 +1408,7 @@ body.beginner-mode .beginner-only { display: block; }
 
 <!-- ─── ETF PANEL ─────────────────────────────────────────────────────── -->
 {% if etf_panel_items %}
-<section id="etf-panel" class="card card-pad-0" style="max-width:1100px;margin:24px auto">
+<section id="etf-panel" class="card card-pad-0 expert-only" style="max-width:1100px;margin:24px auto">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px">
     <div>
       <span class="card-title" style="font-size:16px">📊 ETF Dashboard</span>
@@ -1434,7 +1507,7 @@ body.beginner-mode .beginner-only { display: block; }
 {% endif %}
 
 <!-- ─── STOCK CARDS (Tier 2 — per-ticker bento) ────────────────────── -->
-<section id="stocks">
+<section id="stocks" class="expert-only">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 4px">
     <div>
       <span class="card-title" style="font-size:16px">🔥 Tier 2 — Close Watch</span><span style="font-size:10px;color:var(--muted);margin-left:10px">排名只反映趨勢強度，唔係買入指令 — 買咩睇頂部 ⚡ 今日行動</span>
@@ -1787,7 +1860,7 @@ body.beginner-mode .beginner-only { display: block; }
 
 <!-- ─── UNIVERSE LEADERBOARD ──────────────────────────────────────── -->
 {% if universe_top100 %}
-<section id="universe" class="card card-pad-0" style="max-width:1100px;margin:24px auto">
+<section id="universe" class="card card-pad-0 expert-only" style="max-width:1100px;margin:24px auto">
   <div style="padding:20px 24px 12px;display:flex;align-items:center;justify-content:space-between">
     <div>
       <span class="card-title" style="font-size:15px">📊 Universe Leaderboard</span><span style="font-size:10px;color:var(--muted);margin-left:10px">排名只反映趨勢強度，唔係買入指令 — 買咩睇頂部 ⚡ 今日行動</span>
@@ -1874,7 +1947,7 @@ body.beginner-mode .beginner-only { display: block; }
 
 <!-- ─── HK MORNING BRIEF ──────────────────────────────────────────────── -->
 {% if hk_data %}
-<section id="hkbrief" class="card" style="max-width:1100px;margin:24px auto;padding:28px 32px">
+<section id="hkbrief" class="card expert-only" style="max-width:1100px;margin:24px auto;padding:28px 32px">
   <h2 style="margin:0 0 20px;font-size:18px;font-weight:700;letter-spacing:-.3px">🇭🇰 港股盤前分析</h2>
 
   <!-- HK Indicator Table -->
@@ -2257,15 +2330,13 @@ function toggleMode() {
   if (btn) btn.textContent = isBeginner ? '🔬 Expert' : '📖 Simple';
   try { localStorage.setItem('signalViewMode', isBeginner ? 'beginner' : 'expert'); } catch(e) {}
 }
-// Restore saved mode on page load
+// Sync the toggle label with the mode the inline <head> script already
+// applied. The class itself is set before first paint — see <head> — so
+// there is no flash of the expert layout on load.
 (function() {
-  try {
-    if (localStorage.getItem('signalViewMode') === 'beginner') {
-      document.body.classList.add('beginner-mode');
-      var btn = document.getElementById('mode-toggle');
-      if (btn) btn.textContent = '🔬 Expert';
-    }
-  } catch(e) {}
+  var btn = document.getElementById('mode-toggle');
+  if (btn) btn.textContent = document.body.classList.contains('beginner-mode')
+    ? '🔬 Expert' : '📖 Simple';
 })();
 
 // ── Market open/closed badge ─────────────────────────────────────────
@@ -2715,7 +2786,54 @@ document.addEventListener('DOMContentLoaded', function() {
   renderFavourites();      // instant render from localStorage
   _sbFavLoad();            // async Supabase sync (re-renders if server has more)
 });
+
+// ── Mobile "More" sheet ───────────────────────────────────────────────
+window.toggleMore = function(ev) {
+  if (ev) ev.preventDefault();
+  var s = document.getElementById('more-sheet');
+  if (s) s.classList.toggle('open');
+};
+document.addEventListener('click', function(e) {
+  var s = document.getElementById('more-sheet');
+  if (!s || !s.classList.contains('open')) return;
+  // Backdrop tap, or any destination inside the sheet, closes it.
+  if (e.target === s || (e.target.closest && e.target.closest('.more-sheet-inner a'))) {
+    s.classList.remove('open');
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Escape') return;
+  var s = document.getElementById('more-sheet');
+  if (s) s.classList.remove('open');
+});
 </script>
+
+<!-- Phone navigation. Bottom bar carries the two destinations used daily
+     (today's tickets, market state) plus the validation record; everything
+     else lives in the More sheet. Above 900px this is display:none and the
+     original pill row takes over. -->
+<nav class="mobile-nav">
+  <a href="#top"><span class="mn-ico">⚡</span>今日行動</a>
+  <a href="#overview"><span class="mn-ico">📈</span>市場</a>
+  <a href="./paper_trading.html"><span class="mn-ico">📋</span>紙上驗證</a>
+  <a href="#" onclick="toggleMore(event)"><span class="mn-ico">☰</span>更多</a>
+</nav>
+
+<div class="more-sheet" id="more-sheet">
+  <div class="more-sheet-inner">
+    <a href="#brief">🌅 AI 早盤簡報</a>
+    <a href="#sectors">🔄 板塊輪動</a>
+    <a href="#watchlist">📋 觀察名單</a>
+    <a href="#alerts">🔔 提示記錄</a>
+    <a href="#favourites">⭐ 我的收藏</a>
+    <a href="#etf-panel">📊 ETF</a>
+    <a href="#stocks">🔥 Tier 2 詳細分析</a>
+    <a href="#universe">🌐 Universe 100</a>
+    <a href="#hkbrief">🇭🇰 港股</a>
+    <a href="./backtest.html">📉 訊號回測</a>
+    <a href="./pattern_backtest.html">🔬 形態回測</a>
+  </div>
+</div>
 </body>
 </html>
 """
