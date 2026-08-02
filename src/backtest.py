@@ -7,6 +7,7 @@ Called from main.py after the daily run completes.
 Output: outputs/backtest.html
 """
 
+import math
 import os
 import json
 from datetime import datetime
@@ -17,6 +18,10 @@ from jinja2 import Template
 SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
 SIGNAL_THRESHOLD   = 70
 FORWARD_DAYS       = [5, 10, 20]
+BENCHMARK          = "SPY"
+# Per-ticker rows below this never get a win rate: 2 signals showing "100%"
+# invites cherry-picking from what is pure noise.
+MIN_TICKER_SIGNALS = 5
 
 
 # ── Data helpers ───────────────────────────────────────────────────────────────
@@ -110,14 +115,36 @@ def _run_signals(
             if entry_price <= 0:
                 continue
 
+            # Benchmark over the IDENTICAL window. Without this a 60% win
+            # rate at +10d is unreadable — it could be entirely market
+            # direction. Excess return is the difference between measuring a
+            # signal and measuring beta.
+            bench = price_series.get(BENCHMARK) or {}
+            bench_dates = sorted(bench.keys())
+
+            def _bench_return(days: int) -> float | None:
+                fwd = [d for d in bench_dates if d >= entry_date]
+                if len(fwd) <= days:
+                    return None
+                b0, b1 = bench.get(fwd[0]), bench.get(fwd[days])
+                if not b0 or b0 <= 0 or not b1:
+                    return None
+                return (b1 - b0) / b0 * 100
+
             forward: dict[str, float | None] = {}
             for fd in FORWARD_DAYS:
                 target_idx = entry_idx + fd
                 if target_idx < len(all_dates):
                     exit_price = series[all_dates[target_idx]]
-                    forward[f"r{fd}"] = round((exit_price - entry_price) / entry_price * 100, 2)
+                    r = (exit_price - entry_price) / entry_price * 100
+                    forward[f"r{fd}"] = round(r, 2)
+                    br = _bench_return(fd)
+                    forward[f"b{fd}"] = round(br, 2) if br is not None else None
+                    forward[f"x{fd}"] = round(r - br, 2) if br is not None else None
                 else:
                     forward[f"r{fd}"] = None
+                    forward[f"b{fd}"] = None
+                    forward[f"x{fd}"] = None
 
             results.append({
                 "ticker":       ticker,
@@ -140,16 +167,38 @@ def _aggregate(signals: list[dict]) -> dict:
         key = f"r{fd}"
         vals = [r[key] for r in rows if r.get(key) is not None]
         if not vals:
-            return {"n": 0, "win_rate": None, "avg": None, "median": None}
+            return {"n": 0, "win_rate": None, "avg": None, "median": None,
+                    "bench_avg": None, "excess_avg": None, "beat_rate": None,
+                    "sd": None, "t_stat": None}
         wins = sum(1 for v in vals if v > 0)
         sorted_v = sorted(vals)
         mid = len(sorted_v) // 2
         median = (sorted_v[mid - 1] + sorted_v[mid]) / 2 if len(sorted_v) % 2 == 0 else sorted_v[mid]
+
+        # Benchmark-relative view over the same windows.
+        bvals = [r[f"b{fd}"] for r in rows if r.get(f"b{fd}") is not None]
+        xvals = [r[f"x{fd}"] for r in rows if r.get(f"x{fd}") is not None]
+        avg = sum(vals) / len(vals)
+        # Dispersion and a t-stat on excess return: an average with no spread
+        # attached says nothing about whether it could be chance.
+        sd = t_stat = None
+        if len(xvals) > 1:
+            xbar = sum(xvals) / len(xvals)
+            var = sum((v - xbar) ** 2 for v in xvals) / (len(xvals) - 1)
+            sd = math.sqrt(var)
+            if sd > 0:
+                t_stat = xbar / (sd / math.sqrt(len(xvals)))
         return {
-            "n":        len(vals),
-            "win_rate": round(wins / len(vals) * 100, 1),
-            "avg":      round(sum(vals) / len(vals), 2),
-            "median":   round(median, 2),
+            "n":          len(vals),
+            "win_rate":   round(wins / len(vals) * 100, 1),
+            "avg":        round(avg, 2),
+            "median":     round(median, 2),
+            "bench_avg":  round(sum(bvals) / len(bvals), 2) if bvals else None,
+            "excess_avg": round(sum(xvals) / len(xvals), 2) if xvals else None,
+            # Share of signals that actually beat simply holding the benchmark.
+            "beat_rate":  round(sum(1 for v in xvals if v > 0) / len(xvals) * 100, 1) if xvals else None,
+            "sd":         round(sd, 2) if sd is not None else None,
+            "t_stat":     round(t_stat, 2) if t_stat is not None else None,
         }
 
     overall = {fd: stats_for(signals, fd) for fd in FORWARD_DAYS}
@@ -158,9 +207,18 @@ def _aggregate(signals: list[dict]) -> dict:
     tickers = sorted({r["ticker"] for r in signals})
     for ticker in tickers:
         rows = [r for r in signals if r["ticker"] == ticker]
+        # Below MIN_TICKER_SIGNALS the per-ticker numbers are noise; report
+        # the count and suppress the rates rather than publishing a "100%
+        # win rate" built on two observations.
+        enough = len(rows) >= MIN_TICKER_SIGNALS
         by_ticker[ticker] = {
             "n_signals": len(rows),
-            **{fd: stats_for(rows, fd) for fd in FORWARD_DAYS},
+            "enough":    enough,
+            **{fd: (stats_for(rows, fd) if enough
+                    else {"n": len(rows), "win_rate": None, "avg": None,
+                          "median": None, "bench_avg": None, "excess_avg": None,
+                          "beat_rate": None, "sd": None, "t_stat": None})
+               for fd in FORWARD_DAYS},
         }
 
     return {"overall": overall, "by_ticker": by_ticker}
@@ -325,6 +383,26 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <span class="fd-metric-label">Median return</span>
         <span class="fd-metric-val" style="color:{{ 'var(--up)' if s.median >= 0 else 'var(--down)' }}">{{ '%+.2f'|format(s.median) }}%</span>
       </div>
+      {% if s.bench_avg is not none %}
+      <div class="fd-metric" title="Holding SPY over the identical window. The signal is only worth anything to the extent it beats this.">
+        <span class="fd-metric-label">SPY same window</span>
+        <span class="fd-metric-val" style="color:var(--text-2)">{{ '%+.2f'|format(s.bench_avg) }}%</span>
+      </div>
+      <div class="fd-metric" title="Average return minus SPY over the same window — the part not explained by market direction.">
+        <span class="fd-metric-label">Excess vs SPY</span>
+        <span class="fd-metric-val" style="color:{{ 'var(--up)' if s.excess_avg >= 0 else 'var(--down)' }}">{{ '%+.2f'|format(s.excess_avg) }}%</span>
+      </div>
+      <div class="fd-metric" title="Share of signals that beat simply holding SPY. 50% means the signal added nothing.">
+        <span class="fd-metric-label">Beat SPY</span>
+        <span class="fd-metric-val" style="color:{{ 'var(--up)' if s.beat_rate >= 55 else ('var(--amber)' if s.beat_rate >= 45 else 'var(--down)') }}">{{ s.beat_rate }}%</span>
+      </div>
+      {% endif %}
+      {% if s.t_stat is not none %}
+      <div class="fd-metric" title="t-statistic on excess return. Below about 2 the edge is not distinguishable from chance at this sample size — sd is the spread of individual excess returns.">
+        <span class="fd-metric-label">t-stat (sd {{ '%.1f'|format(s.sd) }}%)</span>
+        <span class="fd-metric-val" style="color:{{ 'var(--up)' if s.t_stat >= 2 else 'var(--muted)' }}">{{ '%+.2f'|format(s.t_stat) }}{% if s.t_stat < 2 %} <span style="font-size:10px;color:var(--muted)">· noise</span>{% endif %}</span>
+      </div>
+      {% endif %}
       {% else %}
       <div style="color:var(--muted);font-family:var(--mono);font-size:11px">Insufficient data</div>
       {% endif %}
@@ -478,7 +556,9 @@ def run_backtest(tickers: list[str], output_dir: str = "outputs") -> str | None:
         return None
 
     print(f"  [backtest] fetching 2y price history for {len(signal_tickers)} tickers…")
-    price_series = _fetch_price_series(sorted(signal_tickers))
+    # BENCHMARK must be fetched even when it never produced a signal — every
+    # excess-return figure is measured against it.
+    price_series = _fetch_price_series(sorted(set(signal_tickers) | {BENCHMARK}))
 
     signals = _run_signals(score_history, price_series)
     if not signals:

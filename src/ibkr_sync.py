@@ -53,6 +53,38 @@ def _num(value, digits: int = 2) -> float | None:
     return round(v, digits)
 
 
+REPORTING_CCY = "USD"
+
+
+def _fx_rates(currencies: set[str]) -> dict[str, float]:
+    """Rate to multiply an amount in each currency by to get USD.
+
+    The account is genuinely mixed — net liquidation denominated in HKD,
+    US positions in USD, SPYL.L on the LSE — and nothing converted, so every
+    cross-position total (exposure, sector concentration, drawdown %) was
+    summing different units. Falls back to 1.0 and flags the currency rather
+    than inventing a rate.
+    """
+    rates = {REPORTING_CCY: 1.0}
+    todo = {c for c in currencies if c and c != REPORTING_CCY}
+    if not todo:
+        return rates
+    try:
+        import yfinance as yf
+    except ImportError:
+        return rates
+    for ccy in todo:
+        try:
+            raw = yf.download(f"{ccy}{REPORTING_CCY}=X", period="5d",
+                              progress=False, auto_adjust=True)
+            close = raw["Close"].dropna()
+            if not close.empty:
+                rates[ccy] = float(close.iloc[-1])
+        except Exception as e:
+            print(f"   ⚠️ FX {ccy}->{REPORTING_CCY} unavailable ({e}); left unconverted")
+    return rates
+
+
 def fetch_positions() -> dict:
     # Get account ID
     accounts = _get("/portfolio/accounts")
@@ -90,8 +122,29 @@ def fetch_positions() -> dict:
             "currency":       p.get("currency", "USD"),
         })
 
+    # Normalise every money figure to one reporting currency and record the
+    # rates used, so downstream totals are comparable and auditable.
+    rates = _fx_rates({p.get("currency") for p in positions} | {summary.get("currency")})
+    for p in positions:
+        r = rates.get(p.get("currency"))
+        p["fx_rate"] = r
+        p["fx_converted"] = r is not None
+        for f in ("market_value", "unrealized_pnl", "daily_pnl"):
+            v = p.get(f)
+            p[f + "_usd"] = round(v * r, 2) if (v is not None and r) else None
+    _sr = rates.get(summary.get("currency"))
+    summary["reporting_currency"] = REPORTING_CCY
+    summary["fx_rate"] = _sr
+    for f in ("net_liquidation", "buying_power"):
+        try:
+            v = float(summary.get(f))
+        except (TypeError, ValueError):
+            v = None
+        summary[f + "_usd"] = round(v * _sr, 2) if (v is not None and _sr) else None
+
     return {
         "synced_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "fx_rates":  rates,
         "account":   summary,
         "positions": positions,
     }

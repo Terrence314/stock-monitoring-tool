@@ -486,6 +486,24 @@ def _run(cfg: dict) -> None:
 
     # ── IBKR P&L / position alert ────────────────────────────────────────────
     _ibkr_positions_list = _ibkr.get("positions", [])
+    # Freshness gate. The dashboard carries a staleness banner but this path
+    # had none, so a run after a day of gateway downtime alerted on old
+    # prices with nothing saying so. The sync is manual and local, so stale
+    # data here is normal rather than exceptional.
+    IBKR_MAX_AGE_HOURS = 24
+    _ibkr_age_h = None
+    _synced_at = _ibkr.get("synced_at")
+    if _synced_at:
+        try:
+            _ibkr_age_h = (datetime.now() - datetime.strptime(
+                _synced_at, "%Y-%m-%d %H:%M")).total_seconds() / 3600
+        except ValueError:
+            _ibkr_age_h = None
+    if _ibkr_positions_list and _ibkr_age_h is not None and _ibkr_age_h > IBKR_MAX_AGE_HOURS:
+        print(f"      IBKR P&L：跳過 — 持倉數據已 {_ibkr_age_h:.0f} 小時未更新"
+              f"（{_synced_at}），先跑 ibkr_sync.py 再睇")
+        _ibkr_positions_list = []
+
     if _ibkr_positions_list and cfg["telegram"]["bot_token"]:
         try:
             daily_loss_thr   = cfg.get("analysis", {}).get("pnl_alert_daily_loss", -20.0)
