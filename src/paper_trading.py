@@ -30,6 +30,42 @@ MAX_PER_SECTOR   = 2        # max open longs per sector (2026-06-19: 4 semis ope
 TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% price move
 STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
 
+# ── Transaction costs ──────────────────────────────────────────────────────────
+# Every P&L figure was gross: no commission, no slippage, no spread. On a
+# 42-trade record at PF 0.26 that does not flip the conclusion, but the gate
+# decides real money and an unpriced strategy cannot support that decision.
+# Defaults follow IBKR's US tiered schedule; tune here, nowhere else.
+COMMISSION_PER_SHARE = 0.0035   # USD per share, per side
+COMMISSION_MIN       = 0.35     # USD floor, per side
+COMMISSION_MAX_PCT   = 1.0      # capped at 1% of trade value, per side
+SLIPPAGE_BPS         = 5.0      # basis points per side (0.05%)
+
+
+def _side_cost(price: float, shares: float) -> float:
+    """Commission + slippage for ONE side of a trade."""
+    if not price or not shares or price <= 0 or shares <= 0:
+        return 0.0
+    value = price * shares
+    commission = min(
+        max(COMMISSION_PER_SHARE * shares, COMMISSION_MIN),
+        value * COMMISSION_MAX_PCT / 100,
+    )
+    return commission + value * SLIPPAGE_BPS / 10_000
+
+
+def _round_trip_cost(entry_price: float, exit_price: float, shares: float) -> float:
+    """Total cost of entering and exiting a position."""
+    return _side_cost(entry_price, shares) + _side_cost(exit_price, shares)
+
+
+def _net_pnl(entry_price: float, exit_price: float, shares: float,
+             is_short: bool = False) -> tuple[float, float, float]:
+    """Return (net_pnl, gross_pnl, costs) for a closed position."""
+    gross = (entry_price - exit_price) * shares if is_short else (exit_price - entry_price) * shares
+    costs = _round_trip_cost(entry_price, exit_price, shares)
+    return round(gross - costs, 2), round(gross, 2), round(costs, 2)
+
+
 # ── Strategy settings ──────────────────────────────────────────────────────────
 LONG_ONLY            = True   # no short positions; model is a long trend-follower
 REGIME_FLOOR         = 35    # SPY score below this → no new longs (extreme bear only)
@@ -262,14 +298,17 @@ def _apply_ohlc_stops(open_trades: list, ohlc: dict, today_str: str) -> int:
             else:
                 last_day = day
                 continue
+            _net, _gross, _costs = _net_pnl(ep, exit_price, trade["shares"])
             trade.update({
                 "status":      "closed",
                 "exit_date":   day,
                 "exit_price":  round(exit_price, 2),
                 "exit_reason": reason,
                 "gapped":      gapped,
-                "pnl":         round((exit_price - ep) * trade["shares"], 2),
-                "pnl_pct":     round((exit_price - ep) / ep * 100, 2),
+                "pnl":         _net,
+                "pnl_gross":   _gross,
+                "costs":       _costs,
+                "pnl_pct":     round(_net / (ep * trade["shares"]) * 100, 2),
             })
             closed += 1
             break
@@ -864,15 +903,17 @@ def update_open_positions(stock_results: list, today_str: str) -> None:
         else:
             continue
 
-        pnl_dir = ep - fill if is_short else fill - ep
+        _net, _gross, _costs = _net_pnl(ep, fill, trade["shares"], is_short)
         trade.update({
             "status":      "closed",
             "exit_date":   today_str,
             "exit_price":  round(fill, 2),
             "exit_reason": reason,
             "gapped":      gapped,
-            "pnl":         round(pnl_dir * trade["shares"], 2),
-            "pnl_pct":     round(pnl_dir / ep * 100, 2),
+            "pnl":         _net,
+            "pnl_gross":   _gross,
+            "costs":       _costs,
+            "pnl_pct":     round(_net / (ep * trade["shares"]) * 100, 2),
         })
         closed_now += 1
 
@@ -1104,14 +1145,16 @@ def run_paper_trading(
                 fill, gapped = _target_fill_price(ep, open_map.get(trade["ticker"]))
             else:
                 fill, gapped = _stop_fill_price(ep, open_map.get(trade["ticker"]))
-            pnl_dir = ep - fill if is_short else fill - ep
+            _net, _gross, _costs = _net_pnl(ep, fill, trade["shares"], is_short)
             trade["status"]      = "closed"
             trade["exit_date"]   = today_str
             trade["exit_price"]  = round(fill, 2)
             trade["exit_reason"] = "take_profit" if hit_target else "stop_loss"
             trade["gapped"]      = gapped
-            trade["pnl"]         = round(pnl_dir * trade["shares"], 2)
-            trade["pnl_pct"]     = round(pnl_dir / ep * 100, 2)
+            trade["pnl"]         = _net
+            trade["pnl_gross"]   = _gross
+            trade["costs"]       = _costs
+            trade["pnl_pct"]     = round(_net / (ep * trade["shares"]) * 100, 2)
 
     # Re-filter open trades after TP/SL check
     open_trades = [t for t in trades if t["status"] == "open"]
@@ -1141,8 +1184,10 @@ def run_paper_trading(
             "exit_date":   today_str,
             "exit_price":  round(cp, 2),
             "exit_reason": exit_reason,
-            "pnl":         round((cp - ep) * trade["shares"], 2),
-            "pnl_pct":     round(pct, 2),
+            "pnl":         _net,
+            "pnl_gross":   _gross,
+            "costs":       _costs,
+            "pnl_pct":     round(_net / (ep * trade["shares"]) * 100, 2),
         })
         print(f"  [paper_trading] {ticker} signal exit ({exit_reason}): {pct:+.1f}%")
 
@@ -1185,20 +1230,17 @@ def run_paper_trading(
             continue
 
         ep = trade["entry_price"]
-        if trade.get("direction", "long") == "short":
-            # Short: profit when price falls (sold high, buy back low)
-            pnl     = round((ep - exit_price) * trade["shares"], 2)
-            pnl_pct = round((ep - exit_price) / ep * 100, 2)
-        else:
-            pnl     = round((exit_price - ep) * trade["shares"], 2)
-            pnl_pct = round((exit_price - ep) / ep * 100, 2)
+        _is_short = trade.get("direction", "long") == "short"
+        pnl, pnl_gross, costs = _net_pnl(ep, exit_price, trade["shares"], _is_short)
         trade.update({
             "status":      "closed",
             "exit_date":   exit_date,
             "exit_price":  round(exit_price, 2),
             "exit_reason": trade.get("exit_reason") or "hold_period",
             "pnl":         pnl,
-            "pnl_pct":     pnl_pct,
+            "pnl_gross":   pnl_gross,
+            "costs":       costs,
+            "pnl_pct":     round(pnl / (ep * trade["shares"]) * 100, 2),
         })
 
     portfolio["trades"] = trades

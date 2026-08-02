@@ -32,14 +32,28 @@ def test_earnings_window_counts_trading_days():
         f"(got risky={risky}, reason={reason!r})"
     )
 
-    # Control: earnings 3 trading days out must NOT block
+    # Earnings 3 trading days out USED to be a "must not block" control. It
+    # now blocks: the +/-1-day window only ever covered the entry day, while
+    # holds run HOLD_WINDOW trading days, so a print 3 days out lands
+    # squarely inside the open position. Kept as a positive case to pin the
+    # widened behaviour.
     thursday_next = date(2026, 7, 16)
     sv._get_earnings_date = lambda ticker: thursday_next
+    try:
+        risky, reason = sv._is_earnings_risk("TEST", monday)
+    finally:
+        sv._get_earnings_date = orig
+    assert risky, "earnings inside the hold window must block"
+    assert "hold" in reason
+
+    # Control: beyond the hold window it must still NOT block.
+    far_out = date(2026, 9, 30)
+    sv._get_earnings_date = lambda ticker: far_out
     try:
         risky, _ = sv._is_earnings_risk("TEST", monday)
     finally:
         sv._get_earnings_date = orig
-    assert not risky, "earnings 3 trading days away must not block"
+    assert not risky, "earnings beyond the hold window must not block"
 
 
 def test_trading_day_delta_signs_and_weekends():

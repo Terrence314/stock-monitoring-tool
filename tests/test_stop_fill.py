@@ -79,7 +79,8 @@ def test_sweep_books_the_stop_on_an_intraday_breach():
     assert _apply_ohlc_stops([t], ohlc, "2026-08-05") == 1
     assert t["exit_price"] == pytest.approx(STOP)
     assert t["gapped"] is False
-    assert t["pnl_pct"] == pytest.approx(-STOP_LOSS_PCT)
+    # Net of costs, so just past the stop; exit_price above is exact.
+    assert -STOP_LOSS_PCT - 0.5 < t["pnl_pct"] <= -STOP_LOSS_PCT
 
 
 def test_sweep_books_the_open_on_a_gap_down():
@@ -112,7 +113,8 @@ def test_poll_no_longer_books_the_observed_price(portfolio):
     assert t["status"] == "closed"
     assert t["exit_reason"] == "stop_loss"
     assert t["exit_price"] == pytest.approx(STOP)
-    assert t["pnl_pct"] == pytest.approx(-STOP_LOSS_PCT)
+    # Net of costs, so just past the stop; exit_price above is exact.
+    assert -STOP_LOSS_PCT - 0.5 < t["pnl_pct"] <= -STOP_LOSS_PCT
 
 
 def test_poll_still_reports_a_genuine_gap_honestly(portfolio):
@@ -134,5 +136,6 @@ def test_no_long_closes_past_the_stop_without_a_gap(portfolio):
     )
 
     t = json.loads(portfolio.read_text())["trades"][0]
-    assert t["pnl_pct"] >= -STOP_LOSS_PCT or t.get("gapped"), \
+    # Allow the cost drag; the point is the fill was not the polled -22%.
+    assert t["pnl_pct"] >= -STOP_LOSS_PCT - 0.5 or t.get("gapped"), \
         f"closed at {t['pnl_pct']}% with no gap recorded"

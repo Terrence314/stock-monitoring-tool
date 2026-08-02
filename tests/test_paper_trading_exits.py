@@ -56,7 +56,10 @@ def test_stop_breach_closes_at_stop_price():
     assert t["exit_reason"] == "stop_loss"
     assert t["exit_date"] == "2026-07-03", f"exit on breach day, got {t['exit_date']}"
     assert abs(t["exit_price"] - stop_price) < 1e-9, f"exit at stop price, got {t['exit_price']}"
-    assert abs(t["pnl_pct"] + STOP_LOSS_PCT) < 1e-6, f"pnl_pct must be -{STOP_LOSS_PCT}, got {t['pnl_pct']}"
+    # pnl_pct is now NET of commission + slippage, so it sits just past the
+    # stop. The fill price above is the invariant that must stay exact.
+    assert -STOP_LOSS_PCT - 0.5 < t["pnl_pct"] <= -STOP_LOSS_PCT, \
+        f"pnl_pct must be -{STOP_LOSS_PCT} net of costs, got {t['pnl_pct']}"
 
 
 def test_no_breach_stays_open_and_updates_price():
@@ -84,7 +87,8 @@ def test_target_breach_closes_at_target_price():
     assert closed == 1
     assert t["exit_reason"] == "take_profit"
     assert abs(t["exit_price"] - target) < 1e-9
-    assert abs(t["pnl_pct"] - TAKE_PROFIT_PCT) < 1e-6
+    # Costs shave the net return just under the target.
+    assert TAKE_PROFIT_PCT - 0.5 < t["pnl_pct"] <= TAKE_PROFIT_PCT
 
 
 def test_same_day_stop_and_target_prefers_stop():

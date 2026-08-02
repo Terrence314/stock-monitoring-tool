@@ -42,7 +42,10 @@ logger = logging.getLogger(__name__)
 PORTFOLIO_FILE   = os.path.join("outputs", "paper_portfolio.json")
 VALIDATOR_LOG    = os.path.join("outputs", "signal_validator_log.json")
 BUY_THRESHOLD    = 70
-EARNINGS_WINDOW  = 1   # trading days; block if earnings within this many days
+EARNINGS_WINDOW  = 1   # trading days either side of entry
+# The whole planned holding period is exposed to an earnings print, not
+# just the entry day. Kept in sync with paper_trading.HOLD_DAYS.
+HOLD_WINDOW      = 10
 
 # 2026 FOMC decision dates (day 2 of each 2-day meeting — when rate decision drops).
 # Source: federalreserve.gov/monetarypolicy/fomccalendars.htm
@@ -77,8 +80,12 @@ def _load_open_tickers(portfolio_path: str = PORTFOLIO_FILE) -> set:
 
 
 def _get_earnings_date(ticker: str) -> date | None:
-    """Fetch next earnings date via yfinance. Returns None if unavailable."""
-    try:
+    """Next earnings date, or None when none is scheduled.
+
+    RAISES on lookup failure — the caller needs to tell "no earnings" from
+    "could not find out". Kept as the seam tests patch.
+    """
+    if True:
         cal = yf.Ticker(ticker).calendar
         if cal is None:
             return None
@@ -101,9 +108,22 @@ def _get_earnings_date(ticker: str) -> date | None:
                 val = row.iloc[0] if hasattr(row, "iloc") else row
                 if hasattr(val, "date"):
                     return val.date()
-    except Exception as e:
-        logger.debug(f"  [validator] earnings fetch failed for {ticker}: {e}")
     return None
+
+
+def _fetch_earnings(ticker: str) -> tuple[date | None, bool]:
+    """Return (earnings_date, lookup_ok).
+
+    lookup_ok separates "this instrument has no scheduled earnings" — normal
+    for an ETF — from "the lookup failed". Collapsing both into None made a
+    flaky yfinance call indistinguishable from a clean all-clear, so the risk
+    gate failed open on precisely the source most likely to break.
+    """
+    try:
+        return _get_earnings_date(ticker), True
+    except Exception as e:
+        logger.warning(f"  [validator] earnings lookup FAILED for {ticker}: {e}")
+        return None, False
 
 
 def _trading_day_delta(today: date, target: date) -> int:
@@ -121,9 +141,25 @@ def _trading_day_delta(today: date, target: date) -> int:
     return n
 
 
-def _is_earnings_risk(ticker: str, today: date, window: int = EARNINGS_WINDOW) -> tuple[bool, str]:
-    """Return (is_risky, reason_string)."""
-    ed = _get_earnings_date(ticker)
+def _is_earnings_risk(ticker: str, today: date, window: int = EARNINGS_WINDOW,
+                      hold_days: int = HOLD_WINDOW) -> tuple[bool, str]:
+    """Return (is_risky, reason_string).
+
+    Two changes from the original ±1-day check:
+
+    1. Earnings anywhere inside the INTENDED HOLDING PERIOD count, not just
+       on the entry day. Holds run 10 trading days, so almost every trade
+       eventually spans a print; blocking only same-day earnings left the
+       real exposure unguarded.
+    2. A fetch failure is no longer silently treated as "no earnings".
+       _get_earnings_date returns None both when a ticker genuinely has no
+       scheduled date and when yfinance errors, so the gate failed open on
+       exactly the data source most likely to break.
+    """
+    ed, ok = _fetch_earnings(ticker)
+    if not ok:
+        # Unknown risk is not the same as no risk.
+        return True, "earnings lookup failed — cannot confirm no print in the hold window"
     if ed is None:
         return False, ""
     # Trading-day distance, not calendar days: Friday earnings before a Monday
@@ -132,6 +168,10 @@ def _is_earnings_risk(ticker: str, today: date, window: int = EARNINGS_WINDOW) -
     if abs(delta) <= window:
         direction = "today" if delta == 0 else (f"in {delta} trading day(s)" if delta > 0 else f"{abs(delta)} trading day(s) ago")
         return True, f"earnings {direction} ({ed})"
+    # Inside the planned holding window — the position would still be open
+    # when the print lands.
+    if 0 < delta <= hold_days:
+        return True, f"earnings in {delta} trading day(s) ({ed}) — inside the {hold_days}-day hold"
     return False, ""
 
 

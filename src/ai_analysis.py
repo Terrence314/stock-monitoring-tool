@@ -187,12 +187,12 @@ def run_news_sentiment(model, ticker: str, headlines: list) -> dict:
             if -10 <= candidate <= 10:
                 score = candidate
         else:
-            # Fallback: find any standalone integer in the range
-            for token in re.findall(r"[+-]?\d+", raw):
-                candidate = int(token)
-                if -10 <= candidate <= 10:
-                    score = candidate
-                    break
+            # No fallback. The old one scanned for "any integer in -10..10",
+            # so a phrase like "未來 3 個月" became a sentiment score of +3 —
+            # a fabricated number that is indistinguishable from a real one
+            # once it is downstream. A missing score is honest; a wrong one
+            # propagates into the signal. score stays None.
+            print(f"  [ai] {ticker} news sentiment: no 評分 line in model output — score omitted")
 
         # Extract the one-sentence rationale
         reason_match = re.search(r"理由[：:]\s*(.+)", raw)
