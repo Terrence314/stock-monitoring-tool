@@ -811,12 +811,15 @@ body.beginner-mode .beginner-only { display: block; }
 .run-btn:hover { background: rgba(52,211,153,0.14); border-color: rgba(52,211,153,0.45); }
 </style>
 <script>
-/* Simple is the default view. Applied before first paint so the dense
-   Expert layout never flashes; an explicit saved preference wins. */
+/* Expert is the default: every section visible on load, as it always was.
+   Simple is opt-in and only applies when explicitly chosen — hiding 8 of 11
+   sections by default read as the tool having lost features, which is a far
+   worse failure than a dense page. Applied before first paint so an opted-in
+   Simple user never sees the Expert layout flash. */
 (function() {
   var mode;
   try { mode = localStorage.getItem('signalViewMode'); } catch (e) {}
-  if (mode !== 'expert') {
+  if (mode === 'beginner') {
     document.documentElement.setAttribute('data-boot-mode', 'beginner');
   }
 })();
@@ -935,8 +938,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">62,996.02</span>
-        <span class="pct up">+0.37%</span>
+        <span class="market-price">63,708.32</span>
+        <span class="pct up">+1.51%</span>
       </div>
     </div>
     
@@ -959,7 +962,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">69 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Aug 02 21:25 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Aug 03 06:22 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -992,17 +995,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       
       
       
-      
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.2);margin-bottom:6px;flex-wrap:wrap">
-        <strong style="color:var(--up)">🟢 BUY <a href="./DXCM.html" style="color:var(--up)">DXCM</a></strong>
-        
-        <span class="mono" style="font-size:12px;font-weight:700">買入 ≤ $83.45</span>
-        <span class="mono" style="font-size:11px;color:var(--down)">止損 $76.77 (−8%)</span>
-        <span class="mono" style="font-size:11px;color:var(--up)">目標 $93.46 (+12%)</span>
-        <span class="mono" style="font-size:11px;color:var(--amber)">期限 08-14（10 交易日）</span>
-        <span style="font-size:11px;color:var(--text-2)">$2,000 · score 100 · BB squeeze just fired upward — bands expanding, BB 1.29</span>
-        <span style="flex-basis:100%;font-size:10px;color:var(--muted);padding-left:2px">📋 落單即設止損單 — 買入後馬上喺 IBKR 掛 stop order，唔好等</span>
-      </div>
       
       <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.2);margin-bottom:6px;flex-wrap:wrap">
         <strong style="color:var(--up)">🟢 BUY <a href="./PSX.html" style="color:var(--up)">PSX</a></strong>
@@ -1049,6 +1041,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           📜 行動記錄（最近 12 次變化）
         </summary>
         <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px">
+          
+          <div style="display:flex;gap:10px;align-items:baseline;font-size:11px;flex-wrap:wrap;padding:4px 0;border-bottom:1px dashed var(--border)">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--muted);min-width:96px">2026-08-03 06:22</span>
+            
+            <span style="color:#34d399;font-family:var(--mono)">🟢 PSX (82)</span>
+            
+            <span style="color:#34d399;font-family:var(--mono)">🟢 LYFT (80)</span>
+            
+            
+            
+            
+            <span style="color:var(--muted);font-size:10px;text-decoration:line-through">DXCM</span>
+          </div>
           
           <div style="display:flex;gap:10px;align-items:baseline;font-size:11px;flex-wrap:wrap;padding:4px 0;border-bottom:1px dashed var(--border)">
             <span style="font-family:var(--mono);font-size:10px;color:var(--muted);min-width:96px">2026-08-02 21:25</span>
@@ -1197,15 +1202,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             <span style="color:var(--text-2);font-size:10px">＋WM</span>
             
-          </div>
-          
-          <div style="display:flex;gap:10px;align-items:baseline;font-size:11px;flex-wrap:wrap;padding:4px 0;border-bottom:1px dashed var(--border)">
-            <span style="font-family:var(--mono);font-size:10px;color:var(--muted);min-width:96px">2026-07-29 22:47</span>
-            
-            
-            <span style="color:var(--text-2)">✅ 無行動</span>
-            
-            <span style="color:var(--muted);font-size:10px;text-decoration:line-through">BKNG CLX KO</span>
           </div>
           
         </div>
@@ -3805,7 +3801,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
                     <div class="ticker-tile">VT</div>
                     <div class="ticker-meta">
                       <div class="ticker-sym">VTI</div>
-                      <div class="ticker-name">Vanguard Total Stock Market ETF</div>
+                      <div class="ticker-name">Vanguard Morningstar Total Stoc</div>
                     </div>
                   </div>
                 </a>
@@ -3973,7 +3969,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
                     <div class="ticker-tile">MG</div>
                     <div class="ticker-meta">
                       <div class="ticker-sym">MGK</div>
-                      <div class="ticker-name">Vanguard Mega Cap Growth ETF</div>
+                      <div class="ticker-name">Vanguard Morningstar Mega Cap G</div>
                     </div>
                   </div>
                 </a>
@@ -4364,7 +4360,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <div class="brief-letter b1">F</div>
           <div class="brief-body">
             <div class="brief-label">F・市場消息整理</div>
-            <div class="brief-text">今日市場主要呈現風險資產溫和上漲的態勢。美股大盤 S&P 500 和納斯達克 100 雙雙收紅，反映市場對經濟前景仍抱持樂觀。VIX 恐慌指數下跌，顯示市場避險情緒降溫。原油價格上漲，可能與供應擔憂或需求預期有關。黃金和美債則小幅下跌，美元指數微升。比特幣持穩，顯示資金對數位資產的興趣仍在。整體而言，市場正交易著對經濟軟著陸的期待與風險偏好的回歸。</div>
+            <div class="brief-text">週日市場交易數據顯示，美股大盤 SPY 和科技股 QQQ 呈現溫和上漲，而 VIX 恐慌指數顯著回落，顯示市場風險偏好有所回升。美元指數微幅走強，美債 TLT 則小幅下跌，反映資金正逐步從避險資產流出。原油價格持續上揚，可能與地緣政治緊張或供應疑慮有關。黃金雖然下跌，但比特幣卻逆勢上漲，暗示市場對風險資產的偏好分歧。整體而言，市場目前主要交易的是風險情緒的改善，以及對未來經濟走勢的樂觀預期，但個別資產表現仍存在差異。</div>
           </div>
         </div>
         
@@ -4372,7 +4368,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <div class="brief-letter b2">G</div>
           <div class="brief-body">
             <div class="brief-label">G・市場情緒判讀</div>
-            <div class="brief-text">從數據來看，VIX 下降、美股上漲，顯示市場恐慌情緒明顯減退。美元指數微升，但幅度不大，未形成強烈避險買盤。美債殖利率上升（價格下跌）與黃金下跌，表示資金正從避險資產流出。雖然我們沒有直接的 Fear & Greed 指數和 ETF 資金流向數據，但綜合現有指標，市場整體偏向 Risk-On。投資者似乎願意承擔更多風險以追求收益。</div>
+            <div class="brief-text">VIX 恐慌指數下跌超過 6%，顯示市場恐慌情緒顯著降溫。美元指數微幅走強，美債 TLT 則走弱，這兩者都指向資金正從相對安全的資產中撤離。雖然具體的 Fear & Greed 指數和 ETF 資金流向未提供，但綜合 VIX、美元與美債的表現，市場情緒明顯偏向 Risk-On。比特幣的逆勢上漲也強化了對風險資產的偏好。目前投資者似乎更願意承擔風險以尋求更高回報。</div>
           </div>
         </div>
         
@@ -4381,11 +4377,11 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <div class="brief-body">
             <div class="brief-label">H・技術面關鍵價位</div>
             <div class="brief-text">*   SPY (S&P 500 ETF):
-    *   壓力位: 今日初步壓力落在 750 附近，若能有效突破，將進一步測試 755。
-    *   支撐位: 初步支撐觀察 745，若跌破，下一個支撐位在 740。
+    *   壓力位: 觀察 750.00 關口，若突破可能進一步挑戰前期高點。
+    *   支撐位: 745.00 是初步支撐，其次是 742.00。若跌破 742.00 需警惕回調風險。
 *   QQQ (納斯達克 100 ETF):
-    *   壓力位: QQQ 短線壓力在 690，突破後有望挑戰 695。
-    *   支撐位: 關鍵支撐在 685，跌破則需留意 680 的防守。</div>
+    *   壓力位: 密切關注 690.00 關卡，若能站穩則有望測試更高價位。
+    *   支撐位: 685.00 是近期關鍵支撐，下方則看 682.00。</div>
           </div>
         </div>
         
@@ -4393,7 +4389,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <div class="brief-letter b4">I</div>
           <div class="brief-body">
             <div class="brief-label">I・今日交易計畫</div>
-            <div class="brief-text">綜合來看，今日操作方向偏 偏多。市場情緒偏向 Risk-On，美股技術面仍處於上升通道。最值得關注的機會是科技股（QQQ）在突破壓力位後的上漲動能，以及大盤（SPY）能否穩固在 747 之上。然而，我們必須警惕原油價格上漲可能引發的通膨擔憂，以及美元指數若突然轉強可能對風險資產造成的壓力。建議密切關注盤中交易量與消息面，謹慎追高。</div>
+            <div class="brief-text">綜合消息面、情緒面與技術面，今日操作方向偏向偏多。市場風險偏好回升，VIX 下跌，美股大盤和科技股表現強勁。最值得關注的機會是逢低佈局 SPY 和 QQQ，特別是若股價能有效站穩支撐位之上。然而，必須警惕原油上漲可能引發的通脹擔憂，以及比特幣獨立走強後可能面臨的回調風險。此外，雖然美債走弱，但仍需關注其波動對市場情緒的潛在影響。</div>
           </div>
         </div>
         
@@ -4428,33 +4424,33 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <div class="hl-item">
             <div class="hl-meta">
               <span class="hl-ticker">ILMN</span>
-              <span class="hl-src">Motley Fool</span>
+              <span class="hl-src">Simply Wall St.</span>
             </div>
-            <div class="hl-title">Is Grail (GRAL) Stock a Buy, Sell, or Hold at Under $70?</div>
+            <div class="hl-title">Can Illumina (ILMN) Hold Its Price As Cash Flow And Earnings Clash?</div>
           </div>
           
           <div class="hl-item">
             <div class="hl-meta">
               <span class="hl-ticker">ILMN</span>
-              <span class="hl-src">MarketBeat</span>
-            </div>
-            <div class="hl-title">Illumina Q2 Earnings Call Highlights</div>
-          </div>
-          
-          <div class="hl-item">
-            <div class="hl-meta">
-              <span class="hl-ticker">CVX</span>
               <span class="hl-src">Simply Wall St.</span>
             </div>
-            <div class="hl-title">Chevron (CVX) Warns Fuel Prices Could Stay High As Refining Capacity Stays Tight</div>
+            <div class="hl-title">Illumina (ILMN) Could Be 19% Overvalued Following Its Q2 Beat And Guidance Raise</div>
           </div>
           
           <div class="hl-item">
             <div class="hl-meta">
               <span class="hl-ticker">CVX</span>
-              <span class="hl-src">Barchart</span>
+              <span class="hl-src">Barrons.com</span>
             </div>
-            <div class="hl-title">Hoping for Lower Prices at the Gas Pump? After Exxon Doubles Profits, CEO Darren Woods Says ‘I Wouldn’t Hold My Breath.’</div>
+            <div class="hl-title">Chevron CEO Says In Discussions With Iraq on Pipeline to Avoid Hormuz</div>
+          </div>
+          
+          <div class="hl-item">
+            <div class="hl-meta">
+              <span class="hl-ticker">CVX</span>
+              <span class="hl-src">Motley Fool</span>
+            </div>
+            <div class="hl-title">3 Bold Oil Predictions for the Second Half of 2026</div>
           </div>
           
           <div class="hl-item">
@@ -4890,6 +4886,110 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="timeline-row">
         <span class="timeline-dot high"></span>
         <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">FAST</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">82</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">EMR</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">82</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">VEEV</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">90</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">ESTC</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">90</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">EOG</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">90</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">CVX</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">90</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">ILMN</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">100</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
+        <span class="timeline-ticker">DXCM</span>
+        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">100</span>
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
+        
+      </div>
+    
+      
+      
+      <div class="timeline-row">
+        <span class="timeline-dot high"></span>
+        <span class="timeline-date">2026-08-02</span>
         <span class="timeline-ticker">MA</span>
         <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">70</span>
         <span class="strength-badge high">偏多 📈</span>
@@ -4905,110 +5005,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <span class="timeline-date">2026-08-02</span>
         <span class="timeline-ticker">BMY</span>
         <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">70</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">WDAY</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">SWK</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">ROP</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">HUBS</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">GM</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">EXPE</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">BRK-B</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">72</span>
-        <span class="strength-badge high">偏多 📈</span>
-        
-        <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
-        
-      </div>
-    
-      
-      
-      <div class="timeline-row">
-        <span class="timeline-dot high"></span>
-        <span class="timeline-date">2026-08-02</span>
-        <span class="timeline-ticker">PSA</span>
-        <span class="num" style="color: #34d399; font-size: 13px; font-weight: 700">74</span>
         <span class="strength-badge high">偏多 📈</span>
         
         <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.12);color:#34d399;border:1px solid rgba(52,211,153,0.25)">✅ 0軸確認</span>
@@ -5440,7 +5436,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <td style="padding:9px 10px">
             <span style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text)">VTI</span>
           </td>
-          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Vanguard Total Stock Market ETF</td>
+          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Vanguard Morningstar Total Stoc</td>
           <td style="padding:9px 10px"><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,.10);color:var(--purple)">Unknown</span>
           </td>
           <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
@@ -5554,7 +5550,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <td style="padding:9px 10px">
             <span style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text)">MGK</span>
           </td>
-          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Vanguard Mega Cap Growth ETF</td>
+          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Vanguard Morningstar Mega Cap G</td>
           <td style="padding:9px 10px"><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,.10);color:var(--purple)">Unknown</span>
           </td>
           <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
@@ -6035,7 +6031,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調分析師目標上調、2026年展望提升、第二季財報優於預期、利潤率增長以及產品擴展，顯示出強勁的積極情緒和增長前景。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞報導指出 DexCom 財報優於預期，上調未來展望，產品擴大市場覆蓋率，並獲得分析師上調目標價，顯示出強勁的成長動能和市場高度認可。</span>
         
       </div>
 
@@ -6161,17 +6157,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① DXCM 目前為多頭排列，MACD在零軸之上且動能擴張，趨勢強勁偏多，動能極強。
-② 近期支撐位為MA5的76.27美元，壓力位則落在BB上軌的80.16美元，但股價已突破此壓力。
-③ 由於所有技術信號均顯示強勁做多，預期未來3-5個交易日將繼續上漲，股價有機會挑戰更高點。
-④ 股價已大幅上漲且突破BB上軌，需警惕短線漲多拉回修正的風險。</div>
+        <div class="ai-body">DXCM 目前呈現強勁的多頭趨勢，MACD 在零軸上方並持續擴張，顯示多頭動能充足。
+最近支撐位為 MA5 的 $76.27，壓力位為布林上軌的 $80.16，但目前已突破，後續壓力位需觀察。
+未來 3-5 個交易日，DXCM 高機率會延續上漲動能，挑戰更高的價格水平，並可能出現溫和回調再上攻。
+主要風險是獲利了結賣壓可能突然增加，或市場整體情緒轉弱，導致股價急劇下挫。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$82.00 - $84.00。止損位設於$75.00，邏輯是跌破MA20與MA60支撐，多頭排列破壞。第一目標價：$90.00（挑戰前高阻力區）。第二目標價：$95.00（潛在突破區間）。風險回報比約2.3:1。目前MACD在0軸以上且動能擴張，多頭趨勢確認，可考慮入場。</div>
+        <div class="entry-body">**
+
+基於目前的強勁技術信號，建議買入區間為 **$82.00 - $84.00**。止損位設於 **$76.00**（MA5下方，跌破則多頭排列結構破壞）。第一目標價 **$92.00** (近前高壓力位)，第二目標價 **$98.00**。此區間風險回報比約為 1:2.3。目前MACD在0軸以上且動能擴張，入場時機良好。</div>
       </div>
       
 
@@ -6182,7 +6180,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="DXCM"
         data-price="83.45"
         data-score="100"
-        data-entry="建議買入區間：$82.00 - $84.00。止損位設於$75.00，邏輯是跌破MA20與MA60支撐，多頭排列破壞。第一目標價：$90.00（挑戰前高阻力區）。第二目標價：$95.00（潛在突破區間）。風險回報比約2.3:1。目前MACD在0軸以上且動能擴張，多頭趨勢確認，可考慮入場。"
+        data-entry="**
+
+基於目前的強勁技術信號，建議買入區間為 **$82.00 - $84.00**。止損位設於 **$76.00**（MA5下方，跌破則多頭排列結構破壞）。第一目標價 **$92.00** (近前高壓力位)，第二目標價 **$98.00**。此區間風險回報比約為 1:2.3。目前MACD在0軸以上且動能擴張，入場時機良好。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -6253,8 +6253,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞報導指出公司財務表現強勁、展望樂觀、獲得分析師上調目標價，並強調其在基因測序及人工智慧領域的機會，整體情緒極為正面。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">財報優於預期並上調財測，加上臨床實力、平台擴張和AI應用等戰略亮點，展現強勁成長潛力。</span>
         
       </div>
 
@@ -6353,21 +6353,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Can Illumina (ILMN) Hold Its Price As Cash Flow And Earnings Clash?
+            
+            <span class="news-pub">Simply Wall St.</span>
+          </div>
+          
+          <div class="news-item">
+            Illumina (ILMN) Could Be 19% Overvalued Following Its Q2 Beat And Guidance Raise
+            
+            <span class="news-pub">Simply Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             Is Grail (GRAL) Stock a Buy, Sell, or Hold at Under $70?
             
             <span class="news-pub">Motley Fool</span>
-          </div>
-          
-          <div class="news-item">
-            Illumina Q2 Earnings Call Highlights
-            
-            <span class="news-pub">MarketBeat</span>
-          </div>
-          
-          <div class="news-item">
-            ILMN Q2 Deep Dive: Clinical Strength, Platform Expansion, and Strategic Focus Drive Guidance Lift
-            
-            <span class="news-pub">StockStory</span>
           </div>
           
         </div>
@@ -6380,10 +6380,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① ILMN目前處於明確的多頭趨勢，且動能強勁，MACD在0軸上方且動能持續擴張。
-② 近期支撐位約在$203.0 (BB上軌)，壓力位則可觀察歷史高點。
-③ 未來3-5個交易日高機率持續上漲，有望突破前高。
-④ 需警惕短線漲幅過大可能引發的回檔修正，尤其是在RSI處於高檔的情況下。</div>
+        <div class="ai-body">① 盤面極強，MACD在0軸以上且動能擴張，顯示多頭趨勢明顯且持續增強。
+② 近期支撐位約為MA5的197.49美元，壓力位則在BB上軌的203.0美元。
+③ 在強力做多信號下，未來3-5個交易日極可能持續上攻，突破BB上軌。
+④ 最需警惕的是RSI過熱（KD-K、KD-D均高位）可能引發短期回調的風險。</div>
       </details>
       
 
@@ -6391,7 +6391,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-建議買入區間為 $200 - $205，因目前股價已站穩多條均線上方。止損位設於 $190，跌破MA20且MACD死叉為止損邏輯，避免獲利回吐風險。第一目標價 $220，第二目標價 $235。以 $205 買入、止損 $190、目標 $220 估算，風險回報比約為 1:1，但若能達第二目標，風險回報比將提升至 1:2。</div>
+
+建議買入區間 $200 - $205。止損位設於 MA20 $192.48 之下，邏輯為跌破關鍵支撐線且破壞多頭排列。第一目標價 $220（前期高點挑戰），第二目標價 $235（基於斐波那契擴展或歷史壓力區間）。風險回報比約 1:2，具吸引力。目前MACD在0軸以上，無需等待突破確認。</div>
       </div>
       
 
@@ -6403,7 +6404,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="205.10"
         data-score="100"
         data-entry="**
-建議買入區間為 $200 - $205，因目前股價已站穩多條均線上方。止損位設於 $190，跌破MA20且MACD死叉為止損邏輯，避免獲利回吐風險。第一目標價 $220，第二目標價 $235。以 $205 買入、止損 $190、目標 $220 估算，風險回報比約為 1:1，但若能達第二目標，風險回報比將提升至 1:2。"
+
+建議買入區間 $200 - $205。止損位設於 MA20 $192.48 之下，邏輯為跌破關鍵支撐線且破壞多頭排列。第一目標價 $220（前期高點挑戰），第二目標價 $235（基於斐波那契擴展或歷史壓力區間）。風險回報比約 1:2，具吸引力。目前MACD在0軸以上，無需等待突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -6474,8 +6476,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管燃油價格可能居高不下對消費者不利，但這對雪佛龍的盈利和股息是利好，且其財報表現強勁，整體情緒偏向正面。</span>
+          <span class="sentiment neut">-2</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有避免地緣政治風險的管道討論，但關於高燃料價格和煉油產能吃緊的警告，以及預期價格不會下跌的評論，都指向負面情緒。</span>
         
       </div>
 
@@ -6574,21 +6576,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Chevron CEO Says In Discussions With Iraq on Pipeline to Avoid Hormuz
+            
+            <span class="news-pub">Barrons.com</span>
+          </div>
+          
+          <div class="news-item">
+            3 Bold Oil Predictions for the Second Half of 2026
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             Chevron (CVX) Warns Fuel Prices Could Stay High As Refining Capacity Stays Tight
             
             <span class="news-pub">Simply Wall St.</span>
-          </div>
-          
-          <div class="news-item">
-            Hoping for Lower Prices at the Gas Pump? After Exxon Doubles Profits, CEO Darren Woods Says ‘I Wouldn’t Hold My Breath.’
-            
-            <span class="news-pub">Barchart</span>
-          </div>
-          
-          <div class="news-item">
-            Passive Income Play: Own This Many Chevron Shares for $1,000 a Year
-            
-            <span class="news-pub">Motley Fool</span>
           </div>
           
         </div>
@@ -6601,17 +6603,18 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前趨勢明顯偏多，MACD在0軸上方且動能持續增強，顯示股價走勢強勁。
-② 最近支撐位為MA5的$191.72，主要壓力位是布林上軌的$201.86。
-③ 在強勁多頭格局下，未來3-5個交易日股價高機率持續上攻，挑戰布林上軌壓力。
-④ 需警惕量能未能有效放大，或RSI過熱後可能出現的回調風險。</div>
+        <div class="ai-body">① 盤面強勢，股價處於多頭排列，MACD在零軸上方且動能擴張，顯示多頭趨勢強勁。
+② 近期支撐為 $191.72 (MA5)，壓力為布林上軌 $201.86。
+③ 在多頭趨勢及動能推升下，未來3-5個交易日股價高機率持續上漲，有望挑戰 $201.86 甚至更高。
+④ 主要風險為漲幅過大或市場情緒逆轉，可能導致 RSI 過熱修正或 MACD 死亡交叉。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$193.00 - $196.00區間內分批買入。止損位設於$188.00 (跌破MA20)，邏輯為保護資本。第一目標價$205.00，第二目標價$215.00。風險回報比約為1:2至1:3，具吸引力。由於MACD已在0軸上方，無需等待額外確認，可直接入場。</div>
+        <div class="entry-body">**
+建議買入區間：$195 - $197。止損位：$188.00（邏輯為跌破MA20支撐，多頭排列破壞）。第一目標價：$205.00（挑戰前高點），第二目標價：$215.00（基於斐波那契擴展）。風險回報比約為 1:2.5，極具吸引力。MACD在零軸以上，無需等待。</div>
       </div>
       
 
@@ -6622,7 +6625,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="CVX"
         data-price="196.83"
         data-score="90"
-        data-entry="建議在$193.00 - $196.00區間內分批買入。止損位設於$188.00 (跌破MA20)，邏輯為保護資本。第一目標價$205.00，第二目標價$215.00。風險回報比約為1:2至1:3，具吸引力。由於MACD已在0軸上方，無需等待額外確認，可直接入場。"
+        data-entry="**
+建議買入區間：$195 - $197。止損位：$188.00（邏輯為跌破MA20支撐，多頭排列破壞）。第一目標價：$205.00（挑戰前高點），第二目標價：$215.00（基於斐波那契擴展）。風險回報比約為 1:2.5，極具吸引力。MACD在零軸以上，無需等待。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -6694,7 +6698,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題暗示EOG資源預期盈利增長，顯示出積極的市場潛力，儘管有一篇關於整體經濟和油價的標題較為中性。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題暗示EOG資源即將公佈的第二季度財報預期成長，且市場關注其是否能延續獲勝勢頭，整體呈現積極正向的預期。</span>
         
       </div>
 
@@ -6825,18 +6829,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① EOG 目前處於多頭排列，MACD在零軸上方且動能擴張，顯示多頭趨勢強勁。
-② 最近壓力位為布林上軌 $150.56，支撐位則在 MA5 $144.02。
-③ 未來3-5個交易日，EOG 極可能延續上漲趨勢，挑戰並可能突破 $150.56 壓力。
-④ 主要風險是 RSI 過熱及 KD-K 值偏高，可能引發短線回檔修正。</div>
+        <div class="ai-body">① EOG目前趨勢偏多且動能強勁，MACD在0軸以上並持續擴張。
+② 最近支撐位為MA5的$144.02，壓力位為布林上軌的$150.56。
+③ 未來3-5個交易日，EOG高機率將持續上攻，挑戰並可能突破布林上軌。
+④ 需警惕量能未能有效放大，可能導致股價在壓力位$150.56附近承壓回落。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-建議買入區間：$147.00 - $149.00。止損位設於MA20 ($139.70) 附近，邏輯為跌破關鍵支撐線且動能可能反轉。第一目標價：$155.00，第二目標價：$160.00。風險回報比約為 1:2.5 (止損約$9，第一目標約$6，第二目標約$11)。由於MACD已在0軸以上且動能擴張，入場時機良好。</div>
+        <div class="entry-body">建議買入區間：$146.00 – $148.50。止損位設於$142.00，邏輯為跌破MA20且趨勢轉弱。第一目標價：$155.00；第二目標價：$162.00。此交易的風險回報比約為1:3.5。目前MACD在0軸以上，無需等待0軸突破確認。</div>
       </div>
       
 
@@ -6847,8 +6850,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="EOG"
         data-price="148.69"
         data-score="90"
-        data-entry="**
-建議買入區間：$147.00 - $149.00。止損位設於MA20 ($139.70) 附近，邏輯為跌破關鍵支撐線且動能可能反轉。第一目標價：$155.00，第二目標價：$160.00。風險回報比約為 1:2.5 (止損約$9，第一目標約$6，第二目標約$11)。由於MACD已在0軸以上且動能擴張，入場時機良好。"
+        data-entry="建議買入區間：$146.00 – $148.50。止損位設於$142.00，邏輯為跌破MA20且趨勢轉弱。第一目標價：$155.00；第二目標價：$162.00。此交易的風險回報比約為1:3.5。目前MACD在0軸以上，無需等待0軸突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -6920,7 +6922,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多則新聞報導Elastic (ESTC)在AI領域與OpenAI深化合作夥伴關係，股價因此大幅上漲並突破關鍵移動平均線，顯示市場對其前景極度樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞報導皆提及 Elastic 在 OpenAI 企業 AI 領域的角色深化，以及其股價突破多個移動平均線，顯示市場對公司前景看好。</span>
         
       </div>
 
@@ -7051,17 +7053,22 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">ESTC目前盤面強勁，多頭排列、RSI動能走強且MACD在0軸上方金叉，顯示多頭趨勢確立並具備擴張動能。
-關鍵價位方面，近期壓力位落在BB上軌$65.69附近，支撐位則看BB中軌$61.33（即MA20）。
-未來3-5個交易日，高機率延續上漲趨勢，或在高位震盪後進一步突破上行。
-主要風險是若RSI過高或KD指標出現背離，可能引發短期回檔修正。</div>
+        <div class="ai-body">① 盤面強勁，ESTC股價處於多頭排列，MACD在0軸上方且動能擴張，顯示多頭趨勢確立且動能持續走強。
+
+② 最近支撐位為MA5 $63.56，關鍵壓力位為BB上軌 $65.69（已突破）。
+
+③ 未來3-5個交易日，ESTC高機率將延續上漲趨勢，有望挑戰更高價位。
+
+④ 主要風險是股價漲幅過大可能引發獲利回吐，導致短線回調。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$64.00 - $65.50。止損位設定在MA20 ($61.33)下方，邏輯為跌破關鍵支撐線，多頭趨勢可能反轉。第一目標價：前高壓力區 $68.00 - $69.00。第二目標價：長期趨勢挑戰 $72.00。風險回報比約為 1:2.5，具吸引力。KD超買雖提示短期修正風險，但MACD動能強勁顯示趨勢延續性較高。</div>
+        <div class="entry-body">**
+
+鑑於當前 MACD 在 0 軸以上且動能擴張，技術面強勁。建議在 **$64.00 - $65.50** 區間分批買入。止損位設於 **$61.00**，邏輯為跌破 MA20 且 MACD 死叉，意味短期多頭趨勢可能反轉。第一目標價 **$70.00** (前高壓力區)，第二目標價 **$75.00** (基於技術擴張)。風險回報比約為 1:2.5 (止損 $65.00-$61.00=$4.00；第一目標 $70.00-$65.00=$5.00)。</div>
       </div>
       
 
@@ -7072,7 +7079,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="ESTC"
         data-price="65.79"
         data-score="90"
-        data-entry="建議買入區間：$64.00 - $65.50。止損位設定在MA20 ($61.33)下方，邏輯為跌破關鍵支撐線，多頭趨勢可能反轉。第一目標價：前高壓力區 $68.00 - $69.00。第二目標價：長期趨勢挑戰 $72.00。風險回報比約為 1:2.5，具吸引力。KD超買雖提示短期修正風險，但MACD動能強勁顯示趨勢延續性較高。"
+        data-entry="**
+
+鑑於當前 MACD 在 0 軸以上且動能擴張，技術面強勁。建議在 **$64.00 - $65.50** 區間分批買入。止損位設於 **$61.00**，邏輯為跌破 MA20 且 MACD 死叉，意味短期多頭趨勢可能反轉。第一目標價 **$70.00** (前高壓力區)，第二目標價 **$75.00** (基於技術擴張)。風險回報比約為 1:2.5 (止損 $65.00-$61.00=$4.00；第一目標 $70.00-$65.00=$5.00)。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -7144,7 +7153,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有看漲潛力的報導，但多篇新聞標題指出股價下跌、市場質疑，甚至基本面已被敘事超越，整體呈現偏空情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有看漲的估值觀點，但近期新聞標題顯示股價下跌且基本面面臨挑戰，導致整體情緒偏向負面。</span>
         
       </div>
 
@@ -7275,10 +7284,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① VEEV 呈現多頭排列，MACD在零軸之上且動能擴張，顯示多頭趨勢強勁，向上動能十足。
-② 最近支撐位約為 $201.78 (MA5)，關鍵壓力位落在布林通道上軌 $207.38。
-③ 未來3-5個交易日，VEEV 有高機率挑戰並突破布林上軌，維持強勢上漲格局。
-④ 最需警惕的下行風險為 KD 指標已處超買區，若出現死叉或RSI動能轉弱，可能引發短期回檔修正。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢確立並持續增強。
+② 近期支撐位約在201.78美元（MA5），壓力位則在207.38美元（BB上軌）。
+③ 未來3-5個交易日，股價很可能延續上升趨勢，挑戰並突破BB上軌壓力。
+④ 最需警惕的是若跌破MA5支撐，可能觸發獲利了結，導致股價回檔修正。</div>
       </details>
       
 
@@ -7287,7 +7296,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-目前MACD在0軸以上且動能擴張，但KD高位死叉暗示短期可能回落。建議等待回調至MA5附近（約$201.78）或更低，在**$198-$202**區間分批買入。止損位設於MA20下方$190，邏輯為跌破關鍵支撐線，多頭趨勢可能反轉。第一目標價$215，第二目標價$230。此交易風險回報比約為1:2.5。</div>
+目前VEEV技術面強勁，MACD在0軸以上且動能擴張，確立多頭趨勢。建議買入區間為 $200-$205，可在此區間內分批佈局。止損位設於MA20 ($193.73) 下方，跌破意味短期趨勢轉弱。第一目標價為 $215 (挑戰前高點)，第二目標價為 $225 (依據技術型態延伸)。目前風險回報比約為 1:2。此時MACD已在0軸之上，無需等待突破確認。</div>
       </div>
       
 
@@ -7300,7 +7309,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="90"
         data-entry="**
 
-目前MACD在0軸以上且動能擴張，但KD高位死叉暗示短期可能回落。建議等待回調至MA5附近（約$201.78）或更低，在**$198-$202**區間分批買入。止損位設於MA20下方$190，邏輯為跌破關鍵支撐線，多頭趨勢可能反轉。第一目標價$215，第二目標價$230。此交易風險回報比約為1:2.5。"
+目前VEEV技術面強勁，MACD在0軸以上且動能擴張，確立多頭趨勢。建議買入區間為 $200-$205，可在此區間內分批佈局。止損位設於MA20 ($193.73) 下方，跌破意味短期趨勢轉弱。第一目標價為 $215 (挑戰前高點)，第二目標價為 $225 (依據技術型態延伸)。目前風險回報比約為 1:2。此時MACD已在0軸之上，無需等待突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -7372,7 +7381,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示 Emerson Electric (EMR) 的財報表現優於預期，且華爾街分析師對其持樂觀態度，市場回報也超越預期，整體情緒非常正面。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多則新聞顯示 Emerson Electric (EMR) 的財報優於預期，且分析師對其持樂觀態度，市場回報也超越預期，整體情緒非常積極。</span>
         
       </div>
 
@@ -7503,17 +7512,18 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① EMR目前處於多頭排列，MACD在0軸以上且RSI動能走強，顯示趨勢強勁且持續向上。
-② 最近支撐位為MA5 $149.06，最近壓力位為BB上軌 $152.42。
-③ 在多頭排列和強勁動能下，未來3-5個交易日高機率會繼續上攻，挑戰並突破BB上軌。
-④ 需警惕KD-K線已跌破KD-D線（KD死叉）可能帶來的回檔風險。</div>
+        <div class="ai-body">① 股價處於多頭排列且MACD在0軸上方，趨勢偏多且動能持續增強。
+② 近期支撐位在MA5的$149.06，主要壓力位是布林上軌的$152.42。
+③ 股價有望持續走高，挑戰布林上軌壓力，並可能創下新高。
+④ KD指標出現高檔死叉，可能預示短期有回檔風險。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$148.00 - $150.00。止損位設於MA20下方 $140.00，邏輯為跌破關鍵支撐線，多頭趨勢可能反轉。第一目標價：$155.00，第二目標價：$160.00。考量止損位與第二目標價，風險回報比約為 1 : 2.5，具吸引力。MACD已在0軸上方形成金叉，無需等待0軸突破確認。</div>
+        <div class="entry-body">**
+建議買入區間為 $149.00 - $151.00，止損位設於 MA20 ($141.63) 下方，邏輯是跌破中短期支撐可能預示趨勢反轉。第一目標價 $158.00（前高附近），第二目標價 $165.00（基於斐波那契擴展）。風險回報比約為 1:2.5，具吸引力。MACD 在零軸上方且金叉，無需等待零軸突破確認。</div>
       </div>
       
 
@@ -7524,7 +7534,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="EMR"
         data-price="149.82"
         data-score="82"
-        data-entry="建議買入區間：$148.00 - $150.00。止損位設於MA20下方 $140.00，邏輯為跌破關鍵支撐線，多頭趨勢可能反轉。第一目標價：$155.00，第二目標價：$160.00。考量止損位與第二目標價，風險回報比約為 1 : 2.5，具吸引力。MACD已在0軸上方形成金叉，無需等待0軸突破確認。"
+        data-entry="**
+建議買入區間為 $149.00 - $151.00，止損位設於 MA20 ($141.63) 下方，邏輯是跌破中短期支撐可能預示趨勢反轉。第一目標價 $158.00（前高附近），第二目標價 $165.00（基於斐波那契擴展）。風險回報比約為 1:2.5，具吸引力。MACD 在零軸上方且金叉，無需等待零軸突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -7596,7 +7607,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向公司正面的發展，包括股息增加、前景看好以及被視為值得投資的股票，儘管仍有少數負面或中性消息，整體看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題圍繞股息增加和公司前景良好，暗示市場對其持樂觀態度。</span>
         
       </div>
 
@@ -7722,10 +7733,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 股價處於多頭排列，MACD在0軸以上且動能擴張，顯示多頭趨勢強勁，動能持續走強。
-② 近期關鍵支撐位為MA5的$47.53，壓力位為布林上軌的$48.55。
-③ 未來3-5個交易日，股價高機率延續漲勢，有望上攻$48.55的布林上軌壓力。
-④ 主要風險是KD指標出現死亡交叉，可能導致股價回檔修正。</div>
+        <div class="ai-body">① 目前盤面處於多頭排列，MACD在0軸以上且動能擴張，顯示多頭趨勢強勁，動能充足。
+② 最近支撐位約為MA5的$47.53，壓力位則為布林上軌的$48.55。
+③ 未來3-5個交易日，FAST股價高機率延續上漲動能，挑戰並突破布林上軌壓力。
+④ 主要風險是KD指標出現死亡交叉，或量能未能持續放大，導致上漲動能減弱，可能轉為盤整或回調。</div>
       </details>
       
 
@@ -7734,7 +7745,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-基於目前的強烈多頭信號，建議買入區間為 $47.00 - $47.80。止損位設於MA20 ($46.36) 略下方，約 $46.00，邏輯是跌破關鍵支撐線將改變多頭趨勢。第一目標價為 $50.00，第二目標價為 $52.00。當前風險回報比約為 1:2.5，具吸引力。MACD在0軸以上且動能擴張，趨勢多頭確認，適合入場。</div>
+建議買入區間為$47.00 - $47.50。止損位設於MA20下方，即$46.00，邏輯為跌破短期趨勢支撐則多頭趨勢可能反轉。第一目標價為歷史高點$50.00，第二目標價則看技術型態突破後的延伸至$52.00。當前風險回報比約為1:2至1:3，具備吸引力。由於MACD已在0軸以上且動能擴張，可直接入場。</div>
       </div>
       
 
@@ -7747,7 +7758,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="82"
         data-entry="**
 
-基於目前的強烈多頭信號，建議買入區間為 $47.00 - $47.80。止損位設於MA20 ($46.36) 略下方，約 $46.00，邏輯是跌破關鍵支撐線將改變多頭趨勢。第一目標價為 $50.00，第二目標價為 $52.00。當前風險回報比約為 1:2.5，具吸引力。MACD在0軸以上且動能擴張，趨勢多頭確認，適合入場。"
+建議買入區間為$47.00 - $47.50。止損位設於MA20下方，即$46.00，邏輯為跌破短期趨勢支撐則多頭趨勢可能反轉。第一目標價為歷史高點$50.00，第二目標價則看技術型態突破後的延伸至$52.00。當前風險回報比約為1:2至1:3，具備吸引力。由於MACD已在0軸以上且動能擴張，可直接入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -7819,7 +7830,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有地緣政治不確定性和總統言論，LMT 在國防合作、技術開發和新合約方面表現出積極信號，但衝突消息和未獲批的請求使其無法獲得更高的評分。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">有利國防股的消息和太空軍合約，但受到中東衝突和對烏克蘭軍事援助的不確定性影響，整體情緒偏向輕微樂觀。</span>
         
       </div>
 
@@ -7945,10 +7956,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前股價處於多頭排列且MACD在0軸以上，顯示整體趨勢偏多，動能強勁。
-② 最近支撐位為MA5的577.47美元，壓力位為布林上軌的598.52美元。
-③ 未來3-5個交易日，股價很可能繼續保持上漲趨勢，挑戰布林上軌壓力。
-④ 主要風險在於KD指標高檔鈍化，股價若未能有效突破壓力可能出現回檔修正。</div>
+        <div class="ai-body">① 盤面強勁，價格在均線之上形成多頭排列，MACD在零軸上方且動能持續增強，顯示多頭趨勢確立且強勁。
+② 最近支撐約為 MA5 的 $577.47，壓力位於布林上軌的 $598.52。
+③ 未來3-5個交易日，LMT 極可能延續強勢，向上挑戰 $598.52 壓力位，若能突破有望進一步上漲。
+④ 最需警惕的風險是 RSI 過熱及 KD 高檔鈍化可能引發短線修正，尤其在接近壓力位時。</div>
       </details>
       
 
@@ -7956,8 +7967,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-
-目前LMT技術面強力做多，但KD指標已超買。建議等待股價回調至**$570 - $575**區間分批買入。止損位設於MA20下方**$535**（跌破此價位可能代表短期趨勢轉弱）。第一目標價**$600**（突破歷史高點），第二目標價**$620**。風險回報比約1:2至1:3，潛在收益可觀。MACD位於0軸以上，趨勢多頭確認，因此無需等待0軸突破。</div>
+建議在回調至MA5附近 ($577.47 - $580) 區間買入，以鎖定較佳的風險回報。止損位設於MA20下方 ($539.24)，邏輯為跌破關鍵支撐線可能預示趨勢反轉。第一目標價：$600，第二目標價：$620。當前風險回報比約為 1:2.5 (若以MA5買入，止損至MA20下方，目標價$600)。</div>
       </div>
       
 
@@ -7969,8 +7979,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="582.74"
         data-score="82"
         data-entry="**
-
-目前LMT技術面強力做多，但KD指標已超買。建議等待股價回調至**$570 - $575**區間分批買入。止損位設於MA20下方**$535**（跌破此價位可能代表短期趨勢轉弱）。第一目標價**$600**（突破歷史高點），第二目標價**$620**。風險回報比約1:2至1:3，潛在收益可觀。MACD位於0軸以上，趨勢多頭確認，因此無需等待0軸突破。"
+建議在回調至MA5附近 ($577.47 - $580) 區間買入，以鎖定較佳的風險回報。止損位設於MA20下方 ($539.24)，邏輯為跌破關鍵支撐線可能預示趨勢反轉。第一目標價：$600，第二目標價：$620。當前風險回報比約為 1:2.5 (若以MA5買入，止損至MA20下方，目標價$600)。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -8042,7 +8051,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向利好消息，特別是高額股票回購授權，預示著對公司未來表現的信心和對股東價值的提升。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇新聞報導提及股票回購授權以及公司股價表現優於市場，顯示正向發展。</span>
         
       </div>
 
@@ -8173,17 +8182,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方且價格位於多條均線之上，顯示強勁多頭趨勢。
-② 近期支撐位約在208.55 (MA5)，壓力位約在222.52 (BB上軌)。
-③ 在強力做多信號下，高機率在未來3-5個交易日維持上漲，並可能挑戰BB上軌。
-④ 需警惕RSI過熱（接近70）後的回調風險，若跌破MA5可能改變短期走勢。</div>
+        <div class="ai-body">① 盤面強勢，股價位於多條均線之上且MACD在0軸以上，顯示多頭趨勢確立且動能偏強。
+② 最近支撐位約在$208.55 (MA5)，壓力位約在$222.52 (BB上軌)。
+③ 未來3-5個交易日高機率延續上漲趨勢，挑戰前高或BB上軌壓力。
+④ 主要風險是若股價跌破MA5 ($208.55) 或MACD動能持續收斂轉弱，可能引發短期回調。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$208 - $211。止損位設於 MA20 ($200.76) 以下，若跌破表示短期趨勢改變。邏輯為跌破關鍵支撐。第一目標價：$225 (基於RSI高位回調前水平)。第二目標價：$240 (基於前期高點或擴展目標)。風險回報比約 1:2.5。若 MACD 在 0 軸以下，則應等待 0 軸突破確認後再入場，但目前 MACD 位於 0 軸上方，趨勢明確。</div>
+        <div class="entry-body">**
+
+建議買入區間為 $208.50 - $211.50。止損位設於 MA20 以下，即 $199.00，邏輯是若跌破 MA20 則多頭趨勢可能受損。第一目標價為 $220.00 (RSI 80 附近可能出現技術性回調)，第二目標價為 $235.00 (前高突破後潛在目標)。風險回報比約 1:2.5，具吸引力。MACD 已在零軸上方確認多頭趨勢，可直接入場。</div>
       </div>
       
 
@@ -8194,7 +8205,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="PSX"
         data-price="211.68"
         data-score="82"
-        data-entry="建議買入區間：$208 - $211。止損位設於 MA20 ($200.76) 以下，若跌破表示短期趨勢改變。邏輯為跌破關鍵支撐。第一目標價：$225 (基於RSI高位回調前水平)。第二目標價：$240 (基於前期高點或擴展目標)。風險回報比約 1:2.5。若 MACD 在 0 軸以下，則應等待 0 軸突破確認後再入場，但目前 MACD 位於 0 軸上方，趨勢明確。"
+        data-entry="**
+
+建議買入區間為 $208.50 - $211.50。止損位設於 MA20 以下，即 $199.00，邏輯是若跌破 MA20 則多頭趨勢可能受損。第一目標價為 $220.00 (RSI 80 附近可能出現技術性回調)，第二目標價為 $235.00 (前高突破後潛在目標)。風險回報比約 1:2.5，具吸引力。MACD 已在零軸上方確認多頭趨勢，可直接入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -8266,7 +8279,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向Rockwell Automation的強勁財報預期和實際表現，尤其物聯網領域令人印象深刻，整體呈現積極正向情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞提及財報表現正面或預期增長，尤其Q1物聯網業務表現亮眼，儘管有資產處分，整體看來市場對ROK持正面態度。</span>
         
       </div>
 
@@ -8397,19 +8410,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前股價處於多頭排列，MACD在0軸以上且動能擴張，顯示趨勢強勁向上，多頭動能強。
-② 最近支撐位約為MA5的$469.53，壓力位則為BB上軌$480.04。
-③ 根據強力做多信號及各項指標向好，未來3-5個交易日股價極可能持續震盪走高。
-④ 最需警惕的下行風險是若股價跌破MA5，可能啟動回調修正。</div>
+        <div class="ai-body">① 盤面強勁，價格在均線之上，形成多頭排列，且MACD在0軸以上並呈金叉擴張，顯示多頭趨勢明顯且動能強勁。
+② 壓力位於布林上軌$480.04，支撐位於MA5 $469.53附近。
+③ 未來3-5個交易日，ROK極可能延續上漲趨勢，挑戰並突破布林上軌壓力，繼續向上攀升。
+④ 主要風險是若未能突破布林上軌壓力，可能出現獲利回吐，股價回測下方均線支撐。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-
-鑒於MACD位於0軸以上且動能擴張，技術面呈現強勢多頭格局。建議買入區間：$475 - $485。止損位設於MA20 ($466.49) 以下，邏輯為跌破中期支撐位則多頭趨勢可能受損。第一目標價：$500 (歷史高點附近阻力位)。第二目標價：$520 (基於通道上緣或技術延伸位)。風險回報比約1:2至1:3，具備吸引力。</div>
+        <div class="entry-body">建議買入區間：$475 - $485。止損位：$460，邏輯為跌破MA20與MA60支撐，多頭排列瓦解。第一目標價：$500，第二目標價：$520。風險回報比約為 1:2.5 (止損$20, 目標$50)，具吸引力。MACD已在0軸以上，多頭趨勢已確認，可積極入場。</div>
       </div>
       
 
@@ -8420,9 +8431,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="ROK"
         data-price="480.08"
         data-score="82"
-        data-entry="**
-
-鑒於MACD位於0軸以上且動能擴張，技術面呈現強勢多頭格局。建議買入區間：$475 - $485。止損位設於MA20 ($466.49) 以下，邏輯為跌破中期支撐位則多頭趨勢可能受損。第一目標價：$500 (歷史高點附近阻力位)。第二目標價：$520 (基於通道上緣或技術延伸位)。風險回報比約1:2至1:3，具備吸引力。"
+        data-entry="建議買入區間：$475 - $485。止損位：$460，邏輯為跌破MA20與MA60支撐，多頭排列瓦解。第一目標價：$500，第二目標價：$520。風險回報比約為 1:2.5 (止損$20, 目標$50)，具吸引力。MACD已在0軸以上，多頭趨勢已確認，可積極入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -8494,7 +8503,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有漲有跌，但Zscaler的股價表現優於大盤的報導以及潛在的大型交易，使其整體情緒偏向正面。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Zscaler近期新聞好壞參半，有股價飆升和超越市場回報的利好消息，同時也有股價下跌和「護城河」可攜性受考驗的挑戰。</span>
         
       </div>
 
@@ -8623,10 +8632,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① ZS目前趨勢偏多，所有均線呈多頭排列，且MACD在0軸以上並動能擴張，顯示多頭強勢。
-② 近期支撐位在MA5 ($150.46) 和MA20 ($147.17)，主要壓力位在布林上軌 ($155.73)。
-③ 未來3-5個交易日，ZS高機率會繼續上漲，挑戰布林上軌壓力，甚至突破向上。
-④ 最需警惕的下行風險是股價未能突破壓力反轉向下，跌破MA5支撐。</div>
+        <div class="ai-body">① 盤面強勁，股價位於多條均線之上，且MACD在0軸以上，顯示多頭趨勢明顯，動能持續增強。
+② 近期支撐位在MA5的150.46美元，壓力位則在布林上軌的155.73美元。
+③ 未來3-5個交易日，Zscaler股價很有可能繼續上攻，挑戰布林上軌壓力，甚至突破創新高。
+④ 主要風險是若股價跌破MA5，可能引發獲利了結賣壓，導致短期回調。</div>
       </details>
       
 
@@ -8634,10 +8643,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-
-建議買入區間：$148 - $152。止損位設於$143（跌破MA60並破壞多頭排列）。第一目標價：$160（前高阻力區），第二目標價：$168（斐波那契擴展位）。風險回報比約為 1:2.5，具備吸引力。目前MACD在0軸以上，多頭趨勢確立，可考慮入場。
-
----</div>
+建議在 $148 - $152 區間內逢低買入。止損位設於 $142，邏輯是跌破MA60且MACD可能轉弱。第一目標價 $165，第二目標價 $175。以買入價 $150、止損 $142、第一目標 $165 計算，風險回報比約為 1:1.87，相當具吸引力。MACD在0軸以上，趨勢多頭確認，適合入場。</div>
       </div>
       
 
@@ -8649,10 +8655,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="151.20"
         data-score="82"
         data-entry="**
-
-建議買入區間：$148 - $152。止損位設於$143（跌破MA60並破壞多頭排列）。第一目標價：$160（前高阻力區），第二目標價：$168（斐波那契擴展位）。風險回報比約為 1:2.5，具備吸引力。目前MACD在0軸以上，多頭趨勢確立，可考慮入場。
-
----"
+建議在 $148 - $152 區間內逢低買入。止損位設於 $142，邏輯是跌破MA60且MACD可能轉弱。第一目標價 $165，第二目標價 $175。以買入價 $150、止損 $142、第一目標 $165 計算，風險回報比約為 1:1.87，相當具吸引力。MACD在0軸以上，趨勢多頭確認，適合入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -8723,8 +8726,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題呈現多空交雜的訊號，但正面消息略佔優勢，尤其強調了投資者青睞、AI升級潛力以及估值可能被低估。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題暗示正面因素如投資者喜愛、產業展望良好、AI升級及可能被低估的價值，儘管有高層變動的詢問，整體情緒仍偏向樂觀。</span>
         
       </div>
 
@@ -8848,17 +8851,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前呈現多頭排列，MACD在零軸之上且動能擴張，顯示趨勢強勁向上。
-②近期支撐位為$33.62 (MA5)，壓力位則在$34.91 (BB上軌)。
-③股價有高機率持續挑戰BB上軌壓力，並可能向上突破，延續上漲走勢。
-④主要風險為量能不足，若追高買盤不濟，恐導致上攻乏力或回檔修正。</div>
+        <div class="ai-body">① 盤面強勁，價格呈現多頭排列，MACD在零軸上方且動能擴張，顯示多頭趨勢確立且動能強勁。
+② 最近支撐位約為 $33.62 (MA5)，壓力位則在 $34.91 (BB上軌)。
+③ 高機率劇本為維持震盪上攻，挑戰並突破BB上軌壓力，價格有望持續走高。
+④ 主要風險在於量能不足，若無法補量，上攻動能可能受限，甚至引發技術性回檔。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$33.50至$34.50區間買入。止損位設於$32.50，跌破MA20與MA5雙重支撐線代表多頭趨勢可能反轉。第一目標價為$37.00（挑戰前高），第二目標價為$39.50（基於斐波那契擴展）。此操作的風險回報比約為1:2.5，具備吸引力。MACD已在0軸以上，無需等待0軸突破確認。</div>
+        <div class="entry-body">**
+
+建議買入區間：$34.00 - $34.50。止損位設於MA20下方約2%至$32.00，邏輯為跌破關鍵支撐線形勢惡化。第一目標價：$38.00（挑戰前高），第二目標價：$42.00。風險回報比約為1:3，具有吸引力。目前MACD已在0軸以上且動能擴張，無須等待額外確認。</div>
       </div>
       
 
@@ -8869,7 +8874,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="GTLB"
         data-price="34.51"
         data-score="80"
-        data-entry="建議在$33.50至$34.50區間買入。止損位設於$32.50，跌破MA20與MA5雙重支撐線代表多頭趨勢可能反轉。第一目標價為$37.00（挑戰前高），第二目標價為$39.50（基於斐波那契擴展）。此操作的風險回報比約為1:2.5，具備吸引力。MACD已在0軸以上，無需等待0軸突破確認。"
+        data-entry="**
+
+建議買入區間：$34.00 - $34.50。止損位設於MA20下方約2%至$32.00，邏輯為跌破關鍵支撐線形勢惡化。第一目標價：$38.00（挑戰前高），第二目標價：$42.00。風險回報比約為1:3，具有吸引力。目前MACD已在0軸以上且動能擴張，無須等待額外確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -8941,7 +8948,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有正面的分析師評級和新的合作夥伴關係，但Lyft股價今年大幅下跌，且有做空報告指出其可能面臨嚴重困境。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有正面的消息如超出市場預期和Morgan Stanley提高目標價，但同時存在股價今年下跌超過26%和空頭警告等負面消息，且風險尚未解除，整體情緒偏向謹慎至輕微看空。</span>
         
       </div>
 
@@ -9072,17 +9079,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① LYFT 目前處於明顯的多頭排列，MACD在0軸以上且金叉，顯示多頭趨勢強勁且動能持續擴張。
-② 最近支撐位約為MA20的 $15.36，壓力位為布林上軌的 $16.45。
-③ 未來3-5個交易日，在多頭趨勢與動能強勁的支撐下，股價很有機會持續向上挑戰 $16.45 壓力位。
-④ 主要風險是當前量能不足（0.83x），若未能有效補量，可能限制上漲動能或導致漲勢受挫。</div>
+        <div class="ai-body">① 盤面強勁，股價位於多頭排列且MACD在0軸以上，顯示多頭趨勢確立且動能持續增強。
+② 近期支撐位在$15.48（MA5），關鍵壓力位在布林上軌$16.45。
+③ 股價短期內高機率將持續上攻，有機會挑戰$16.45壓力位，若突破則漲勢有望延續。
+④ 主要風險為量能不足，若追高買盤無法持續放大，恐導致漲勢受阻甚至拉回整理。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$15.50 - $15.80區間買入，此區間接近MA5支撐。止損位設於$15.00，若跌破表示多頭排列結構受損，趨勢可能反轉。第一目標價$16.80，為近期壓力位；第二目標價$17.50，為斐波那契擴展位或更長期壓力位。目前風險回報比約1:2，具吸引力。由於MACD已在0軸上方，無需等待額外確認。</div>
+        <div class="entry-body">建議買入區間：$15.50 - $15.80。止損位設於MA20下方 $15.20，邏輯為跌破中期支撐，多頭趨勢可能反轉。第一目標價：$17.00 (基於近期高點與RSI超買區間)，第二目標價：$18.50 (基於MACD動能持續擴張)。風險回報比約1:3，具有吸引力。</div>
       </div>
       
 
@@ -9093,7 +9100,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="LYFT"
         data-price="15.86"
         data-score="80"
-        data-entry="建議在$15.50 - $15.80區間買入，此區間接近MA5支撐。止損位設於$15.00，若跌破表示多頭排列結構受損，趨勢可能反轉。第一目標價$16.80，為近期壓力位；第二目標價$17.50，為斐波那契擴展位或更長期壓力位。目前風險回報比約1:2，具吸引力。由於MACD已在0軸上方，無需等待額外確認。"
+        data-entry="建議買入區間：$15.50 - $15.80。止損位設於MA20下方 $15.20，邏輯為跌破中期支撐，多頭趨勢可能反轉。第一目標價：$17.00 (基於近期高點與RSI超買區間)，第二目標價：$18.50 (基於MACD動能持續擴張)。風險回報比約1:3，具有吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -9165,7 +9172,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指出 MTD 第二季財報優於預期或符合預期，且有分析師維持買入評級並提高目標價，顯示市場對其前景看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題顯示公司第二季度盈利超出預期或符合預期，且有分析師維持買入評級並調高目標價，顯示強烈正面情緒。</span>
         
       </div>
 
@@ -9291,19 +9298,20 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① MTD目前趨勢偏多，MACD在0軸以上且動能擴張，顯示強勁的多頭力量。
-② 最近支撐位為MA5的$1381.98，最近壓力位為BB上軌的$1407.32。
-③ 未來3-5個交易日，MTD很可能持續上漲，挑戰更高價位。
-④ 主要風險是股價漲幅過大，KD指標已形成高檔死叉，可能引發短期回調。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，呈現明確的多頭趨勢。
+② 近期支撐位約在1381.98（MA5），壓力位為BB上軌1407.32。
+③ 股價站上BB上軌，爆量，未來3-5個交易日高機率延續漲勢，挑戰更高點。
+④ 主要風險為RSI高檔，KD呈現死亡交叉，若短期回檔恐為獲利了結賣壓。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
+        <div class="entry-body">建議等待股價回調至MA5附近，即$1380-$1400區間尋找買入機會。止損位設於MA20下方，即$1300，邏輯是跌破MA20可能改變短期上升趨勢。第一目標價$1480（挑戰前高），第二目標價$1550（基於技術測量）。此交易的風險回報比約為1:2。
 
-建議買入區間為 $1400 - $1420。止損位設於MA20，約 $1320，邏輯為跌破MA20可能代表短期趨勢轉弱。第一目標價為歷史新高 $1450，第二目標價為 $1500。風險回報比約為 1:2.5，具備吸引力。目前MACD在0軸以上且動能擴張，無需等待0軸突破。</div>
+---
+**重要提醒：** 以上分析基於提供之數據，市場波動快速，投資前請務必進行獨立研究並考慮自身風險承受能力。</div>
       </div>
       
 
@@ -9314,9 +9322,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="MTD"
         data-price="1416.30"
         data-score="80"
-        data-entry="**
+        data-entry="建議等待股價回調至MA5附近，即$1380-$1400區間尋找買入機會。止損位設於MA20下方，即$1300，邏輯是跌破MA20可能改變短期上升趨勢。第一目標價$1480（挑戰前高），第二目標價$1550（基於技術測量）。此交易的風險回報比約為1:2。
 
-建議買入區間為 $1400 - $1420。止損位設於MA20，約 $1320，邏輯為跌破MA20可能代表短期趨勢轉弱。第一目標價為歷史新高 $1450，第二目標價為 $1500。風險回報比約為 1:2.5，具備吸引力。目前MACD在0軸以上且動能擴張，無需等待0軸突破。"
+---
+**重要提醒：** 以上分析基於提供之數據，市場波動快速，投資前請務必進行獨立研究並考慮自身風險承受能力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -9387,8 +9396,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">裁員消息與市場回顧相伴，部分公司如Salesforce股價走勢不明，顯示出市場存在不確定性。</span>
+          <span class="sentiment neut">-2</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">ServiceNow 裁員以及市場回顧顯示不確定性，儘管有 Salesforce 和 IBM 的正面預測，整體情緒仍偏謹慎。</span>
         
       </div>
 
@@ -9487,6 +9496,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Prediction: Salesforce Will End The Year At This Price
+            
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             MarketBeat Week in Review – 07/27- 07/31
             
             <span class="news-pub">MarketBeat</span>
@@ -9496,12 +9511,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             ServiceNow cuts nearly 300 jobs in Silicon Valley
             
             <span class="news-pub">LA Times</span>
-          </div>
-          
-          <div class="news-item">
-            Rimini Street Q2 Earnings Call Highlights
-            
-            <span class="news-pub">MarketBeat</span>
           </div>
           
         </div>
@@ -9514,19 +9523,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，價格處於多頭排列，MACD在0軸以上且動能擴張，顯示多頭趨勢明顯且動能強勁。
-② 最近支撐約在$110.65 (MA5)，關鍵壓力區間在$117.3 (BB上軌)。
-③ 在多頭趨勢和動能支撐下，未來3-5個交易日高機率維持震盪上攻，有望挑戰BB上軌。
-④ 主要風險為成交量能不足，若後續量能無法有效放大，上漲動能恐受限，甚至出現回調。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸以上且動能擴張，顯示多頭趨勢明顯，整體動能偏強。
+② 近期支撐約在$110.65 (MA5)，關鍵壓力位於$117.3 (BB上軌)。
+③ 在強力做多信號下，未來3-5個交易日股價有望挑戰$117.3的BB上軌壓力。
+④ 主要風險是量能不足（0.84x），若多頭追價量能無法有效放大，上漲動能恐受限，甚至出現技術性回調。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-
-建議買入區間為 **$108.50 - $110.50**，利用KD高位回落的短線修正作為佈局機會。止損位設於 **$103.00**（MA60下方），邏輯是若跌破此關鍵支撐，則多頭排列可能被破壞，趨勢轉弱。第一目標價 **$118.00**，第二目標價 **$125.00**。此佈局的風險回報比約為 **1:2.5** (以區間中點$109.50計算，下行空間$6.5，上行空間$8.5/$15.5)。</div>
+        <div class="entry-body">建議在 $108.00 - $110.00 區間買入，利用短期回調佈局。止損位設於 $103.00，邏輯為跌破MA60並破壞多頭排列。第一目標價 $118.00（挑戰前高），第二目標價 $125.00（基於RSI及MACD動能延伸）。此建議的風險回報比約為 1:2.5，具吸引力。MACD已在0軸以上且動能擴張，多頭趨勢確認，可直接入場。</div>
       </div>
       
 
@@ -9537,9 +9544,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="NOW"
         data-price="111.23"
         data-score="80"
-        data-entry="**
-
-建議買入區間為 **$108.50 - $110.50**，利用KD高位回落的短線修正作為佈局機會。止損位設於 **$103.00**（MA60下方），邏輯是若跌破此關鍵支撐，則多頭排列可能被破壞，趨勢轉弱。第一目標價 **$118.00**，第二目標價 **$125.00**。此佈局的風險回報比約為 **1:2.5** (以區間中點$109.50計算，下行空間$6.5，上行空間$8.5/$15.5)。"
+        data-entry="建議在 $108.00 - $110.00 區間買入，利用短期回調佈局。止損位設於 $103.00，邏輯為跌破MA60並破壞多頭排列。第一目標價 $118.00（挑戰前高），第二目標價 $125.00（基於RSI及MACD動能延伸）。此建議的風險回報比約為 1:2.5，具吸引力。MACD已在0軸以上且動能擴張，多頭趨勢確認，可直接入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -9611,7 +9616,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示公司表現優於市場預期，且積極投入AI及資安合作，整體呈現利好趨勢。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示公司表現優於市場預期、積極參與新興科技（AI）合作，且股票接近買入點，整體呈現正面趨勢。</span>
         
       </div>
 
@@ -9737,17 +9742,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前NTAP處於強勁的多頭趨勢，MACD在0軸上方且動能持續擴張，顯示多方主導力量強勁。
-② 最近支撐位約在MA5的$174.01，壓力位為BB上軌的$178.08，若突破則開啟新漲勢。
-③ 未來3-5個交易日，NTAP有很高機率延續漲勢並突破BB上軌，繼續向上挑戰更高點。
-④ 主要風險是量能不足（0.69x），若股價持續上漲而成交量未放大，需警惕後續上漲動能可能減弱，或出現回調。</div>
+        <div class="ai-body">① 盤面強勁，MACD在零軸之上且動能擴張，顯示多頭趨勢明顯且動能強勁。
+② 支撐位約在 $174.01 (MA5)，壓力位約在 $178.08 (BB上軌)。
+③ 未來3-5個交易日，高機率延續漲勢，挑戰更高價格，MACD金叉有利多頭。
+④ 主要風險是量能不足，若追高買盤不濟，恐導致漲勢受阻甚至拉回。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">NTAP目前處於多頭排列且MACD動能擴張，但KD高位死叉顯示短期可能回調，量能不足也需留意。建議等待短期回調後，在 **$172.00 - $175.00** 區間分批買入。止損位設於 **$165.00**，邏輯為跌破MA20且MACD可能轉弱。第一目標價 **$185.00** (前高壓力區)，第二目標價 **$195.00**。風險回報比約 1:2。</div>
+        <div class="entry-body">**
+
+鑒於當前MACD已在0軸上方且動能擴張，可以考慮入場。建議買入區間：$175.00 - $178.00。止損位設於MA20，即$167.67，邏輯為跌破關鍵均線可能破壞多頭結構。第一目標價：$188.00（挑戰前高），第二目標價：$200.00。此交易的潛在風險回報比約為 1:2.5。需留意KD指標高位死叉，短線或有技術性回調，但整體趨勢仍偏多。</div>
       </div>
       
 
@@ -9758,7 +9765,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="NTAP"
         data-price="178.50"
         data-score="80"
-        data-entry="NTAP目前處於多頭排列且MACD動能擴張，但KD高位死叉顯示短期可能回調，量能不足也需留意。建議等待短期回調後，在 **$172.00 - $175.00** 區間分批買入。止損位設於 **$165.00**，邏輯為跌破MA20且MACD可能轉弱。第一目標價 **$185.00** (前高壓力區)，第二目標價 **$195.00**。風險回報比約 1:2。"
+        data-entry="**
+
+鑒於當前MACD已在0軸上方且動能擴張，可以考慮入場。建議買入區間：$175.00 - $178.00。止損位設於MA20，即$167.67，邏輯為跌破關鍵均線可能破壞多頭結構。第一目標價：$188.00（挑戰前高），第二目標價：$200.00。此交易的潛在風險回報比約為 1:2.5。需留意KD指標高位死叉，短線或有技術性回調，但整體趨勢仍偏多。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -9830,7 +9839,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於盈利和估值的討論，但主要新聞標題指出騰訊大幅下跌並引發中國遊戲股拋售，對 NTES 產生負面影響，抵消了其他正面訊息。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有收入改善和估值討論，但騰訊大跌引發的中國遊戲股拋售，以及對NetEase估值是否合理的爭論，都給市場帶來負面情緒。</span>
         
       </div>
 
@@ -9961,17 +9970,18 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢明顯且動能強勁。
-② 支撐位約在129.18 (MA5)，壓力位約在137.85 (BB上軌)。
-③ 在多頭排列及MACD動能強勁下，高機率延續上漲動能，挑戰BB上軌壓力。
-④ 量能不足可能導致上漲動能受限，若未能有效放量突破，則有拉回修正風險。</div>
+        <div class="ai-body">①盤面強弱：趨勢偏多，所有均線呈多頭排列，MACD在零軸上方且動能擴張，RSI動能走強。
+②關鍵價位：近期支撐約在129.18（MA5），壓力約在137.85（BB上軌）。
+③高機率劇本：短期內持續上攻，挑戰布林上軌壓力，但需留意量能是否能跟上。
+④主要風險：量能不足可能導致上漲動能減弱，若跌破MA5支撐，短線多頭趨勢可能受影響。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在 $130-$132 區間買入，利用短期回調佈局。止損位設於 MA20 ($128.94) 附近，若跌破表示短期趨勢轉弱。第一目標價 $140，第二目標價 $145。風險回報比約 1:2，具吸引力。由於 MACD 已在 0 軸以上且動能擴張，無需等待 0 軸突破確認。</div>
+        <div class="entry-body">**
+建議在 $130 - $132 區間買入，止損位設於 MA20（約 $128.94）下方，以避免技術面趨勢反轉。邏輯是基於 MA20 作為短期趨勢支撐位。第一目標價 $138（前高附近），第二目標價 $145。風險回報比約 1:2.5，具吸引力。MACD 已在 0 軸以上且動能擴張，趨勢多頭確認，可考慮入場。</div>
       </div>
       
 
@@ -9982,7 +9992,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="NTES"
         data-price="133.27"
         data-score="80"
-        data-entry="建議在 $130-$132 區間買入，利用短期回調佈局。止損位設於 MA20 ($128.94) 附近，若跌破表示短期趨勢轉弱。第一目標價 $140，第二目標價 $145。風險回報比約 1:2，具吸引力。由於 MACD 已在 0 軸以上且動能擴張，無需等待 0 軸突破確認。"
+        data-entry="**
+建議在 $130 - $132 區間買入，止損位設於 MA20（約 $128.94）下方，以避免技術面趨勢反轉。邏輯是基於 MA20 作為短期趨勢支撐位。第一目標價 $138（前高附近），第二目標價 $145。風險回報比約 1:2.5，具吸引力。MACD 已在 0 軸以上且動能擴張，趨勢多頭確認，可考慮入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -10054,7 +10065,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示UiPath股價下跌、低於公允價值，儘管有反彈，但整體基調仍偏向負面，甚至與其他科技股比較時，也隱含著其表現不確定性。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示UiPath股價下跌、NAV下降且有大幅下滑，儘管有反彈但仍可能低於公允價值，整體情緒偏向負面。</span>
         
       </div>
 
@@ -10180,10 +10191,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，價格在所有均線之上，MACD在0軸以上且動能擴張，顯示多頭趨勢明顯且動能強勁。
-② 最近支撐位約為MA5的$12.31，近期壓力位則在布林上軌$13.03。
-③ 未來3-5個交易日，高機率會持續震盪走高，或挑戰布林上軌$13.03。
-④ 最需警惕的下行風險是極度縮量可能導致追高動能不足，若未能補量上攻，股價恐回檔修正。</div>
+        <div class="ai-body">① PATH 目前呈現多頭排列，MACD在0軸以上且動能持續擴張，顯示多頭趨勢強勁且動能充沛。
+② 最近壓力位在布林上軌 $13.03，支撐位則看 MA5 的 $12.31。
+③ 未來3-5個交易日，PATH 有較高機率挑戰突破 $13.03 的布林上軌壓力，延續上漲走勢。
+④ 最需警惕的下行風險是極度縮量（量比 0.47x），若量能未能有效放大配合，上漲動能可能受限或反轉。</div>
       </details>
       
 
@@ -10192,7 +10203,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-建議買入區間：$12.00 - $12.50（等待短期回調或量能放大）。止損位：$11.50，跌破MA20與MA60支撐。第一目標價：$13.50；第二目標價：$14.50。風險回報比：約1:2至1:3，吸引力較高。由於MACD已在0軸以上且動能擴張，無需等待0軸突破。但因極度縮量，建議分批入場並密切觀察量能變化。</div>
+鑑於 MACD 在零軸以上且動能強勁，我們建議在回調至 **$12.30 - $12.50** 區間時考慮買入。止損位設於 **$11.70**（MA20下方，趨勢破壞風險）。第一目標價 **$13.50**（挑戰前高點），第二目標價 **$14.50**。風險回報比約為 1:2.5，具吸引力。此策略建立在多頭趨勢延續的基礎上，但需密切關注量能變化。</div>
       </div>
       
 
@@ -10205,7 +10216,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="80"
         data-entry="**
 
-建議買入區間：$12.00 - $12.50（等待短期回調或量能放大）。止損位：$11.50，跌破MA20與MA60支撐。第一目標價：$13.50；第二目標價：$14.50。風險回報比：約1:2至1:3，吸引力較高。由於MACD已在0軸以上且動能擴張，無需等待0軸突破。但因極度縮量，建議分批入場並密切觀察量能變化。"
+鑑於 MACD 在零軸以上且動能強勁，我們建議在回調至 **$12.30 - $12.50** 區間時考慮買入。止損位設於 **$11.70**（MA20下方，趨勢破壞風險）。第一目標價 **$13.50**（挑戰前高點），第二目標價 **$14.50**。風險回報比約為 1:2.5，具吸引力。此策略建立在多頭趨勢延續的基礎上，但需密切關注量能變化。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -10276,8 +10287,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數報導顯示法拉利在財報、訂製化服務和定價能力上表現強勁，分析師亦普遍維持買入或優於大盤評級，顯示市場對其前景高度樂觀，儘管有單一標的股價目標調降，但整體仍是正向。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數報導顯示法拉利銷售強勁、獲利成長，分析師維持買入評級並調高或微調目標價，顯示市場對其前景樂觀。</span>
         
       </div>
 
@@ -10376,6 +10387,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Ferrari Buyers Keep Splurging on Custom Supercars—And It's Boosting Profits
+            
+            <span class="news-pub">Benzinga</span>
+          </div>
+          
+          <div class="news-item">
             Is Ferrari a Buy After Its Latest Earnings Report?
             
             <span class="news-pub">Motley Fool</span>
@@ -10385,12 +10402,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             Ferrari Q2 Earnings Call Highlights
             
             <span class="news-pub">MarketBeat</span>
-          </div>
-          
-          <div class="news-item">
-            Auto & Transport Roundup: Market Talk
-            
-            <span class="news-pub">The Wall Street Journal</span>
           </div>
           
         </div>
@@ -10403,19 +10414,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面趨勢偏多，且多頭排列顯示股價強勁，MACD在0軸以上且動能擴張，表示上漲動能強勁。
-② 最近支撐位為MA5 $389.49，壓力位為布林上軌 $399.09。
-③ 在多頭排列、MACD動能擴張和爆量加持下，未來3-5個交易日股價高機率持續上漲，有望突破前高。
-④ 主要風險為KD指標過熱，若KD-K線持續向下交叉KD-D線，可能引發短期回檔。</div>
+        <div class="ai-body">① RACE 呈現多頭排列，MACD 在零軸以上且動能擴張，顯示強勁的多頭趨勢與動能。
+② 最近支撐位為 MA5 ($389.49)，近期壓力位在 BB 上軌 ($399.09)。
+③ 在多頭強勁與爆量支撐下，未來3-5個交易日高機率將持續上攻，挑戰並突破 $399.09 壓力位。
+④ 主要風險為KD-K與KD-D在高檔呈現死亡交叉，可能導致短線回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-
-建議買入區間：$385 - $390。止損位設於 MA20 ($378.13) 之下，邏輯是跌破關鍵支撐將改變短期趨勢。第一目標價：$410 (前高壓力區)。第二目標價：$430 (基於斐波那契擴展)。風險回報比約 2.5:1，具有吸引力。MACD 在 0 軸以上且動能擴張，確認多頭趨勢，可直接入場。</div>
+        <div class="entry-body">建議在 $385 - $390 區間買入。止損位設於 MA20 ($378.13) 之下，邏輯是若跌破 MA20 則短期多頭趨勢可能反轉。第一目標價 $410（歷史高點附近），第二目標價 $430（潛在突破區間）。風險回報比約為 1:2.5，具備吸引力。MACD 位於 0 軸以上，無需等待突破確認。</div>
       </div>
       
 
@@ -10426,9 +10435,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="RACE"
         data-price="393.87"
         data-score="80"
-        data-entry="**
-
-建議買入區間：$385 - $390。止損位設於 MA20 ($378.13) 之下，邏輯是跌破關鍵支撐將改變短期趨勢。第一目標價：$410 (前高壓力區)。第二目標價：$430 (基於斐波那契擴展)。風險回報比約 2.5:1，具有吸引力。MACD 在 0 軸以上且動能擴張，確認多頭趨勢，可直接入場。"
+        data-entry="建議在 $385 - $390 區間買入。止損位設於 MA20 ($378.13) 之下，邏輯是若跌破 MA20 則短期多頭趨勢可能反轉。第一目標價 $410（歷史高點附近），第二目標價 $430（潛在突破區間）。風險回報比約為 1:2.5，具備吸引力。MACD 位於 0 軸以上，無需等待突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -10500,7 +10507,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示市場對 Snowflake 在AI領域的進展持樂觀態度，分析師也給予正面評價和高目標價，儘管有部分擔憂。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有共同創辦人套現和估值擔憂，但多數新聞強調AI整合的積極影響、分析師上調目標價以及AI技術對其發展的助益，整體情緒偏向樂觀。</span>
         
       </div>
 
@@ -10602,6 +10609,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Cathie Wood sells $5.5 million of surging tech stock
+            
+            <span class="news-pub">TheStreet</span>
+          </div>
+          
+          <div class="news-item">
             Snowflake (SNOW) Joins Cursor Program To Help Enterprises Put AI To Work
             
             <span class="news-pub">Simply Wall St.</span>
@@ -10611,12 +10624,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             Snowflake Inc. (SNOW) Stock Sinks As Market Gains: What You Should Know
             
             <span class="news-pub">Zacks</span>
-          </div>
-          
-          <div class="news-item">
-            AI Traction Fuels Snowflake’s (SNOW) Guidance Boost
-            
-            <span class="news-pub">Insider Monkey</span>
           </div>
           
         </div>
@@ -10629,17 +10636,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面強弱：SNOW目前多頭趨勢強勁，MACD在零軸上方且動能持續擴張。
-②關鍵價位：短期壓力位在布林上軌$291.28，支撐位則在MA5 $283.51。
-③高機率劇本：未來3-5個交易日，SNOW很可能持續上攻，有機會挑戰新高。
-④主要風險：RSI接近超買區，若股價無法有效站穩$291.28，恐有獲利回吐壓力。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢明顯，上漲動能強勁。
+② 壓力位在BB上軌約$291.28，支撐位則看MA5約$283.51。
+③ 未來3-5個交易日高機率延續上漲趨勢，挑戰並突破$293的高點。
+④ 主要風險為漲幅過大後的技術性回調，或大盤走弱拖累個股。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$285 - $290。止損位：$270，邏輯為跌破MA20且MACD可能轉弱。第一目標價：$310，基於近期高點與RSI趨勢；第二目標價：$330，基於未來增長預期。風險回報比約1:2。目前MACD在0軸以上且動能擴張，確認多頭趨勢，可考慮入場。</div>
+        <div class="entry-body">**
+
+基於目前的強勁技術信號（MACD金叉且動能擴張、爆量、多頭排列），建議**買入區間為 $285 - $295**。止損位設於 **$270**（跌破MA20並持續走弱），邏輯為保護資本。第一目標價 **$310**（接近歷史高點），第二目標價 **$330**（基於斐波那契擴展）。風險回報比約為 1:2.5 (目標價一) 至 1:4 (目標價二)，具吸引力。</div>
       </div>
       
 
@@ -10650,7 +10659,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="SNOW"
         data-price="293.28"
         data-score="80"
-        data-entry="建議買入區間：$285 - $290。止損位：$270，邏輯為跌破MA20且MACD可能轉弱。第一目標價：$310，基於近期高點與RSI趨勢；第二目標價：$330，基於未來增長預期。風險回報比約1:2。目前MACD在0軸以上且動能擴張，確認多頭趨勢，可考慮入場。"
+        data-entry="**
+
+基於目前的強勁技術信號（MACD金叉且動能擴張、爆量、多頭排列），建議**買入區間為 $285 - $295**。止損位設於 **$270**（跌破MA20並持續走弱），邏輯為保護資本。第一目標價 **$310**（接近歷史高點），第二目標價 **$330**（基於斐波那契擴展）。風險回報比約為 1:2.5 (目標價一) 至 1:4 (目標價二)，具吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -10722,7 +10733,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題顯示能源股在收盤前和盤前均呈現上漲趨勢，且有對個別能源公司的正面展望和技術分析，整體情緒偏向樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多個標題指出能源股上漲，且整體市場情緒積極，顯示對XLE（能源類股ETF）有正面展望。</span>
         
       </div>
 
@@ -10831,10 +10842,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① XLE 股價位於多條均線之上，且 MACD 在零軸以上，顯示多頭趨勢強勁，動能正在擴張。
-② 近期支撐位在 MA5 的 $58.62，壓力位則為布林上軌的 $61.01。
-③ 股價很可能在未來 3-5 個交易日持續上攻，挑戰 $61.01 甚至更高價位。
-④ 主要風險是量能不足，若後續無法有效放大，可能導致上漲動能減弱，甚至回調。</div>
+        <div class="ai-body">① 盤面強勁，MACD在零軸之上且動能擴張，結合多頭排列，顯示為明確的多頭趨勢，動能強。
+② 近期支撐位在MA5的$58.62附近，壓力位則為布林通道上軌的$61.01。
+③ 未來3-5個交易日，高機率股價將持續上漲，有望測試並突破布林上軌。
+④ 主要風險為量能不足，若後續無法有效補量，可能限制漲勢或引發獲利回吐。</div>
       </details>
       
 
@@ -10843,7 +10854,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-鑒於MACD已在0軸以上且動能擴張，趨勢多頭確認，建議買入區間為 $59.00 - $59.50。止損位設於MA20下方 $57.00，邏輯為若跌破MA20且未能快速收復，則短線多頭趨勢可能受損。第一目標價 $62.00，第二目標價 $64.00。風險回報比約為 1:2.5，具備吸引力。</div>
+建議買入區間：$59.00 - $59.50。止損位設於 MA20 價位 $57.29，邏輯為跌破關鍵均線代表多頭趨勢可能反轉。第一目標價：$61.50（前期高點附近），第二目標價：$63.00。風險回報比約為 1:2。由於 MACD 已在 0 軸以上且動能擴張，無須等待 0 軸突破確認。</div>
       </div>
       
 
@@ -10856,7 +10867,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="80"
         data-entry="**
 
-鑒於MACD已在0軸以上且動能擴張，趨勢多頭確認，建議買入區間為 $59.00 - $59.50。止損位設於MA20下方 $57.00，邏輯為若跌破MA20且未能快速收復，則短線多頭趨勢可能受損。第一目標價 $62.00，第二目標價 $64.00。風險回報比約為 1:2.5，具備吸引力。"
+建議買入區間：$59.00 - $59.50。止損位設於 MA20 價位 $57.29，邏輯為跌破關鍵均線代表多頭趨勢可能反轉。第一目標價：$61.50（前期高點附近），第二目標價：$63.00。風險回報比約為 1:2。由於 MACD 已在 0 軸以上且動能擴張，無須等待 0 軸突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -10928,7 +10939,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題顯示Weyerhaeuser Q2財報超出預期，EBITDA雖然同比下降但仍具韌性，且有戰略性增長亮點，整體偏向正面。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題顯示公司第二季度盈利和營收超越預期，雖然調整後 EBITDA 下降，但整體表現被視為穩健增長。</span>
         
       </div>
 
@@ -11054,18 +11065,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢明顯且動能強勁。
-② 最近支撐位為$24.3 (MA5)，壓力位為$25.07 (布林上軌)。
-③ 未來3-5個交易日，高機率延續漲勢，有望突破$25.07的布林上軌壓力。
-④ 主要風險是股價未能有效突破布林上軌，並出現獲利回吐導致回檔。</div>
+        <div class="ai-body">① 盤面趨勢偏多，MACD在零軸上方且動能擴張，顯示多頭走勢強勁。
+② 最近壓力位為BB上軌25.07美元，支撐位可參考MA5的24.3美元。
+③ 在多頭趨勢下，股價預計將挑戰並突破25.07美元壓力，繼續上漲。
+④ 主要風險為漲幅過大可能引發回檔修正，需留意BB上軌附近是否出現賣壓。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-建議買入區間：$24.50 - $25.00。止損位設於MA20 ($23.78) 附近，若跌破表示短線多頭趨勢被破壞。第一目標價：$26.50（挑戰前高阻力），第二目標價：$27.80（基於技術測量延伸）。此交易風險回報比約為1:2至1:3，具吸引力。由於MACD已在0軸以上，無需等待0軸突破確認。</div>
+        <div class="entry-body">建議買入區間：$24.5 - $25.0。止損位：$23.5 (跌破 MA20 及 MA60 關鍵支撐)。第一目標價：$27.0 (前波高點)。第二目標價：$28.5 (技術形態壓力)。此處 MACD 已在 0 軸以上且動能擴張，偏多趨勢確立，可直接入場。風險回報比：若以 $24.75 中位數入場，止損 $1.25，第一目標獲利 $2.25，約 1:1.8，具吸引力。</div>
       </div>
       
 
@@ -11076,8 +11086,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="WY"
         data-price="25.03"
         data-score="77"
-        data-entry="**
-建議買入區間：$24.50 - $25.00。止損位設於MA20 ($23.78) 附近，若跌破表示短線多頭趨勢被破壞。第一目標價：$26.50（挑戰前高阻力），第二目標價：$27.80（基於技術測量延伸）。此交易風險回報比約為1:2至1:3，具吸引力。由於MACD已在0軸以上，無需等待0軸突破確認。"
+        data-entry="建議買入區間：$24.5 - $25.0。止損位：$23.5 (跌破 MA20 及 MA60 關鍵支撐)。第一目標價：$27.0 (前波高點)。第二目標價：$28.5 (技術形態壓力)。此處 MACD 已在 0 軸以上且動能擴張，偏多趨勢確立，可直接入場。風險回報比：若以 $24.75 中位數入場，止損 $1.25，第一目標獲利 $2.25，約 1:1.8，具吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -11149,7 +11158,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有美股下跌和歐盟調查的負面消息，但JD.com在市場上的表現優於大盤、與開利簽約、耐克業務調整及評價吸引力等正面消息仍顯示出潛在的成長動能。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有美股ADR大跌及歐盟調查的負面消息，但公司獲得新零售合作、中國業務策略調整以及聰明錢加倍投入等正面消息，整體顯示出潛在價值和未來發展機會。</span>
         
       </div>
 
@@ -11280,10 +11289,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勢，股價處於明顯多頭排列，MACD在零軸以上且動能擴張，顯示上漲趨勢強勁。
-② 壓力位在布林上軌 $33.37，支撐位可看MA5 $32.05，其次為MA20 $29.74。
-③ 未來3-5個交易日，股價高機率延續漲勢，挑戰布林上軌壓力，但需提防RSI超買後的回調。
-④ 主要風險為RSI高達79.13已進入超買區，隨時可能出現獲利回吐，導致股價技術性修正。</div>
+        <div class="ai-body">① 盤面極強，MACD在0軸上方且動能擴張，顯示多頭趨勢強勁，價格突破多條均線呈多頭排列。
+② 近期支撐約在MA5的32.05美元，壓力則在布林上軌的33.37美元。
+③ 未來3-5個交易日，JD有望挑戰33.37美元壓力，若突破可能進一步上漲。
+④ 主要風險為RSI高達79.13，處於超買區，需警惕隨時可能出現的回調修正。</div>
       </details>
       
 
@@ -11292,7 +11301,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-建議等待RSI回調至70以下，或股價小幅回踩MA5附近（約$32.00-$32.50）建立初步倉位。止損位設於MA20（約$29.70），若跌破MA20則止損，因多頭趨勢可能反轉。第一目標價$35.00，第二目標價$37.50。風險回報比約為1:1.5至1:2。MACD已在0軸以上，無需等待突破確認。</div>
+儘管技術面強勢，但RSI和KD均處於超買區，暗示短期有回調需求。因此，建議等待回調確認支撐後再入場。理想買入區間：$31.50 - $32.50 (MA5 - MA20附近)。止損位設定於MA60下方，$28.80，邏輯為跌破長期趨勢線則多頭結構破壞。第一目標價：$35.50 (前高附近)，第二目標價：$38.00。風險回報比約 1:2.5。</div>
       </div>
       
 
@@ -11305,7 +11314,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="75"
         data-entry="**
 
-建議等待RSI回調至70以下，或股價小幅回踩MA5附近（約$32.00-$32.50）建立初步倉位。止損位設於MA20（約$29.70），若跌破MA20則止損，因多頭趨勢可能反轉。第一目標價$35.00，第二目標價$37.50。風險回報比約為1:1.5至1:2。MACD已在0軸以上，無需等待突破確認。"
+儘管技術面強勢，但RSI和KD均處於超買區，暗示短期有回調需求。因此，建議等待回調確認支撐後再入場。理想買入區間：$31.50 - $32.50 (MA5 - MA20附近)。止損位設定於MA60下方，$28.80，邏輯為跌破長期趨勢線則多頭結構破壞。第一目標價：$35.50 (前高附近)，第二目標價：$38.00。風險回報比約 1:2.5。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -11377,7 +11386,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有其他公司（如AbbVie）的負面消息和預期下調，REGN自身的財報表現良好，分析師也調升了目標價，顯示出正向趨勢，但被同行業負面新聞部分抵銷。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有其他公司獲利超越預期或股價下跌的消息，但Regeneron自身的新聞顯示出良好的管線進展、產品動能、以及分析師上調目標價，並有合作夥伴表示會「重建信任」，這些都是正向訊號。</span>
         
       </div>
 
@@ -11503,10 +11512,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，多頭趨勢確立，動能強勁且持續擴張，MACD在0軸上方支持此判斷。
-② 最近支撐位為 MA5 $711.75，壓力位為 BB上軌 $733.57。
-③ 未來3-5個交易日高機率將維持強勢上漲，但需注意RSI超買可能引發的短期回調。
-④ 最需警惕的下行風險是RSI超買過高，可能導致股價短期內出現較大幅度回調。</div>
+        <div class="ai-body">① 盤面強勁，股價處於多頭排列，MACD在0軸以上且動能擴張，顯示多方趨勢明確且動能強勁。
+② 最近支撐位為MA5 $711.75，壓力位在布林上軌 $733.57，若突破則關注歷史新高。
+③ 未來3-5個交易日高機率延續上漲趨勢，但RSI超買需留意短期震盪整理。
+④ 主要風險為RSI超買導致的回調壓力，若未能有效突破壓力位恐引發獲利了結。</div>
       </details>
       
 
@@ -11514,7 +11523,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-建議等待 RSI (78.06) 及 KD (K=95.2, D=90.2) 超買狀況有所緩解後，在 **$730 - $745** 區間分批買入。止損位設於 **$700**（MA20 附近支撐，跌破則趨勢有轉弱風險）。第一目標價 **$800**，第二目標價 **$840**（基於技術測量與歷史高點阻力）。此建議下，潛在風險回報比約為 1:2.3。目前 MACD 在 0 軸以上且動能擴張，無需等待 0 軸突破確認。</div>
+
+鑒於RSI及KD超買，建議等待回調，可在$730-$745區間分批買入。止損位設於$710，若跌破MA5，多頭趨勢可能受損。第一目標價$785，第二目標價$810。目前風險回報比約為 1.5:1 至 2:1，偏向買方。MACD在0軸以上，無需等待0軸突破。</div>
       </div>
       
 
@@ -11526,7 +11536,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="762.63"
         data-score="75"
         data-entry="**
-建議等待 RSI (78.06) 及 KD (K=95.2, D=90.2) 超買狀況有所緩解後，在 **$730 - $745** 區間分批買入。止損位設於 **$700**（MA20 附近支撐，跌破則趨勢有轉弱風險）。第一目標價 **$800**，第二目標價 **$840**（基於技術測量與歷史高點阻力）。此建議下，潛在風險回報比約為 1:2.3。目前 MACD 在 0 軸以上且動能擴張，無需等待 0 軸突破確認。"
+
+鑒於RSI及KD超買，建議等待回調，可在$730-$745區間分批買入。止損位設於$710，若跌破MA5，多頭趨勢可能受損。第一目標價$785，第二目標價$810。目前風險回報比約為 1.5:1 至 2:1，偏向買方。MACD在0軸以上，無需等待0軸突破。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -11598,7 +11609,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有一次降級和對其估值的質疑，但整體新聞顯示該公司在關鍵領域（如潛艇合約、航太和造船實力）表現強勁，並與盟友進行合作，這帶來了積極的展望，但挑戰和估值問題稍微抑制了樂觀情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有看跌觀點，但通用動力公司在國防領域的吸引力、強勁的財報、新高的積壓訂單以及潛艇訂單的成功，顯示出整體偏向樂觀的情緒。</span>
         
       </div>
 
@@ -11724,17 +11735,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面偏多，MACD在0軸上方且動能仍強，顯示多頭趨勢延續。
-② 最近支撐位約為MA20的$376.49，壓力位則為布林上軌的$391.78。
-③ 未來3-5個交易日，股價高機率在MA20上方震盪整理，蓄勢挑戰上軌壓力。
-④ 主要風險為KD-K值低於KD-D，短線可能出現回檔修正壓力。</div>
+        <div class="ai-body">① 盤面趨勢偏多，MACD在0軸以上且動能走強，顯示買盤力道增強。
+② 近期支撐位約在$376.49（MA20），壓力位約在$391.78（BB上軌）。
+③ 未來3-5個交易日，股價可能維持震盪向上走勢，挑戰上軌壓力。
+④ 主要風險為KD指標出現死亡交叉，恐導致股價短線回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$380.00 - $383.00區間買入。止損位設於MA20下方$375.00，邏輯是跌破中短期趨勢線則多頭結構可能破壞。第一目標價$395.00（挑戰前高），第二目標價$410.00（趨勢延伸）。風險回報比約1:2至1:3，具吸引力。由於MACD已在0軸上方，無需等待0軸突破確認。</div>
+        <div class="entry-body">**
+
+建議在$375 - $380區間買入，止損位設於MA60下方5%（約$340），邏輯為跌破MA60且大幅下挫則多頭趨勢被破壞。第一目標價$400，第二目標價$420。風險回報比約為1:2。</div>
       </div>
       
 
@@ -11745,7 +11758,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="GD"
         data-price="383.42"
         data-score="74"
-        data-entry="建議在$380.00 - $383.00區間買入。止損位設於MA20下方$375.00，邏輯是跌破中短期趨勢線則多頭結構可能破壞。第一目標價$395.00（挑戰前高），第二目標價$410.00（趨勢延伸）。風險回報比約1:2至1:3，具吸引力。由於MACD已在0軸上方，無需等待0軸突破確認。"
+        data-entry="**
+
+建議在$375 - $380區間買入，止損位設於MA60下方5%（約$340），邏輯為跌破MA60且大幅下挫則多頭趨勢被破壞。第一目標價$400，第二目標價$420。風險回報比約為1:2。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -11817,7 +11832,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">HPQ 股價下跌且可能被高估的報導，蓋過了分析師目標價等潛在利多。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">HPQ 新聞顯示其股價下跌且可能被高估，儘管有AI PC敘事，但整體情緒偏向看空。</span>
         
       </div>
 
@@ -11948,17 +11963,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前HPQ處於多頭趨勢，MACD在0軸上方，但動能略收斂。
-② 最近支撐位為25.08（MA20），壓力位為28.33（BB上軌）。
-③ 未來3-5個交易日，HPQ可能測試28.33壓力位，若突破則有望繼續上漲。
-④ 主要風險是KD指標出現死亡交叉，恐導致股價回檔修正。</div>
+        <div class="ai-body">① 盤面強弱：HPQ目前處於中多頭趨勢，MACD在0軸上方，顯示多頭動能持續，但動能略有收斂。
+② 關鍵價位：近期支撐位為MA20 ($25.08)，壓力位為BB上軌 ($28.33)。
+③ 高機率劇本：RSI動能走強，價格可能挑戰BB上軌壓力，若突破則有望進一步上漲。
+④ 主要風險：KD指標出現死亡交叉，短線有回調風險，需警惕跌破MA5 ($27.48) 引發的賣壓。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$26.80 - $27.20區間買入。止損位設於MA20下方$24.50，邏輯是若跌破MA20且趨勢轉弱，則初步多頭格局破壞。第一目標價$29.50，第二目標價$31.00。此交易的風險回報比約為1:2.5，具吸引力。由於MACD已在0軸以上，且形成金叉，多頭趨勢已確認。</div>
+        <div class="entry-body">建議在 $27.00 - $27.30 區間買入。止損位設於 $26.00（MA20下方，避免趨勢反轉）。邏輯是若跌破MA20，表示短期多頭動能減弱。第一目標價 $28.50（接近前期高點），第二目標價 $30.00。風險回報比約 1:2.5，具吸引力。由於MACD已在0軸上方且形成金叉，多頭趨勢已確認，可直接考慮入場。</div>
       </div>
       
 
@@ -11969,7 +11984,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="HPQ"
         data-price="27.27"
         data-score="74"
-        data-entry="建議在$26.80 - $27.20區間買入。止損位設於MA20下方$24.50，邏輯是若跌破MA20且趨勢轉弱，則初步多頭格局破壞。第一目標價$29.50，第二目標價$31.00。此交易的風險回報比約為1:2.5，具吸引力。由於MACD已在0軸以上，且形成金叉，多頭趨勢已確認。"
+        data-entry="建議在 $27.00 - $27.30 區間買入。止損位設於 $26.00（MA20下方，避免趨勢反轉）。邏輯是若跌破MA20，表示短期多頭動能減弱。第一目標價 $28.50（接近前期高點），第二目標價 $30.00。風險回報比約 1:2.5，具吸引力。由於MACD已在0軸上方且形成金叉，多頭趨勢已確認，可直接考慮入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -12041,7 +12056,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多則新聞顯示ITW調高財測、股價上漲、分析師提高目標價，整體呈現極度看好趨勢。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示ITW業績表現強勁、上調財測、增加股票回購、獲得分析師上調目標價，並被列為具競爭優勢和派發股息的成長股，整體情緒非常看好。</span>
         
       </div>
 
@@ -12132,6 +12147,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            4 Industrial Dividend Growers That Fly Under the Radar and Look Like Buys in August
+            
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             Why nVent Electric Crushed Estimates Again (Hint: It's Not Just Due to AI Data Centers)
             
             <span class="news-pub">Motley Fool</span>
@@ -12141,12 +12162,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             1 Surging  Stock with Competitive Advantages and 2 Facing Headwinds
             
             <span class="news-pub">StockStory</span>
-          </div>
-          
-          <div class="news-item">
-            Company News for July 29, 2026
-            
-            <span class="news-pub">Zacks</span>
           </div>
           
         </div>
@@ -12159,17 +12174,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前趨勢偏多頭，MACD在零軸之上顯示多頭動能穩健，但動能略有收斂跡象。
-② 近期支撐位約在 $276.98 (MA20)，壓力位約在 $294.0 (BB上軌)。
-③ 未來3-5個交易日，價格有機會向上挑戰BB上軌壓力，但需留意MACD動能收斂。
-④ 主要風險為若股價跌破MA20支撐，可能觸發獲利了結賣壓，導致回檔修正。</div>
+        <div class="ai-body">① 盤面強勁，價格在MA20與MA60之上形成中多頭排列，MACD在0軸之上且RSI動能走強，趨勢偏多。
+② 近期支撐位約在276.98 (MA20)，壓力位約在294.0 (BB上軌)。
+③ 未來3-5個交易日，股價最可能延續偏多格局，有機會挑戰BB上軌壓力。
+④ 主要風險為MACD動能略收斂，若未能有效突破壓力，可能出現回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在 $280 - $285 區間買入，等待MACD動能再次加強。止損位設於 $270，邏輯為跌破MA20且MACD死叉，顯示多頭趨勢反轉。第一目標價 $295，第二目標價 $305。此交易風險回報比約為 1:2。請注意，MACD目前雖在0軸以上，但動能略收，宜觀察其動能是否再次擴大。</div>
+        <div class="entry-body">**
+
+基於目前的偏多趨勢，建議在 $285 - $290 區間買入。止損位設於 $275，邏輯為跌破MA20與MA60關鍵支撐，趨勢可能反轉。第一目標價 $300 (歷史阻力位)，第二目標價 $315。風險回報比約為 1:2.5，具吸引力。MACD已在0軸上方，趨勢多頭確認，可考慮入場。</div>
       </div>
       
 
@@ -12180,7 +12197,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="ITW"
         data-price="286.95"
         data-score="74"
-        data-entry="建議在 $280 - $285 區間買入，等待MACD動能再次加強。止損位設於 $270，邏輯為跌破MA20且MACD死叉，顯示多頭趨勢反轉。第一目標價 $295，第二目標價 $305。此交易風險回報比約為 1:2。請注意，MACD目前雖在0軸以上，但動能略收，宜觀察其動能是否再次擴大。"
+        data-entry="**
+
+基於目前的偏多趨勢，建議在 $285 - $290 區間買入。止損位設於 $275，邏輯為跌破MA20與MA60關鍵支撐，趨勢可能反轉。第一目標價 $300 (歷史阻力位)，第二目標價 $315。風險回報比約為 1:2.5，具吸引力。MACD已在0軸上方，趨勢多頭確認，可考慮入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -12251,8 +12270,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有營收超出預期和新的太陽能計畫等正面消息，但同店淨營業收入下降和新供應壓力等負面因素導致獲利不及預期，整體情緒偏向謹慎或略為看空。</span>
+          <span class="sentiment neut">+2</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有營收超出預期和正面遷入租金增長等利好消息，但同店淨營運收益（NOI）下降導致FFO未達預期，整體情緒呈現好壞參半。</span>
         
       </div>
 
@@ -12343,6 +12362,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Did Public Storage’s Solar Push and NSA Deal Just Recast PSA’s Real Estate Income Strategy?
+            
+            <span class="news-pub">Simply Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             Self-Storage REITs Show Mixed NOI in Q2 2026 Earnings
             
             <span class="news-pub">CRE Daily</span>
@@ -12352,12 +12377,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             Public Storage Q2 Earnings Call Highlights
             
             <span class="news-pub">MarketBeat</span>
-          </div>
-          
-          <div class="news-item">
-            Public Storage (PSA) (Q2 2026) Earnings Call Highlights: Positive Move-In Rent Growth and ...
-            
-            <span class="news-pub">GuruFocus.com</span>
           </div>
           
         </div>
@@ -12370,18 +12389,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強弱：價格位於MA20與MA60之上，且MACD在0軸以上，顯示多頭趨勢明顯，動能正在增強。
-② 關鍵價位：近期支撐位於$320.57 (MA20)，壓力則在$331.88 (BB上軌)。
-③ 高機率劇本：多頭動能擴張，股價有望震盪向上挑戰BB上軌壓力。
-④ 主要風險：若股價跌破MA20支撐，多頭趨勢恐將遭到破壞。</div>
+        <div class="ai-body">①目前PSA呈現多頭趨勢，MACD在零軸以上且動能擴張，RSI動能走強，整體盤面偏強。
+②近期關鍵壓力在布林上軌331.88美元，支撐則在MA20的320.57美元附近。
+③未來3-5個交易日，股價有較高機率繼續震盪走高，挑戰331.88美元壓力位。
+④主要風險為若股價跌破MA20（320.57美元），可能導致多頭趨勢遭到破壞並轉弱。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-建議在 $320 - $325 區間內分批買入。止損位設於 $310，跌破則代表跌破MA60並破壞多頭趨勢，需離場。第一目標價 $345（接近前期高點），第二目標價 $360（基於行業前景及估值重估）。此筆交易的風險回報比約為 1:2.5，具備吸引力。由於MACD已在0軸以上並呈現金叉，趨勢多頭確認，可擇機進場。</div>
+        <div class="entry-body">建議買入區間：$320.00 - $325.00。止損位：$313.00 (MA60下方，避免趨勢反轉風險)。第一目標價：$335.00 (前高點附近)。第二目標價：$345.00 (進一步突破空間)。風險回報比約1:2.5，具吸引力。</div>
       </div>
       
 
@@ -12392,8 +12410,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="PSA"
         data-price="324.17"
         data-score="74"
-        data-entry="**
-建議在 $320 - $325 區間內分批買入。止損位設於 $310，跌破則代表跌破MA60並破壞多頭趨勢，需離場。第一目標價 $345（接近前期高點），第二目標價 $360（基於行業前景及估值重估）。此筆交易的風險回報比約為 1:2.5，具備吸引力。由於MACD已在0軸以上並呈現金叉，趨勢多頭確認，可擇機進場。"
+        data-entry="建議買入區間：$320.00 - $325.00。止損位：$313.00 (MA60下方，避免趨勢反轉風險)。第一目標價：$335.00 (前高點附近)。第二目標價：$345.00 (進一步突破空間)。風險回報比約1:2.5，具吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -12465,7 +12482,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞報導強調巴菲特和阿貝爾在舊股票上的豐厚收益、現金儲備創紀錄、以及潛在的收購或回購，整體趨勢樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示巴菲特投資的Alphabet和一個AI股票表現強勁，且Berkshire Hathaway在American Express方面仍有成長空間，整體趨勢偏向樂觀。</span>
         
       </div>
 
@@ -12569,19 +12586,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            Warren Buffett Passed on This Stock for Over 7 Years. Greg Abel May Not Wait Any Longer.
+            Warren Buffett Regretted Not Investing in Alphabet Earlier. New CEO Greg Abel Won't Have the Same Worry.
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Prediction: Greg Abel Will Continue Holding This Berkshire Hathaway Stock That Warren Buffett Backed for Decades.
+            3 Reasons Why Berkshire Hathaway Owns $29 Billion of Alphabet Stock
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Warren Buffett Thinks Investors Are "Gambling" Right Now. Here's What Happened the Last Time He Uttered Those Words.
+            American Express: The Growth Story Isn't Over (NYSE: AXP)
             
             <span class="news-pub">Motley Fool</span>
           </div>
@@ -12596,17 +12613,18 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方且金叉動能擴張，RSI動能走強，確認多頭趨勢。
-② 近期壓力位在布林上軌$513.82，支撐位在MA5 $507.99。
-③ 股價短期內高機率延續漲勢，挑戰布林上軌壓力，甚至有望突破。
-④ 主要風險為量能不足，若股價繼續上漲但成交量未能有效放大，可能導致上漲動能減弱。</div>
+        <div class="ai-body">① 目前處於明確的多頭趨勢，且動能持續增強，MACD在零軸之上確認強勢。
+② 近期支撐位在 $507.99 (MA5)，關鍵壓力位則在布林上軌 $513.82。
+③ 未來3-5個交易日，股價很可能延續上漲趨勢，挑戰並突破布林上軌。
+④ 需警惕量能不足的問題，若股價繼續上漲但成交量未能配合放大，可能引發短期回調。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$500-$505區間分批買入，利用回調機會。止損位設於MA20下方$497.54，以防多頭趨勢反轉。第一目標價$525，第二目標價$540，分別為近期高點與前波壓力區。風險回報比約1:2至1:3，具吸引力。MACD已在0軸以上且動能擴張，確認多頭趨勢，無需等待0軸突破。</div>
+        <div class="entry-body">**
+建議在 $505 - $510 區間進行買入，耐心等待回調至MA5附近。止損位設於 $495（跌破MA20）。第一目標價為 $525（預期短期高點），第二目標價為 $540（歷史高點附近，預期中期壓力位）。風險回報比約為 1:2.5，具備吸引力。</div>
       </div>
       
 
@@ -12617,7 +12635,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="BRK-B"
         data-price="511.54"
         data-score="72"
-        data-entry="建議在$500-$505區間分批買入，利用回調機會。止損位設於MA20下方$497.54，以防多頭趨勢反轉。第一目標價$525，第二目標價$540，分別為近期高點與前波壓力區。風險回報比約1:2至1:3，具吸引力。MACD已在0軸以上且動能擴張，確認多頭趨勢，無需等待0軸突破。"
+        data-entry="**
+建議在 $505 - $510 區間進行買入，耐心等待回調至MA5附近。止損位設於 $495（跌破MA20）。第一目標價為 $525（預期短期高點），第二目標價為 $540（歷史高點附近，預期中期壓力位）。風險回報比約為 1:2.5，具備吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -12689,7 +12708,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞中多個標題提及Expedia股價表現良好，甚至可能突破新高，但也有其他消息與其直接關聯不大，因此持謹慎樂觀態度。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示一些積極信號，例如股價創新高和潛在突破，但也有關於反壟斷調查和市場競爭的潛在負面因素，因此情緒偏向中性樂觀。</span>
         
       </div>
 
@@ -12820,10 +12839,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面趨勢強勁，MACD在零軸之上且RSI動能走強，顯示多頭格局確立。
-② 近期支撐位約在MA5的293.22美元，壓力位則在布林上軌的299.46美元。
-③ 未來3-5個交易日，股價高機率維持震盪上攻，挑戰前期高點或布林上軌壓力。
-④ 主要風險為量能不足，若後續無法有效放大，可能導致上漲動能減弱甚至回檔。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能走強，價格處於多頭排列。
+② 壓力位在布林上軌$299.46，近期支撐位為MA5 $293.22。
+③ 價格可能持續向上測試布林上軌壓力，並在$293.22附近獲得支撐。
+④ 量能不足是主要風險，若無法補量，漲勢可能受阻或回調。</div>
       </details>
       
 
@@ -12832,7 +12851,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-基於目前的偏多信號，建議可在 $290 - $295 區間考慮買入。止損位設於 MA20 ($272.45) 略下方，例如 $270，若跌破表示短期多頭趨勢可能反轉。第一目標價為 $310 (基於近期高點)，第二目標價為 $330 (基於前期壓力位或通道上緣)。風險回報比約為 1:2.5，具吸引力。MACD 目前在0軸上方且為金叉，趨勢多頭確認，可考慮入場。</div>
+EXPE技術面偏多，但量能不足需留意。建議買入區間：$285 - $290（回測MA5附近）。止損位：$270（跌破MA20，多頭趨勢可能反轉）。第一目標價：$310（歷史高點附近），第二目標價：$330。風險回報比約為 1:2.5，具吸引力。MACD已在0軸上方，無需等待突破確認。</div>
       </div>
       
 
@@ -12845,7 +12864,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="72"
         data-entry="**
 
-基於目前的偏多信號，建議可在 $290 - $295 區間考慮買入。止損位設於 MA20 ($272.45) 略下方，例如 $270，若跌破表示短期多頭趨勢可能反轉。第一目標價為 $310 (基於近期高點)，第二目標價為 $330 (基於前期壓力位或通道上緣)。風險回報比約為 1:2.5，具吸引力。MACD 目前在0軸上方且為金叉，趨勢多頭確認，可考慮入場。"
+EXPE技術面偏多，但量能不足需留意。建議買入區間：$285 - $290（回測MA5附近）。止損位：$270（跌破MA20，多頭趨勢可能反轉）。第一目標價：$310（歷史高點附近），第二目標價：$330。風險回報比約為 1:2.5，具吸引力。MACD已在0軸上方，無需等待突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -12917,7 +12936,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇報導正面評價GM在電動化方面的努力，分析師也給予「強力買入」評級，顯示市場對GM抱持樂觀態度。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多篇文章指出GM的電動車策略和新車型（如Corvette Grand Sport X hybrid）受到正面評價，分析師也給予「強力買入」評級，顯示市場對其前景看好。</span>
         
       </div>
 
@@ -13016,12 +13035,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            GM leans into electrification with the Grand Sport X: Review
-            
-            <span class="news-pub">Yahoo Finance</span>
-          </div>
-          
-          <div class="news-item">
             Is General Motors (GM) Undervalued Or Already Priced For EV Charges?
             
             <span class="news-pub">Simply Wall St.</span>
@@ -13031,6 +13044,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             GM Is a ‘Strong Buy,’ Analyst Says. Plus, Caesars and 3 More Stocks.
             
             <span class="news-pub">Barrons.com</span>
+          </div>
+          
+          <div class="news-item">
+            Yahoo Finance test drives the Corvette Grand Sport X hybrid
+            
+            <span class="news-pub">Yahoo Finance Video</span>
           </div>
           
         </div>
@@ -13043,17 +13062,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，價格在均線之上形成多頭排列，MACD在零軸之上顯示多方趨勢明確且動能充足。
-② 近期支撐位看MA5的88.8美元，壓力位則落在BB上軌91.08美元。
-③ GM股價未來3-5個交易日，在多頭排列及RSI走強支持下，預期將挑戰並有機會突破上軌壓力，持續上漲。
-④ 主要風險為量能不足，若未能補量上攻，恐導致股價上攻乏力，面臨回檔修正壓力。</div>
+        <div class="ai-body">① 目前股價處於多頭排列，MACD在零軸之上，顯示趨勢偏多且動能強勁。
+② 近期支撐位在MA5的$88.8，壓力位則為BB上軌的$91.08。
+③ 未來3-5個交易日，GM股價仍有機會向上挑戰BB上軌壓力。
+④ 主要風險在於量能不足，若後續無法補量，上漲動能可能受限。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$85.00 - $87.00區間買入，利用短期回檔進行佈局。止損位設於$82.00，邏輯為跌破MA20支撐，多頭排列破壞。第一目標價$95.00，為近期高點挑戰；第二目標價$100.00，挑戰心理關口。若以$86.00買入，止損$82.00 (虧損$4.00)，第一目標$95.00 (獲利$9.00)，風險回報比約1:2.25。</div>
+        <div class="entry-body">**
+
+由於MACD在0軸以上且為金叉（動能略收），多頭趨勢已確認。建議在$87.00 - $88.00區間買入，止損位設於$84.50（跌破MA20支撐）。第一目標價$92.00（挑戰前高），第二目標價$95.00。風險回報比約1:2，值得考慮。</div>
       </div>
       
 
@@ -13064,7 +13085,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="GM"
         data-price="88.86"
         data-score="72"
-        data-entry="建議在$85.00 - $87.00區間買入，利用短期回檔進行佈局。止損位設於$82.00，邏輯為跌破MA20支撐，多頭排列破壞。第一目標價$95.00，為近期高點挑戰；第二目標價$100.00，挑戰心理關口。若以$86.00買入，止損$82.00 (虧損$4.00)，第一目標$95.00 (獲利$9.00)，風險回報比約1:2.25。"
+        data-entry="**
+
+由於MACD在0軸以上且為金叉（動能略收），多頭趨勢已確認。建議在$87.00 - $88.00區間買入，止損位設於$84.50（跌破MA20支撐）。第一目標價$92.00（挑戰前高），第二目標價$95.00。風險回報比約1:2，值得考慮。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -13135,8 +13158,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有財報超出預期的正面消息和對 AI 的樂觀展望，但競爭和市場的整體負面情緒（如油價下跌和晶片股下跌）使得整體情緒只是略偏正面。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管存在競爭疑慮，但HubSpot的強勁業績和對AI的樂觀態度為投資者帶來積極信號，但其他非公司特定新聞則存在負面因素。</span>
         
       </div>
 
@@ -13259,10 +13282,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前呈現多頭排列，MACD在0軸上方且RSI動能走強，整體趨勢偏多且動能強勁。
-② 近期支撐約在MA5的$236.53，主要壓力則落在布林上軌$249.02。
-③ 股價短期內高機率將維持上漲趨勢，並可能挑戰布林上軌壓力位。
-④ 主要風險是量能不足可能導致上漲動能減弱，或出現獲利了結賣壓。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸上方且RSI動能走強，價格呈現多頭排列。
+② 近期支撐為MA5的236.53美元，壓力位於BB上軌249.02美元。
+③ 未來3-5個交易日，股價可能維持偏多走勢，挑戰前高或BB上軌。
+④ 主要風險是量能不足可能導致上漲動能放緩，或KD高檔背離後的修正。</div>
       </details>
       
 
@@ -13270,7 +13293,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-建議在回調至MA20附近，即 $215 - $220 區間買入。止損位設於MA60下方，約 $200，邏輯為跌破長期趨勢線則多頭格局可能改變。第一目標價為歷史高點 $250，第二目標價為 $265。此交易風險回報比約為1:2。KD高位死叉顯示短線有回調壓力，可等待回調確認支撐後再入場。</div>
+建議買入區間：$230 - $235。止損位：$225（跌破MA20）。邏輯：MA20為重要支撐，跌破恐改變短期上升趨勢。第一目標價：$250（前高附近）。第二目標價：$265（MA5與MA20延伸趨勢線）。風險回報比：約1:2。MACD在0軸以上，無需等待0軸突破確認。</div>
       </div>
       
 
@@ -13282,7 +13305,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="237.36"
         data-score="72"
         data-entry="**
-建議在回調至MA20附近，即 $215 - $220 區間買入。止損位設於MA60下方，約 $200，邏輯為跌破長期趨勢線則多頭格局可能改變。第一目標價為歷史高點 $250，第二目標價為 $265。此交易風險回報比約為1:2。KD高位死叉顯示短線有回調壓力，可等待回調確認支撐後再入場。"
+建議買入區間：$230 - $235。止損位：$225（跌破MA20）。邏輯：MA20為重要支撐，跌破恐改變短期上升趨勢。第一目標價：$250（前高附近）。第二目標價：$265（MA5與MA20延伸趨勢線）。風險回報比：約1:2。MACD在0軸以上，無需等待0軸突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -13353,8 +13376,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示Roper Technologies的財報表現強勁，且Roche在藥物核准方面取得重大進展，整體呈現積極正向的市場情緒，儘管有JP Morgan的「減持」評級，但仍不減整體看好趨勢。</span>
+          <span class="sentiment pos">+8</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示Roper Technologies營收和獲利表現強勁，並獲得正面分析師評價，即使有負面評價也提高了目標價，整體情緒極為看好。</span>
         
       </div>
 
@@ -13480,18 +13503,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前趨勢偏多，MACD在零軸之上，顯示上升動能仍強勁。
-② 近期支撐位約為$391.05（MA5），壓力位則在BB上軌的$400.62。
-③ 價格可能繼續挑戰$400.62的壓力位，若能突破有望延續漲勢。
-④ 主要風險為量能不足，若後續無法補量，漲勢可能受阻或反轉。</div>
+        <div class="ai-body">① 盤面強勁，MACD在零軸之上且RSI動能走強，顯示多頭趨勢明顯且動能強勁。
+② 近期支撐位為MA5 $391.05，壓力位為BB上軌 $400.62。
+③ 在多頭排列及RSI動能強勁下，股價預期將持續上攻挑戰BB上軌壓力。
+④ 量能不足是主要風險，若股價上漲時未能伴隨足夠成交量，上攻力道可能受阻，甚至出現獲利了結賣壓。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-建議買入區間為 $385 - $395。止損位設於 $375，邏輯為跌破 MA20 支撐，多頭排列破壞。第一目標價為 $410（歷史高點附近），第二目標價為 $430（潛在技術突破點）。以 $391.97 買入計算，止損 $16.97，目標 $18.03/$38.03，風險回報比約為 1:1.06 / 1:2.24。由於 MACD 位於 0 軸上方，不需等待 0 軸突破確認。需留意 KD 超買，可能短期面臨修正壓力。</div>
+        <div class="entry-body">建議買入區間：$385.00 - $390.00，以待股價回檔測試MA5支撐。止損位設於MA20下方 $360.00，因跌破MA20可能預示趨勢轉弱。第一目標價：$410.00（挑戰歷史高點），第二目標價：$425.00（基於RSI動能持續走強）。風險回報比約1:2，具吸引力。由於MACD已在0軸上方確認多頭趨勢，無需等待0軸突破。</div>
       </div>
       
 
@@ -13502,8 +13524,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="ROP"
         data-price="391.97"
         data-score="72"
-        data-entry="**
-建議買入區間為 $385 - $395。止損位設於 $375，邏輯為跌破 MA20 支撐，多頭排列破壞。第一目標價為 $410（歷史高點附近），第二目標價為 $430（潛在技術突破點）。以 $391.97 買入計算，止損 $16.97，目標 $18.03/$38.03，風險回報比約為 1:1.06 / 1:2.24。由於 MACD 位於 0 軸上方，不需等待 0 軸突破確認。需留意 KD 超買，可能短期面臨修正壓力。"
+        data-entry="建議買入區間：$385.00 - $390.00，以待股價回檔測試MA5支撐。止損位設於MA20下方 $360.00，因跌破MA20可能預示趨勢轉弱。第一目標價：$410.00（挑戰歷史高點），第二目標價：$425.00（基於RSI動能持續走強）。風險回報比約1:2，具吸引力。由於MACD已在0軸上方確認多頭趨勢，無需等待0軸突破。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -13575,7 +13596,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調公司第二季業績強勁，受生產力提升、品牌實力、關稅退款和銷售推動，管理層上調了財測，且有分析師上調目標價，顯示市場對其前景抱持高度樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調公司第二季度表現強勁，生產力提升、品牌實力增強，並上調了財測，分析師也維持買入評級並上調目標價，顯示出非常積極的市場情緒。</span>
         
       </div>
 
@@ -13702,9 +13723,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-arrow">▼</span>
         </summary>
         <div class="ai-body">① 盤面強勁，MACD在0軸上方且金叉，顯示多頭趨勢確立，動能強勁。
-② 壓力位在布林上軌$96.14，支撐位可看MA5 $94.31。
-③ 未來3-5個交易日，股價有較高機率挑戰並突破$96.14壓力位，呈現緩步上漲走勢。
-④ 主要風險為若股價未能突破壓力位並回落，可能下探MA20 $90.08，甚至跌破。</div>
+② 最近支撐約在$94.31 (MA5)，壓力位在$96.14 (BB上軌)。
+③ 未來3-5個交易日，股價高機率延續漲勢，挑戰BB上軌。
+④ 主要風險是若股價跌破MA5 ($94.31)，可能引發獲利了結賣壓，導致回檔修正。</div>
       </details>
       
 
@@ -13712,8 +13733,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-
-建議買入區間：$93 - $95。止損位：$89 (跌破 MA20 且 MACD 死亡交叉，表示多頭動能減弱)。第一目標價：$102 (前高與 Fibonacci 回撤位附近)。第二目標價：$108 (長期趨勢突破點)。風險回報比約 1:2.5，具吸引力。MACD 已在 0 軸上方，趨勢多頭確認，可考慮入場。需留意 KD 超買，短期可能面臨拉回整理。</div>
+建議在 $92.00 - $94.00 區間買入。止損位設於 $89.00，邏輯為跌破MA20支撐，多頭趨勢可能受損。第一目標價 $98.00（前高壓力位），第二目標價 $102.00（上行通道上限）。風險回報比約 1:2，具備吸引力。目前MACD在0軸以上，可直接入場。</div>
       </div>
       
 
@@ -13725,8 +13745,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="94.58"
         data-score="72"
         data-entry="**
-
-建議買入區間：$93 - $95。止損位：$89 (跌破 MA20 且 MACD 死亡交叉，表示多頭動能減弱)。第一目標價：$102 (前高與 Fibonacci 回撤位附近)。第二目標價：$108 (長期趨勢突破點)。風險回報比約 1:2.5，具吸引力。MACD 已在 0 軸上方，趨勢多頭確認，可考慮入場。需留意 KD 超買，短期可能面臨拉回整理。"
+建議在 $92.00 - $94.00 區間買入。止損位設於 $89.00，邏輯為跌破MA20支撐，多頭趨勢可能受損。第一目標價 $98.00（前高壓力位），第二目標價 $102.00（上行通道上限）。風險回報比約 1:2，具備吸引力。目前MACD在0軸以上，可直接入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -13798,7 +13817,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">WDAY 的新聞好壞參半，有股市優於大盤的報導，但同時也有股價下跌以及關於其AI策略是否有效的疑慮，整體情緒偏向中性略帶負面。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">WDAY 的新聞標題顯示有漲有跌，且有其他大公司股票下跌的負面消息，整體情緒偏向中性略帶謹慎。</span>
         
       </div>
 
@@ -13929,22 +13948,18 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① WDAY 盤面呈現強勢多頭趨勢，MACD 在零軸上方且動能走強，短期上漲動能佳。
-② 最近支撐位為 MA5 的 $158.74，壓力位在布林上軌的 $164.77。
-③ 未來3-5個交易日，WDAY 有望延續漲勢，挑戰布林上軌壓力位。
-④ 主要風險在於成交量不足，若無法有效放大，可能導致上漲動能減弱或回檔。</div>
+        <div class="ai-body">① 盤面強勁，股價在多頭排列之上，MACD位於零軸上方且為金叉，顯示多頭趨勢明顯且動能強勁。
+② 最近支撐位為MA5 $158.74，壓力位為布林上軌 $164.77。
+③ 未來3-5個交易日，股價很可能繼續上漲，挑戰布林上軌壓力，甚至突破。
+④ 主要風險是量能不足，若股價繼續上漲而成交量無法有效放大，可能導致上漲動能衰竭而回調。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議等待KD高位回落至超賣區後尋找買入機會，或觀察股價是否能再次站穩於$160上方。
-建議買入區間：$155 - $158。
-止損位：$150（跌破MA5及MA20支撐，多頭排列瓦解風險）。
-第一目標價：$170（近期高點壓力區）。
-第二目標價：$180（挑戰前高阻力）。
-若在$156買入，止損於$150，第一目標$170，風險回報比約1:2.3。若MACD在0軸以下，則等待0軸突破確認後再入場，但目前MACD已在0軸以上，此風險不適用。</div>
+        <div class="entry-body">**
+建議在 $155 - $160 區間買入，等待MACD動能再次向上發散。止損位設於 $148 (跌破MA20)，邏輯為保護本金，避免趨勢反轉。第一目標價 $175 (接近歷史高點)，第二目標價 $185 (基於估值擴張預期)。此交易的風險回報比約為 1:2.5，具備良好吸引力。</div>
       </div>
       
 
@@ -13955,12 +13970,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="WDAY"
         data-price="160.34"
         data-score="72"
-        data-entry="建議等待KD高位回落至超賣區後尋找買入機會，或觀察股價是否能再次站穩於$160上方。
-建議買入區間：$155 - $158。
-止損位：$150（跌破MA5及MA20支撐，多頭排列瓦解風險）。
-第一目標價：$170（近期高點壓力區）。
-第二目標價：$180（挑戰前高阻力）。
-若在$156買入，止損於$150，第一目標$170，風險回報比約1:2.3。若MACD在0軸以下，則等待0軸突破確認後再入場，但目前MACD已在0軸以上，此風險不適用。"
+        data-entry="**
+建議在 $155 - $160 區間買入，等待MACD動能再次向上發散。止損位設於 $148 (跌破MA20)，邏輯為保護本金，避免趨勢反轉。第一目標價 $175 (接近歷史高點)，第二目標價 $185 (基於估值擴張預期)。此交易的風險回報比約為 1:2.5，具備良好吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -14031,8 +14042,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有正面的財報和成長展望，但仍存在關於估值、催化劑延遲以及股價區間震盪的擔憂，部分抵消了利好消息。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多則新聞指出阿斯特捷利康與必治妥施貴寶洽談鉅額併購案，潛在的交易金額和策略聯盟帶來市場的極大關注和正面期待，儘管同時存在對必治妥施貴寶估值的謹慎看法，但其第二季度財報和前景展望良好，整體氛圍偏向樂觀。</span>
         
       </div>
 
@@ -14131,21 +14142,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            Bristol Myers Squibb Isn't Nearly as Cheap as It Looks -- Here's the 1 Thing That Could Change That
+            AstraZeneca holds talks with Bristol Myers Squibb on $400 billion megadeal, FT reports
             
-            <span class="news-pub">Motley Fool</span>
+            <span class="news-pub">Reuters</span>
           </div>
           
           <div class="news-item">
-            BMY Q2 Deep Dive: Growth Portfolio and Pipeline Progress Drive Upgraded Outlook
+            AstraZeneca and Bristol-Myers Squibb in talks over potential merger - Report
             
-            <span class="news-pub">StockStory</span>
+            <span class="news-pub">Investing.com</span>
           </div>
           
           <div class="news-item">
-            Bristol Myers Squibb Q2 Earnings Call Highlights
+            AstraZeneca plots £300bn tie-up with US rival
             
-            <span class="news-pub">MarketBeat</span>
+            <span class="news-pub">The Telegraph</span>
           </div>
           
         </div>
@@ -14158,19 +14169,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前股價呈多頭排列，MACD在0軸上方且動能擴張，顯示多頭趨勢強勁。
-② 最近壓力位在布林上軌$65.64，支撐位可參考MA5 $63.89。
-③ 股價短期內高機率將測試並突破$65.64壓力，並延續上漲趨勢。
-④ 主要風險為RSI高檔及BB%逼近1，若未能有效突破，可能引發技術性回檔。</div>
+        <div class="ai-body">① BMY 盤面強勢，MACD在0軸以上且動能擴張，確立多頭趨勢，動能強勁。
+② 最近壓力位在BB上軌 $65.64，支撐位則在MA5 $63.89。
+③ 股價高機率持續上攻，突破 $65.64 壓力位，短期內有望挑戰更高點。
+④ 主要風險為RSI高檔，KD呈現高檔鈍化，若無法突破壓力，可能出現回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-
-鑒於MACD金叉且動能擴張，且位於0軸以上，技術面多頭趨勢確立。建議買入區間：$64.50 - $65.50。止損位：跌破MA20 ($60.44)，邏輯為多頭趨勢結構被破壞。第一目標價：$68.00（挑戰前高阻力區）；第二目標價：$70.00（基於費波那契擴展或更長期趨勢線）。風險回報比：約1:2.5，具吸引力。</div>
+        <div class="entry-body">建議在$64.50 - $65.50區間內買入。止損位設於$62.80（MA5下方，跌破則多頭趨勢可能受損）。第一目標價為$68.00（前高點附近），第二目標價為$70.00。此交易風險回報比約為1:2至1:3，具備吸引力。由於MACD已在0軸以上且動能擴張，無需等待額外確認。</div>
       </div>
       
 
@@ -14181,9 +14190,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="BMY"
         data-price="65.31"
         data-score="70"
-        data-entry="**
-
-鑒於MACD金叉且動能擴張，且位於0軸以上，技術面多頭趨勢確立。建議買入區間：$64.50 - $65.50。止損位：跌破MA20 ($60.44)，邏輯為多頭趨勢結構被破壞。第一目標價：$68.00（挑戰前高阻力區）；第二目標價：$70.00（基於費波那契擴展或更長期趨勢線）。風險回報比：約1:2.5，具吸引力。"
+        data-entry="建議在$64.50 - $65.50區間內買入。止損位設於$62.80（MA5下方，跌破則多頭趨勢可能受損）。第一目標價為$68.00（前高點附近），第二目標價為$70.00。此交易風險回報比約為1:2至1:3，具備吸引力。由於MACD已在0軸以上且動能擴張，無需等待額外確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -14254,8 +14261,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數標題皆指出Mastercard營收成長強勁、獲得監管優勢、以及分析師上調目標價，顯示公司表現積極且前景樂觀。</span>
+          <span class="sentiment pos">+5</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞中提到營收強勁增長及策略性發展，部分文章探討股價未來走向，整體趨於樂觀，但也有對其估值過高的擔憂，因此給出正向但非極端的評分。</span>
         
       </div>
 
@@ -14354,6 +14361,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Where Will Mastercard Stock Be in 5 Years?
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             Mastercard Inc (MA) (Q2 2026) Earnings Call Highlights: Strong Revenue Growth and Strategic ...
             
             <span class="news-pub">GuruFocus.com</span>
@@ -14363,12 +14376,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             Circle’s NYDFS Trust Charter Completes a Regulatory Depth Moat No Other Stablecoin Issuer Can Match
             
             <span class="news-pub">Forkast News</span>
-          </div>
-          
-          <div class="news-item">
-            Capital One's Purchase Volume Grew 26%, but Legacy Discover Volume Rose Less Than 2%. Only One Number Describes the Franchise It Bought.
-            
-            <span class="news-pub">Motley Fool</span>
           </div>
           
         </div>
@@ -14382,9 +14389,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-arrow">▼</span>
         </summary>
         <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢明顯，上漲動能強。
-② 最近壓力位為BB上軌 $575.09，支撐位為MA5 $565.65。
-③ 未來3-5個交易日，MA高機率延續多頭走勢，向上挑戰BB上軌壓力。
-④ 主要風險為KD指標處於超買區，若出現死亡交叉可能引發回調。</div>
+② 最近支撐位為MA5的565.65美元，壓力位則為布林通道上軌的575.09美元。
+③ 股價站穩各均線，且MACD持續向上，未來3-5個交易日高機率將持續上漲，挑戰布林通道上軌壓力。
+④ 主要風險為KD指標處於高檔鈍化，RSI也接近超買區間，需警惕短期回檔或漲勢放緩。</div>
       </details>
       
 
@@ -14392,8 +14399,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-
-建議買入區間：$560 - $570。止損位設於MA20下方，約$540，邏輯是跌破MA20可能破壞短期多頭結構。第一目標價：$595 (RSI過熱區間)，第二目標價：$620 (歷史高點附近)。目前風險回報比約為 1:2.5，具吸引力。</div>
+建議在 $560 - $570 區間買入。止損位設於 $540（跌破 MA20 且MACD轉弱）。第一目標價為前高 $585，第二目標價為 $600。風險回報比約 1:2。由於MACD在0軸以上且動能擴張，無需等待0軸突破確認，可直接考慮入場。</div>
       </div>
       
 
@@ -14405,8 +14411,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="573.10"
         data-score="70"
         data-entry="**
-
-建議買入區間：$560 - $570。止損位設於MA20下方，約$540，邏輯是跌破MA20可能破壞短期多頭結構。第一目標價：$595 (RSI過熱區間)，第二目標價：$620 (歷史高點附近)。目前風險回報比約為 1:2.5，具吸引力。"
+建議在 $560 - $570 區間買入。止損位設於 $540（跌破 MA20 且MACD轉弱）。第一目標價為前高 $585，第二目標價為 $600。風險回報比約 1:2。由於MACD在0軸以上且動能擴張，無需等待0軸突破確認，可直接考慮入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -14477,8 +14482,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有 outperform 市場和股息機會等正面消息，但多數標題圍繞股價下跌、市場整體下滑以及S&P 500在七月首次下跌等負面情緒，顯示了較為看淡的整體觀點。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示ACN在市場下跌時表現相對較好，且具有成長潛力，但也有整體市場下跌和部分股票領跌的負面資訊，因此情緒偏向中性略為正面。</span>
         
       </div>
 
@@ -14604,10 +14609,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面偏多，MACD在0軸上方且動能仍強，顯示中期上漲趨勢確立。
-② 近期支撐位為MA5的$164.22，壓力位則為布林上軌的$169.47。
-③ 未來3-5個交易日股價有望挑戰布林上軌，並在165-170區間震盪整理。
-④ 主要風險為MACD動能持續收斂並形成死叉，可能引發短期回調。</div>
+        <div class="ai-body">① 目前股價位於多條均線之上，MACD在0軸上方且動能走強，顯示整體趨勢偏多。
+② 近期支撐位為MA5 $164.22，壓力位為布林上軌 $169.47。
+③ 價格有望向布林上軌 $169.47 挑戰，若能突破則有機會續創新高。
+④ KD指標高檔鈍化且K值下彎，需留意短期回檔修正的風險。</div>
       </details>
       
 
@@ -14616,7 +14621,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-基於目前 MACD 位於 0 軸以上且為金叉，趨勢多頭確認，建議可分批買入區間為 $163.00 - $166.00。止損位設於 $158.00（MA60 附近，避免跌破多頭趨勢）。第一目標價：$175.00，第二目標價：$182.00。風險回報比約為 1:2.5，具吸引力。</div>
+基於目前MACD在0軸上方且趨勢明確，建議買入區間為$163.00 - $166.00。止損位設於MA60以下，約$155.00，邏輯為跌破長期支撐即多頭趨勢轉弱。第一目標價$175.00，第二目標價$182.00。風險回報比約為1:2至1:3，具備吸引力。</div>
       </div>
       
 
@@ -14629,7 +14634,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="67"
         data-entry="**
 
-基於目前 MACD 位於 0 軸以上且為金叉，趨勢多頭確認，建議可分批買入區間為 $163.00 - $166.00。止損位設於 $158.00（MA60 附近，避免跌破多頭趨勢）。第一目標價：$175.00，第二目標價：$182.00。風險回報比約為 1:2.5，具吸引力。"
+基於目前MACD在0軸上方且趨勢明確，建議買入區間為$163.00 - $166.00。止損位設於MA60以下，約$155.00，邏輯為跌破長期支撐即多頭趨勢轉弱。第一目標價$175.00，第二目標價$182.00。風險回報比約為1:2至1:3，具備吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -14701,7 +14706,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Nucor在多個標題中被提及表現出色，特別是Q2財報凸顯增長專案和需求，顯示強勁的積極趨勢。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Nucor 在股票對決中擊敗競爭對手，並透過財報電話會議強調成長項目和需求，顯示公司表現強勁且前景樂觀。</span>
         
       </div>
 
@@ -14827,10 +14832,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面偏多，MACD在0軸上方且RSI動能走強，顯示多頭趨勢確立且動能持續增強。
-② 近期支撐位約在$240.08（MA60），壓力位則在$263.67（布林上軌）。
-③ 未來3-5個交易日，股價很可能在$256.77（MA5）附近盤整後，再次挑戰布林上軌$263.67。
-④ 主要風險為KD-K線向下交叉KD-D線，可能預示股價短期內將出現回調。</div>
+        <div class="ai-body">① 盤面強勁，MACD在零軸之上，顯示多頭趨勢確立且動能走強。
+② 近期支撐位約為 $256.77 (MA5)，壓力位為布林上軌 $263.67。
+③ 未來3-5個交易日高機率持續上攻，測試布林上軌壓力。
+④ 主要風險為KD指標出現高檔死叉，可能引發短期回檔修正。</div>
       </details>
       
 
@@ -14839,7 +14844,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-建議買入區間：$250 - $257。止損位設於MA20 ($238.82) 下方，邏輯為跌破短期均線可能反轉趨勢。第一目標價：$275 (歷史高點附近)，第二目標價：$290 (潛在突破新高)。風險回報比約1:2.5，屬良好。MACD已在0軸上方，無需等待突破確認。</div>
+建議買入區間：$250 - $255。止損位設於MA60下方約3%，即$232.88，邏輯為跌破長期支撐。第一目標價：$275，第二目標價：$290。風險回報比：約1:2至1:3，具吸引力。</div>
       </div>
       
 
@@ -14852,7 +14857,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="67"
         data-entry="**
 
-建議買入區間：$250 - $257。止損位設於MA20 ($238.82) 下方，邏輯為跌破短期均線可能反轉趨勢。第一目標價：$275 (歷史高點附近)，第二目標價：$290 (潛在突破新高)。風險回報比約1:2.5，屬良好。MACD已在0軸上方，無需等待突破確認。"
+建議買入區間：$250 - $255。止損位設於MA60下方約3%，即$232.88，邏輯為跌破長期支撐。第一目標價：$275，第二目標價：$290。風險回報比：約1:2至1:3，具吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -14924,7 +14929,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向Zoom的積極發展，包括市場表現、新領導層任命和未來的財報發布，雖然其中一篇財報日期有誤，但整體趨勢是正面的。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題指向Zoom的積極發展，包括市場表現、高管任命以促進亞太區增長，以及即將發布財報的預期，即便其中一則提及財報預估落後，但整體氛圍偏向利好。</span>
         
       </div>
 
@@ -15047,17 +15052,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸以上且動能擴張，顯示多頭趨勢明顯，上漲動能強。
-② 最近壓力位為BB上軌96.15，支撐位可看MA5的92.7或MA20的89.97。
-③ 未來3-5個交易日高機率延續上漲趨勢，挑戰前高，但需留意短期超買回檔。
-④ 主要風險為漲多回檔，尤其KD-K、KD-D偏高，若股價無法站穩BB上軌可能引發修正。</div>
+        <div class="ai-body">① 盤面強勢偏多，價格站上MA60，MACD在0軸上方且動能擴張，RSI動能走強。
+② 最近壓力位位於布林上軌96.15美元，支撐位可看MA5的92.7美元。
+③ 未來3-5個交易日，股價很可能在92.7至96.15美元區間震盪，並有機會向上突破壓力位。
+④ 主要風險為股價未能有效突破布林上軌壓力，恐引發獲利了結賣壓，導致回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$93-$95區間等待回調買入，止損設於MA60下方$93（約$92.5），若跌破MA60則多頭趨勢可能受阻。第一目標價$100，第二目標價$105。風險回報比約為1:2至1:3，具備吸引力。由於MACD已在0軸以上且動能擴張，多頭趨勢確認，無需等待。</div>
+        <div class="entry-body">建議在$92-$94區間分批買入，利用回調機會建倉。止損位設於$88，邏輯為跌破MA20與MA60雙重支撐，多頭趨勢可能反轉。第一目標價$105（前高壓力位），第二目標價$112（技術形態突破潛在上漲空間）。考量到潛在的上漲空間與下跌風險，風險回報比約為1:2.5，具吸引力。MACD金叉且動能擴張於0軸以上，多頭趨勢確立，可考慮入場。</div>
       </div>
       
 
@@ -15068,7 +15073,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="ZM"
         data-price="96.07"
         data-score="67"
-        data-entry="建議在$93-$95區間等待回調買入，止損設於MA60下方$93（約$92.5），若跌破MA60則多頭趨勢可能受阻。第一目標價$100，第二目標價$105。風險回報比約為1:2至1:3，具備吸引力。由於MACD已在0軸以上且動能擴張，多頭趨勢確認，無需等待。"
+        data-entry="建議在$92-$94區間分批買入，利用回調機會建倉。止損位設於$88，邏輯為跌破MA20與MA60雙重支撐，多頭趨勢可能反轉。第一目標價$105（前高壓力位），第二目標價$112（技術形態突破潛在上漲空間）。考量到潛在的上漲空間與下跌風險，風險回報比約為1:2.5，具吸引力。MACD金叉且動能擴張於0軸以上，多頭趨勢確立，可考慮入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -15140,7 +15145,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Church & Dwight (CHD) 的第二季財報顯示有機銷售額強勁增長並超越預期，整體表現良好，推動市場看好情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">Church & Dwight (CHD) 的第二季財報顯示有機銷售額強勁增長並符合或超出預期，表明業績表現良好，市場情緒樂觀。</span>
         
       </div>
 
@@ -15258,17 +15263,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① CHD目前處於0軸以上的多頭趨勢，且動能有走強跡象。
-② 近期關鍵壓力位約在100.29美元，支撐位約在97.55美元。
-③ 未來3-5個交易日，股價有機會挑戰並突破上軌壓力，延續上漲趨勢。
-④ 主要風險是KD指標出現死亡交叉，可能導致股價回調至MA20或BB下軌。</div>
+        <div class="ai-body">① 目前趨勢偏多，MACD在0軸上方支持多頭動能，RSI動能走強。
+② 近期支撐位為97.55（MA20），壓力位為100.29（BB上軌）。
+③ 高機率劇本為持續在BB上軌與MA20之間盤整或緩步上攻。
+④ 主要風險是KD-K值低於KD-D，可能預示短期回調。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$97.55 - $98.80 (MA20至現價區間)。止損位設於MA60下方 $96.00，邏輯為跌破長期支撐則多頭趨勢可能反轉。第一目標價 $102.00，第二目標價 $105.00。當前風險回報比約 1:2.5，屬合理範圍。MACD已在0軸以上，無需等待0軸突破確認。</div>
+        <div class="entry-body">建議買入區間：$97.50 - $98.50 (靠近MA20及現價附近)。止損位設定於$96.00，若跌破此位，則多頭趨勢可能反轉，MA60失守。第一目標價：$102.00 (挑戰前期高點)，第二目標價：$105.00。風險回報比約為 1:2.5，具吸引力。MACD在0軸上方，無需等待0軸突破確認。</div>
       </div>
       
 
@@ -15279,7 +15284,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="CHD"
         data-price="98.81"
         data-score="66"
-        data-entry="建議買入區間：$97.55 - $98.80 (MA20至現價區間)。止損位設於MA60下方 $96.00，邏輯為跌破長期支撐則多頭趨勢可能反轉。第一目標價 $102.00，第二目標價 $105.00。當前風險回報比約 1:2.5，屬合理範圍。MACD已在0軸以上，無需等待0軸突破確認。"
+        data-entry="建議買入區間：$97.50 - $98.50 (靠近MA20及現價附近)。止損位設定於$96.00，若跌破此位，則多頭趨勢可能反轉，MA60失守。第一目標價：$102.00 (挑戰前期高點)，第二目標價：$105.00。風險回報比約為 1:2.5，具吸引力。MACD在0軸上方，無需等待0軸突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -15351,7 +15356,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neut">+2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">正面消息如收購案和公平價值提升，被負面法律訴訟和對分析師的擔憂所抵消，導致情緒略為正面但帶有不確定性。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">正面消息如收購案和分析師對股價的看好，與負面消息如法律訴訟金額大致平衡，但後者影響較大，因此略微偏向中性。</span>
         
       </div>
 
@@ -15469,17 +15474,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面顯示多頭趨勢，MACD在零軸以上，但KD指標已出現死叉，動能略為收斂。
-② 最近支撐位於MA20的$113.6，壓力則在布林上軌的$118.32。
-③ 價格可能在MA5和MA20附近震盪整理，若能突破MA5壓力，有機會向上挑戰布林上軌。
-④ KD指標死叉且K值跌破D值，需警惕短線可能出現回檔修正，下行風險增加。</div>
+        <div class="ai-body">① EBAY 目前處於多頭趨勢，MACD在零軸上方，但動能略微收斂。
+② 最近支撐位約為 $113.6 (MA20)，壓力位約為 $118.32 (BB上軌)。
+③ 未來3-5個交易日，EBAY 最可能震盪偏多，有望挑戰BB上軌。
+④ 主要風險為KD指標高檔死叉，以及MACD動能持續收斂轉弱，可能導致股價回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在 $112.50 - $113.50 區間分批買入，利用KD高位回落的短期調整尋找切入點。止損位設於 $110.00，若跌破表示多頭趨勢逆轉。第一目標價為 $118.00（挑戰前高），第二目標價 $122.00（突破前高）。此交易風險回報比約為 1:2。</div>
+        <div class="entry-body">建議在 **$113.00 - $114.00** 區間分批買入。止損位設於 **$111.00**（邏輯為跌破MA60並確認多頭趨勢破壞）。第一目標價 **$118.00**，第二目標價 **$122.00**。目前風險回報比約為 1:2.5 (止損 2.5%，目標 6.0%-9.0%)，具備吸引力。由於MACD已在0軸上方，無需等待0軸突破確認。</div>
       </div>
       
 
@@ -15490,7 +15495,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="EBAY"
         data-price="114.01"
         data-score="66"
-        data-entry="建議在 $112.50 - $113.50 區間分批買入，利用KD高位回落的短期調整尋找切入點。止損位設於 $110.00，若跌破表示多頭趨勢逆轉。第一目標價為 $118.00（挑戰前高），第二目標價 $122.00（突破前高）。此交易風險回報比約為 1:2。"
+        data-entry="建議在 **$113.00 - $114.00** 區間分批買入。止損位設於 **$111.00**（邏輯為跌破MA60並確認多頭趨勢破壞）。第一目標價 **$118.00**，第二目標價 **$122.00**。目前風險回報比約為 1:2.5 (止損 2.5%，目標 6.0%-9.0%)，具備吸引力。由於MACD已在0軸上方，無需等待0軸突破確認。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -15562,7 +15567,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">有兩則新聞關於企業社會責任報告，普遍正面，但同時有分析師調降目標價的負面消息，整體情緒偏向輕微樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞混雜了企業社會責任報告的正面消息、即將到來的財報季的關注，以及分析師下調目標價的負面因素，顯示出複雜且略偏正面的情緒。</span>
         
       </div>
 
@@ -15685,19 +15690,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強弱：股價高於MA20和MA60，MACD在零軸之上且RSI動能走強，顯示趨勢偏多且動能良好。
-② 關鍵價位：近期支撐位約在MA20的$558.84附近，壓力位在BB上軌$579.47。
-③ 高機率劇本：考量多頭趨勢及動能，未來3-5個交易日股價有機會持續向上挑戰BB上軌。
-④ 主要風險：若KD-K線持續向下，可能形成死亡交叉，暗示短線回調風險，需留意股價跌破MA20。</div>
+        <div class="ai-body">① 盤面強弱：價格位於主要均線上方，MACD在零軸之上且RSI動能增強，顯示偏多趨勢持續，短線動能正蓄積。
+② 關鍵價位：近期支撐位約在 $558.84 (MA20)，壓力位約在 $579.47 (BB上軌)。
+③ 高機率劇本：考量動能增強及技術信號偏多，未來3-5個交易日股價有望挑戰壓力區間，甚至有機會突破前高。
+④ 主要風險：若股價跌破MA20 ($558.84)，且KD指標持續向下，可能預示多頭動能減弱，需警惕轉弱風險。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-
-由於MACD在0軸以上且為金叉，技術信號偏多，建議在$555-$560區間內逢低買入。止損位設於$550，邏輯為跌破MA60並破壞多頭結構。第一目標價$575，第二目標價$590。此建議下的風險回報比約為1:2至1:3，具吸引力。</div>
+        <div class="entry-body">建議在$555-$560區間買入，止損位設於$550（跌破MA60並趨勢轉弱）。第一目標價$575，第二目標價$590。此建議的風險回報比約為1:2至1:3，MACD位於0軸以上確認多頭趨勢，無需等待0軸突破。</div>
       </div>
       
 
@@ -15708,9 +15711,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="IDXX"
         data-price="559.07"
         data-score="66"
-        data-entry="**
-
-由於MACD在0軸以上且為金叉，技術信號偏多，建議在$555-$560區間內逢低買入。止損位設於$550，邏輯為跌破MA60並破壞多頭結構。第一目標價$575，第二目標價$590。此建議下的風險回報比約為1:2至1:3，具吸引力。"
+        data-entry="建議在$555-$560區間買入，止損位設於$550（跌破MA60並趨勢轉弱）。第一目標價$575，第二目標價$590。此建議的風險回報比約為1:2至1:3，MACD位於0軸以上確認多頭趨勢，無需等待0軸突破。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -15781,8 +15782,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">SCHD獲得多數正面關注，被推薦為值得購買的ETF，但也有文章提出替代方案，或將其與其他ETF進行比較，整體情緒偏向正面但非完全看好。</span>
+          <span class="sentiment pos">+5</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有幾篇新聞建議替代基金或探討領取社會福利的負面影響，但整體而言，多篇新聞推薦SCHD為值得買入並持有的最佳或高成長股息ETF，顯示出偏向正面的情緒。</span>
         
       </div>
 
@@ -15883,17 +15884,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前股價位於多條均線之上，且MACD在0軸以上，顯示多頭趨勢強勁，動能偏多。
-② 近期主要壓力位於BB上軌33.93美元，支撐位則看MA20的32.87美元。
-③ 在多頭趨勢和RSI動能走強下，未來3-5個交易日股價有望挑戰甚至突破33.93美元的壓力位。
-④ 需警惕股價若跌破MA20（32.87美元），可能導致多頭趨勢轉弱的下行風險。</div>
+        <div class="ai-body">① 盤面顯示多頭趨勢，價格在MA20和MA60之上，MACD在0軸上方，RSI動能走強，整體偏多。
+② 最近支撐位約為MA20的$32.87，關鍵壓力位為布林上軌$33.93。
+③ 未來3-5個交易日，SCHD有較高機率繼續向上測試壓力位$33.93。
+④ 主要風險是KD-K值低於KD-D，顯示短期動能可能轉弱，若無法突破壓力位，存在回調風險。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議買入區間：$33.00 - $33.30，若能回調至MA20（約$32.87）附近更是良好買點。止損位設於$32.50，邏輯為跌破MA20且MACD死叉，技術面轉弱。第一目標價$34.50（挑戰近期高點），第二目標價$35.50（基於歷史波段拓展）。此建議下風險回報比約為1:2至1:3，具備吸引力。目前MACD已在0軸以上且為金叉，趨勢多頭確認，適合擇機入場。</div>
+        <div class="entry-body">建議買入區間：$33.00 - $33.30，等待回檔至MA20附近支撐。止損位設於$32.50（跌破MA20與MA60區間，且MACD翻黑），邏輯為短期趨勢惡化。第一目標價：$34.50（挑戰前高），第二目標價：$35.50（基於歷史波幅與MACD動能）。風險回報比約1:2。MACD目前在0軸以上，多頭趨勢確認，可考慮入場。</div>
       </div>
       
 
@@ -15904,7 +15905,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="SCHD"
         data-price="33.47"
         data-score="66"
-        data-entry="建議買入區間：$33.00 - $33.30，若能回調至MA20（約$32.87）附近更是良好買點。止損位設於$32.50，邏輯為跌破MA20且MACD死叉，技術面轉弱。第一目標價$34.50（挑戰近期高點），第二目標價$35.50（基於歷史波段拓展）。此建議下風險回報比約為1:2至1:3，具備吸引力。目前MACD已在0軸以上且為金叉，趨勢多頭確認，適合擇機入場。"
+        data-entry="建議買入區間：$33.00 - $33.30，等待回檔至MA20附近支撐。止損位設於$32.50（跌破MA20與MA60區間，且MACD翻黑），邏輯為短期趨勢惡化。第一目標價：$34.50（挑戰前高），第二目標價：$35.50（基於歷史波幅與MACD動能）。風險回報比約1:2。MACD目前在0軸以上，多頭趨勢確認，可考慮入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -15976,7 +15977,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+5</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">這些新聞標題大多關注 FNDX 是否值得投資、表現優於市場以及是否為強勢 ETF，顯示出普遍的正面關注和潛在的投資機會。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">這些新聞標題大多是中性偏積極的提問，探討 FNDX 是否值得投資或表現強勁，顯示市場對其存在興趣並非看空。</span>
         
       </div>
 
@@ -16077,10 +16078,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方，且價格維持多頭排列，顯示趨勢偏多且動能強勁。
-② 最近壓力位為BB上軌31.84，支撐位可參考MA5的31.7，或BB中軌約31.5。
-③ 未來3-5個交易日，FNDX高機率延續上漲趨勢，挑戰BB上軌壓力，並可能突破。
-④ 主要風險為KD指標出現死叉，暗示短期有回檔整理的可能。</div>
+        <div class="ai-body">① 盤面強勁，價格呈現多頭排列，MACD在零軸上方確認多頭趨勢，RSI動能走強，整體偏多。
+② 近期壓力位在BB上軌31.84，支撐位可看MA20的31.5或BB下軌的31.15。
+③ 未來3-5個交易日，FNDX高機率震盪走高，有望測試並突破BB上軌壓力。
+④ 主要風險為MACD死叉雖有收斂但尚未翻多，若KD持續死叉向下，恐引發短期回檔。</div>
       </details>
       
 
@@ -16088,8 +16089,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="entry">
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
-建議買入區間：$31.50 - $31.70。止損位：$30.80（跌破MA60並確認收盤價）。邏輯：MA60是中長期支撐線，一旦跌破意味著中長期趨勢轉弱。第一目標價：$32.50（挑戰近期高點）。第二目標價：$33.00。風險回報比約1:2。
-**重要提示：雖然MACD死叉收斂，但因其仍在0軸以上，且多頭排列趨勢明確，故可考慮逢低買入。若MACD當時已在0軸以下，則會建議等待0軸突破確認後再入場。**</div>
+
+基於目前的偏多信號，建議可於 **$31.50 - $31.70** 區間分批買入。止損位設定在 **$31.20**，邏輯為跌破MA20與MA5雙重支撐，多頭排列破壞。第一目標價 **$32.50** (短期壓力區間)，第二目標價 **$33.20** (技術阻力位)。風險回報比約為 1:2.5 (止損 0.5%，目標 1.5% 以上)。</div>
       </div>
       
 
@@ -16101,8 +16102,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="31.74"
         data-score="65"
         data-entry="**
-建議買入區間：$31.50 - $31.70。止損位：$30.80（跌破MA60並確認收盤價）。邏輯：MA60是中長期支撐線，一旦跌破意味著中長期趨勢轉弱。第一目標價：$32.50（挑戰近期高點）。第二目標價：$33.00。風險回報比約1:2。
-**重要提示：雖然MACD死叉收斂，但因其仍在0軸以上，且多頭排列趨勢明確，故可考慮逢低買入。若MACD當時已在0軸以下，則會建議等待0軸突破確認後再入場。**"
+
+基於目前的偏多信號，建議可於 **$31.50 - $31.70** 區間分批買入。止損位設定在 **$31.20**，邏輯為跌破MA20與MA5雙重支撐，多頭排列破壞。第一目標價 **$32.50** (短期壓力區間)，第二目標價 **$33.20** (技術阻力位)。風險回報比約為 1:2.5 (止損 0.5%，目標 1.5% 以上)。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -16173,8 +16174,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調市場對亞馬遜的積極看法，包括潛在的投資機會、CEO對未來需求的信心，以及其在AI和雲端運算領域的策略性地位，暗示強勁的成長前景。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">AWS萬億美元的潛力以及AI帶來的影響力，抵消了債務和支出增加的擔憂，市場對亞馬遜的未來發展持樂觀態度。</span>
         
       </div>
 
@@ -16265,21 +16266,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            Warren Buffett Passed on This Stock for Over 7 Years. Greg Abel May Not Wait Any Longer.
+            SpaceX vs. the "Magnificent Seven": How the New Nasdaq-100 Member Stacks Up
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Amazon Already Knows What 2028 Looks Like: CEO Andy Jassy Says the Demand Is 'Striking' as AWS Races to Add Capacity
+            Big Tech’s $2 trillion AI shakeout just changed everything
+            
+            <span class="news-pub">TheStreet</span>
+          </div>
+          
+          <div class="news-item">
+            Amazon Says AWS Could Become A $1 Trillion Business
             
             <span class="news-pub">Benzinga</span>
-          </div>
-          
-          <div class="news-item">
-            Why Now Is Finally the Time to Buy the Big Three Cloud Computing Stocks Before It's Too Late
-            
-            <span class="news-pub">Motley Fool</span>
           </div>
           
         </div>
@@ -16292,10 +16293,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，股價站上MA60，RSI動能走強，但MACD仍在0軸以下，趨勢仍偏空。
-② 壓力位在布林上軌$264.2，支撐位在布林中軌或MA5附近$239.2。
-③ 伴隨爆量上漲，未來3-5個交易日股價有望持續向上挑戰布林上軌。
-④ 需警惕MACD金叉在0軸以下可能為誘多陷阱，若未能有效突破壓力，股價恐回落。</div>
+        <div class="ai-body">① 趨勢由空轉多，動能強勁。
+② 支撐位約 $264.2（布林上軌），壓力位約 $271.58（現價已突破）。
+③ 在強勁動能下，未來3-5個交易日股價有望續漲。
+④ MACD金叉在0軸以下，需警惕反彈無力，形成誘多陷阱。</div>
       </details>
       
 
@@ -16379,8 +16380,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+5</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">部分新聞暗示華爾街將資金從AI股票轉向Salesforce等公司，且有合約利多和股價被低估的觀點，但也有關於風險和潛在問題的聲音，整體偏向中性樂觀。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有股價下跌的短期波動和風險提示，但整體新聞傾向於將 Salesforce 視為具備買入機會和增長潛力，甚至被視為資金從 AI 股流出後的避風港。</span>
         
       </div>
 
@@ -16484,21 +16485,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Prediction: Salesforce Will End The Year At This Price
+            
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
+            The Salesforce Dip Is a Buying Opportunity
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+          <div class="news-item">
             Jim Cramer says Wall Street is 'fleeing' AI stocks after a 7% drop — and buying Salesforce, Walmart instead
             
             <span class="news-pub">Moneywise</span>
-          </div>
-          
-          <div class="news-item">
-            1 Software Stock with Exciting Potential and 2 We Find Risky
-            
-            <span class="news-pub">StockStory</span>
-          </div>
-          
-          <div class="news-item">
-            Jim Cramer Said Trouble Was Brewing As Salesforce Inc. (NYSE:CRM)’s Shares Rose
-            
-            <span class="news-pub">Insider Monkey</span>
           </div>
           
         </div>
@@ -16511,10 +16512,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方且金叉，顯示多頭趨勢確立且動能持續增強。
-② 壓力位在BB上軌$186.63，支撐位可看MA5 $181.64。
-③ 短期內價格有望挑戰BB上軌壓力，若突破則繼續上攻。
-④ 量能不足是主要風險，若無法補量，上攻動能可能受限或出現回調。</div>
+        <div class="ai-body">① 盤面強勁，價格站穩多條均線，MACD在零軸之上且動能擴張，顯示多頭趨勢明顯且動能強勁。
+② 最近支撐位為MA5的$181.64，壓力位為BB上軌的$186.63。
+③ 未來3-5個交易日，股價很可能在$181.64至$186.63之間震盪整理，或嘗試突破上軌。
+④ 主要風險在於量能不足，若無法有效放大，突破上軌的動能恐將受限，甚至引發回調。</div>
       </details>
       
 
@@ -16523,7 +16524,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="entry-label">Entry timing</div>
         <div class="entry-body">**
 
-由於 MACD 已在 0 軸以上且動能擴張，可以考慮入場。建議買入區間 $180-$184。止損位設於 $170，邏輯是跌破 MA20 且跌破 MA60 關鍵支撐。第一目標價 $195，第二目標價 $205。風險回報比約為 1:2.5。</div>
+由於 MACD 已在 0 軸以上且動能擴張，我們建議在 $180 - $183 區間建立多頭部位。止損位設於 $175 (MA20 附近)，跌破此處代表短期趨勢可能反轉。第一目標價為 $195，第二目標價為 $205，風險回報比約為 1:2.5 到 1:4。</div>
       </div>
       
 
@@ -16536,7 +16537,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="65"
         data-entry="**
 
-由於 MACD 已在 0 軸以上且動能擴張，可以考慮入場。建議買入區間 $180-$184。止損位設於 $170，邏輯是跌破 MA20 且跌破 MA60 關鍵支撐。第一目標價 $195，第二目標價 $205。風險回報比約為 1:2.5。"
+由於 MACD 已在 0 軸以上且動能擴張，我們建議在 $180 - $183 區間建立多頭部位。止損位設於 $175 (MA20 附近)，跌破此處代表短期趨勢可能反轉。第一目標價為 $195，第二目標價為 $205，風險回報比約為 1:2.5 到 1:4。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -16608,7 +16609,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有維持中性評級但調高目標價的正面消息，且公司業務與AI革命相關，但整體新聞中並無特別強烈的利多或利空。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有分析師維持中立評級並調高目標價，且公司參與AI安全領域，但整體新聞仍混合著市場波動和行業挑戰。</span>
         
       </div>
 
@@ -16726,17 +16727,18 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，股價位於MA5、MA20、MA60之上，MACD在0軸上方，顯示多頭趨勢明顯且動能強勁。
-② 最近支撐位為MA20的$158.13，壓力位為布林上軌的$167.73。
-③ 未來3-5個交易日，在RSI動能走強下，股價預計將持續上攻，可能測試布林上軌壓力。
-④ 主要風險是MACD死叉收斂後可能再次向下，或量能未能持續放大，導致上漲動能不足。</div>
+        <div class="ai-body">① 盤面強勁，價格在MA20和MA60之上，MACD在0軸上方確認多頭趨勢，RSI動能走強，顯示買氣旺盛。
+② 近期支撐位為$158.13 (MA20)，壓力位為$167.73 (BB上軌)。
+③ 在RSI走強和MACD收斂的推動下，未來3-5個交易日股價有望向上挑戰布林上軌。
+④ 需警惕MACD死叉未能反轉並進一步擴大，導致股價回檔測試MA20支撐的風險。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在$160.00 - $161.50區間輕倉買入。止損設於MA20下方$157.00，跌破MA20可能預示短期趨勢轉弱。第一目標價$168.00（挑戰前高點），第二目標價$175.00（潛在突破區間）。風險回報比約1:2至1:3。若MACD未突破0軸，則應等待0軸突破確認後再入場，以避免誘多風險。</div>
+        <div class="entry-body">**
+建議在 $158.00 - $161.00 區間建立倉位。止損設於 MA60 以下 $143.00，邏輯是跌破關鍵長期支撐，多頭趨勢可能逆轉。第一目標價 $170.00，第二目標價 $180.00。風險回報比約 1:2.5，具吸引力。由於MACD在零軸之上，此為正常擇時建議。</div>
       </div>
       
 
@@ -16747,7 +16749,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="FTNT"
         data-price="161.95"
         data-score="65"
-        data-entry="建議在$160.00 - $161.50區間輕倉買入。止損設於MA20下方$157.00，跌破MA20可能預示短期趨勢轉弱。第一目標價$168.00（挑戰前高點），第二目標價$175.00（潛在突破區間）。風險回報比約1:2至1:3。若MACD未突破0軸，則應等待0軸突破確認後再入場，以避免誘多風險。"
+        data-entry="**
+建議在 $158.00 - $161.00 區間建立倉位。止損設於 MA60 以下 $143.00，邏輯是跌破關鍵長期支撐，多頭趨勢可能逆轉。第一目標價 $170.00，第二目標價 $180.00。風險回報比約 1:2.5，具吸引力。由於MACD在零軸之上，此為正常擇時建議。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -16818,8 +16821,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題多數強調人工智慧、雲端運算和長期成長的潛力，且對MSFT持正面態度。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調微軟在AI、雲端運算及納斯達克100指數中的強勁表現和潛力，儘管有競爭議題，但整體趨勢正面。</span>
         
       </div>
 
@@ -16910,19 +16913,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            Microsoft vs. Apple: Comparing Revenue Trends and the Impact of Artificial Intelligence
+            SpaceX vs. the "Magnificent Seven": How the New Nasdaq-100 Member Stacks Up
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Advanced Micro Devices vs. Arm: Which Tech Stock Is a Better Buy in 2026?
+            Big Tech’s $2 trillion AI shakeout just changed everything
             
-            <span class="news-pub">Motley Fool</span>
+            <span class="news-pub">TheStreet</span>
           </div>
           
           <div class="news-item">
-            3 Top Tech Stocks for Long-Term Growth and Income
+            As Cloud Revenue Soars, Is It Time to Buy Microsoft Stock?
             
             <span class="news-pub">Motley Fool</span>
           </div>
@@ -16937,18 +16940,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢強勁，RSI偏高但尚未過熱。
-② 支撐位約在440.5（BB上軌），壓力位不明顯，可觀察前高或心理關口。
-③ 未來3-5個交易日，股價高機率續漲，有望挑戰更高點位，但需留意技術指標過熱風險。
-④ 主要風險為漲多回檔，若RSI過熱或KD指標出現死亡交叉，可能引發短期修正。</div>
+        <div class="ai-body">① 盤面強勁，MACD在0軸上方且動能擴張，顯示多頭趨勢強勁。
+② 支撐位在$440.5（BB上軌），壓力位不明顯，可觀察近期高點。
+③ 未來3-5個交易日高機率延續上漲趨勢，挑戰更高點位。
+④ 主要風險是RSI高位（74.52）可能出現技術性回檔修正。</div>
       </details>
       
 
       
       <div class="entry">
         <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-建議在 $450 - $455 區間逢低買入，止損位設於 $440（跌破MA20支撐，多頭趨勢可能受損）。第一目標價 $480（前高附近，短期獲利了結點），第二目標價 $500（基於AI變現潛力的估值重估）。風險回報比約為 1:2.5，具吸引力。MACD已在0軸以上且動能擴張，多頭趨勢確認，無需等待0軸突破。</div>
+        <div class="entry-body">建議在$450-$460區間內分批買入。止損位設於MA20下方$396.87，邏輯為跌破關鍵支撐代表趨勢轉弱。第一目標價為$480，第二目標價為$500。目前風險回報比約為1:2，具備吸引力。MACD已在0軸以上且動能擴張，可直接入場。</div>
       </div>
       
 
@@ -16959,8 +16961,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-ticker="MSFT"
         data-price="464.72"
         data-score="65"
-        data-entry="**
-建議在 $450 - $455 區間逢低買入，止損位設於 $440（跌破MA20支撐，多頭趨勢可能受損）。第一目標價 $480（前高附近，短期獲利了結點），第二目標價 $500（基於AI變現潛力的估值重估）。風險回報比約為 1:2.5，具吸引力。MACD已在0軸以上且動能擴張，多頭趨勢確認，無需等待0軸突破。"
+        data-entry="建議在$450-$460區間內分批買入。止損位設於MA20下方$396.87，邏輯為跌破關鍵支撐代表趨勢轉弱。第一目標價為$480，第二目標價為$500。目前風險回報比約為1:2，具備吸引力。MACD已在0軸以上且動能擴張，可直接入場。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -17032,7 +17033,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管部分大型科技股表現良好，但多數新聞標題指向市場的不確定性、利率上升的擔憂以及對投資策略的謹慎反思。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有個別股票表現良好，但標題整體顯示出對利率上升、市場波動、科技股板塊分化以及經濟前景的不確定性擔憂。</span>
         
       </div>
 
@@ -17133,10 +17134,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 目前盤面偏多，MACD在0軸上方支持多頭趨勢，RSI動能亦走強。
-② 近期支撐位在BB下軌 $515.17，壓力位在BB上軌 $530.43。
-③ 未來3-5個交易日，DIA最可能維持震盪偏多走勢，可能挑戰前高。
-④ 主要風險為MACD若再次形成死叉並跌破0軸，可能引發下行修正。</div>
+        <div class="ai-body">① 目前盤面為中多頭趨勢，MACD在0軸以上確認多頭結構，RSI動能走強，顯示買盤力道增強。
+② 近期支撐位在BB下軌 $515.17，壓力位為BB上軌 $530.43。
+③ 未來3-5個交易日，DIA最可能維持在$515-$530區間震盪，並有機會挑戰壓力位。
+④ 主要風險為MACD死叉未能收斂成功，導致股價跌破MA20與MA60，多頭趨勢逆轉。</div>
       </details>
       
 
@@ -17221,7 +17222,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示ETF和美國股市上漲，尤其是在科技財報和AI相關的利好消息推動下，整體情緒偏向樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多則新聞指出交易所交易基金（ETF）和美國股市走高，尤其在科技股財報（如亞馬遜）優於預期及AI交易熱潮持續的背景下，顯示市場整體情緒偏向樂觀。</span>
         
       </div>
 
@@ -17322,10 +17323,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面強弱：價格位於 MA20 和 MA60 之上，呈現中多頭趨勢，但 MACD 仍在零軸下方且為死叉收斂，動能偏弱。
-② 關鍵價位：近期支撐位為 MA5 的 $743.08，壓力位為布林通道上軌 $762.02。
-③ 高機率劇本：RSI 動能走強，MACD 死叉收斂，顯示築底跡象，未來3-5天可能在 MA20 附近盤整後嘗試向上測試布林通道上軌。
-④ 主要風險：MACD 死叉仍未解除，若無法突破零軸，且跌破 MA20，則可能轉為下行。</div>
+        <div class="ai-body">① 盤面呈現多空拉鋸，價格位於0軸以下，MACD死叉收斂顯示底部跡象，但尚未確立多頭趨勢。
+② 近期支撐位為736.28（BB下軌），壓力位在762.02（BB上軌）。
+③ 未來3-5個交易日可能維持震盪整理，價格在MA20附近徘徊，等待趨勢明朗。
+④ 主要風險為MACD未能成功翻正且再次擴大死叉，導致價格跌破MA20與BB下軌。</div>
       </details>
       
 
@@ -17410,7 +17411,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於特定持股（如Apple）下跌的負面消息，但整體而言，SCHG被多篇文章提及為擊敗大盤且值得關注的成長型ETF，暗示了潛在的正面表現。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於蘋果的負面新聞和成長股的靜默出售，但 SCHG 仍有跑贏大盤的良好紀錄，並持有表現出色的巨型股，顯示出潛在的積極因素。</span>
         
       </div>
 
@@ -17511,10 +17512,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面中性偏多，MACD雖在0軸下方仍偏空，但RSI動能走強，價格站上MA20與MA60，多頭格局初步形成。
-② 最近支撐位為$33.21 (BB下軌)，壓力位為$35.07 (BB上軌)。
-③ 未來3-5個交易日，股價有機會在$33.21至$35.07區間震盪整理，並嘗試向上突破壓力位。
-④ 主要風險是MACD若未能有效穿越0軸且再度擴大死叉，恐導致股價向下測試支撐位，甚至跌破MA60。</div>
+        <div class="ai-body">① 盤面趨勢為中多頭，價格位居MA20及MA60之上；MACD雖在0軸以下，但RSI動能走強，顯示潛在反彈動能。
+② 最近支撐位於BB下軌33.21，而關鍵壓力在BB上軌35.07。
+③ 未來3-5個交易日，在RSI動能走強及KD-K線黃金交叉訊號下，股價有較高機率挑戰BB上軌壓力。
+④ 主要風險是MACD仍位於0軸下方且為死叉，若未能有效突破0軸，仍可能導致趨勢轉弱。</div>
       </details>
       
 
@@ -17598,8 +17599,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neut">-2</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然有關於AI和收入型ETF的正面消息，但通膨、潛在的收益陷阱以及對科技股「避風港」幻象的質疑，共同營造出一個謹慎甚至略偏負面的市場情緒。</span>
+          <span class="sentiment neg">-3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示市場對高收益ETF的擔憂、潛在的債券收益率上升、聯準會政策可能帶來的負面影響，以及關於動量股崩盤的討論，整體呈現偏向謹慎和看跌的情緒。</span>
         
       </div>
 
@@ -17700,10 +17701,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面顯示中多頭趨勢，但MACD仍在零軸下方，動能偏弱，需警惕。
-② 近期支撐位在 $732.76，壓力位在 $758.63。
-③ 高機率走勢為在 $732.76 至 $758.63 之間震盪整理。
-④ 主要風險為MACD持續在零軸以下走弱，可能引發下行修正。</div>
+        <div class="ai-body">①盤面呈現中多頭格局，價格站上MA20和MA60，但MACD仍在0軸下方，顯示整體上漲動能尚未完全確立，趨勢偏中性。
+②最近支撐位為MA5的$739.63和布林下軌的$732.76，壓力位為布林上軌的$758.63。
+③未來3-5個交易日，在多頭格局下，SPY有較高機率繼續挑戰布林上軌的壓力，但需留意MACD動能是否能翻正。
+④主要風險是MACD仍處於0軸以下，若未能有效翻正並伴隨量能放大，可能會導致漲勢受阻，甚至重新回測支撐。</div>
       </details>
       
 
@@ -17787,8 +17788,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+5</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞指出 S&P 500 相關投資表現良好，或有持續增長潛力，儘管有通脹和潛在陷阱的警示，整體仍偏向樂觀。</span>
+          <span class="sentiment pos">+6</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題預測 VOO 將會成長，並提供長期財富建立的策略，顯示出對未來樂觀的態度。</span>
         
       </div>
 
@@ -17862,21 +17863,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            1 Thing Every Investor Needs to Know About Buying the S&P 500 Right Now
+            If I Could Tell Every Investor 1 Thing About Building Lasting Wealth in the Stock Market, It's This
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            You Inherited an IRA and the IRS Gives You 10 Years to Empty It. These 3 ETFs Make Every Year Count
+            Where Will the Vanguard S&P 500 ETF (VOO) Be in 2036? History Has Good and Bad News for Investors.
             
-            <span class="news-pub">24/7 Wall St.</span>
+            <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Warren Buffett's favorite fund quadrupled your money in 10 years
+            Prediction: Vanguard's S&P 500 ETF Will Be Back Above $1 Trillion in Assets Before the Year Is Out. Here's the Math.
             
-            <span class="news-pub">TheStreet</span>
+            <span class="news-pub">Motley Fool</span>
           </div>
           
         </div>
@@ -17889,10 +17890,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面呈現中多頭格局，價格站在MA20與MA60之上，MACD雖在0軸下方，但已收斂，動能正在增強。
-② 近期支撐位為$673.6 (BB下軌)，壓力位則在$697.24 (BB上軌)。
-③ 在RSI動能走強與MACD死叉收斂的跡象下，未來3-5個交易日高機率測試上漲並挑戰$697.24壓力位。
-④ 主要下行風險為MACD未能成功突破0軸轉為多頭，或股價跌破MA20與MA60，趨勢可能轉弱。</div>
+        <div class="ai-body">① 盤面呈現中多頭格局，MACD雖在0軸以下但死叉收斂顯示底部跡象，RSI動能走強，整體動能偏多。
+② 近期支撐位為BB下軌 $673.6，壓力位為BB上軌 $697.24。
+③ 未來3-5個交易日，VOO有較高機率在 $673.6 至 $697.24 區間內震盪整理，並嘗試向上挑戰壓力位。
+④ 主要風險是若MACD未能成功向上穿越0軸並形成金叉，可能導致反彈無力，甚至跌破 $673.6 支撐。</div>
       </details>
       
 
@@ -17977,7 +17978,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題多數正面或中性，提供投資策略與分析，但也包含對高費率和市場自滿的警示。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題雖然探討了一些投資策略和產品成本問題，但整體上呈現中性偏積極的基調，有文章推薦VT並討論全球擴張。</span>
         
       </div>
 
@@ -18078,10 +18079,13 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面呈現中多頭格局，MACD雖在0軸以下但死叉收斂，顯示潛在築底跡象，動能逐步走強。
-② 近期支撐位在BB下軌 $152.84，壓力位則在BB上軌 $158.42。
-③ 未來3-5個交易日，VT最可能在MA20與BB上軌之間震盪盤整，尋求向上突破。
-④ 主要風險為MACD未能向上突破0軸形成金叉，或跌破MA20與MA60，轉為弱勢盤整。</div>
+        <div class="ai-body">VT目前呈現中多頭格局，但MACD仍在零軸以下，趨勢雖偏多但動能略顯不足，需觀察是否能轉強。
+
+關鍵價位方面，支撐位約在152.84美元（BB下軌），壓力位則在158.42美元（BB上軌）。
+
+未來3-5個交易日，高機率在152.84至158.42美元區間震盪整理，等待明確方向。
+
+主要風險為MACD未能向上穿越零軸，導致多頭動能不足，恐引發股價跌破MA20和MA60。</div>
       </details>
       
 
@@ -18130,7 +18134,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
                 onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
                 title="Click to add VTI to Favourites">☆</button>
             </div>
-            <div class="scard-name">Vanguard Total Stock Market ETF</div>
+            <div class="scard-name">Vanguard Morningstar Total Stoc</div>
             <div class="scard-tags">
               <span class="tag etf">etf</span>
               <span class="tag market">US</span>
@@ -18166,7 +18170,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+7</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調VTI作為長期投資工具的優勢、增長潛力以及其在退休規劃中的重要性，並有關於其持有SpaceX股票的正面消息，整體情緒偏向看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調VTI的長期投資潛力、低費用優勢以及作為累積財富工具的有效性，顯示出強烈的看好情緒。</span>
         
       </div>
 
@@ -18267,10 +18271,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①目前MACD雖仍在0軸以下，但價格站上MA60，顯示短線有轉強跡象，需觀察是否能帶動MACD翻正。
-②最近支撐位約在MA5的$365.21，壓力位則在BB上軌的$374.54。
-③高機率劇本為震盪偏多，有望挑戰BB上軌，但需注意量能是否能持續放大。
-④主要風險在於MACD仍處於0軸以下且MACD Hist為負，若不能有效翻正，可能再次回測下方支撐。</div>
+        <div class="ai-body">① 趨勢偏空，但動能轉強，MACD仍在0軸下方，未確認多頭趨勢。
+② 近期支撐為BB下軌361.93，壓力為BB上軌374.54。
+③ 短線有望於361.93至374.54區間震盪整理，MACD死叉收斂顯示底部跡象。
+④ 若跌破MA60並續創新低，則下行風險將大幅增加。</div>
       </details>
       
 
@@ -18355,7 +18359,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於Apple的負面新聞，但OEF過去10年的表現優於SPY，且ETF整體資金流入強勁，顯示市場對大型股ETF仍持樂觀態度。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有關於Apple的負面新聞，但OEF過去10年的表現優於SPY，且ETF整體資金流入強勁，顯示出市場對大型股ETF的樂觀情緒。</span>
         
       </div>
 
@@ -18456,10 +18460,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① OEF 目前趨勢處於中多頭，但 MACD 在零軸以下顯示趨勢仍偏空，RSI 動能走強但整體動能中性。
-② 短期支撐位約在 $360.09 (BB下軌)，壓力位約在 $375.11 (BB上軌)。
-③ 未來 3–5 個交易日，股價可能在 $360.09 至 $375.11 區間震盪，或因 MACD 死叉收斂而有築底反彈機會。
-④ 主要風險在於量能不足，若市場追價力道不足，加上 MACD 仍偏空，可能導致股價反彈無力，甚至跌破支撐。</div>
+        <div class="ai-body">① 盤面呈現中多頭格局，MACD雖在0軸以下但死叉收斂，動能正逐步轉強。
+② 近期支撐位在BB下軌360.09，壓力位為BB上軌375.11。
+③ 未來3-5個交易日，在RSI走強及MACD收斂帶動下，股價有機會持續向上挑戰BB上軌。
+④ 需警惕量能不足問題，若成交量持續低迷，恐影響上漲動能，甚至導致漲勢反轉。</div>
       </details>
       
 
@@ -18599,10 +18603,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 股價低於 MA60 顯示空頭排列，MACD 處於 0 軸以下且為死叉收斂，整體趨勢偏弱。
-② 近期支撐位在 $18.18 (BB下軌)，壓力位在 $18.8 (BB上軌)。
-③ 考量爆量與 RSI 動能走強，短期內可能維持區間震盪，並在 $18.18 附近尋求支撐。
-④ 最需警惕 MACD 若持續在 0 軸下方運行且再度擴大死叉，恐進一步下探。</div>
+        <div class="ai-body">① SPYL.L 趨勢偏空，但RSI動能走強且MACD死叉收斂，顯示底部跡象，動能稍有改善。
+② 最近支撐位為布林下軌 $18.18，壓力位為布林上軌 $18.8。
+③ 未來3-5個交易日，股價可能在 $18.18 至 $18.8 區間震盪築底，等待趨勢明確。
+④ 主要風險是空頭排列持續，若跌破 $18.18，可能加速探底。</div>
       </details>
       
 
@@ -18684,8 +18688,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示對AI和雲端運算持正面看法，但Google搜尋流量的波動和貸款市場的擔憂帶來一些負面影響，整體仍偏向中性樂觀。</span>
+          <span class="sentiment pos">+7</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞普遍正面，強調了Alphabet在AI領域的領導地位、Warren Buffett對其的看好以及 Berkshire Hathaway 的巨額持股，顯示出強勁的成長潛力。</span>
         
       </div>
 
@@ -18776,19 +18780,19 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
-            IonQ vs. Alphabet:  What Revenue Trends Reveal About the Quantum Computing Chipmaker and the Artificial Intelligence Giant
+            SpaceX vs. the "Magnificent Seven": How the New Nasdaq-100 Member Stacks Up
             
             <span class="news-pub">Motley Fool</span>
           </div>
           
           <div class="news-item">
-            Here Are My 3 Top Artificial Intelligence (AI) Stocks to Buy in August
+            Big Tech’s $2 trillion AI shakeout just changed everything
             
-            <span class="news-pub">Motley Fool</span>
+            <span class="news-pub">TheStreet</span>
           </div>
           
           <div class="news-item">
-            Why Now Is Finally the Time to Buy the Big Three Cloud Computing Stocks Before It's Too Late
+            Warren Buffett Regretted Not Investing in Alphabet Earlier. New CEO Greg Abel Won't Have the Same Worry.
             
             <span class="news-pub">Motley Fool</span>
           </div>
@@ -18803,10 +18807,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 趨勢偏空，MACD在0軸以下，儘管RSI動能走強，仍處於弱勢反彈格局。
-② 近期支撐位為布林下軌 $316.76，壓力位為 MA60 $364.83。
-③ 在爆量與RSI走強下，未來3-5天可能測試MA60壓力，但因MACD在0軸以下，上漲空間有限。
-④ 最大的風險是MACD金叉在0軸以下可能為誘多陷阱，若未能有效突破MA60，股價恐再次下探。</div>
+        <div class="ai-body">① 趨勢偏空，MACD在零軸以下，儘管RSI走強，動能仍需觀察是否能持續突破。
+② 支撐位約在 $348.05（MA20），壓力位約在 $364.83（MA60）。
+③ 股價可能在 $348.05 至 $364.83 之間震盪整理，試圖挑戰MA60。
+④ 主要風險為MACD金叉在零軸以下，可能為誘多陷阱，趨勢若未能有效突破MA60，恐再次下探。</div>
       </details>
       
 
@@ -18855,7 +18859,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
                 onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
                 title="Click to add MGK to Favourites">☆</button>
             </div>
-            <div class="scard-name">Vanguard Mega Cap Growth ETF</div>
+            <div class="scard-name">Vanguard Morningstar Mega Cap G</div>
             <div class="scard-tags">
               <span class="tag etf">etf</span>
               <span class="tag market">US</span>
@@ -18891,7 +18895,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">MGK 的新聞標題普遍積極，指出其成長潛力、強勁的盈利前景和華爾街巨頭的持續買入，顯示出強烈的看漲情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">MGK 的多數新聞標題指向積極的投資雷達、強勁的未來盈利、華爾街巨頭的持續買入，以及對主要持股（如蘋果和博通）的樂觀前景。</span>
         
       </div>
 
@@ -18992,10 +18996,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 趨勢偏空，MACD在0軸以下，整體動能不足。
-② 近期支撐位83.34（BB下軌），壓力位86.85（MA20）。
-③ 可能在83.34至86.85區間震盪整理，觀察是否能有效突破MA20。
-④ 若跌破BB下軌83.34，可能進一步下跌，空頭趨勢加劇。</div>
+        <div class="ai-body">① 盤面偏空，MACD在0軸以下且KD-K雖上升但仍處低檔，顯示目前趨勢偏弱，上漲動能不足。
+② 最近支撐位為BB下軌 $83.34，壓力位為MA20 $86.85，其次是MA60 $87.63。
+③ 高機率走勢為在MA20附近震盪整理，若能突破MA20則有機會挑戰MA60，否則可能回測BB下軌。
+④ 主要風險是若未能有效站穩MA20，恐因空頭排列壓力而持續下探，需留意跌破BB下軌的可能。</div>
       </details>
       
 
@@ -19080,7 +19084,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有部分正面消息如亞馬遜財報提振市場，但多數標題暗示收益並非真實成長、指數表現不佳、AI 貿易過熱以及總體經濟的隱憂，整體情緒偏向謹慎甚至看空。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有AI相關的樂觀消息，但多篇報導點出ETF收益的誤導性、資金回報的假象、科技股的表現不佳以及宏觀經濟的不確定性，整體情緒偏向謹慎甚至看空。</span>
         
       </div>
 
@@ -19154,6 +19158,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div class="news-list">
           
           <div class="news-item">
+            Apple Soared 15% in July, but GPIQ Holders Lost 6%: The Hidden Options Tax on Covered-Call ETFs
+            
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
             Return of Capital Disguised as Yield: Why QDTE’s $13.33 Trailing Payout Is Slowly Returning Your Own Money
             
             <span class="news-pub">24/7 Wall St.</span>
@@ -19163,12 +19173,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             What's Inside URA Decides This Dip's Fate
             
             <span class="news-pub">Trefis</span>
-          </div>
-          
-          <div class="news-item">
-            QQQI’s 14% Yield Hides a Costly Truth: 98% Is Your Own Money Coming Back
-            
-            <span class="news-pub">24/7 Wall St.</span>
           </div>
           
         </div>
@@ -19181,10 +19185,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面目前趨勢偏空，MACD在0軸以下且趨勢減弱，但RSI動能開始走強，顯示空方力道略有放緩。
-② 近期支撐位在BB下軌$665.34，壓力位為MA5 $678.18。
-③ 未來3-5個交易日，股價可能在BB下軌附近震盪築底，或小幅反彈向MA5靠近。
-④ 主要風險是空頭排列持續，若跌破BB下軌，可能加速下跌。</div>
+        <div class="ai-body">① 盤面整體偏空，MACD在零軸以下且為死叉，顯示空頭趨勢確立，短期動能雖略有增強，但未能扭轉。
+② 最近支撐位於BB下軌 $665.34，壓力則在 $678.18（MA5）與 $701.02（MA20）。
+③ 未來3-5個交易日，QQQ高機率將維持震盪偏弱走勢，可能在$665.34至$678.18區間內整理。
+④ 主要風險在於若跌破$665.34的BB下軌支撐，可能觸發新一輪跌勢，加速下探。</div>
       </details>
       
 
@@ -19268,8 +19272,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
           
           
-          <span class="sentiment neg">-3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題顯示通脹、利率上升、經濟增長放緩和部分科技巨頭表現不佳，整體市場情緒偏向謹慎甚至看空。</span>
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">有正面的經濟數據和市場上漲訊號，但也存在對通膨、聯準會政策和動能股崩盤的擔憂。</span>
         
       </div>
 
@@ -19370,10 +19374,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">①盤面趨勢偏空，MACD在0軸以下且死叉收斂，顯示動能疲弱，市場處於弱勢整理。
-②支撐位在BB下軌$289.14，壓力位在MA5 $291.73及MA20 $293.99。
-③未來3-5個交易日，IWM可能在$289.14至$291.73之間盤整，若能站穩MA5則有望向上測試MA20。
-④主要風險是若跌破BB下軌$289.14，可能加速下跌，進一步下探，需警惕。</div>
+        <div class="ai-body">① 趨勢偏空，動能較弱，MACD在0軸下方且為死叉收斂，顯示空頭仍佔優勢。
+② 近期支撐位在BB下軌$289.14，壓力位在MA5 $291.73，其次是MA20 $293.99。
+③ 未來3-5個交易日，IWM可能在$289.14至$291.73之間震盪整理，尋求底部。
+④ 主要風險是跌破BB下軌$289.14，可能加速下跌，進一步測試更低的支撐。</div>
       </details>
       
 
@@ -19458,7 +19462,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment neg">-8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題指出 TLT 下跌、30 年期殖利率創 2007 年以來新高、美國公債 ETF 遭受「世代性損失的完美風暴」、以及債券市場對聯準會行動的強烈要求，顯示市場對 TLT 存在極度看空情緒。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">新聞標題指出TLT下跌、殖利率創高、債券ETF遭受巨大損失、以及對聯準會信譽的質疑，顯示出強烈的看空情緒。</span>
         
       </div>
 
@@ -19567,10 +19571,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面整體趨勢偏空，MACD在零軸以下且動能仍弱。
-② 近期支撐位在BB下軌82.38美元，壓力位則為MA5的83.18美元。
-③ 高機率劇本為延續弱勢震盪，可能在BB下軌附近尋求支撐，或小幅反彈後續跌。
-④ 主要風險為空頭排列持續，若跌破BB下軌82.38美元，恐加速探底。</div>
+        <div class="ai-body">① 盤面整體趨勢偏空，MACD在0軸以下且動能仍弱。
+② 近期支撐位在BB下軌82.38，壓力位在BB上軌85.39。
+③ 價格可能在低檔震盪或測試更低點，MACD偏空。
+④ 需警惕若跌破BB下軌，恐將加速下跌趨勢。</div>
       </details>
       
 
@@ -19655,7 +19659,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">雖然納斯達克經歷了最糟糕的一個月，但科技巨頭的強勁財報和AI相關股票的利好消息提振了整體市場情緒，顯示出股市的韌性。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">市場在大型科技公司財報和AI相關股票的帶動下呈現積極態勢，儘管存在一些獲利了結和半導體板塊的波動，但整體情緒偏向樂觀。</span>
         
       </div>
 
@@ -19756,10 +19760,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面弱勢，MACD位於零軸以下，趨勢偏空且動能不足。
-② 最近支撐位約在 $514.12 (BB下軌)，壓力位約在 $571.63 (MA20)。
-③ 未來3-5個交易日，股價可能在 $514.12 至 $540.53 之間震盪築底，或進一步探底。
-④ 需警惕股價跌破 $514.12 支撐，可能加速下探。</div>
+        <div class="ai-body">① 盤面偏弱，MACD在0軸以下且趨勢偏空，顯示下跌動能仍然較強。
+② 近期支撐位在BB下軌 $514.12，壓力位在MA5 $532.36。
+③ 在3-5個交易日內，SMH最可能在 $514.12 至 $532.36 之間震盪盤整。
+④ 主要風險為空頭排列持續，價格可能跌破BB下軌，進一步探底。</div>
       </details>
       
 
@@ -19844,7 +19848,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調VONG的成長潛力、資金流入及過去的優異表現，整體呈現正面看好。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題暗示VONG具有潛力、流入大量資金，且即便在高點仍值得買入，整體情緒偏向積極看好。</span>
         
       </div>
 
@@ -19945,10 +19949,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面目前趨勢偏空，MACD在0軸以下，顯示短期動能仍為負向。
-② 最近支撐位於布林下軌 $118.11，壓力位於 MA20 的 $123.73。
-③ 未來3-5個交易日，股價可能在 $118.11 至 $123.73 之間震盪築底，需觀察量能能否回升。
-④ 主要風險為空頭排列持續，若跌破 $118.11，可能開啟更深一波跌勢。</div>
+        <div class="ai-body">① 盤面目前趨勢偏空，MACD在0軸以下，顯示空頭趨勢持續，但RSI動能走強，表示短期跌勢可能放緩。
+② 近期支撐位為布林下軌 $118.11，壓力位為MA5 $120.14。
+③ 未來3-5個交易日，VONG可能在 $118.11 至 $120.14 之間震盪整理，尋求築底機會，但上漲動能有限。
+④ 主要風險是空頭排列持續，若跌破 $118.11 支撐，可能加速下跌。</div>
       </details>
       
 
@@ -20031,7 +20035,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有正面的盈利報告和股票註冊消息，但關於市場投機和潛在熊市的警告也存在，導致情緒偏向中性樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有正面的盈利報告和股票註冊消息，但關於市場整體風險（如韓國ETF的警示和潛在熊市）以及對其他券商的比較（ Coinbase、Robinhood等）帶來了一些不確定性。</span>
         
       </div>
 
@@ -20149,10 +20153,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面弱勢，MACD位於0軸以下且KD指標低檔，顯示股價處於偏空下行趨勢。
-② 近期支撐位在BB下軌87.29，壓力位可關注MA5的89.58。
-③ 未來3-5個交易日可能繼續在區間震盪整理，下探支撐後才有機會止跌。
-④ 主要風險為股價跌破87.29，可能加速下跌，進一步測試更低支撐。</div>
+        <div class="ai-body">① 盤面弱勢，MACD位於0軸以下且呈空頭排列，顯示趨勢偏空且動能不足。
+② 近期支撐位在BB下軌87.29，壓力位在MA5的89.58。
+③ 股價可能在87.29附近獲得短暫支撐，但上漲動能有限，預計仍將在低檔震盪。
+④ 最大風險為跌破BB下軌87.29，將加劇下行壓力，可能進一步探底。</div>
       </details>
       
 
@@ -20237,7 +20241,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+6</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示科技股（特別是AI相關）表現強勁，且VGT相較於QQQ有更好的回報，儘管存在一些獲利了結和供應鏈擔憂，但整體情緒偏向樂觀。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題強調科技股的優異表現、AI的潛力以及VGT相對於其他ETF的優勢，顯示出市場對科技板塊的整體樂觀情緒，儘管存在部分風險提示。</span>
         
       </div>
 
@@ -20338,10 +20342,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 趨勢偏空，MACD在0軸以下且KD在高檔鈍化，動能較弱。
-② 近期支撐位在BB下軌 $109.68，壓力位為MA20 $114.45。
-③ 價格可能在BB下軌附近獲得支撐，但上漲動能不足，近期可能持續盤整或小幅下跌。
-④ 最大風險為跌破BB下軌，可能加速下跌形成新的空頭走勢。</div>
+        <div class="ai-body">① 盤面弱勢，MACD 在零軸以下且為死叉，顯示空頭趨勢明顯，動能偏弱。
+② 最近支撐位為 $109.68（BB下軌），壓力位為 $114.45（MA20）。
+③ 未來3-5個交易日，VGT 高機率將持續下探，或在支撐位附近震盪整理。
+④ 主要風險為空頭排列，若跌破 BB 下軌，可能加速下跌。</div>
       </details>
       
 
@@ -20426,7 +20430,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           
           <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">金價受地緣政治因素和美元走勢影響而有升有跌，但整體市場對貴金屬的長期展望仍有正面驅動因素。</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">金價受地緣政治趨緩及整體股市波動影響，但長期仍有看漲驅動力，且部分科技股表現強勁抵銷了弱勢。</span>
         
       </div>
 
@@ -20535,10 +20539,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ai-label">✦ AI Analysis</span>
           <span class="ai-arrow">▼</span>
         </summary>
-        <div class="ai-body">① 盤面目前處於偏空趨勢，MACD在0軸以下，動能偏弱。
-② 近期支撐位在$364.19 (布林下軌)，壓力位在$382.11 (布林上軌)。
-③ 未來3-5個交易日，GLD很可能持續在區間震盪，或維持弱勢下跌。
-④ 主要風險是如果跌破布林下軌，可能引發加速下跌。</div>
+        <div class="ai-body">①目前為空頭排列，價格低於MA60，MACD在0軸以下且訊號無效，顯示趨勢偏空且動能不足。
+②近期支撐位為布林下軌$364.19，壓力位則為MA5 $372.76。
+③未來3-5個交易日，股價很可能在$364.19至$372.76之間震盪盤整，需觀察是否能站穩MA5。
+④主要風險是MACD若持續未能突破0軸並呈現死叉，可能導致股價進一步探底，跌破布林下軌。</div>
       </details>
       
 
@@ -24912,24 +24916,24 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
   <!-- Gemini HK Brief -->
   
   <div style="background:var(--surface2);border-radius:10px;padding:20px 22px">
-    <pre style="white-space:pre-wrap;font-family:var(--sans);margin:0;font-size:13.5px;line-height:1.75;color:var(--text)">好的，以下是今日的港股盤前分析：
+    <pre style="white-space:pre-wrap;font-family:var(--sans);margin:0;font-size:13.5px;line-height:1.75;color:var(--text)">好的，以下是今天的港股盤前分析：
 
 ## 🌍 昨夜美股概況
-隔晚美股三大指數全線收紅↑，其中納指表現領先，上漲1.00%。科網股普遍走強，但半導體板塊升幅溫和。
+昨夜美股三大指數全線收紅，標普500 ↑紅0.70%，納指 ↑紅1.00%。科技股帶動大市上揚，費城半導體指數亦微升 ↑紅0.07%，顯示市場情緒偏樂觀。
 
 ## 📊 港股開盤預測
-綜合美股表現及主要港股ADR（預託證券）走勢，今日港股偏多，恒指預計高開。阿里巴巴ADR大漲5.10%，騰訊亦升1.45%，利好科技板塊。
+綜合騰訊ADR ↑紅1.45%及阿里巴巴US ↑紅5.10%的強勁表現，加上VIX恐慌指數 ↓綠6.44%回落，預期今日港股偏多，恒指料將高開。
 
 ## 🔍 重點關注
-*   **科網巨頭表現：** 阿里、騰訊ADR強勁，有望帶動港股科技股開盤↑。
-*   **美債息走向：** 美國10年期債息上揚1.72%，或對高估值股份造成壓力。
-*   **VIX恐慌指數：** VIX（反映市場恐慌情緒的指標）下跌6.44%，顯示市場避險情緒降溫。
+* **科技巨頭 ADR 表現**: 騰訊與阿里巴巴ADR大漲，預示本地科技股受捧。
+* **美國10年債息**: 美國10年期國債孳息率 ↑紅1.72%上升，或影響資金流向，需留意其對估值敏感板塊的壓力。
+* **VIX 恐慌指數**: VIX ↓綠6.44%回落至15.99，反映市場恐慌情緒降溫，有利風險資產表現。
 
 ## ⚠️ 風險提示
-美債息持續上升，可能對科技及增長股估值帶來不確定性，需留意資金流向變化。
+美國10年債息上升趨勢，可能令高估值成長股面臨調整壓力，投資者需留意市場對息口的敏感度。
 
 ## 💡 新手小提示
-今天宜採取觀望態度，謹慎追高。</pre>
+今天宜保持觀望態度，謹慎選擇進場時機。</pre>
   </div>
   
 </section>
