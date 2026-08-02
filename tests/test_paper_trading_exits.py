@@ -132,9 +132,12 @@ def test_fetch_ohlc_bulk_handles_multiindex_single_ticker():
     import paper_trading as pt
 
     idx = pd.to_datetime(["2026-07-02", "2026-07-03"])
-    cols = pd.MultiIndex.from_product([["Low", "High", "Close"], ["TEST"]])
+    # Open is carried too — the exit paths need it to tell a gap fill from an
+    # intraday breach (see tests/test_stop_fill.py).
+    cols = pd.MultiIndex.from_product([["Open", "Low", "High", "Close"], ["TEST"]])
     df = pd.DataFrame(
-        [[95.0, 105.0, 100.0], [96.0, 106.0, 101.0]], index=idx, columns=cols
+        [[99.0, 95.0, 105.0, 100.0], [100.5, 96.0, 106.0, 101.0]],
+        index=idx, columns=cols,
     )
     orig = pt.yf.download
     pt.yf.download = lambda *a, **k: df
@@ -143,7 +146,9 @@ def test_fetch_ohlc_bulk_handles_multiindex_single_ticker():
     finally:
         pt.yf.download = orig
     assert "TEST" in out, f"MultiIndex single-ticker frame must parse, got {out}"
-    assert out["TEST"]["2026-07-02"] == {"low": 95.0, "high": 105.0, "close": 100.0}
+    assert out["TEST"]["2026-07-02"] == {
+        "open": 99.0, "low": 95.0, "high": 105.0, "close": 100.0,
+    }
 
 
 def test_fetch_ohlc_bulk_handles_flat_columns():
@@ -152,14 +157,18 @@ def test_fetch_ohlc_bulk_handles_flat_columns():
     import paper_trading as pt
 
     idx = pd.to_datetime(["2026-07-02"])
-    df = pd.DataFrame({"Low": [95.0], "High": [105.0], "Close": [100.0]}, index=idx)
+    df = pd.DataFrame(
+        {"Open": [99.0], "Low": [95.0], "High": [105.0], "Close": [100.0]}, index=idx
+    )
     orig = pt.yf.download
     pt.yf.download = lambda *a, **k: df
     try:
         out = pt._fetch_ohlc_bulk(["TEST"], "2026-07-01")
     finally:
         pt.yf.download = orig
-    assert out.get("TEST", {}).get("2026-07-02") == {"low": 95.0, "high": 105.0, "close": 100.0}
+    assert out.get("TEST", {}).get("2026-07-02") == {
+        "open": 99.0, "low": 95.0, "high": 105.0, "close": 100.0,
+    }
 
 
 if __name__ == "__main__":

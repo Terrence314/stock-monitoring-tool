@@ -170,8 +170,10 @@ def _fetch_ohlc_bulk(tickers: list, start_date: str) -> dict:
         try:
             if is_multi:
                 low, high, close = raw["Low"][t], raw["High"][t], raw["Close"][t]
+                op = raw["Open"][t] if "Open" in raw else None
             else:
                 low, high, close = raw["Low"], raw["High"], raw["Close"]
+                op = raw["Open"] if "Open" in raw else None
         except (KeyError, TypeError):
             continue
         bars = {}
@@ -182,12 +184,42 @@ def _fetch_ohlc_bulk(tickers: list, start_date: str) -> dict:
                     "low":   float(low[d]),
                     "high":  float(high[d]),
                     "close": float(close[d]),
+                    # Needed to model gap fills — a stop cannot fill at its
+                    # level on a session that opened straight through it.
+                    "open":  float(op[d]) if op is not None else None,
                 }
             except (KeyError, TypeError, ValueError):
                 continue
         if bars:
             result[t] = bars
     return result
+
+
+def _stop_fill_price(entry_price: float, day_open: float | None) -> tuple[float, bool]:
+    """Fill price for a long stop-loss, modelling gaps. Returns (fill, gapped).
+
+    A resting stop at S fills at about S when price trades down through it
+    intraday. When the session OPENS below S the order fills at the opening
+    print instead — you cannot be filled at a price that never traded.
+
+    This is the single convention for every exit path. Previously the history
+    sweep always booked exactly S while the intraday poll booked whatever
+    price it happened to observe, so the same event produced two different
+    P&Ls depending on which path noticed first: three trades closed at -17.0%,
+    -14.1% and -13.5% and were still labelled "stop_loss".
+    """
+    stop = entry_price * (1 - STOP_LOSS_PCT / 100)
+    if day_open and day_open > 0 and day_open < stop:
+        return day_open, True
+    return stop, False
+
+
+def _target_fill_price(entry_price: float, day_open: float | None) -> tuple[float, bool]:
+    """Fill price for a long take-profit. Mirror of _stop_fill_price."""
+    target = entry_price * (1 + TAKE_PROFIT_PCT / 100)
+    if day_open and day_open > target:
+        return day_open, True
+    return target, False
 
 
 def _apply_ohlc_stops(open_trades: list, ohlc: dict, today_str: str) -> int:
@@ -222,9 +254,11 @@ def _apply_ohlc_stops(open_trades: list, ohlc: dict, today_str: str) -> int:
             bar = bars[day]
             # Conservative ordering: assume the stop was hit before the target
             if bar["low"] <= stop_price:
-                exit_price, reason = stop_price, "stop_loss"
+                exit_price, gapped = _stop_fill_price(ep, bar.get("open"))
+                reason = "stop_loss"
             elif bar["high"] >= target_price:
-                exit_price, reason = target_price, "take_profit"
+                exit_price, gapped = _target_fill_price(ep, bar.get("open"))
+                reason = "take_profit"
             else:
                 last_day = day
                 continue
@@ -233,6 +267,7 @@ def _apply_ohlc_stops(open_trades: list, ohlc: dict, today_str: str) -> int:
                 "exit_date":   day,
                 "exit_price":  round(exit_price, 2),
                 "exit_reason": reason,
+                "gapped":      gapped,
                 "pnl":         round((exit_price - ep) * trade["shares"], 2),
                 "pnl_pct":     round((exit_price - ep) / ep * 100, 2),
             })
@@ -789,6 +824,12 @@ def update_open_positions(stock_results: list, today_str: str) -> None:
         for s in stock_results
         if s.get("price") and float(s["price"]) > 0
     }
+    # Today's opening print, used to tell a gap from an intraday breach.
+    open_map = {
+        s["ticker"]: float(s["open_price"])
+        for s in stock_results
+        if s.get("open_price") and float(s["open_price"]) > 0
+    }
 
     # Update current prices
     for trade in open_trades:
@@ -806,28 +847,34 @@ def update_open_positions(stock_results: list, today_str: str) -> None:
             continue
         is_short = trade.get("direction", "long") == "short"
         pct = (ep - cp) / ep * 100 if is_short else (cp - ep) / ep * 100
-        pnl_dir = ep - cp if is_short else cp - ep
 
-        if pct >= TAKE_PROFIT_PCT:
-            trade.update({
-                "status":      "closed",
-                "exit_date":   today_str,
-                "exit_price":  round(cp, 2),
-                "exit_reason": "take_profit",
-                "pnl":         round(pnl_dir * trade["shares"], 2),
-                "pnl_pct":     round(pct, 2),
-            })
-            closed_now += 1
-        elif pct <= -STOP_LOSS_PCT:
-            trade.update({
-                "status":      "closed",
-                "exit_date":   today_str,
-                "exit_price":  round(cp, 2),
-                "exit_reason": "stop_loss",
-                "pnl":         round(pnl_dir * trade["shares"], 2),
-                "pnl_pct":     round(pct, 2),
-            })
-            closed_now += 1
+        # Longs book the modelled fill, not the polled price. This poll runs
+        # every 15 minutes, so cp is where price sits NOW — often well past
+        # the level a resting order would already have filled at.
+        if not is_short and pct >= TAKE_PROFIT_PCT:
+            fill, gapped = _target_fill_price(ep, open_map.get(trade["ticker"]))
+            reason = "take_profit"
+        elif not is_short and pct <= -STOP_LOSS_PCT:
+            fill, gapped = _stop_fill_price(ep, open_map.get(trade["ticker"]))
+            reason = "stop_loss"
+        elif is_short and pct >= TAKE_PROFIT_PCT:
+            fill, gapped, reason = cp, False, "take_profit"
+        elif is_short and pct <= -STOP_LOSS_PCT:
+            fill, gapped, reason = cp, False, "stop_loss"
+        else:
+            continue
+
+        pnl_dir = ep - fill if is_short else fill - ep
+        trade.update({
+            "status":      "closed",
+            "exit_date":   today_str,
+            "exit_price":  round(fill, 2),
+            "exit_reason": reason,
+            "gapped":      gapped,
+            "pnl":         round(pnl_dir * trade["shares"], 2),
+            "pnl_pct":     round(pnl_dir / ep * 100, 2),
+        })
+        closed_now += 1
 
     portfolio["trades"]       = trades
     portfolio["last_updated"] = today_str
@@ -875,6 +922,13 @@ def run_paper_trading(
     sector_map = {
         s["ticker"]: (s.get("sector") or "Unknown")
         for s in stock_results
+    }
+    # Today's opening print — lets the exit paths tell a gap from an intraday
+    # breach so a stop is not booked at a price that never traded.
+    open_map = {
+        s["ticker"]: float(s["open_price"])
+        for s in stock_results
+        if s.get("open_price") and float(s["open_price"]) > 0
     }
 
     # ── 1. Open new positions ──────────────────────────────────────────────────
@@ -1040,20 +1094,24 @@ def run_paper_trading(
         else:
             pct = (cp - ep) / ep * 100   # long profits when price rises
 
-        if pct >= TAKE_PROFIT_PCT:
+        # Same modelled fill as the history sweep and the intraday poll —
+        # one convention for the same event, whichever path notices it.
+        if pct >= TAKE_PROFIT_PCT or pct <= -STOP_LOSS_PCT:
+            hit_target = pct >= TAKE_PROFIT_PCT
+            if is_short:
+                fill, gapped = cp, False
+            elif hit_target:
+                fill, gapped = _target_fill_price(ep, open_map.get(trade["ticker"]))
+            else:
+                fill, gapped = _stop_fill_price(ep, open_map.get(trade["ticker"]))
+            pnl_dir = ep - fill if is_short else fill - ep
             trade["status"]      = "closed"
             trade["exit_date"]   = today_str
-            trade["exit_price"]  = round(cp, 2)
-            trade["exit_reason"] = "take_profit"
-            trade["pnl"]         = round((cp - ep if not is_short else ep - cp) * trade["shares"], 2)
-            trade["pnl_pct"]     = round(pct, 2)
-        elif pct <= -STOP_LOSS_PCT:
-            trade["status"]      = "closed"
-            trade["exit_date"]   = today_str
-            trade["exit_price"]  = round(cp, 2)
-            trade["exit_reason"] = "stop_loss"
-            trade["pnl"]         = round((cp - ep if not is_short else ep - cp) * trade["shares"], 2)
-            trade["pnl_pct"]     = round(pct, 2)
+            trade["exit_price"]  = round(fill, 2)
+            trade["exit_reason"] = "take_profit" if hit_target else "stop_loss"
+            trade["gapped"]      = gapped
+            trade["pnl"]         = round(pnl_dir * trade["shares"], 2)
+            trade["pnl_pct"]     = round(pnl_dir / ep * 100, 2)
 
     # Re-filter open trades after TP/SL check
     open_trades = [t for t in trades if t["status"] == "open"]
