@@ -1008,6 +1008,12 @@ def run_paper_trading(
             "ticker":            ticker,
             "direction":         direction,
             "signal_date":       today_str,
+            # Only the DATE was stored, so no one could reconstruct which
+            # price the engine actually saw, reconcile a paper fill against a
+            # real order, or tell whether the entry-day bar's low predated
+            # the entry. Verified live: one recent entry was booked 3.3%
+            # above that day's close, and nothing recorded when.
+            "entry_ts":          datetime.now(tz=timezone(timedelta(hours=8))).isoformat(timespec="seconds"),
             "entry_price":       round(entry_price, 2),
             "shares":            shares,
             "notional":          pos_notional,

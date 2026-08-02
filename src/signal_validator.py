@@ -35,6 +35,8 @@ from datetime import date, datetime, timedelta
 
 import yfinance as yf
 
+from market_calendar import trading_days_between
+
 logger = logging.getLogger(__name__)
 
 # ── Config ─────────────────────────────────────────────────────────────────────
@@ -127,18 +129,14 @@ def _fetch_earnings(ticker: str) -> tuple[date | None, bool]:
 
 
 def _trading_day_delta(today: date, target: date) -> int:
-    """Signed count of weekdays (Mon-Fri) from today to target.
-    Positive = target in the future. US market holidays not modeled —
-    a holiday counts as a trading day, which errs on the blocking side."""
-    if target == today:
-        return 0
-    step = 1 if target > today else -1
-    d, n = today, 0
-    while d != target:
-        d += timedelta(days=step)
-        if d.weekday() < 5:
-            n += step
-    return n
+    """Signed count of NYSE trading days from today to target.
+
+    Delegates to the shared calendar so holidays are excluded here exactly as
+    they are in the Action Box's expiry and the paper engine's hold count.
+    Previously this counted bare weekdays, so an earnings date across a long
+    weekend read as further away than it really was.
+    """
+    return trading_days_between(today, target)
 
 
 def _is_earnings_risk(ticker: str, today: date, window: int = EARNINGS_WINDOW,

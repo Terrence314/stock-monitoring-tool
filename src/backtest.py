@@ -19,6 +19,12 @@ SCORE_HISTORY_FILE = os.path.join("outputs", "score_history.json")
 SIGNAL_THRESHOLD   = 70
 FORWARD_DAYS       = [5, 10, 20]
 BENCHMARK          = "SPY"
+# Round-trip transaction cost, as a percentage of notional. The paper engine
+# prices this per trade from share count (paper_trading._round_trip_cost);
+# this study has no share count, so it uses the engine's typical figure so the
+# two surfaces are at least comparable. Excess return is unaffected — holding
+# the benchmark costs the same round trip — so only the raw columns move.
+ROUND_TRIP_COST_PCT = 0.17
 # Per-ticker rows below this never get a win rate: 2 signals showing "100%"
 # invites cherry-picking from what is pure noise.
 MIN_TICKER_SIGNALS = 5
@@ -136,11 +142,16 @@ def _run_signals(
                 target_idx = entry_idx + fd
                 if target_idx < len(all_dates):
                     exit_price = series[all_dates[target_idx]]
-                    r = (exit_price - entry_price) / entry_price * 100
+                    # Net of the round trip. A gross forward return is not a
+                    # return you could have earned.
+                    r = (exit_price - entry_price) / entry_price * 100 - ROUND_TRIP_COST_PCT
                     forward[f"r{fd}"] = round(r, 2)
                     br = _bench_return(fd)
-                    forward[f"b{fd}"] = round(br, 2) if br is not None else None
-                    forward[f"x{fd}"] = round(r - br, 2) if br is not None else None
+                    # Buying the benchmark costs the same round trip, so the
+                    # excess is unchanged by pricing both sides.
+                    br_net = (br - ROUND_TRIP_COST_PCT) if br is not None else None
+                    forward[f"b{fd}"] = round(br_net, 2) if br_net is not None else None
+                    forward[f"x{fd}"] = round(r - br_net, 2) if br_net is not None else None
                 else:
                     forward[f"r{fd}"] = None
                     forward[f"b{fd}"] = None

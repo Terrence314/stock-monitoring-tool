@@ -7,6 +7,7 @@ from jinja2 import Template
 from stock_detail import generate_stock_detail_page
 # Single source of truth for the trade plan — the Action Box ticket, the paper
 # engine and the Telegram message must never drift apart again.
+from market_calendar import add_trading_days, is_covered
 from paper_trading import (
     STOP_LOSS_PCT, TAKE_PROFIT_PCT, HOLD_DAYS, BUY_THRESHOLD,
     REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
@@ -3254,6 +3255,13 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     held          = {t["ticker"] for t in open_trades}
     by_ticker     = {s["ticker"]: s for s in stocks_sorted}
 
+    # Same lesson as the FOMC table: a hardcoded date list must say so when it
+    # runs out, not quietly degrade to weekends-only counting.
+    if not is_covered(_date.today()):
+        print(f"  [action_box] ⚠️ NYSE holiday table does not cover "
+              f"{_date.today().year} — ticket expiries fall back to weekday "
+              f"counting. Update src/market_calendar.py.")
+
     # ── Market regime gate — MUST match paper_trading.run_paper_trading ───────
     # Without this the dashboard printed order tickets the engine then refused
     # to open: SPY score 23 < REGIME_FLOOR held every entry for 12 days while
@@ -3287,12 +3295,11 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
             px = s.get("price") or 0
             # Order ticket numbers derived from the paper engine's own
             # constants — never re-typed here, so they cannot drift.
-            expiry = _date.today()
-            _td = 0
-            while _td < HOLD_DAYS:
-                expiry += timedelta(days=1)
-                if expiry.weekday() < 5:
-                    _td += 1
+            # Expiry uses the shared NYSE calendar. Counting bare weekdays
+            # put the ticket's stated expiry a day early whenever a market
+            # holiday fell inside the hold, disagreeing with the engine,
+            # which closes on the real SPY-derived session count.
+            expiry = add_trading_days(_date.today(), HOLD_DAYS)
             buys.append({
                 "ticker": s["ticker"],
                 "price":  px,
