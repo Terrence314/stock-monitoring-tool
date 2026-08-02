@@ -41,10 +41,14 @@ def test_simple_mode_applied_before_first_paint():
     assert "signalViewMode" in head
 
 
-def test_expert_is_opt_in_not_the_default():
-    """Only an explicit saved 'expert' preference leaves beginner mode."""
-    assert re.search(r"mode\s*!==\s*'expert'", RG), \
-        "default view is no longer Simple"
+def test_expert_is_the_default_and_simple_is_opt_in():
+    """Simple was briefly the default. Hiding 8 of 11 sections on load read
+    as the tool having lost features — a far worse failure than a dense
+    page — so it applies only when explicitly chosen."""
+    assert re.search(r"mode\s*===\s*'beginner'", RG), \
+        "Simple is no longer opt-in — the default view must be Expert"
+    assert not re.search(r"mode\s*!==\s*'expert'", RG), \
+        "Simple-by-default logic has come back"
 
 
 @pytest.mark.parametrize("section", EXPERT_SECTIONS)

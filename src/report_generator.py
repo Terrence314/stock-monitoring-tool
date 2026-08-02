@@ -827,12 +827,15 @@ body.beginner-mode .beginner-only { display: block; }
 .run-btn:hover { background: rgba(52,211,153,0.14); border-color: rgba(52,211,153,0.45); }
 </style>
 <script>
-/* Simple is the default view. Applied before first paint so the dense
-   Expert layout never flashes; an explicit saved preference wins. */
+/* Expert is the default: every section visible on load, as it always was.
+   Simple is opt-in and only applies when explicitly chosen — hiding 8 of 11
+   sections by default read as the tool having lost features, which is a far
+   worse failure than a dense page. Applied before first paint so an opted-in
+   Simple user never sees the Expert layout flash. */
 (function() {
   var mode;
   try { mode = localStorage.getItem('signalViewMode'); } catch (e) {}
-  if (mode !== 'expert') {
+  if (mode === 'beginner') {
     document.documentElement.setAttribute('data-boot-mode', 'beginner');
   }
 })();
