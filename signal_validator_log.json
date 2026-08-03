@@ -1,15 +1,13 @@
 [
   {
-    "date": "2026-08-02",
-    "ran_at": "2026-08-02 22:22",
-    "passed": [],
+    "date": "2026-08-03",
+    "ran_at": "2026-08-03 15:38",
+    "passed": [
+      "IR"
+    ],
     "blocked": [
       {
-        "ticker": "PSX",
-        "reason": "AI review REJECTED"
-      },
-      {
-        "ticker": "LYFT",
+        "ticker": "PTON",
         "reason": "AI review REJECTED"
       }
     ],

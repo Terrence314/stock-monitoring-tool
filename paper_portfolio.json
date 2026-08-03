@@ -1245,8 +1245,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 83.45,
-      "current_date": "2026-08-02",
+      "current_price": 86.67,
+      "current_date": "2026-08-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1271,8 +1271,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1416.3,
-      "current_date": "2026-08-02",
+      "current_price": 1429.68,
+      "current_date": "2026-08-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1297,8 +1297,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 111.23,
-      "current_date": "2026-08-02",
+      "current_price": 115.07,
+      "current_date": "2026-08-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1321,8 +1321,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 133.27,
-      "current_date": "2026-08-02",
+      "current_price": 132.08,
+      "current_date": "2026-08-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1345,8 +1345,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 59.55,
-      "current_date": "2026-08-02",
+      "current_price": 59.12,
+      "current_date": "2026-08-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1355,7 +1355,32 @@
         "Above MA60"
       ],
       "sector": "Unknown"
+    },
+    {
+      "id": "IR-2026-08-03",
+      "ticker": "IR",
+      "direction": "long",
+      "signal_date": "2026-08-03",
+      "entry_ts": "2026-08-03T23:38:30+08:00",
+      "entry_price": 85.46,
+      "shares": 17.551907,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 85.46,
+      "current_date": "2026-08-03",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Industrials"
     }
   ],
-  "last_updated": "2026-08-02"
+  "last_updated": "2026-08-03"
 }
