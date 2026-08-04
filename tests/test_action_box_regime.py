@@ -26,6 +26,7 @@ from paper_trading import (                                          # noqa: E40
     REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
     _notional_for_score,
 )
+from entry_selection import account_equity_usd                       # noqa: E402
 
 
 def _stock(ticker, score, label="GO", price=100.0, vol_ratio=1.5):
@@ -95,14 +96,27 @@ def test_missing_spy_fails_closed(outdir):
 
 # ── 2. Conviction-weighted ticket size ────────────────────────────────────────
 
-@pytest.mark.parametrize("score,expected", [(70, 1000.0), (80, 1500.0), (95, 2000.0)])
-def test_ticket_carries_engine_notional(outdir, score, expected):
-    """The ticket used to say "$1,000" regardless of conviction sizing."""
+@pytest.mark.parametrize("score", [70, 80, 95])
+def test_ticket_carries_engine_notional(outdir, score):
+    """The ticket used to say "$1,000" regardless of conviction sizing.
+
+    The literal dollar amounts this once asserted retired on 2026-08-05, when
+    sizing moved from a fixed $1,000/$1,500/$2,000 unit to a percent of account
+    equity — a $1,500 ticket was 32% of a USD 4,650 account. What must hold is
+    unchanged: the published ticket and the engine size the same position.
+    """
     stocks = [_stock("SPY", REGIME_NORMAL), _stock("AAA", score)]
 
     box = _build_action_box(stocks, outdir)
 
-    assert box["buys"][0]["notional"] == expected == _notional_for_score(score)
+    equity, _basis = account_equity_usd(outdir)
+    assert box["buys"][0]["notional"] == _notional_for_score(score, equity)
+
+
+def test_ticket_size_still_scales_with_conviction(outdir):
+    equity, _basis = account_equity_usd(outdir)
+    sizes = [_notional_for_score(s, equity) for s in (70, 85, 95)]
+    assert sizes[0] < sizes[1] < sizes[2]
 
 
 # ── 3. Stop/target derived from the engine's constants ────────────────────────

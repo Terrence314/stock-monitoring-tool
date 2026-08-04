@@ -1,9 +1,10 @@
 """paper_trading.py — Paper trading simulator (long-only).
 
 On every daily run, this module:
-  1. Opens LONG positions for tickers scoring >= BUY_THRESHOLD (≥70)
-     Subject to market regime gate: no new longs when SPY is weak.
-  2. Conviction-weighted sizing: score≥90→$2k, 80–89→$1.5k, 70–79→$1k
+  1. Opens LONG positions chosen by entry_selection.select_entries() — the
+     same function the dashboard Action Box publishes tickets from, so the
+     validation record and the page can no longer describe different strategies.
+  2. Conviction-weighted sizing as a percent of account equity (entry_selection)
   3. Updates floating P&L for all open positions using today's fresh prices
   4. Closes positions that hit Take-Profit (+12%) or Stop-Loss (−8%)
   5. Auto-closes positions held for HOLD_DAYS trading days (fallback)
@@ -20,13 +21,17 @@ import pandas as pd
 import yfinance as yf
 from jinja2 import Template
 
+from entry_selection import (                                        # noqa: E402
+    BUY_THRESHOLD, REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
+    MAX_PER_SECTOR, MAX_OPEN_POSITIONS,
+    account_equity_usd, position_notional, select_entries, sector_cap_ok,
+)
+
 PORTFOLIO_FILE   = os.path.join("outputs", "paper_portfolio.json")
-BUY_THRESHOLD    = 70       # score >= this → LONG signal
 SELL_THRESHOLD   = 30       # kept for backtest compat — shorts disabled (LONG_ONLY=True)
 SIGNAL_THRESHOLD = BUY_THRESHOLD   # kept for backtest compat
-NOTIONAL         = 1000.0   # USD base notional per trade (scaled by conviction)
+NOTIONAL         = 1000.0   # legacy reporting unit only — sizing is in entry_selection
 HOLD_DAYS        = 10       # trading days before auto-close (fallback)
-MAX_PER_SECTOR   = 2        # max open longs per sector (2026-06-19: 4 semis opened together, all lost)
 TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% price move
 STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
 
@@ -67,10 +72,10 @@ def _net_pnl(entry_price: float, exit_price: float, shares: float,
 
 
 # ── Strategy settings ──────────────────────────────────────────────────────────
+# Entry thresholds, regime floors, sector/position caps and sizing all live in
+# entry_selection.py and are imported above — the Action Box reads the same
+# module, which is the only way the two stay in agreement.
 LONG_ONLY            = True   # no short positions; model is a long trend-follower
-REGIME_FLOOR         = 35    # SPY score below this → no new longs (extreme bear only)
-REGIME_NORMAL        = 50    # SPY score below this → only high-conviction longs (≥80)
-HIGH_CONVICTION_MIN  = 80    # minimum score for transitional-market entries
 
 
 # ── Persistence ────────────────────────────────────────────────────────────────
@@ -89,18 +94,16 @@ def _save_portfolio(p: dict) -> None:
         json.dump(p, f, ensure_ascii=False, indent=2)
 
 
-def _notional_for_score(score: int) -> float:
-    """Conviction-weighted sizing: higher signal score → larger position.
+def _notional_for_score(score: int, equity_usd: float | None = None) -> float:
+    """Conviction-weighted sizing, as a percent of account equity.
 
-    Score ≥ 90  →  $2,000  (strong buy, full bull alignment)
-    Score 80–89 →  $1,500  (strong buy)
-    Score 70–79 →  $1,000  (base case)
+    Kept as the module's public name; the policy itself lives in
+    entry_selection.position_notional. Pass `equity_usd` when the caller has
+    already resolved it — otherwise this re-reads the broker snapshot.
     """
-    if score >= 90:
-        return NOTIONAL * 2.0
-    if score >= 80:
-        return NOTIONAL * 1.5
-    return NOTIONAL
+    if equity_usd is None:
+        equity_usd, _basis = account_equity_usd()
+    return position_notional(score, equity_usd)
 
 
 # ── Trading calendar ───────────────────────────────────────────────────────────
@@ -168,19 +171,16 @@ def _get_exit_price(ticker: str, exit_date: str, series: dict) -> float | None:
 def _sector_cap_ok(ticker: str, sector_map: dict, trades: list) -> bool:
     """True if opening a long in this ticker keeps its sector under MAX_PER_SECTOR.
 
-    Fail-open: tickers with no sector data ("Unknown"/missing) are never blocked.
+    Takes the full trade list and filters it, then delegates the rule itself to
+    entry_selection.sector_cap_ok so the Action Box applies the same cap.
     Legacy trades without a stored 'sector' field fall back to sector_map.
     """
-    sector = sector_map.get(ticker, "Unknown")
-    if not sector or sector == "Unknown":
-        return True
-    open_in_sector = sum(
-        1 for t in trades
-        if t.get("status") == "open"
-        and t.get("direction", "long") == "long"
-        and (t.get("sector") or sector_map.get(t.get("ticker"), "Unknown")) == sector
-    )
-    return open_in_sector < MAX_PER_SECTOR
+    open_longs = [
+        {**t, "sector": (t.get("sector") or sector_map.get(t.get("ticker"), "Unknown"))}
+        for t in trades
+        if t.get("status") == "open" and t.get("direction", "long") == "long"
+    ]
+    return sector_cap_ok(ticker, sector_map, open_longs)
 
 
 def _fetch_ohlc_bulk(tickers: list, start_date: str) -> dict:
@@ -975,7 +975,8 @@ def run_paper_trading(
     # ── 1. Open new positions ──────────────────────────────────────────────────
     new_count = 0
 
-    def _open_trade(ticker: str, score: int, direction: str, entry_price: float) -> None:
+    def _open_trade(ticker: str, score: int, direction: str, entry_price: float,
+                    notional: float | None = None) -> None:
         nonlocal new_count
         # Block same-day re-open (date-based ID check)
         suffix = "" if direction == "long" else "-S"
@@ -996,7 +997,7 @@ def run_paper_trading(
             print(f"  [paper_trading] {ticker} skipped — sector cap "
                   f"({MAX_PER_SECTOR} open in {sector_map.get(ticker)})")
             return
-        pos_notional = _notional_for_score(score)
+        pos_notional = notional if notional is not None else _notional_for_score(score)
         shares = round(pos_notional / entry_price, 6)
         # Attach active pattern names at trade open for attribution
         patterns_triggered = []
@@ -1031,69 +1032,24 @@ def run_paper_trading(
         })
         new_count += 1
 
-    # ── Market regime gate: check SPY score before opening any longs ─────────────
-    spy_result = next((s for s in stock_results if s.get("ticker") == "SPY"), None)
-    # Fail CLOSED when SPY is missing. The old default of 55 sat above
-    # REGIME_NORMAL, so a failed SPY fetch put the engine into normal buying —
-    # a risk gate whose failure mode was "trade as usual".
-    spy_score  = spy_result["score"] if spy_result else REGIME_FLOOR - 1
+    # ── Entry selection ────────────────────────────────────────────────────────
+    # One decision function, shared with the dashboard Action Box. Regime gate,
+    # verdict/EMA200/volume timing, sector cap, position cap, validator veto and
+    # sizing all live in entry_selection.select_entries — duplicating any of it
+    # here is what let the page and the engine drift apart for seven weeks.
+    ranked = sorted(stock_results, key=lambda s: (s.get("score") or 0), reverse=True)
+    entries, ctx = select_entries(ranked, trades, blocked_tickers=blocked_tickers)
 
-    if spy_score < REGIME_FLOOR:
-        print(f"  [paper_trading] SPY score={spy_score} < {REGIME_FLOOR} — bear regime, no new longs")
-    elif spy_score < REGIME_NORMAL:
-        print(f"  [paper_trading] SPY score={spy_score} — transitional market, only score≥{HIGH_CONVICTION_MIN} longs")
-    else:
-        print(f"  [paper_trading] SPY score={spy_score} — bull regime, normal threshold (score≥{BUY_THRESHOLD})")
+    print(f"  [paper_trading] regime={ctx['regime']} (SPY {ctx['regime_spy']}) · "
+          f"equity ${ctx['equity_usd']:,.0f} ({ctx['sizing_basis']}) · "
+          f"{ctx['slots_left']}/{ctx['max_open']} slots free · "
+          f"{len(entries)} entry candidate(s)")
+    if ctx["sizing_basis"] == "fallback":
+        print("  [paper_trading] ⚠️ account equity unreadable or stale — "
+              f"sizing off the ${ctx['equity_usd']:,.0f} fallback; run ibkr_sync.py")
 
-    # Entry-timing gate — same rule the dashboard Action Box shows the user
-    # (verdict GO ✅ or BREAKOUT ↑). Without this the engine buys extended
-    # WAIT-verdict stocks the user is explicitly told not to chase, and the
-    # 60-day validation measures a strategy nobody follows.
-    verdict_map = {
-        s["ticker"]: ((s.get("entry_verdict") or {}).get("label", ""))
-        for s in stock_results
-    }
-    # Weekly trend proxy: EMA200. Price below EMA200 = long-term downtrend → skip.
-    ema200_map = {s["ticker"]: (s.get("ema200") or 0) for s in stock_results}
-
-    def _entry_timing_ok(tkr: str) -> bool:
-        label = verdict_map.get(tkr, "")
-        verdict_ok = "GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label
-        if not verdict_ok:
-            return False
-        # Weekly trend gate: skip longs where price is below EMA200
-        ep = price_map.get(tkr, 0)
-        ema200 = ema200_map.get(tkr, 0)
-        if ema200 and ep and ep < ema200:
-            return False
-        return True
-
-    for ticker, score in today_scores.items():
-        if ticker == "SPY":
-            continue   # never trade SPY itself
-        entry_price = price_map.get(ticker)
-        if not entry_price or entry_price <= 0:
-            continue
-        if not _entry_timing_ok(ticker):
-            continue   # score qualified but entry timing poor — skip, same as Action Box
-
-        # Long-only: no short positions (model is a long trend-follower)
-        if LONG_ONLY:
-            # Regime-gated long entry
-            if spy_score < REGIME_FLOOR:
-                pass   # no new longs in bear market
-            elif spy_score < REGIME_NORMAL:
-                if score >= HIGH_CONVICTION_MIN:
-                    _open_trade(ticker, score, "long", entry_price)
-            else:
-                if score >= BUY_THRESHOLD:
-                    _open_trade(ticker, score, "long", entry_price)
-        else:
-            # Legacy long+short (disabled — LONG_ONLY=True)
-            if score >= BUY_THRESHOLD:
-                _open_trade(ticker, score, "long", entry_price)
-            elif score <= SELL_THRESHOLD:
-                _open_trade(ticker, score, "short", entry_price)
+    for e in entries:
+        _open_trade(e["ticker"], e["score"], "long", e["price"], notional=e["notional"])
 
     if not trades:
         print("  [paper_trading] no trades yet — skipping")

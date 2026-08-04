@@ -10,16 +10,21 @@ B. An all-winners sample gives PF = inf, which was reported as a passing 99.0.
    Infinite PF means "no losses observed yet" — a statement about sample size,
    not about edge.
 
-Plus the window reset: GATE_START_DATE moved to the history-based stop fix
-(a0a50b86, 2026-07-17). Before it the -8% stop did not bind — 7 of 42 closed
-trades ran past it, worst -22.1% — so that history measures a risk model the
-code no longer implements.
+Plus the window reset. GATE_START_DATE moves whenever the risk model changes,
+because a gate that blends two strategies validates neither — first to the
+history-based stop fix (a0a50b86, 2026-07-17), then to the Action Box / engine
+unification with equity-based sizing (2026-08-05). These fixtures therefore
+derive their dates FROM the constant rather than naming one: the rule under
+test is "entries made under an older risk model are excluded", not any single
+date, and hardcoding one made all seven tests fail on the next legitimate
+reset.
 """
 
 import os
 import sys
 import json
 import tempfile
+from datetime import datetime, timedelta
 
 import pytest
 
@@ -29,10 +34,17 @@ from report_generator import (                                        # noqa: E4
     _build_action_box, GATE_START_DATE, GATE_MIN_TRADES, GATE_MIN_WINRATE,
 )
 
-STOP_FIX_COMMIT_DATE = "2026-07-17"
+def _days_from_window_start(n: int) -> str:
+    """A date n days after the current window opens (negative = before it)."""
+    start = datetime.strptime(GATE_START_DATE, "%Y-%m-%d")
+    return (start + timedelta(days=n)).strftime("%Y-%m-%d")
 
 
-def _trades(n_win, n_loss, signal_date="2026-07-20", win=50.0, loss=-50.0):
+IN_WINDOW  = _days_from_window_start(3)
+PRE_WINDOW = _days_from_window_start(-28)
+
+
+def _trades(n_win, n_loss, signal_date=IN_WINDOW, win=50.0, loss=-50.0):
     out = []
     for i in range(n_win):
         out.append(_t(f"W{i}", signal_date, win))
@@ -44,7 +56,7 @@ def _trades(n_win, n_loss, signal_date="2026-07-20", win=50.0, loss=-50.0):
 def _t(ticker, signal_date, pnl):
     return {
         "ticker": ticker, "status": "closed",
-        "signal_date": signal_date, "exit_date": "2026-07-30",
+        "signal_date": signal_date, "exit_date": _days_from_window_start(13),
         "pnl": pnl, "pnl_pct": pnl / 10,
         "notional": 1000, "entry_price": 100, "shares": 10,
     }
@@ -59,8 +71,14 @@ def _gate(trades):
 
 # ── A. Minimum sample size ────────────────────────────────────────────────────
 
-def test_window_starts_at_the_stop_fix():
-    assert GATE_START_DATE == STOP_FIX_COMMIT_DATE
+def test_window_starts_at_the_current_risk_model():
+    """The window must name the live model's start, not an earlier one.
+
+    2026-07-17 was the stop fix; 2026-08-05 is the Action Box / engine
+    unification and equity-based sizing. Anything older means the gate is
+    counting trades taken under rules the code no longer implements.
+    """
+    assert GATE_START_DATE >= "2026-08-05"
 
 
 def test_two_winners_no_longer_satisfy_the_gate():
@@ -112,10 +130,10 @@ def test_finite_pf_is_still_reported():
 
 # ── Window membership keys on entry date ──────────────────────────────────────
 
-def test_trades_entered_before_the_stop_fix_are_excluded():
-    """Pre-fix trades ran under a stop that did not bind — they must not count,
-    even though they closed inside the window."""
-    pre = _t("OLD", "2026-06-19", -220.0)      # the -22.1% ON trade shape
+def test_trades_entered_before_the_window_are_excluded():
+    """Entries made under an older risk model must not count, even when they
+    closed inside the window."""
+    pre = _t("OLD", PRE_WINDOW, -220.0)        # the -22.1% ON trade shape
     post = _trades(n_win=3, n_loss=0)
 
     box = _gate([pre] + post)
