@@ -1,37 +1,47 @@
 {
- "ts": "2026-08-03 23:38",
- "buys": [
+ "ts": "2026-08-04 12:43",
+ "buys": [],
+ "sells": [
+  {
+   "ticker": "MTD",
+   "float_pct": 0.9,
+   "why": "score 12"
+  },
+  {
+   "ticker": "NOW",
+   "float_pct": 3.5,
+   "why": "score 12"
+  },
+  {
+   "ticker": "NTES",
+   "float_pct": -0.9,
+   "why": "score 12"
+  },
+  {
+   "ticker": "XLE",
+   "float_pct": -0.7,
+   "why": "score 12"
+  },
   {
    "ticker": "IR",
-   "price": 85.46080017089844,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 61",
-   "stop": 78.62,
-   "target": 95.72,
-   "notional": 1500.0,
-   "expiry": "08-17",
-   "ai_review": {
-    "verdict": "NEEDS_REVIEW",
-    "summary": "1.【多頭理據】IR股價目前處於強勁的多頭排列，價格（85.46）高於所有短期和長期均線（MA5: 84.85 > MA20: 81.87 > MA60: 77.0），且RSI動能（60.93）走強，MACD金叉並在0軸上方擴張（MACD: 1.87, MACD_HIST: 0.08），顯示強勁的上升趨勢。股價已在MA60上方站穩11.0%，為多頭提供了堅實的支撐。\n\n2.【空頭理據】該交易存在極大的量能風險，今日成交量僅為均量的0.35倍，屬於極度縮量，在缺乏量能確認的情況下追漲風險極高。雖然KD指標中性（K=62.4, D=64.7），但量能不足可能導致上漲動能衰竭或潛在反轉。\n\n3.【關"
-   },
-   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
+   "float_pct": 0.0,
+   "why": "score 22"
   }
  ],
- "sells": [],
  "no_action": false,
- "regime": "bull",
- "regime_spy": 64,
- "regime_min": 70,
+ "regime": "bear",
+ "regime_spy": 13,
+ "regime_min": null,
  "regime_min_floor": 35,
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": 0.0,
- "breaker_usd": 0.0,
- "breaker_base": 8000.0,
+ "breaker_pct": 1.25,
+ "breaker_usd": 118.9,
+ "breaker_base": 9500.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 17,
+ "gate_day": 18,
  "gate_days": 60,
  "gate_winrate": 50.0,
  "gate_ci_low": 0.0,
@@ -42,17 +52,5 @@
  "gate_pf": 0.3,
  "gate_pnl": -84.0,
  "gate_trades": 2,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-08-03 15:38",
-  "passed": 1,
-  "blocked": 1,
-  "blocked_list": [
-   {
-    "ticker": "PTON",
-    "reason": "AI review REJECTED"
-   }
-  ],
-  "caution_tags": []
- }
+ "gate_ready": false
 }

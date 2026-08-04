@@ -3047,5 +3047,40 @@
    "LYFT",
    "PSX"
   ]
+ },
+ {
+  "ts": "2026-08-04 12:43",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "MTD",
+    "why": "score 12"
+   },
+   {
+    "ticker": "NOW",
+    "why": "score 12"
+   },
+   {
+    "ticker": "NTES",
+    "why": "score 12"
+   },
+   {
+    "ticker": "XLE",
+    "why": "score 12"
+   },
+   {
+    "ticker": "IR",
+    "why": "score 22"
+   }
+  ],
+  "added": [
+   "MTD",
+   "NOW",
+   "NTES",
+   "XLE"
+  ],
+  "removed": [
+   "PTON"
+  ]
  }
 ]
