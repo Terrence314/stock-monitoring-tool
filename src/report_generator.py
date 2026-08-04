@@ -1009,7 +1009,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
 
       <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-2)">
         <span title="本月已實現+未實現盈虧 ÷ 投入名義金額。觸及 −5% 即停止開新倉。">
-          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '%+,.0f'|format(action_box.breaker_usd) }} 美元{% if action_box.breaker_base %} / 本月投入 ${{ '%,.0f'|format(action_box.breaker_base) }}{% endif %})</span>{% endif %}
+          {# Thousands grouping needs str.format, NOT the |format filter —
+             |format is printf-style and "%,.0f" raises
+             "ValueError: unsupported format character ','". This crashed
+             every price_refresh run for a day once breaker_usd went
+             non-zero and the guard below finally let the branch execute. #}
+          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '{:+,.0f}'.format(action_box.breaker_usd) }} 美元{% if action_box.breaker_base %} / 本月投入 {{ '${:,.0f}'.format(action_box.breaker_base) }}{% endif %})</span>{% endif %}
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
         <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即歷史止損修復（a0a50b86）之後開倉嘅單；之前 -8% 止損唔生效（最差走到 -22.1%），嗰批數據描述緊一個而家已經唔存在嘅風險模型。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">

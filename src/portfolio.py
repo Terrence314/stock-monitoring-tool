@@ -404,14 +404,14 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <div class="acct-card">
       <div class="acct-label">Unrealized P&L</div>
       <div class="acct-val {{ 'up' if total_unreal >= 0 else 'down' }}">
-        {{ '%+,.2f'|format(total_unreal) }}
+        {{ '{:+,.2f}'.format(total_unreal) }}
       </div>
       <div class="acct-sub">{{ '%+.2f'|format(total_return_pct) }}% total return</div>
     </div>
     <div class="acct-card">
       <div class="acct-label">Realized P&L</div>
       <div class="acct-val {{ 'up' if total_realized >= 0 else 'down' }}">
-        {{ '%+,.2f'|format(total_realized) }}
+        {{ '{:+,.2f}'.format(total_realized) }}
       </div>
       <div class="acct-sub">from closed positions</div>
     </div>
@@ -466,7 +466,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       <td class="num">${{ '%.2f'|format(h.cur_price) }}</td>
       <td class="num">${{ '{:,.2f}'.format(h.mkt_value) }}</td>
       <td class="num">
-        <span class="chip {{ 'up' if h.unreal_pnl >= 0 else 'down' }}">${{ '%+,.2f'|format(h.unreal_pnl) }}</span>
+        <span class="chip {{ 'up' if h.unreal_pnl >= 0 else 'down' }}">${{ '{:+,.2f}'.format(h.unreal_pnl) }}</span>
       </td>
       <td class="num">
         <span class="chip {{ 'up' if h.unreal_pct >= 0 else 'down' }}">{{ '%+.2f'|format(h.unreal_pct) }}%</span>
@@ -476,7 +476,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </td>
       <td class="num mob-hide">
         {% if h.realized_pnl %}
-        <span class="chip {{ 'up' if h.realized_pnl >= 0 else 'down' }}">${{ '%+,.2f'|format(h.realized_pnl) }}</span>
+        <span class="chip {{ 'up' if h.realized_pnl >= 0 else 'down' }}">${{ '{:+,.2f}'.format(h.realized_pnl) }}</span>
         {% else %}<span style="color:var(--muted)">—</span>{% endif %}
       </td>
     </tr>
@@ -526,7 +526,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </td>
       <td class="num">
         {% set amt = t.amount_usd or 0 %}
-        <span style="font-family:var(--mono);font-size:12px;color:{{ 'var(--up)' if amt >= 0 else 'var(--down)' }}">{{ '%+,.2f'|format(amt) }}</span>
+        <span style="font-family:var(--mono);font-size:12px;color:{{ 'var(--up)' if amt >= 0 else 'var(--down)' }}">{{ '{:+,.2f}'.format(amt) }}</span>
         {% if t.get('realized_pnl') %}
         <div style="font-size:10px;color:{{ 'var(--up)' if t.realized_pnl >= 0 else 'var(--down)' }}">realised {{ '%+.2f'|format(t.realized_pnl) }}</div>
         {% endif %}
