@@ -938,8 +938,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">64,259.20</span>
-        <span class="pct up">+1.26%</span>
+        <span class="market-price">64,179.20</span>
+        <span class="pct up">+1.13%</span>
       </div>
     </div>
     
@@ -962,7 +962,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">101 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Aug 05 05:12 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Aug 05 07:03 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -1024,7 +1024,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-2)">
         <span title="本月已實現+未實現盈虧 ÷ 投入名義金額。觸及 −5% 即停止開新倉。">
           
-          斷路器 +1.8% / -5.0% <span style="color:var(--text-2)">(+227 美元 / 本月投入 $12,500)</span>
+          斷路器 +1.9% / -5.0% <span style="color:var(--text-2)">(+241 美元 / 本月投入 $12,500)</span>
           <span style="color:#34d399">✓ ok</span>
         </span>
         <span title="真錢上線門檻：60日驗證 + 至少 30 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 2026-07-17 起計 — 即歷史止損修復（a0a50b86）之後開倉嘅單；之前 -8% 止損唔生效（最差走到 -22.1%），嗰批數據描述緊一個而家已經唔存在嘅風險模型。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
@@ -1223,21 +1223,21 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="badge up">BULLISH</span>
         </div>
         <div class="kpi-val" style="color: var(--up)">Risk On</div>
-        <div class="kpi-sub">93 up · 8 down</div>
+        <div class="kpi-sub">92 up · 9 down</div>
       </div>
       <div class="kpi" title="Stocks scoring 70+ out of 100. Score ≥70 = strong buy signal; 50–69 = moderate; below 50 = avoid new entries.">
         <div class="kpi-head">
           <span class="kpi-label">Strong signals</span>
           <span class="badge blue">≥ 70</span>
         </div>
-        <div class="kpi-val">62 / 101</div>
+        <div class="kpi-val">61 / 101</div>
         <div class="kpi-sub">mid-band (50-69): 15</div>
       </div>
       <div class="kpi" title="Average signal score across all Tier 2 stocks. Above 60 = healthy momentum; below 40 = broad weakness across the watchlist.">
         <div class="kpi-head">
           <span class="kpi-label">Avg signal</span>
         </div>
-        <div class="kpi-val">67.2</div>
+        <div class="kpi-val">66.6</div>
         <div class="kpi-sub">across 101 names</div>
       </div>
       <div class="kpi" title="CNN Fear &amp; Greed Index (0–100). 75+ = Greed (market overheating); 25– = Fear (possible buying opportunity). Use alongside stock scores, not as a standalone signal.">
@@ -1283,32 +1283,32 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
           <span style="font-size:13px;color:var(--text);font-weight:600">Signal dist.</span>
-          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">67.2</b></span>
+          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">66.6</b></span>
         </div>
         <div class="hist-bar">
           
           <div class="hist-col">
             <span class="hist-num">3</span>
-            <div class="hist-rect" style="height:4px;background:#f87171;opacity:0.9"></div>
+            <div class="hist-rect" style="height:5px;background:#f87171;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
-            <span class="hist-num">11</span>
-            <div class="hist-rect" style="height:17px;background:#ff8a4d;opacity:0.9"></div>
+            <span class="hist-num">12</span>
+            <div class="hist-rect" style="height:20px;background:#ff8a4d;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
             <span class="hist-num">14</span>
-            <div class="hist-rect" style="height:22px;background:#f5b942;opacity:0.9"></div>
+            <div class="hist-rect" style="height:23px;background:#f5b942;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
             <span class="hist-num">24</span>
-            <div class="hist-rect" style="height:39px;background:#80c97f;opacity:0.9"></div>
+            <div class="hist-rect" style="height:40px;background:#80c97f;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
-            <span class="hist-num">49</span>
+            <span class="hist-num">48</span>
             <div class="hist-rect" style="height:80px;background:#34d399;opacity:0.9"></div>
           </div>
           
@@ -1405,7 +1405,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             <div class="sr-cell" style="background:rgba(245,185,66,0.12)">
               <div class="sr-tick">Unknow</div>
-              <div class="sr-val" style="color:var(--amber)">58</div>
+              <div class="sr-val" style="color:var(--amber)">56</div>
             </div>
           
         </div>
@@ -1679,48 +1679,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td class="num mob-hide">1.54×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
-              </td>
-              <td class="ring-cell">
-                <div style="width:40px;height:40px;position:relative">
-                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
-                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
-                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
-                      stroke-dasharray="92.49 100.53" stroke-linecap="round"/>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">92</div>
-                </div>
-              </td>
-              <td class="center"><span class="strength-badge high">強力做多 🔥</span></td>
-            </tr>
-          
-            
-            
-            
-            
-            
-            
-            <tr class="lb-row" data-type="etf" data-market="LSE" data-score="92" data-rsi="65.52" data-price="19.04199981689453" data-ma20="18.52" data-ma60="18.47">
-              <td>
-                <a href="#" onclick="scrollToCard('SPYL.L');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to SPYL.L card below">
-                  <div class="ticker-cell">
-                    <div class="ticker-tile">SP</div>
-                    <div class="ticker-meta">
-                      <div class="ticker-sym">SPYL.L</div>
-                      <div class="ticker-name">SSGA SPDR ETFS EUROPE I PLC SS </div>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td>
-                <span class="tag etf">etf</span>
-              </td>
-              <td class="num lg">19.04</td>
-              <td><span class="pct-chip up">+1.64%</span></td>
-              <td class="num mob-hide">65.5</td>
-              <td class="num mob-hide" style="color: #34d399">+0.04</td>
-              <td class="num mob-hide">1.76×</td>
-              <td class="ring-cell">
-                <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 11.3,18.0 20.7,14.1 30.0,14.1 39.3,11.2 48.7,10.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
               <td class="ring-cell">
                 <div style="width:40px;height:40px;position:relative">
@@ -5395,6 +5353,48 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             
             
+            <tr class="lb-row" data-type="etf" data-market="LSE" data-score="23" data-rsi="58.77" data-price="nan" data-ma20="0" data-ma60="0">
+              <td>
+                <a href="#" onclick="scrollToCard('SPYL.L');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to SPYL.L card below">
+                  <div class="ticker-cell">
+                    <div class="ticker-tile">SP</div>
+                    <div class="ticker-meta">
+                      <div class="ticker-sym">SPYL.L</div>
+                      <div class="ticker-name">SSGA SPDR ETFS EUROPE I PLC SS </div>
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <span class="tag etf">etf</span>
+              </td>
+              <td class="num lg">nan</td>
+              <td><span class="pct-chip down">+nan%</span></td>
+              <td class="num mob-hide">58.8</td>
+              <td class="num mob-hide" style="color: #f87171">-0.00</td>
+              <td class="num mob-hide">1.76×</td>
+              <td class="ring-cell">
+                <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 11.3,18.0 20.7,14.1 30.0,14.1 39.3,11.2 48.7,10.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              </td>
+              <td class="ring-cell">
+                <div style="width:40px;height:40px;position:relative">
+                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
+                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
+                    <circle cx="20" cy="20" r="16" stroke="#f87171" stroke-width="2.5" fill="none"
+                      stroke-dasharray="23.12 100.53" stroke-linecap="round"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">23</div>
+                </div>
+              </td>
+              <td class="center"><span class="strength-badge low">偏空 📉</span></td>
+            </tr>
+          
+            
+            
+            
+            
+            
+            
             <tr class="lb-row" data-type="etf" data-market="US" data-score="23" data-rsi="50.97" data-price="575.7100219726562" data-ma20="568.4" data-ma60="590.52">
               <td>
                 <a href="#" onclick="scrollToCard('SMH');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to SMH card below">
@@ -6176,7 +6176,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       
       <div class="sector-tile mid">
         <div class="sector-name">Unknown</div>
-        <div class="sector-avg mid">58</div>
+        <div class="sector-avg mid">56</div>
         <div class="sector-tickers">
           
             
@@ -6184,9 +6184,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
             
             <span class="sector-chip high">XLI · 92</span>
-          
-            
-            <span class="sector-chip high">SPYL.L · 92</span>
           
             
             <span class="sector-chip high">SPY · 82</span>
@@ -6265,6 +6262,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
             
             <span class="sector-chip low">TLT · 23</span>
+          
+            
+            <span class="sector-chip low">SPYL.L · 23</span>
           
             
             <span class="sector-chip low">SMH · 23</span>
@@ -6542,44 +6542,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           </td>
           <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--green)">
             +3.2%
-          </td>
-          <td style="padding:9px 10px;text-align:center;font-size:14px">
-            ▲
-          </td><td style="padding:9px 10px;text-align:center">
-            
-              <span style="font-size:10px;color:var(--muted)">Core</span>
-            
-          </td>
-        </tr>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">
-            19.04
-          </td>
-          <td style="padding:9px 10px">
-            <a href="#stock-SPYL.L" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">SPYL.L</a>
-          </td>
-          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SSGA SPDR ETFS EUROPE I PLC SS </td>
-          <td style="padding:9px 10px"><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,.10);color:var(--purple)">Unknown</span>
-          </td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
-            —
-          </td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--green)">92</td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--text-2)">
-            65.5
-          </td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--green)">
-            +2.8%
           </td>
           <td style="padding:9px 10px;text-align:center;font-size:14px">
             ▲
@@ -7609,6 +7571,44 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           </td>
           <td style="padding:9px 10px;text-align:center;font-size:14px">
             ▲
+          </td><td style="padding:9px 10px;text-align:center">
+            
+              <span style="font-size:10px;color:var(--muted)">Core</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">
+            <span style="color:var(--muted)">—</span>
+          </td>
+          <td style="padding:9px 10px">
+            <a href="#stock-SPYL.L" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">SPYL.L</a>
+          </td>
+          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SSGA SPDR ETFS EUROPE I PLC SS </td>
+          <td style="padding:9px 10px"><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,.10);color:var(--purple)">Unknown</span>
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
+            —
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--muted)">23</td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--text-2)">
+            58.8
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--red)">
+            —
+          </td>
+          <td style="padding:9px 10px;text-align:center;font-size:14px">
+            —
           </td><td style="padding:9px 10px;text-align:center">
             
               <span style="font-size:10px;color:var(--muted)">Core</span>
@@ -9107,163 +9107,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SPYL.L" class="scard high" data-type="etf" data-market="LSE" data-score="92" data-ticker="SPYL.L" data-rsi="65.52" data-price="19.04199981689453" data-ma20="18.52" data-ma60="18.47" data-bento-idx="7">
-
-      <div class="scard-head">
-        <div class="scard-id">
-          <div class="scard-tile">SP</div>
-          <div>
-            <div style="display:flex;align-items:center;gap:6px">
-              <div class="scard-sym">SPYL.L</div>
-              <!-- Tier 2 history badges -->
-              
-              <!-- IBKR position badge -->
-              
-              
-              <!-- Star/favourite button -->
-              <button class="star-btn" data-ticker="SPYL.L"
-                onclick="toggleFavourite('SPYL.L')"
-                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
-                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
-                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
-                title="Click to add SPYL.L to Favourites">☆</button>
-            </div>
-            <div class="scard-name">SSGA SPDR ETFS EUROPE I PLC SS </div>
-            <div class="scard-tags">
-              <span class="tag etf">etf</span>
-              <span class="tag market">LSE</span>
-            </div>
-          </div>
-        </div>
-        <div class="scard-price">
-          <div class="price-block">
-            <div class="price-val">$19.04</div>
-            <div class="price-chg up">+1.64%</div>
-          </div>
-          <div class="ring high">
-            <svg width="56" height="56">
-              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
-              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
-                stroke-dasharray="132.94 144.50" stroke-linecap="round"/>
-            </svg>
-            <div class="ring-num">92</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
-        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,20.5 6.0,14.9 10.0,12.9 14.0,13.4 18.0,13.9 22.0,12.6 26.0,12.1 30.0,17.8 34.0,17.6 38.0,16.1 42.0,15.4 46.0,22.8 50.0,19.6 54.0,22.5 58.0,20.0 62.0,24.0 66.0,23.3 70.0,20.3 74.0,11.7 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
-      </div>
-      
-
-      <div class="scard-row">
-        <span class="strength-badge high">強力做多 🔥</span>
-        
-      </div>
-
-      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
-      
-      
-      <div class="verdict-row">
-        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
-          🟡 WAIT
-        </span>
-        <span class="verdict-reason">BB extended (1.14) — wait for pullback</span>
-      </div>
-      
-
-      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
-      <div class="beginner-only">
-        <div class="beg-verdict high">
-          🔥 Strong Buy — Very bullish technical setup (92/100)
-          
-        </div>
-        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
-      </div>
-
-      
-
-      <div class="expert-only">
-      
-      
-      
-      
-      </div>
-
-      
-      
-      
-
-      <div class="expert-only">
-        <div class="scard-row">
-          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 18.53</span>
-          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 18.52</span>
-          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 18.47</span>
-          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 65.52</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.8×</span>
-          
-          
-          
-          
-          
-          
-          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.14&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.14</span>
-          
-          
-        </div>
-        <div>
-          <div class="scard-sub">Technical signals</div>
-          <div class="signals" data-sig-ticker="SPYL.L">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（65.5 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">✅ 爆量（成交量 1.8× 均量）</div><div class="signal-item">🟡 略高於 MA60（+3.1%）</div><div class="signal-item">KD 中性（K=82.8 · D=57.9）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.0% — 極近歷史高位</div>
-          </div>
-        </div>
-      </div>
-
-      
-
-      
-      <details class="ai-details" open>
-        <summary>
-          <span class="ai-label">✦ AI Analysis</span>
-          <span class="ai-arrow">▼</span>
-        </summary>
-        <div class="ai-body">① SPYL.L目前趨勢偏多，MACD在0軸以上且動能持續擴張，顯示多頭格局強勁。
-② 最近支撐位為MA20的18.51，主要壓力位則可關注布林線上軌18.89。
-③ 在多頭趨勢下，未來3-5個交易日高機率將持續上漲，並挑戰更高點位。
-④ 主要下行風險為若股價跌破MA20（18.51）並持續下行，可能改變目前多頭趨勢。</div>
-      </details>
-      
-
-      
-      <div class="entry">
-        <div class="entry-label">Entry timing</div>
-        <div class="entry-body">建議在 $18.80 - $19.00 區間買入，等待MACD在0軸以上金叉且動能持續擴張，確認多頭趨勢。止損位設於 $18.40 (略低於MA5/MA20/MA60，跌破則多頭趨勢面臨考驗)，邏輯是若跌破此區域，則近期多頭趨勢可能反轉。第一目標價 $19.80，第二目標價 $20.50。風險回報比約為 1:2.5，具吸引力。</div>
-      </div>
-      
-
-      <a href="./SPYL.L.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
-        → 查看詳細分析
-      </a>
-      <button class="copy-btn"
-        data-ticker="SPYL.L"
-        data-price="19.04"
-        data-score="92"
-        data-entry="建議在 $18.80 - $19.00 區間買入，等待MACD在0軸以上金叉且動能持續擴張，確認多頭趨勢。止損位設於 $18.40 (略低於MA5/MA20/MA60，跌破則多頭趨勢面臨考驗)，邏輯是若跌破此區域，則近期多頭趨勢可能反轉。第一目標價 $19.80，第二目標價 $20.50。風險回報比約為 1:2.5，具吸引力。"
-        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
-    </article>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <article id="stock-AXON" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="AXON" data-rsi="66.48" data-price="607.2000122070312" data-ma20="539.99" data-ma60="482.42" data-bento-idx="8">
+    <article id="stock-AXON" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="AXON" data-rsi="66.48" data-price="607.2000122070312" data-ma20="539.99" data-ma60="482.42" data-bento-idx="7">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9487,7 +9331,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-BILL" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="BILL" data-rsi="67.8" data-price="48.56999969482422" data-ma20="44.02" data-ma60="38.93" data-bento-idx="9">
+    <article id="stock-BILL" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="BILL" data-rsi="67.8" data-price="48.56999969482422" data-ma20="44.02" data-ma60="38.93" data-bento-idx="8">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9715,7 +9559,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-DASH" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="DASH" data-rsi="63.93" data-price="202.3699951171875" data-ma20="188.95" data-ma60="173.22" data-bento-idx="10">
+    <article id="stock-DASH" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="DASH" data-rsi="63.93" data-price="202.3699951171875" data-ma20="188.95" data-ma60="173.22" data-bento-idx="9">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9939,7 +9783,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ETN" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="ETN" data-rsi="61.9" data-price="444.7699890136719" data-ma20="405.13" data-ma60="404.08" data-bento-idx="11">
+    <article id="stock-ETN" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="ETN" data-rsi="61.9" data-price="444.7699890136719" data-ma20="405.13" data-ma60="404.08" data-bento-idx="10">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10160,7 +10004,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-FTNT" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="FTNT" data-rsi="65.87" data-price="168.2899932861328" data-ma20="158.65" data-ma60="146.25" data-bento-idx="12">
+    <article id="stock-FTNT" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="FTNT" data-rsi="65.87" data-price="168.2899932861328" data-ma20="158.65" data-ma60="146.25" data-bento-idx="11">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10383,7 +10227,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-GE" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="GE" data-rsi="64.74" data-price="377.2799987792969" data-ma20="354.97" data-ma60="338.72" data-bento-idx="13">
+    <article id="stock-GE" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="GE" data-rsi="64.74" data-price="377.2799987792969" data-ma20="354.97" data-ma60="338.72" data-bento-idx="12">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10604,7 +10448,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PTON" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="PTON" data-rsi="62.05" data-price="6.610000133514404" data-ma20="6.25" data-ma60="5.88" data-bento-idx="14">
+    <article id="stock-PTON" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="PTON" data-rsi="62.05" data-price="6.610000133514404" data-ma20="6.25" data-ma60="5.88" data-bento-idx="13">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10826,7 +10670,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ZS" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="ZS" data-rsi="65.07" data-price="163.22000122070312" data-ma20="148.06" data-ma60="144.71" data-bento-idx="15">
+    <article id="stock-ZS" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="ZS" data-rsi="65.07" data-price="163.22000122070312" data-ma20="148.06" data-ma60="144.71" data-bento-idx="14">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11052,7 +10896,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CHD" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="CHD" data-rsi="63.66" data-price="103.0" data-ma20="97.88" data-ma60="96.83" data-bento-idx="16">
+    <article id="stock-CHD" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="CHD" data-rsi="63.66" data-price="103.0" data-ma20="97.88" data-ma60="96.83" data-bento-idx="15">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11273,7 +11117,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-V" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="V" data-rsi="65.84" data-price="369.5899963378906" data-ma20="359.0" data-ma60="339.27" data-bento-idx="17">
+    <article id="stock-V" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="V" data-rsi="65.84" data-price="369.5899963378906" data-ma20="359.0" data-ma60="339.27" data-bento-idx="16">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11487,7 +11331,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SPY" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="SPY" data-rsi="66.04" data-price="771.3300170898438" data-ma20="747.2" data-ma60="744.03" data-bento-idx="18">
+    <article id="stock-SPY" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="SPY" data-rsi="66.04" data-price="771.3300170898438" data-ma20="747.2" data-ma60="744.03" data-bento-idx="17">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11689,7 +11533,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-VTI" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="VTI" data-rsi="66.27" data-price="380.82000732421875" data-ma20="368.91" data-ma60="366.99" data-bento-idx="19">
+    <article id="stock-VTI" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="VTI" data-rsi="66.27" data-price="380.82000732421875" data-ma20="368.91" data-ma60="366.99" data-bento-idx="18">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11895,7 +11739,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SCHD" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="SCHD" data-rsi="66.62" data-price="33.849998474121094" data-ma20="33.0" data-ma60="32.33" data-bento-idx="20">
+    <article id="stock-SCHD" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="SCHD" data-rsi="66.62" data-price="33.849998474121094" data-ma20="33.0" data-ma60="32.33" data-bento-idx="19">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12092,7 +11936,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-DELL" class="scard high" data-type="stock" data-market="US" data-score="82" data-ticker="DELL" data-rsi="60.91" data-price="467.2699890136719" data-ma20="419.79" data-ma60="379.49" data-bento-idx="21">
+    <article id="stock-DELL" class="scard high" data-type="stock" data-market="US" data-score="82" data-ticker="DELL" data-rsi="60.91" data-price="467.2699890136719" data-ma20="419.79" data-ma60="379.49" data-bento-idx="20">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12316,7 +12160,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-IVV" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="IVV" data-rsi="66.12" data-price="774.7899780273438" data-ma20="750.66" data-ma60="747.37" data-bento-idx="22">
+    <article id="stock-IVV" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="IVV" data-rsi="66.12" data-price="774.7899780273438" data-ma20="750.66" data-ma60="747.37" data-bento-idx="21">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12522,7 +12366,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SCHG" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="SCHG" data-rsi="65.61" data-price="35.52000045776367" data-ma20="34.22" data-ma60="34.08" data-bento-idx="23">
+    <article id="stock-SCHG" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="SCHG" data-rsi="65.61" data-price="35.52000045776367" data-ma20="34.22" data-ma60="34.08" data-bento-idx="22">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12732,7 +12576,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-VOO" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="VOO" data-rsi="66.21" data-price="708.97998046875" data-ma20="686.81" data-ma60="683.83" data-bento-idx="24">
+    <article id="stock-VOO" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="VOO" data-rsi="66.21" data-price="708.97998046875" data-ma20="686.81" data-ma60="683.83" data-bento-idx="23">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12942,7 +12786,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-VT" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="VT" data-rsi="63.94" data-price="160.4499969482422" data-ma20="155.83" data-ma60="155.64" data-bento-idx="25">
+    <article id="stock-VT" class="scard high" data-type="etf" data-market="US" data-score="82" data-ticker="VT" data-rsi="63.94" data-price="160.4499969482422" data-ma20="155.83" data-ma60="155.64" data-bento-idx="24">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13146,7 +12990,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NOW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NOW" data-rsi="62.3" data-price="118.13999938964844" data-ma20="106.55" data-ma60="104.38" data-bento-idx="26">
+    <article id="stock-NOW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NOW" data-rsi="62.3" data-price="118.13999938964844" data-ma20="106.55" data-ma60="104.38" data-bento-idx="25">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13371,7 +13215,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLF" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="XLF" data-rsi="68.58" data-price="57.880001068115234" data-ma20="56.44" data-ma60="53.83" data-bento-idx="27">
+    <article id="stock-XLF" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="XLF" data-rsi="68.58" data-price="57.880001068115234" data-ma20="56.44" data-ma60="53.83" data-bento-idx="26">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13577,7 +13421,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-BLK" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="BLK" data-rsi="65.48" data-price="1131.1300048828125" data-ma20="1064.15" data-ma60="1041.21" data-bento-idx="28">
+    <article id="stock-BLK" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="BLK" data-rsi="65.48" data-price="1131.1300048828125" data-ma20="1064.15" data-ma60="1041.21" data-bento-idx="27">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13800,7 +13644,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CBRE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CBRE" data-rsi="64.93" data-price="151.0500030517578" data-ma20="142.06" data-ma60="136.46" data-bento-idx="29">
+    <article id="stock-CBRE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CBRE" data-rsi="64.93" data-price="151.0500030517578" data-ma20="142.06" data-ma60="136.46" data-bento-idx="28">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14025,7 +13869,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CRM" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CRM" data-rsi="63.99" data-price="190.99000549316406" data-ma20="172.71" data-ma60="171.9" data-bento-idx="30">
+    <article id="stock-CRM" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CRM" data-rsi="63.99" data-price="190.99000549316406" data-ma20="172.71" data-ma60="171.9" data-bento-idx="29">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14253,7 +14097,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CRWD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CRWD" data-rsi="66.49" data-price="211.22000122070312" data-ma20="193.24" data-ma60="177.18" data-bento-idx="31">
+    <article id="stock-CRWD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CRWD" data-rsi="66.49" data-price="211.22000122070312" data-ma20="193.24" data-ma60="177.18" data-bento-idx="30">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14479,7 +14323,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-FAST" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="FAST" data-rsi="65.8" data-price="49.709999084472656" data-ma20="46.51" data-ma60="45.7" data-bento-idx="32">
+    <article id="stock-FAST" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="FAST" data-rsi="65.8" data-price="49.709999084472656" data-ma20="46.51" data-ma60="45.7" data-bento-idx="31">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14700,7 +14544,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-GTLB" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="GTLB" data-rsi="66.68" data-price="36.47999954223633" data-ma20="33.09" data-ma60="29.79" data-bento-idx="33">
+    <article id="stock-GTLB" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="GTLB" data-rsi="66.68" data-price="36.47999954223633" data-ma20="33.09" data-ma60="29.79" data-bento-idx="32">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14917,7 +14761,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-IR" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="IR" data-rsi="68.4" data-price="89.45999908447266" data-ma20="82.52" data-ma60="77.24" data-bento-idx="34">
+    <article id="stock-IR" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="IR" data-rsi="68.4" data-price="89.45999908447266" data-ma20="82.52" data-ma60="77.24" data-bento-idx="33">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15140,7 +14984,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ITW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="ITW" data-rsi="66.7" data-price="295.05999755859375" data-ma20="278.89" data-ma60="263.44" data-bento-idx="35">
+    <article id="stock-ITW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="ITW" data-rsi="66.7" data-price="295.05999755859375" data-ma20="278.89" data-ma60="263.44" data-bento-idx="34">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15359,7 +15203,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-LYFT" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="LYFT" data-rsi="66.67" data-price="16.729999542236328" data-ma20="15.48" data-ma60="14.53" data-bento-idx="36">
+    <article id="stock-LYFT" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="LYFT" data-rsi="66.67" data-price="16.729999542236328" data-ma20="15.48" data-ma60="14.53" data-bento-idx="35">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15587,7 +15431,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NET" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NET" data-rsi="71.24" data-price="301.3299865722656" data-ma20="273.84" data-ma60="243.61" data-bento-idx="37">
+    <article id="stock-NET" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NET" data-rsi="71.24" data-price="301.3299865722656" data-ma20="273.84" data-ma60="243.61" data-bento-idx="36">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15809,7 +15653,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PINS" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="PINS" data-rsi="70.66" data-price="25.579999923706055" data-ma20="23.28" data-ma60="21.48" data-bento-idx="38">
+    <article id="stock-PINS" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="PINS" data-rsi="70.66" data-price="25.579999923706055" data-ma20="23.28" data-ma60="21.48" data-bento-idx="37">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -16033,7 +15877,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SCHW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="SCHW" data-rsi="68.1" data-price="106.3499984741211" data-ma20="103.03" data-ma60="94.88" data-bento-idx="39">
+    <article id="stock-SCHW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="SCHW" data-rsi="68.1" data-price="106.3499984741211" data-ma20="103.03" data-ma60="94.88" data-bento-idx="38">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -16252,7 +16096,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SHW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="SHW" data-rsi="64.61" data-price="361.57000732421875" data-ma20="333.64" data-ma60="322.16" data-bento-idx="40">
+    <article id="stock-SHW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="SHW" data-rsi="64.61" data-price="361.57000732421875" data-ma20="333.64" data-ma60="322.16" data-bento-idx="39">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -16471,7 +16315,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-URI" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="URI" data-rsi="60.78" data-price="1150.1300048828125" data-ma20="1080.1" data-ma60="1048.2" data-bento-idx="41">
+    <article id="stock-URI" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="URI" data-rsi="60.78" data-price="1150.1300048828125" data-ma20="1080.1" data-ma60="1048.2" data-bento-idx="40">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -16694,7 +16538,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-VEEV" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="VEEV" data-rsi="67.06" data-price="211.86000061035156" data-ma20="195.42" data-ma60="176.74" data-bento-idx="42">
+    <article id="stock-VEEV" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="VEEV" data-rsi="67.06" data-price="211.86000061035156" data-ma20="195.42" data-ma60="176.74" data-bento-idx="41">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -16920,7 +16764,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-WY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="WY" data-rsi="63.78" data-price="25.829999923706055" data-ma20="24.0" data-ma60="23.98" data-bento-idx="43">
+    <article id="stock-WY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="WY" data-rsi="63.78" data-price="25.829999923706055" data-ma20="24.0" data-ma60="23.98" data-bento-idx="42">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -17143,7 +16987,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-DOCU" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="DOCU" data-rsi="64.77" data-price="57.540000915527344" data-ma20="51.95" data-ma60="48.64" data-bento-idx="44">
+    <article id="stock-DOCU" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="DOCU" data-rsi="64.77" data-price="57.540000915527344" data-ma20="51.95" data-ma60="48.64" data-bento-idx="43">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -17367,7 +17211,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-HON" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="HON" data-rsi="63.91" data-price="248.7899932861328" data-ma20="234.11" data-ma60="233.31" data-bento-idx="45">
+    <article id="stock-HON" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="HON" data-rsi="63.91" data-price="248.7899932861328" data-ma20="234.11" data-ma60="233.31" data-bento-idx="44">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -17590,7 +17434,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-HUBS" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="HUBS" data-rsi="62.46" data-price="248.88999938964844" data-ma20="221.18" data-ma60="204.54" data-bento-idx="46">
+    <article id="stock-HUBS" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="HUBS" data-rsi="62.46" data-price="248.88999938964844" data-ma20="221.18" data-ma60="204.54" data-bento-idx="45">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -17816,7 +17660,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-WDAY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="WDAY" data-rsi="67.14" data-price="171.27999877929688" data-ma20="147.3" data-ma60="135.57" data-bento-idx="47">
+    <article id="stock-WDAY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="WDAY" data-rsi="67.14" data-price="171.27999877929688" data-ma20="147.3" data-ma60="135.57" data-bento-idx="46">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -18044,7 +17888,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ADBE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="ADBE" data-rsi="62.77" data-price="257.489990234375" data-ma20="234.54" data-ma60="231.62" data-bento-idx="48">
+    <article id="stock-ADBE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="ADBE" data-rsi="62.77" data-price="257.489990234375" data-ma20="234.54" data-ma60="231.62" data-bento-idx="47">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -18261,7 +18105,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-RACE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="RACE" data-rsi="64.78" data-price="402.7900085449219" data-ma20="379.39" data-ma60="360.5" data-bento-idx="49">
+    <article id="stock-RACE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="RACE" data-rsi="64.78" data-price="402.7900085449219" data-ma20="379.39" data-ma60="360.5" data-bento-idx="48">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -18475,7 +18319,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SNOW" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="SNOW" data-rsi="77.33" data-price="316.7699890136719" data-ma20="276.73" data-ma60="237.54" data-bento-idx="50">
+    <article id="stock-SNOW" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="SNOW" data-rsi="77.33" data-price="316.7699890136719" data-ma20="276.73" data-ma60="237.54" data-bento-idx="49">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -18697,7 +18541,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ZM" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="ZM" data-rsi="68.8" data-price="102.12000274658203" data-ma20="91.46" data-ma60="94.5" data-bento-idx="51">
+    <article id="stock-ZM" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="ZM" data-rsi="68.8" data-price="102.12000274658203" data-ma20="91.46" data-ma60="94.5" data-bento-idx="50">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -18929,7 +18773,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-HYG" class="scard high" data-type="etf" data-market="US" data-score="74" data-ticker="HYG" data-rsi="61.86" data-price="79.55000305175781" data-ma20="79.19" data-ma60="79.05" data-bento-idx="52">
+    <article id="stock-HYG" class="scard high" data-type="etf" data-market="US" data-score="74" data-ticker="HYG" data-rsi="61.86" data-price="79.55000305175781" data-ma20="79.19" data-ma60="79.05" data-bento-idx="51">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -19061,7 +18905,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-MA" class="scard high" data-type="stock" data-market="US" data-score="74" data-ticker="MA" data-rsi="68.06" data-price="571.0999755859375" data-ma20="546.65" data-ma60="513.13" data-bento-idx="53">
+    <article id="stock-MA" class="scard high" data-type="stock" data-market="US" data-score="74" data-ticker="MA" data-rsi="68.06" data-price="571.0999755859375" data-ma20="546.65" data-ma60="513.13" data-bento-idx="52">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -19280,7 +19124,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-FNDX" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="FNDX" data-rsi="69.96" data-price="32.380001068115234" data-ma20="31.58" data-ma60="31.06" data-bento-idx="54">
+    <article id="stock-FNDX" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="FNDX" data-rsi="69.96" data-price="32.380001068115234" data-ma20="31.58" data-ma60="31.06" data-bento-idx="53">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -19486,7 +19330,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-OEF" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="OEF" data-rsi="66.2" data-price="381.7200012207031" data-ma20="368.54" data-ma60="367.92" data-bento-idx="55">
+    <article id="stock-OEF" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="OEF" data-rsi="66.2" data-price="381.7200012207031" data-ma20="368.54" data-ma60="367.92" data-bento-idx="54">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -19680,7 +19524,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-RCL" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="RCL" data-rsi="66.09" data-price="325.739990234375" data-ma20="298.86" data-ma60="289.95" data-bento-idx="56">
+    <article id="stock-RCL" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="RCL" data-rsi="66.09" data-price="325.739990234375" data-ma20="298.86" data-ma60="289.95" data-bento-idx="55">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -19905,7 +19749,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CIBR" class="scard high" data-type="etf" data-market="US" data-score="70" data-ticker="CIBR" data-rsi="70.52" data-price="97.94000244140625" data-ma20="91.52" data-ma60="87.06" data-bento-idx="57">
+    <article id="stock-CIBR" class="scard high" data-type="etf" data-market="US" data-score="70" data-ticker="CIBR" data-rsi="70.52" data-price="97.94000244140625" data-ma20="91.52" data-ma60="87.06" data-bento-idx="56">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -20109,7 +19953,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-DDOG" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="DDOG" data-rsi="70.5" data-price="288.1499938964844" data-ma20="261.22" data-ma60="240.8" data-bento-idx="58">
+    <article id="stock-DDOG" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="DDOG" data-rsi="70.5" data-price="288.1499938964844" data-ma20="261.22" data-ma60="240.8" data-bento-idx="57">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -20337,7 +20181,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-EXPE" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="EXPE" data-rsi="72.27" data-price="312.05999755859375" data-ma20="276.12" data-ma60="248.29" data-bento-idx="59">
+    <article id="stock-EXPE" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="EXPE" data-rsi="72.27" data-price="312.05999755859375" data-ma20="276.12" data-ma60="248.29" data-bento-idx="58">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -20569,7 +20413,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NUE" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="NUE" data-rsi="71.48" data-price="274.0400085449219" data-ma20="243.02" data-ma60="241.34" data-bento-idx="60">
+    <article id="stock-NUE" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="NUE" data-rsi="71.48" data-price="274.0400085449219" data-ma20="243.02" data-ma60="241.34" data-bento-idx="59">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -20792,7 +20636,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-DXCM" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="DXCM" data-rsi="71.86" data-price="86.94000244140625" data-ma20="75.97" data-ma60="72.03" data-bento-idx="61">
+    <article id="stock-DXCM" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="DXCM" data-rsi="71.86" data-price="86.94000244140625" data-ma20="75.97" data-ma60="72.03" data-bento-idx="60">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -21006,7 +20850,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NTAP" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="NTAP" data-rsi="72.6" data-price="190.4600067138672" data-ma20="169.92" data-ma60="156.31" data-bento-idx="62">
+    <article id="stock-NTAP" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="NTAP" data-rsi="72.6" data-price="190.4600067138672" data-ma20="169.92" data-ma60="156.31" data-bento-idx="61">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -21225,7 +21069,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-AVGO" class="scard" data-type="stock" data-market="US" data-score="67" data-ticker="AVGO" data-rsi="61.73" data-price="418.1600036621094" data-ma20="388.02" data-ma60="399.13" data-bento-idx="63">
+    <article id="stock-AVGO" class="scard" data-type="stock" data-market="US" data-score="67" data-ticker="AVGO" data-rsi="61.73" data-price="418.1600036621094" data-ma20="388.02" data-ma60="399.13" data-bento-idx="62">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -21357,7 +21201,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-MSFT" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="MSFT" data-rsi="79.19" data-price="492.80999755859375" data-ma20="407.11" data-ma60="404.26" data-bento-idx="64">
+    <article id="stock-MSFT" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="MSFT" data-rsi="79.19" data-price="492.80999755859375" data-ma20="407.11" data-ma60="404.26" data-bento-idx="63">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -21497,7 +21341,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PLTR" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="PLTR" data-rsi="73.02" data-price="162.66000366210938" data-ma20="130.12" data-ma60="131.72" data-bento-idx="65">
+    <article id="stock-PLTR" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="PLTR" data-rsi="73.02" data-price="162.66000366210938" data-ma20="130.12" data-ma60="131.72" data-bento-idx="64">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -21637,7 +21481,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-REGN" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="REGN" data-rsi="77.06" data-price="760.6599731445312" data-ma20="685.99" data-ma60="653.96" data-bento-idx="66">
+    <article id="stock-REGN" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="REGN" data-rsi="77.06" data-price="760.6599731445312" data-ma20="685.99" data-ma60="653.96" data-bento-idx="65">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -21854,7 +21698,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-IWM" class="scard" data-type="etf" data-market="US" data-score="64" data-ticker="IWM" data-rsi="61.3" data-price="301.7099914550781" data-ma20="294.13" data-ma60="290.85" data-bento-idx="67">
+    <article id="stock-IWM" class="scard" data-type="etf" data-market="US" data-score="64" data-ticker="IWM" data-rsi="61.3" data-price="301.7099914550781" data-ma20="294.13" data-ma60="290.85" data-bento-idx="66">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -22051,7 +21895,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-JPM" class="scard" data-type="stock" data-market="US" data-score="63" data-ticker="JPM" data-rsi="64.94" data-price="357.5199890136719" data-ma20="345.88" data-ma60="324.04" data-bento-idx="68">
+    <article id="stock-JPM" class="scard" data-type="stock" data-market="US" data-score="63" data-ticker="JPM" data-rsi="64.94" data-price="357.5199890136719" data-ma20="345.88" data-ma60="324.04" data-bento-idx="67">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -22266,7 +22110,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PATH" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="PATH" data-rsi="71.35" data-price="14.100000381469727" data-ma20="11.97" data-ma60="11.24" data-bento-idx="69">
+    <article id="stock-PATH" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="PATH" data-rsi="71.35" data-price="14.100000381469727" data-ma20="11.97" data-ma60="11.24" data-bento-idx="68">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -22490,7 +22334,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SWK" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="SWK" data-rsi="71.66" data-price="102.4000015258789" data-ma20="91.01" data-ma60="84.98" data-bento-idx="70">
+    <article id="stock-SWK" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="SWK" data-rsi="71.66" data-price="102.4000015258789" data-ma20="91.01" data-ma60="84.98" data-bento-idx="69">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -22717,7 +22561,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-BRK-B" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="BRK-B" data-rsi="70.29" data-price="517.219970703125" data-ma20="498.53" data-ma60="491.01" data-bento-idx="71">
+    <article id="stock-BRK-B" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="BRK-B" data-rsi="70.29" data-price="517.219970703125" data-ma20="498.53" data-ma60="491.01" data-bento-idx="70">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -22940,7 +22784,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-MMM" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="MMM" data-rsi="70.19" data-price="181.4499969482422" data-ma20="167.83" data-ma60="159.3" data-bento-idx="72">
+    <article id="stock-MMM" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="MMM" data-rsi="70.19" data-price="181.4499969482422" data-ma20="167.83" data-ma60="159.3" data-bento-idx="71">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -23151,7 +22995,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ESTC" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="ESTC" data-rsi="73.32" data-price="71.05999755859375" data-ma20="62.42" data-ma60="59.3" data-bento-idx="73">
+    <article id="stock-ESTC" class="scard" data-type="stock" data-market="US" data-score="60" data-ticker="ESTC" data-rsi="73.32" data-price="71.05999755859375" data-ma20="62.42" data-ma60="59.3" data-bento-idx="72">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -23370,7 +23214,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-AMD" class="scard" data-type="stock" data-market="US" data-score="57" data-ticker="AMD" data-rsi="52.22" data-price="518.5800170898438" data-ma20="511.81" data-ma60="502.17" data-bento-idx="74">
+    <article id="stock-AMD" class="scard" data-type="stock" data-market="US" data-score="57" data-ticker="AMD" data-rsi="52.22" data-price="518.5800170898438" data-ma20="511.81" data-ma60="502.17" data-bento-idx="73">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -23502,7 +23346,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-JD" class="scard" data-type="stock" data-market="US" data-score="57" data-ticker="JD" data-rsi="78.68" data-price="32.970001220703125" data-ma20="30.38" data-ma60="29.37" data-bento-idx="75">
+    <article id="stock-JD" class="scard" data-type="stock" data-market="US" data-score="57" data-ticker="JD" data-rsi="78.68" data-price="32.970001220703125" data-ma20="30.38" data-ma60="29.37" data-bento-idx="74">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -23721,7 +23565,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-LMT" class="scard" data-type="stock" data-market="US" data-score="52" data-ticker="LMT" data-rsi="70.02" data-price="589.3300170898438" data-ma20="544.35" data-ma60="528.5" data-bento-idx="76">
+    <article id="stock-LMT" class="scard" data-type="stock" data-market="US" data-score="52" data-ticker="LMT" data-rsi="70.02" data-price="589.3300170898438" data-ma20="544.35" data-ma60="528.5" data-bento-idx="75">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -23935,7 +23779,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-TGT" class="scard" data-type="stock" data-market="US" data-score="52" data-ticker="TGT" data-rsi="66.7" data-price="148.11000061035156" data-ma20="139.54" data-ma60="131.78" data-bento-idx="77">
+    <article id="stock-TGT" class="scard" data-type="stock" data-market="US" data-score="52" data-ticker="TGT" data-rsi="66.7" data-price="148.11000061035156" data-ma20="139.54" data-ma60="131.78" data-bento-idx="76">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -24154,7 +23998,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XBI" class="scard" data-type="etf" data-market="US" data-score="48" data-ticker="XBI" data-rsi="52.2" data-price="151.8800048828125" data-ma20="153.29" data-ma60="143.78" data-bento-idx="78">
+    <article id="stock-XBI" class="scard" data-type="etf" data-market="US" data-score="48" data-ticker="XBI" data-rsi="52.2" data-price="151.8800048828125" data-ma20="153.29" data-ma60="143.78" data-bento-idx="77">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -24294,7 +24138,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NVDA" class="scard" data-type="stock" data-market="US" data-score="47" data-ticker="NVDA" data-rsi="56.98" data-price="211.94000244140625" data-ma20="204.6" data-ma60="208.47" data-bento-idx="79">
+    <article id="stock-NVDA" class="scard" data-type="stock" data-market="US" data-score="47" data-ticker="NVDA" data-rsi="56.98" data-price="211.94000244140625" data-ma20="204.6" data-ma60="208.47" data-bento-idx="78">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -24426,7 +24270,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-GOOGL" class="scard" data-type="stock" data-market="US" data-score="47" data-ticker="GOOGL" data-rsi="62.43" data-price="377.6499938964844" data-ma20="348.94" data-ma60="364.09" data-bento-idx="80">
+    <article id="stock-GOOGL" class="scard" data-type="stock" data-market="US" data-score="47" data-ticker="GOOGL" data-rsi="62.43" data-price="377.6499938964844" data-ma20="348.94" data-ma60="364.09" data-bento-idx="79">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -24630,7 +24474,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-QQQ" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="QQQ" data-rsi="57.95" data-price="723.8499755859375" data-ma20="700.6" data-ma60="713.97" data-bento-idx="81">
+    <article id="stock-QQQ" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="QQQ" data-rsi="57.95" data-price="723.8499755859375" data-ma20="700.6" data-ma60="713.97" data-bento-idx="80">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -24819,7 +24663,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLK" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="XLK" data-rsi="58.43" data-price="186.89999389648438" data-ma20="178.56" data-ma60="181.93" data-bento-idx="82">
+    <article id="stock-XLK" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="XLK" data-rsi="58.43" data-price="186.89999389648438" data-ma20="178.56" data-ma60="181.93" data-bento-idx="81">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -24951,7 +24795,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-MGK" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="MGK" data-rsi="62.37" data-price="90.41999816894531" data-ma20="87.0" data-ma60="87.71" data-bento-idx="83">
+    <article id="stock-MGK" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="MGK" data-rsi="62.37" data-price="90.41999816894531" data-ma20="87.0" data-ma60="87.71" data-bento-idx="82">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -25140,7 +24984,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-VGT" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="VGT" data-rsi="60.04" data-price="120.1500015258789" data-ma20="114.69" data-ma60="115.96" data-bento-idx="84">
+    <article id="stock-VGT" class="scard" data-type="etf" data-market="US" data-score="47" data-ticker="VGT" data-rsi="60.04" data-price="120.1500015258789" data-ma20="114.69" data-ma60="115.96" data-bento-idx="83">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -25329,7 +25173,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLE" class="scard" data-type="etf" data-market="US" data-score="46" data-ticker="XLE" data-rsi="56.39" data-price="58.52000045776367" data-ma20="57.77" data-ma60="56.77" data-bento-idx="85">
+    <article id="stock-XLE" class="scard" data-type="etf" data-market="US" data-score="46" data-ticker="XLE" data-rsi="56.39" data-price="58.52000045776367" data-ma20="57.77" data-ma60="56.77" data-bento-idx="84">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -25461,7 +25305,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SAP" class="scard" data-type="stock" data-market="US" data-score="45" data-ticker="SAP" data-rsi="70.61" data-price="195.49000549316406" data-ma20="165.94" data-ma60="167.86" data-bento-idx="86">
+    <article id="stock-SAP" class="scard" data-type="stock" data-market="US" data-score="45" data-ticker="SAP" data-rsi="70.61" data-price="195.49000549316406" data-ma20="165.94" data-ma60="167.86" data-bento-idx="85">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -25682,7 +25526,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLV" class="scard" data-type="etf" data-market="US" data-score="44" data-ticker="XLV" data-rsi="54.04" data-price="162.10000610351562" data-ma20="161.82" data-ma60="154.76" data-bento-idx="87">
+    <article id="stock-XLV" class="scard" data-type="etf" data-market="US" data-score="44" data-ticker="XLV" data-rsi="54.04" data-price="162.10000610351562" data-ma20="161.82" data-ma60="154.76" data-bento-idx="86">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -25822,7 +25666,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLY" class="scard" data-type="etf" data-market="US" data-score="37" data-ticker="XLY" data-rsi="59.25" data-price="118.29000091552734" data-ma20="114.63" data-ma60="116.29" data-bento-idx="88">
+    <article id="stock-XLY" class="scard" data-type="etf" data-market="US" data-score="37" data-ticker="XLY" data-rsi="59.25" data-price="118.29000091552734" data-ma20="114.63" data-ma60="116.29" data-bento-idx="87">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -25954,7 +25798,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-VONG" class="scard" data-type="etf" data-market="US" data-score="37" data-ticker="VONG" data-rsi="59.31" data-price="127.93000030517578" data-ma20="123.77" data-ma60="125.92" data-bento-idx="89">
+    <article id="stock-VONG" class="scard" data-type="etf" data-market="US" data-score="37" data-ticker="VONG" data-rsi="59.31" data-price="127.93000030517578" data-ma20="123.77" data-ma60="125.92" data-bento-idx="88">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -26143,7 +25987,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ARKK" class="scard" data-type="etf" data-market="US" data-score="33" data-ticker="ARKK" data-rsi="52.4" data-price="76.76000213623047" data-ma20="75.78" data-ma60="77.36" data-bento-idx="90">
+    <article id="stock-ARKK" class="scard" data-type="etf" data-market="US" data-score="33" data-ticker="ARKK" data-rsi="52.4" data-price="76.76000213623047" data-ma20="75.78" data-ma60="77.36" data-bento-idx="89">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -26275,7 +26119,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-IBKR" class="scard" data-type="stock" data-market="US" data-score="33" data-ticker="IBKR" data-rsi="45.32" data-price="88.62999725341797" data-ma20="91.97" data-ma60="89.56" data-bento-idx="91">
+    <article id="stock-IBKR" class="scard" data-type="stock" data-market="US" data-score="33" data-ticker="IBKR" data-rsi="45.32" data-price="88.62999725341797" data-ma20="91.97" data-ma60="89.56" data-bento-idx="90">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -26479,7 +26323,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-BOTZ" class="scard" data-type="etf" data-market="US" data-score="30" data-ticker="BOTZ" data-rsi="58.45" data-price="37.09000015258789" data-ma20="35.23" data-ma60="37.62" data-bento-idx="92">
+    <article id="stock-BOTZ" class="scard" data-type="etf" data-market="US" data-score="30" data-ticker="BOTZ" data-rsi="58.45" data-price="37.09000015258789" data-ma20="35.23" data-ma60="37.62" data-bento-idx="91">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -26611,7 +26455,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SOXX" class="scard" data-type="etf" data-market="US" data-score="23" data-ticker="SOXX" data-rsi="50.59" data-price="542.2100219726562" data-ma20="534.84" data-ma60="559.26" data-bento-idx="93">
+    <article id="stock-SOXX" class="scard" data-type="etf" data-market="US" data-score="23" data-ticker="SOXX" data-rsi="50.59" data-price="542.2100219726562" data-ma20="534.84" data-ma60="559.26" data-bento-idx="92">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -26743,7 +26587,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-TLT" class="scard" data-type="etf" data-market="US" data-score="23" data-ticker="TLT" data-rsi="42.54" data-price="82.81999969482422" data-ma20="83.33" data-ma60="84.26" data-bento-idx="94">
+    <article id="stock-TLT" class="scard" data-type="etf" data-market="US" data-score="23" data-ticker="TLT" data-rsi="42.54" data-price="82.81999969482422" data-ma20="83.33" data-ma60="84.26" data-bento-idx="93">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -26928,6 +26772,147 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-price="82.82"
         data-score="23"
         data-entry=""
+        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
+    </article>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <article id="stock-SPYL.L" class="scard" data-type="etf" data-market="LSE" data-score="23" data-ticker="SPYL.L" data-rsi="58.77" data-price="nan" data-ma20="0" data-ma60="0" data-bento-idx="94">
+
+      <div class="scard-head">
+        <div class="scard-id">
+          <div class="scard-tile">SP</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="scard-sym">SPYL.L</div>
+              <!-- Tier 2 history badges -->
+              
+              <!-- IBKR position badge -->
+              
+              
+              <!-- Star/favourite button -->
+              <button class="star-btn" data-ticker="SPYL.L"
+                onclick="toggleFavourite('SPYL.L')"
+                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
+                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
+                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
+                title="Click to add SPYL.L to Favourites">☆</button>
+            </div>
+            <div class="scard-name">SSGA SPDR ETFS EUROPE I PLC SS </div>
+            <div class="scard-tags">
+              <span class="tag etf">etf</span>
+              <span class="tag market">LSE</span>
+            </div>
+          </div>
+        </div>
+        <div class="scard-price">
+          <div class="price-block">
+            <div class="price-val">$nan</div>
+            <div class="price-chg down">+nan%</div>
+          </div>
+          <div class="ring low">
+            <svg width="56" height="56">
+              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
+              <circle cx="28" cy="28" r="23" stroke="#f87171" stroke-width="3.5" fill="none"
+                stroke-dasharray="33.23 144.50" stroke-linecap="round"/>
+            </svg>
+            <div class="ring-num">23</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
+        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.4 6.2,9.2 10.4,6.0 14.7,6.8 18.9,7.6 23.1,5.6 27.3,4.8 31.6,14.0 35.8,13.6 40.0,11.2 44.2,10.0 48.4,22.0 52.7,16.8 56.9,21.6 61.1,17.6 65.3,24.0 69.6,22.8 73.8,18.0 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
+      </div>
+      
+
+      <div class="scard-row">
+        <span class="strength-badge low">偏空 📉</span>
+        
+      </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+
+      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
+      <div class="beginner-only">
+        <div class="beg-verdict low">
+          📉 Caution — More indicators are bearish (23/100)
+          
+        </div>
+        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
+      </div>
+
+      
+
+      <div class="expert-only">
+      
+      
+      
+      
+      </div>
+
+      
+      
+      
+
+      <div class="expert-only">
+        <div class="scard-row">
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · None</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · None</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · None</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 58.77</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.8×</span>
+          
+          
+        </div>
+        <div>
+          <div class="scard-sub">Technical signals</div>
+          <div class="signals" data-sig-ticker="SPYL.L">
+            <div class="signal-item">❌ 空頭排列（價格低於 MA60）</div><div class="signal-item">RSI 中性（58.8）</div><div class="signal-item">🟡 MACD 死叉收斂（底部跡象，非買入訊號）</div><div class="signal-item">✅ 爆量（成交量 1.8× 均量）</div><div class="signal-item">MA60 資料不足</div><div class="signal-item">⚠️ 價格在 EMA200 之下（EMA200 仍向上）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+      <details class="ai-details" open>
+        <summary>
+          <span class="ai-label">✦ AI Analysis</span>
+          <span class="ai-arrow">▼</span>
+        </summary>
+        <div class="ai-body">① SPYL.L目前趨勢偏多，MACD在0軸以上且動能持續擴張，顯示多頭格局強勁。
+② 最近支撐位為MA20的18.51，主要壓力位則可關注布林線上軌18.89。
+③ 在多頭趨勢下，未來3-5個交易日高機率將持續上漲，並挑戰更高點位。
+④ 主要下行風險為若股價跌破MA20（18.51）並持續下行，可能改變目前多頭趨勢。</div>
+      </details>
+      
+
+      
+      <div class="entry">
+        <div class="entry-label">Entry timing</div>
+        <div class="entry-body">建議在 $18.80 - $19.00 區間買入，等待MACD在0軸以上金叉且動能持續擴張，確認多頭趨勢。止損位設於 $18.40 (略低於MA5/MA20/MA60，跌破則多頭趨勢面臨考驗)，邏輯是若跌破此區域，則近期多頭趨勢可能反轉。第一目標價 $19.80，第二目標價 $20.50。風險回報比約為 1:2.5，具吸引力。</div>
+      </div>
+      
+
+      <a href="./SPYL.L.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+        → 查看詳細分析
+      </a>
+      <button class="copy-btn"
+        data-ticker="SPYL.L"
+        data-price="nan"
+        data-score="23"
+        data-entry="建議在 $18.80 - $19.00 區間買入，等待MACD在0軸以上金叉且動能持續擴張，確認多頭趨勢。止損位設於 $18.40 (略低於MA5/MA20/MA60，跌破則多頭趨勢面臨考驗)，邏輯是若跌破此區域，則近期多頭趨勢可能反轉。第一目標價 $19.80，第二目標價 $20.50。風險回報比約為 1:2.5，具吸引力。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
