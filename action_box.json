@@ -1,37 +1,11 @@
 {
- "ts": "2026-08-04 12:43",
+ "ts": "2026-08-04 23:07",
  "buys": [],
- "sells": [
-  {
-   "ticker": "MTD",
-   "float_pct": 0.9,
-   "why": "score 12"
-  },
-  {
-   "ticker": "NOW",
-   "float_pct": 3.5,
-   "why": "score 12"
-  },
-  {
-   "ticker": "NTES",
-   "float_pct": -0.9,
-   "why": "score 12"
-  },
-  {
-   "ticker": "XLE",
-   "float_pct": -0.7,
-   "why": "score 12"
-  },
-  {
-   "ticker": "IR",
-   "float_pct": 0.0,
-   "why": "score 22"
-  }
- ],
- "no_action": false,
- "regime": "bear",
- "regime_spy": 13,
- "regime_min": null,
+ "sells": [],
+ "no_action": true,
+ "regime": "bull",
+ "regime_spy": 72,
+ "regime_min": 70,
  "regime_min_floor": 35,
  "stop_pct": 8.0,
  "target_pct": 12.0,
@@ -52,5 +26,12 @@
  "gate_pf": 0.3,
  "gate_pnl": -84.0,
  "gate_trades": 2,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-08-04 15:07",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
