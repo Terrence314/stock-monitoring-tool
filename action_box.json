@@ -1,8 +1,19 @@
 {
- "ts": "2026-08-05 01:49",
- "buys": [],
+ "ts": "2026-08-05 03:36",
+ "buys": [
+  {
+   "ticker": "XLI",
+   "price": 186.6649932861328,
+   "score": 90,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.16",
+   "stop": 171.73,
+   "target": 209.06,
+   "notional": 2000.0,
+   "expiry": "08-18"
+  }
+ ],
  "sells": [],
- "no_action": true,
+ "no_action": false,
  "regime": "bull",
  "regime_spy": 72,
  "regime_min": 70,
@@ -10,8 +21,8 @@
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": 1.14,
- "breaker_usd": 142.49,
+ "breaker_pct": 1.73,
+ "breaker_usd": 216.04,
  "breaker_base": 12500.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
