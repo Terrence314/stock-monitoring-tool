@@ -1,5 +1,5 @@
 {
- "ts": "2026-08-04 23:07",
+ "ts": "2026-08-04 23:24",
  "buys": [],
  "sells": [],
  "no_action": true,
@@ -10,9 +10,9 @@
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": 1.25,
- "breaker_usd": 118.9,
- "breaker_base": 9500.0,
+ "breaker_pct": 1.19,
+ "breaker_usd": 148.33,
+ "breaker_base": 12500.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 18,
@@ -26,12 +26,5 @@
  "gate_pf": 0.3,
  "gate_pnl": -84.0,
  "gate_trades": 2,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-08-04 15:07",
-  "passed": 0,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_ready": false
 }
