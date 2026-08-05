@@ -1,13 +1,13 @@
 {
- "ts": "2026-08-06 03:28",
+ "ts": "2026-08-06 05:07",
  "buys": [
   {
    "ticker": "ABNB",
-   "price": 151.94000244140625,
+   "price": 152.49000549316406,
    "score": 80,
-   "reason": "Score 80 · BB 0.76 · RSI 60",
-   "stop": 139.78,
-   "target": 170.17,
+   "reason": "Score 80 · BB 0.79 · RSI 60",
+   "stop": 140.29,
+   "target": 170.79,
    "notional": 1500.0,
    "expiry": "08-19"
   }
@@ -15,20 +15,20 @@
  "sells": [
   {
    "ticker": "XLE",
-   "float_pct": -3.6,
-   "why": "score 17"
+   "float_pct": -3.4,
+   "why": "score 27"
   }
  ],
  "no_action": false,
  "regime": "bull",
- "regime_spy": 72,
+ "regime_spy": 52,
  "regime_min": 70,
  "regime_min_floor": 35,
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": 0.51,
- "breaker_usd": 84.8,
+ "breaker_pct": 0.4,
+ "breaker_usd": 66.56,
  "breaker_base": 16500.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
