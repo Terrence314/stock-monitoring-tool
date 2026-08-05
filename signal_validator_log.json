@@ -1,9 +1,16 @@
 [
   {
-    "date": "2026-08-04",
-    "ran_at": "2026-08-04 15:07",
-    "passed": [],
-    "blocked": [],
+    "date": "2026-08-05",
+    "ran_at": "2026-08-05 15:01",
+    "passed": [
+      "WYNN"
+    ],
+    "blocked": [
+      {
+        "ticker": "ABNB",
+        "reason": "AI review REJECTED"
+      }
+    ],
     "cautions": []
   }
 ]
