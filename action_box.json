@@ -1,27 +1,10 @@
 {
- "ts": "2026-08-06 06:58",
- "buys": [
-  {
-   "ticker": "ABNB",
-   "price": 152.49000549316406,
-   "score": 80,
-   "reason": "Score 80 · BB 0.79 · RSI 60",
-   "stop": 140.29,
-   "target": 170.79,
-   "notional": 1500.0,
-   "expiry": "08-19"
-  }
- ],
- "sells": [
-  {
-   "ticker": "XLE",
-   "float_pct": -3.8,
-   "why": "score 27"
-  }
- ],
- "no_action": false,
+ "ts": "2026-08-06 22:57",
+ "buys": [],
+ "sells": [],
+ "no_action": true,
  "regime": "bull",
- "regime_spy": 52,
+ "regime_spy": 72,
  "regime_min": 70,
  "regime_min_floor": 35,
  "stop_pct": 8.0,
@@ -32,7 +15,7 @@
  "breaker_base": 16500.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 19,
+ "gate_day": 20,
  "gate_days": 60,
  "gate_winrate": 50.0,
  "gate_ci_low": 0.0,
@@ -43,5 +26,17 @@
  "gate_pf": 0.3,
  "gate_pnl": -84.0,
  "gate_trades": 2,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-08-06 14:58",
+  "passed": 0,
+  "blocked": 1,
+  "blocked_list": [
+   {
+    "ticker": "SOFI",
+    "reason": "AI review REJECTED"
+   }
+  ],
+  "caution_tags": []
+ }
 }

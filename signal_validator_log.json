@@ -1,13 +1,11 @@
 [
   {
-    "date": "2026-08-05",
-    "ran_at": "2026-08-05 15:01",
-    "passed": [
-      "WYNN"
-    ],
+    "date": "2026-08-06",
+    "ran_at": "2026-08-06 14:58",
+    "passed": [],
     "blocked": [
       {
-        "ticker": "ABNB",
+        "ticker": "SOFI",
         "reason": "AI review REJECTED"
       }
     ],
