@@ -1,23 +1,13 @@
 {
- "ts": "2026-08-07 22:13",
+ "ts": "2026-08-07 23:56",
  "buys": [
   {
    "ticker": "DE",
-   "price": 618.8350219726562,
+   "price": 622.8499755859375,
    "score": 80,
-   "reason": "Score 80 · BB 0.71 · RSI 55",
-   "stop": 569.33,
-   "target": 693.1,
-   "notional": 1500.0,
-   "expiry": "08-21"
-  },
-  {
-   "ticker": "SOFI",
-   "price": 18.325000762939453,
-   "score": 80,
-   "reason": "Score 80 · BB 0.77 · RSI 56",
-   "stop": 16.86,
-   "target": 20.52,
+   "reason": "Score 80 · BB 0.77 · RSI 57",
+   "stop": 573.02,
+   "target": 697.59,
    "notional": 1500.0,
    "expiry": "08-21"
   }
@@ -25,7 +15,7 @@
  "sells": [
   {
    "ticker": "XLE",
-   "float_pct": -4.0,
+   "float_pct": -3.6,
    "why": "score 17"
   }
  ],
@@ -37,8 +27,8 @@
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": 0.72,
- "breaker_usd": 130.45,
+ "breaker_pct": 0.83,
+ "breaker_usd": 149.91,
  "breaker_base": 18000.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
