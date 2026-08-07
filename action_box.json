@@ -1,38 +1,34 @@
 {
- "ts": "2026-08-07 21:55",
+ "ts": "2026-08-07 22:13",
  "buys": [
   {
-   "ticker": "AFRM",
-   "price": 77.58000183105469,
+   "ticker": "DE",
+   "price": 618.8350219726562,
    "score": 80,
-   "reason": "Score 80 · BB 0.61 · RSI 54",
-   "stop": 71.37,
-   "target": 86.89,
+   "reason": "Score 80 · BB 0.71 · RSI 55",
+   "stop": 569.33,
+   "target": 693.1,
    "notional": 1500.0,
-   "expiry": "08-21",
-   "ai_review": {
-    "verdict": "NEEDS_REVIEW",
-    "summary": "1.【多頭理據】AFRM 處於強勁的多頭排列中（價格 77.58 > MA5 77.28 > MA20 75.8 > MA60 73.6），且其 RSI 動能（53.74 ↑）和 MACD 金叉動能擴張（MACD 0.05, MACD_HIST 0.29）均顯示上漲趨勢正在形成和加強。股價目前已穩定站穩在 MA60 上方 5.4%，表明具備較好的支撐和上漲潛力。\n2.【空頭理據】該交易的最大風險在於極度縮量（VOL_RATIO: 0.05），這意味著當前的多頭信號缺乏市場成交量的強勁支持，可能導致上漲動能不足或潛在的假突破。此外，KD指標K值（69.6）低於D值（75.7），顯示短期內動能可能"
-   },
-   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
+   "expiry": "08-21"
   },
   {
-   "ticker": "DE",
-   "price": 619.0999755859375,
+   "ticker": "SOFI",
+   "price": 18.325000762939453,
    "score": 80,
-   "reason": "Score 80 · BB 0.72 · RSI 55",
-   "stop": 569.57,
-   "target": 693.39,
+   "reason": "Score 80 · BB 0.77 · RSI 56",
+   "stop": 16.86,
+   "target": 20.52,
    "notional": 1500.0,
-   "expiry": "08-21",
-   "ai_review": {
-    "verdict": "NEEDS_REVIEW",
-    "summary": "好的，以下是針對 DE 股票 BUY 信號的審查報告：\n\n1.【多頭理據】\nDE 股票現價 619.0999755859375 呈現明顯的多頭排列（價格 > MA5 > MA20 > MA60），且所有移動均線（MA5: 613.67, MA20: 605.52, MA60: 588.41）均在 0 軸上方，展現強勁的上升趨勢。RSI 動能增強至 55.43，MACD 金叉並在 0 軸以上擴張至 4.96，表明動能持續積累，股價已穩固站在 MA60 上方 5.2%，顯示強勢。\n\n2.【空頭理據】\n儘管多頭排列強勁，但今日的極度縮量（VOL_RATIO: 0.02）是一個嚴重的風險信號。在如此低"
-   },
-   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
+   "expiry": "08-21"
   }
  ],
- "sells": [],
+ "sells": [
+  {
+   "ticker": "XLE",
+   "float_pct": -4.0,
+   "why": "score 17"
+  }
+ ],
  "no_action": false,
  "regime": "bull",
  "regime_spy": 72,
@@ -41,28 +37,21 @@
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": -0.4,
- "breaker_usd": -66.18,
- "breaker_base": 16500.0,
+ "breaker_pct": 0.72,
+ "breaker_usd": 130.45,
+ "breaker_base": 18000.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 21,
  "gate_days": 60,
- "gate_winrate": 50.0,
- "gate_ci_low": 0.0,
+ "gate_winrate": 66.7,
+ "gate_ci_low": 13.3,
  "gate_ci_high": 100.0,
  "gate_min_trades": 30,
  "gate_enough": false,
  "gate_start": "2026-07-17",
- "gate_pf": 0.3,
- "gate_pnl": -84.0,
- "gate_trades": 2,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-08-07 13:55",
-  "passed": 2,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_pf": 1.78,
+ "gate_pnl": 93.71,
+ "gate_trades": 3,
+ "gate_ready": false
 }
