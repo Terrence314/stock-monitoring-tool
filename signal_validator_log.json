@@ -1,14 +1,12 @@
 [
   {
-    "date": "2026-08-06",
-    "ran_at": "2026-08-06 14:58",
-    "passed": [],
-    "blocked": [
-      {
-        "ticker": "SOFI",
-        "reason": "AI review REJECTED"
-      }
+    "date": "2026-08-07",
+    "ran_at": "2026-08-07 13:55",
+    "passed": [
+      "AFRM",
+      "DE"
     ],
+    "blocked": [],
     "cautions": []
   }
 ]

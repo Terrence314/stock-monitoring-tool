@@ -1245,8 +1245,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 82.67,
-      "current_date": "2026-08-06",
+      "current_price": 82.9,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1271,8 +1271,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1409.58,
-      "current_date": "2026-08-06",
+      "current_price": 1428.56,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1293,20 +1293,23 @@
       "shares": 13.48557,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 117.35,
-      "current_date": "2026-08-06",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-07",
+      "exit_price": 124.58,
+      "exit_reason": "take_profit",
+      "current_price": 124.2,
+      "current_date": "2026-08-07",
+      "pnl": 177.71,
+      "pnl_pct": 11.85,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
         "Above MA60"
       ],
-      "sector": "Technology"
+      "sector": "Technology",
+      "gapped": false,
+      "pnl_gross": 180.0,
+      "costs": 2.29
     },
     {
       "id": "NTES-2026-08-02",
@@ -1321,8 +1324,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 129.34,
-      "current_date": "2026-08-06",
+      "current_price": 131.07,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1345,8 +1348,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 58.16,
-      "current_date": "2026-08-06",
+      "current_price": 57.16,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1370,8 +1373,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 88.24,
-      "current_date": "2026-08-06",
+      "current_price": 88.68,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1395,8 +1398,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 96.39,
-      "current_date": "2026-08-06",
+      "current_price": 98.43,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1421,8 +1424,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 374.55,
-      "current_date": "2026-08-06",
+      "current_price": 374.49,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1447,8 +1450,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 349.52,
-      "current_date": "2026-08-06",
+      "current_price": 354.7,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1473,8 +1476,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 359.49,
-      "current_date": "2026-08-06",
+      "current_price": 367.15,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1499,8 +1502,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 101.5,
-      "current_date": "2026-08-06",
+      "current_price": 100.3,
+      "current_date": "2026-08-07",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1510,7 +1513,32 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical"
+    },
+    {
+      "id": "AFRM-2026-08-07",
+      "ticker": "AFRM",
+      "direction": "long",
+      "signal_date": "2026-08-07",
+      "entry_ts": "2026-08-07T21:55:55+08:00",
+      "entry_price": 77.58,
+      "shares": 19.33488,
+      "notional": 1500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 77.58,
+      "current_date": "2026-08-07",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Financial Services"
     }
   ],
-  "last_updated": "2026-08-06"
+  "last_updated": "2026-08-07"
 }
