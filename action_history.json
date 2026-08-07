@@ -3272,5 +3272,25 @@
   "removed": [
    "SOFI"
   ]
+ },
+ {
+  "ts": "2026-08-08 00:54",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "XLE",
+    "why": "score 17"
+   },
+   {
+    "ticker": "AFRM",
+    "why": "score 17"
+   }
+  ],
+  "added": [
+   "AFRM"
+  ],
+  "removed": [
+   "DE"
+  ]
  }
 ]
