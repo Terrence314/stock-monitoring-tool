@@ -12,7 +12,8 @@ from datetime import datetime, timezone
 
 from data_fetcher import fetch_fear_greed, fetch_market_overview, fetch_stock_data
 from notifier import send_exit_alert
-from paper_trading import update_open_positions
+from paper_trading import run_paper_trading, update_open_positions
+from report_generator import _load_blocked_tickers
 from report_generator import generate_dashboard
 from technical_analysis import calculate_indicators
 
@@ -325,12 +326,43 @@ def main():
     )
     print(f"  報告已更新：{report_path}")
 
-    # ── Intraday paper trading update (prices + TP/SL, no new trades) ────────────
+    # ── Intraday paper trading ───────────────────────────────────────────────────
+    # This used to mark prices and check TP/SL only, never opening a position.
+    # The Action Box, though, is rebuilt on every one of these hourly runs and
+    # publishes fresh BUY tickets — so nine times out of ten a day the page
+    # printed an order the engine had no path to take. Over 2026-07-17..08-04
+    # that was 31 of 37 published tickets, and it is why the go-live gate sat at
+    # 2 closed trades in 18 days instead of 14. The engine now runs the same
+    # selection the page just rendered.
+    today_key = datetime.now().strftime("%Y-%m-%d")
     try:
-        today_key = datetime.now().strftime("%Y-%m-%d")
-        update_open_positions(stock_results, today_key)
+        today_scores = {s["ticker"]: s["score"] for s in stock_results
+                        if s.get("score") is not None}
+        run_paper_trading(
+            today_key, today_scores, stock_results,
+            blocked_tickers=_load_blocked_tickers("outputs"),
+        )
     except Exception as pt_err:
-        print(f"  [paper_trading] ⚠️ intraday update skipped: {pt_err}")
+        print(f"  [paper_trading] ⚠️ intraday run skipped: {pt_err}")
+        # Fall back to the mark-and-exit path so stops stay honoured even when
+        # entry selection fails — never leave open positions unmanaged. But
+        # run_paper_trading persists the portfolio BEFORE it renders its HTML,
+        # so a failure in that last step leaves today's exits already booked;
+        # re-running the exit logic over them would be a second pass on
+        # positions that were handled. Only retry if nothing was saved.
+        try:
+            with open(os.path.join("outputs", "paper_portfolio.json"), encoding="utf-8") as f:
+                already_saved = json.load(f).get("last_updated") == today_key
+        except (OSError, ValueError):
+            already_saved = False
+        if already_saved:
+            print("  [paper_trading] portfolio already written this run — "
+                  "skipping fallback update")
+        else:
+            try:
+                update_open_positions(stock_results, today_key)
+            except Exception as upd_err:
+                print(f"  [paper_trading] ⚠️ fallback price update also failed: {upd_err}")
 
     print("\n  完成 ✅")
 

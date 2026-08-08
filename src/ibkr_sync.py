@@ -77,7 +77,13 @@ def _fx_rates(currencies: set[str]) -> dict[str, float]:
         try:
             raw = yf.download(f"{ccy}{REPORTING_CCY}=X", period="5d",
                               progress=False, auto_adjust=True)
-            close = raw["Close"].dropna()
+            # yfinance returns column-MultiIndexed frames, so raw["Close"] is a
+            # single-column DataFrame and .iloc[-1] is a Series, not a float.
+            # float() on it raised every time, the except below swallowed it as
+            # "FX unavailable", and every _usd field published as null — which
+            # in turn made entry_selection fall back to the default equity even
+            # on a freshly synced account.
+            close = raw["Close"].squeeze("columns").dropna()
             if not close.empty:
                 rates[ccy] = float(close.iloc[-1])
         except Exception as e:

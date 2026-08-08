@@ -474,6 +474,19 @@ def _run(cfg: dict) -> None:
                 os.replace(_tmp, _ab_path)
             except OSError as _e:
                 print(f"      [validator] ⚠️ 無法寫回 action_box.json：{_e}")
+
+            # Publish today's veto list for the hourly refresh. The AI review
+            # costs an API call per ticker, so price_refresh reuses this rather
+            # than re-running the validator ten times a session.
+            try:
+                _bl_path = os.path.join("outputs", "validator_blocked.json")
+                _tmp = _bl_path + ".tmp"
+                with open(_tmp, "w", encoding="utf-8") as f:
+                    json.dump({"date": today_key, "tickers": sorted(_blocked_tickers)},
+                              f, ensure_ascii=False, indent=1)
+                os.replace(_tmp, _bl_path)
+            except OSError as _e:
+                print(f"      [validator] ⚠️ 無法寫 validator_blocked.json：{_e}")
         except Exception as e:
             print(f"      [validator] ⚠️ 驗證器異常，本日 BUY 未經驗證照發：{type(e).__name__}: {e}")
             _ab = {**_ab, "validator": {"error": f"{type(e).__name__}: {e}"}}

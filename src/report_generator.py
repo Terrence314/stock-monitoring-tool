@@ -8,11 +8,8 @@ from stock_detail import generate_stock_detail_page
 # Single source of truth for the trade plan — the Action Box ticket, the paper
 # engine and the Telegram message must never drift apart again.
 from market_calendar import add_trading_days, is_covered
-from paper_trading import (
-    STOP_LOSS_PCT, TAKE_PROFIT_PCT, HOLD_DAYS, BUY_THRESHOLD,
-    REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
-    _notional_for_score,
-)
+from paper_trading import STOP_LOSS_PCT, TAKE_PROFIT_PCT, HOLD_DAYS
+from entry_selection import MAX_OPEN_POSITIONS, REGIME_FLOOR, select_entries
 
 DASHBOARD_HTML = """<!DOCTYPE html>
 <html lang="zh-TW">
@@ -983,7 +980,11 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       {% if action_box.no_action %}
       <div style="padding:10px 12px;border-radius:10px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.18);margin-bottom:10px">
         <span style="color:var(--up);font-weight:600">✅ 今日無行動</span>
+        {% if action_box.slots_left == 0 %}
+        <span style="color:var(--text-2);font-size:12px"> — 持倉已滿（{{ action_box.max_open }}/{{ action_box.max_open }}），唔會再開新倉；持倉亦無賣出訊號。有倉平咗先會再出飛。</span>
+        {% else %}
         <span style="color:var(--text-2);font-size:12px"> — 無股票合資格入場，持倉無賣出訊號。乜都唔做都係一個決定。</span>
+        {% endif %}
       </div>
       {% else %}
       {% for b in action_box.buys %}
@@ -1017,7 +1018,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '{:+,.0f}'.format(action_box.breaker_usd) }} 美元{% if action_box.breaker_base %} / 本月投入 {{ '${:,.0f}'.format(action_box.breaker_base) }}{% endif %})</span>{% endif %}
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
-        <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即歷史止損修復（a0a50b86）之後開倉嘅單；之前 -8% 止損唔生效（最差走到 -22.1%），嗰批數據描述緊一個而家已經唔存在嘅風險模型。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
+        <span title="每張飛嘅金額 = 戶口淨值 × 信心比重（分數 ≥90 → 12%、80–89 → 10%、70–79 → 7%），上限 {{ action_box.max_open }} 個同時持倉。舊制係固定 $1,000/$1,500/$2,000 base unit，喺一個 USD 4,650 嘅戶口度即係單一倉位食 32–43%。sizing 顯示 fallback 代表讀唔到 IBKR 淨值（未同步或超過 7 日），數字用預設值計 — 跑 ibkr_sync.py 就會回復真數。">
+          倉位 {{ '${:,.0f}'.format(action_box.equity_usd) }} × 7–12%
+          {%- if action_box.sizing_basis == 'fallback' %} <span style="color:var(--amber)">⚠ fallback 淨值</span>{% else %} <span style="color:var(--muted)">IBKR 淨值</span>{% endif %}
+          · 空位 {{ action_box.slots_left }}/{{ action_box.max_open }}
+        </span>
+        <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即 Action Box 同 paper 引擎統一用同一個選股決策、倉位改按戶口淨值計（7–12%，上限 {{ action_box.max_open }} 倉）之後開倉嘅單。之前嗰批用固定 $1,000–$2,000 落單、一日只決策一次，喺一個細戶口度單一倉位食到 43%；混埋一齊計 PF 同勝率就係量度兩個唔同策略，兩個都驗唔到。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
           真錢門檻 Day {{ action_box.gate_day }}/{{ action_box.gate_days }}
           · 勝率 {{ action_box.gate_winrate if action_box.gate_winrate is not none else '—' }}%{% if action_box.gate_ci_low is not none %} <span style="color:var(--muted)">[{{ action_box.gate_ci_low }}–{{ action_box.gate_ci_high }}]</span>{% endif %}
           · PF {{ action_box.gate_pf if action_box.gate_pf is not none else '—' }}
@@ -3175,14 +3181,30 @@ def _collect_headlines(stocks: list) -> list[dict]:
     return headlines
 
 
-# Validation window restarts at the history-based stop fix (a0a50b86,
-# 2026-07-17). Before that date the -8% stop did not bind: 7 of 42 closed
-# trades ran past it, worst -22.1%, because tickers rotating out of the daily
-# watchlist stopped being price-checked. Those trades measure a risk model the
-# code no longer implements, so counting them toward a real-money decision
-# would validate something that cannot recur. Window membership keys on
-# signal_date (entry), not exit_date — the risk rules apply from entry.
-GATE_START_DATE   = "2026-07-17"
+# Validation window restarts whenever the risk model changes, for the same
+# reason each time: a gate that blends two strategies validates neither.
+#
+# 2026-08-09 (current) — Action Box and the paper engine were unified behind
+#   entry_selection.select_entries, and sizing moved from a fixed
+#   $1,000/$1,500/$2,000 unit to 7–12% of account equity with a 5-position
+#   cap. Entries before this date were sized up to 43% of the account and were
+#   decided once a day; entries after are sized to the account and decided on
+#   every refresh.
+#
+#   This is the DEPLOY date, not the date the code was written (2026-08-05).
+#   The commit sat unpushed for four days while production kept running the
+#   old code, and HD/PANW/WYNN/AFRM were opened Aug 5–7 under the old sizing.
+#   Dating the window from the commit would have counted those four toward the
+#   new model — the exact blending this constant exists to prevent. The window
+#   opens when the rules actually start binding.
+# 2026-07-17 (previous) — the history-based stop fix (a0a50b86). Before it the
+#   -8% stop did not bind: 7 of 42 closed trades ran past it, worst -22.1%,
+#   because tickers rotating out of the daily watchlist stopped being
+#   price-checked.
+#
+# Window membership keys on signal_date (entry), not exit_date — the risk
+# rules apply from entry.
+GATE_START_DATE   = "2026-08-09"
 GATE_DAYS         = 60
 GATE_MIN_TRADES   = 30             # no quality verdict below this sample size.
                                    # Without a floor, two winners and zero
@@ -3194,7 +3216,29 @@ GATE_MIN_PF       = 1.3            # profit factor alternative — win-rate-only
 BREAKER_LIMIT_PCT = -5.0           # monthly circuit breaker
 
 
-ACTION_HISTORY_MAX = 200   # snapshots kept on disk
+ACTION_HISTORY_MAX  = 200   # snapshots kept on disk
+ACTION_BOX_MAX_BUYS = 3     # tickets shown at once — display limit, not a rule
+BLOCKED_FILE        = "validator_blocked.json"
+
+
+def _load_blocked_tickers(output_dir: str) -> set:
+    """Tickers today's signal validator vetoed (earnings window, AI REJECTED).
+
+    Written by main.py once per day. The validator's AI review costs an API
+    call, so the hourly refresh reuses the daily verdict rather than re-running
+    it — and ignores the file once it is no longer today's, so a stale veto
+    list can neither suppress nor greenlight anything.
+    """
+    import json as _json
+    from datetime import date as _date
+    try:
+        with open(os.path.join(output_dir, BLOCKED_FILE), encoding="utf-8") as f:
+            data = _json.load(f)
+    except (OSError, ValueError):
+        return set()
+    if data.get("date") != _date.today().isoformat():
+        return set()
+    return {t for t in data.get("tickers", []) if t}
 
 
 def _log_action_history(action_box: dict, output_dir: str) -> list:
@@ -3260,7 +3304,6 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         trades = []
 
     open_trades   = [t for t in trades if t.get("status") == "open"]
-    held          = {t["ticker"] for t in open_trades}
     by_ticker     = {s["ticker"]: s for s in stocks_sorted}
 
     # Same lesson as the FOMC table: a hardcoded date list must say so when it
@@ -3270,58 +3313,38 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
               f"{_date.today().year} — ticket expiries fall back to weekday "
               f"counting. Update src/market_calendar.py.")
 
-    # ── Market regime gate — MUST match paper_trading.run_paper_trading ───────
-    # Without this the dashboard printed order tickets the engine then refused
-    # to open: SPY score 23 < REGIME_FLOOR held every entry for 12 days while
-    # the Action Box kept publishing BUYs. Fails CLOSED when SPY is missing —
-    # a risk gate whose failure mode is "trade normally" is the wrong default.
-    _spy = by_ticker.get("SPY")
-    spy_score = _spy.get("score") if _spy else None
-    if spy_score is None:
-        regime, min_score = "unknown", None
-    elif spy_score < REGIME_FLOOR:
-        regime, min_score = "bear", None
-    elif spy_score < REGIME_NORMAL:
-        regime, min_score = "transitional", HIGH_CONVICTION_MIN
-    else:
-        regime, min_score = "bull", BUY_THRESHOLD
+    # ── BUY candidates — the engine's own selector, not a second copy ─────────
+    # Every gate (regime, verdict/EMA200/volume timing, sector cap, position
+    # cap, validator veto) and the sizing now come from entry_selection, the
+    # same call run_paper_trading makes. Re-implementing them here is what put
+    # 31 published tickets on the page that the engine never opened between
+    # 2026-07-17 and 08-04.
+    entries, ctx = select_entries(
+        stocks_sorted, trades,
+        blocked_tickers=_load_blocked_tickers(output_dir),
+        output_dir=output_dir,
+    )
+    regime, spy_score = ctx["regime"], ctx["regime_spy"]
+    min_score = ctx["regime_min"]
 
-    # ── BUY candidates ──
     buys = []
-    for s in stocks_sorted if min_score is not None else []:
-        v = s.get("entry_verdict") or {}
-        label = v.get("label", "")
-        if s["ticker"] in held:
-            continue
-        vol_ok = (s.get("vol_ratio") or 0) >= 1.0
-        # BB squeeze without volume expansion = false breakout risk
-        is_squeeze = "BREAKOUT" in label
-        if is_squeeze and not vol_ok:
-            continue  # require vol confirmation on squeeze breakouts
-        _score = s.get("score", 0)
-        if ("GO" in label or "BREAKOUT ↑" in label or "BREAKOUT 🚀" in label) and _score >= min_score:
-            px = s.get("price") or 0
-            # Order ticket numbers derived from the paper engine's own
-            # constants — never re-typed here, so they cannot drift.
-            # Expiry uses the shared NYSE calendar. Counting bare weekdays
-            # put the ticket's stated expiry a day early whenever a market
-            # holiday fell inside the hold, disagreeing with the engine,
-            # which closes on the real SPY-derived session count.
-            expiry = add_trading_days(_date.today(), HOLD_DAYS)
-            buys.append({
-                "ticker": s["ticker"],
-                "price":  px,
-                "score":  _score,
-                "reason": v.get("reason", ""),
-                "stop":   round(px * (1 - STOP_LOSS_PCT / 100), 2) if px else None,
-                "target": round(px * (1 + TAKE_PROFIT_PCT / 100), 2) if px else None,
-                # Conviction-weighted size the engine would actually open —
-                # the ticket used to hardcode "$1,000" for every score.
-                "notional": _notional_for_score(_score),
-                "expiry": expiry.strftime("%m-%d"),
-            })
-        if len(buys) >= 3:
-            break
+    for e in entries[:ACTION_BOX_MAX_BUYS]:
+        px = e["price"]
+        # Expiry uses the shared NYSE calendar. Counting bare weekdays put the
+        # ticket's stated expiry a day early whenever a market holiday fell
+        # inside the hold, disagreeing with the engine, which closes on the
+        # real SPY-derived session count.
+        expiry = add_trading_days(_date.today(), HOLD_DAYS)
+        buys.append({
+            "ticker":   e["ticker"],
+            "price":    px,
+            "score":    e["score"],
+            "reason":   e["reason"],
+            "stop":     round(px * (1 - STOP_LOSS_PCT / 100), 2) if px else None,
+            "target":   round(px * (1 + TAKE_PROFIT_PCT / 100), 2) if px else None,
+            "notional": e["notional"],
+            "expiry":   expiry.strftime("%m-%d"),
+        })
 
     # ── SELL candidates (held positions gone bearish) ──
     sells = []
@@ -3420,6 +3443,12 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "regime_spy":    spy_score,
         "regime_min":    min_score,
         "regime_min_floor": REGIME_FLOOR,
+        # Sizing provenance and the position cap, so a ticket that looks small
+        # (or a day with no tickets at all) explains itself on the page.
+        "equity_usd":    ctx["equity_usd"],
+        "sizing_basis":  ctx["sizing_basis"],
+        "slots_left":    ctx["slots_left"],
+        "max_open":      MAX_OPEN_POSITIONS,
         "stop_pct":      STOP_LOSS_PCT,
         "target_pct":    TAKE_PROFIT_PCT,
         "hold_days":     HOLD_DAYS,

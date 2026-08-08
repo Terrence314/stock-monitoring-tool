@@ -98,6 +98,41 @@ def test_breaker_line_renders_when_keys_are_absent():
     assert "斷路器" in out
 
 
+# ── Position-sizing line (added 2026-08-05 with equity-based sizing) ─────────
+
+def _sizing_fragment():
+    """The 倉位 / 空位 block, extracted from the live template."""
+    lines = rg.DASHBOARD_HTML.splitlines()
+    start = next((i for i, ln in enumerate(lines) if "每張飛嘅金額" in ln), None)
+    if start is None:
+        pytest.fail("sizing line not found in DASHBOARD_HTML")
+    end = next(i for i in range(start, len(lines)) if "空位" in lines[i])
+    return "\n".join(lines[start:end + 1])
+
+
+@pytest.mark.parametrize("basis,expected", [
+    ("fallback", "fallback"),
+    ("ibkr", "IBKR"),
+])
+def test_sizing_line_renders_both_bases(basis, expected):
+    """Grouped money here needs str.format; the printf filter would raise."""
+    out = Template(_sizing_fragment()).render(action_box={
+        "equity_usd": 4650.0, "sizing_basis": basis,
+        "slots_left": 2, "max_open": 5,
+    })
+    assert "$4,650" in out, "thousands separator missing"
+    assert expected in out
+    assert "2/5" in out
+
+
+def test_sizing_line_renders_large_equity():
+    out = Template(_sizing_fragment()).render(action_box={
+        "equity_usd": 1234567.0, "sizing_basis": "ibkr",
+        "slots_left": 0, "max_open": 5,
+    })
+    assert "$1,234,567" in out
+
+
 # ── Portfolio page carried the same defect ────────────────────────────────────
 
 def test_portfolio_money_lines_have_no_invalid_format_string():
