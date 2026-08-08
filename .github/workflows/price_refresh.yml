@@ -59,7 +59,14 @@ jobs:
           # from stale/empty data and overwrites the good copies on Pages.
           # paper_portfolio.json is CRITICAL: repo has an old committed copy that
           # would otherwise clobber the live portfolio every 15 minutes.
-          for FILE in paper_portfolio.json broad_scan_latest.json score_history.json alert_history.json action_history.json; do
+          # validator_blocked.json carries the daily run's veto list into this
+          # hourly one — without it price_refresh can open a position the
+          # validator rejected this morning, now that the refresh opens
+          # positions at all. ibkr_positions.json carries account equity;
+          # without it every ticket is sized off the fallback instead of real
+          # net liquidation. Both are written by the daily run and can only
+          # reach this job through Pages — workflow runs share no filesystem.
+          for FILE in paper_portfolio.json broad_scan_latest.json score_history.json alert_history.json action_history.json validator_blocked.json ibkr_positions.json; do
             curl -f -s "$BASE/$FILE" -o "outputs/$FILE" \
               && echo "  ✅ $FILE loaded" \
               || { rm -f "outputs/$FILE"; echo "  ⚠️  $FILE not on Pages — skipped"; }

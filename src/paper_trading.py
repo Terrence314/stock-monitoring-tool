@@ -89,6 +89,12 @@ def _load_portfolio() -> dict:
 
 
 def _save_portfolio(p: dict) -> None:
+    # A closed position's unrealized figure is a leftover from its last mark;
+    # leaving it published invites a reader to add it to the realized `pnl`.
+    for t in p.get("trades", []):
+        if t.get("status") == "closed":
+            t.pop("float_pnl", None)
+            t.pop("float_pnl_pct", None)
     os.makedirs(os.path.dirname(PORTFOLIO_FILE) or ".", exist_ok=True)
     with open(PORTFOLIO_FILE, "w", encoding="utf-8") as f:
         json.dump(p, f, ensure_ascii=False, indent=2)
@@ -338,6 +344,21 @@ def _float_pnl(trade: dict) -> tuple:
         pnl = round((cp - ep) * shares, 2)
         pct = round((cp - ep) / ep * 100, 2) if ep > 0 else 0.0
     return pnl, pct
+
+
+def _publish_float_pnl(trade: dict) -> None:
+    """Persist an open position's unrealized P&L onto the trade record.
+
+    `pnl`/`pnl_pct` are written only at exit, so every open position published
+    to gh-pages carried `pnl: null` and each downstream reader — the daily
+    portfolio cross-check, any analysis of the published JSON — had to
+    rediscover (current - entry) * shares or silently score the position as
+    zero. Deliberately SEPARATE keys rather than filling in `pnl`: several
+    consumers sum `pnl` across a trade list without filtering on status, and
+    unrealized money in that sum would read as realized.
+    """
+    fp, fpc = _float_pnl(trade)
+    trade["float_pnl"], trade["float_pnl_pct"] = fp, fpc
 
 
 def _build_stats(trades: list) -> dict:
@@ -876,6 +897,7 @@ def update_open_positions(stock_results: list, today_str: str) -> None:
         if cp and cp > 0:
             trade["current_price"] = round(cp, 2)
             trade["current_date"]  = today_str
+        _publish_float_pnl(trade)
 
     # Enforce TP / SL
     closed_now = 0
@@ -1067,6 +1089,7 @@ def run_paper_trading(
         if cp and cp > 0:
             trade["current_price"] = round(cp, 2)
             trade["current_date"] = today_str
+        _publish_float_pnl(trade)
 
     # ── 4a-pre. History-based TP/SL sweep (covers watchlist-rotation orphans) ──
     # Open positions whose tickers left the daily watchlist get no live price

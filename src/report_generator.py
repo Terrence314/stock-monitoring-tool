@@ -3184,14 +3184,19 @@ def _collect_headlines(stocks: list) -> list[dict]:
 # Validation window restarts whenever the risk model changes, for the same
 # reason each time: a gate that blends two strategies validates neither.
 #
-# 2026-08-05 (current) — Action Box and the paper engine were unified behind
+# 2026-08-09 (current) — Action Box and the paper engine were unified behind
 #   entry_selection.select_entries, and sizing moved from a fixed
 #   $1,000/$1,500/$2,000 unit to 7–12% of account equity with a 5-position
 #   cap. Entries before this date were sized up to 43% of the account and were
 #   decided once a day; entries after are sized to the account and decided on
-#   every refresh. The 2 closed trades this reset discards are worth less than
-#   a clean denominator — and the new cadence reaches 30 closed trades faster
-#   than the old window would have.
+#   every refresh.
+#
+#   This is the DEPLOY date, not the date the code was written (2026-08-05).
+#   The commit sat unpushed for four days while production kept running the
+#   old code, and HD/PANW/WYNN/AFRM were opened Aug 5–7 under the old sizing.
+#   Dating the window from the commit would have counted those four toward the
+#   new model — the exact blending this constant exists to prevent. The window
+#   opens when the rules actually start binding.
 # 2026-07-17 (previous) — the history-based stop fix (a0a50b86). Before it the
 #   -8% stop did not bind: 7 of 42 closed trades ran past it, worst -22.1%,
 #   because tickers rotating out of the daily watchlist stopped being
@@ -3199,7 +3204,7 @@ def _collect_headlines(stocks: list) -> list[dict]:
 #
 # Window membership keys on signal_date (entry), not exit_date — the risk
 # rules apply from entry.
-GATE_START_DATE   = "2026-08-05"
+GATE_START_DATE   = "2026-08-09"
 GATE_DAYS         = 60
 GATE_MIN_TRADES   = 30             # no quality verdict below this sample size.
                                    # Without a floor, two winners and zero
