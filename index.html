@@ -938,8 +938,8 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     <div class="market-item">
       <span class="market-name">比特幣</span>
       <div class="market-line">
-        <span class="market-price">64,067.96</span>
-        <span class="pct down">-1.20%</span>
+        <span class="market-price">64,016.75</span>
+        <span class="pct down">-1.28%</span>
       </div>
     </div>
     
@@ -962,7 +962,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     <button class="refresh-btn" id="refresh-btn" onclick="doRefresh(this)" title="Reload page — shows data from last pipeline run"><span class="spin-icon">↻</span> Refresh</button>
     <button class="run-btn" id="run-now-btn" onclick="triggerRefresh(this)" title="Fetch live prices now via GitHub Actions">▶ Run Now</button>
     <span class="filter-meta" id="filter-count">85 instruments</span>
-    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Aug 11 04:42 HKT</span>
+    <span class="filter-meta" id="update-stamp" style="color:var(--muted)">Updated Aug 11 05:40 HKT</span>
     <span class="filter-meta" id="auto-refresh-countdown" style="color:var(--muted);font-size:10px"></span>
   </div>
 </header>
@@ -1006,7 +1006,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-2)">
         <span title="本月已實現+未實現盈虧 ÷ 投入名義金額。觸及 −5% 即停止開新倉。">
           
-          斷路器 +1.8% / -5.0% <span style="color:var(--text-2)">(+329 美元 / 本月投入 $18,000)</span>
+          斷路器 +1.9% / -5.0% <span style="color:var(--text-2)">(+349 美元 / 本月投入 $18,000)</span>
           <span style="color:#34d399">✓ ok</span>
         </span>
         <span title="每張飛嘅金額 = 戶口淨值 × 信心比重（分數 ≥90 → 12%、80–89 → 10%、70–79 → 7%），上限 5 個同時持倉。舊制係固定 $1,000/$1,500/$2,000 base unit，喺一個 USD 4,650 嘅戶口度即係單一倉位食 32–43%。sizing 顯示 fallback 代表讀唔到 IBKR 淨值（未同步或超過 7 日），數字用預設值計 — 跑 ibkr_sync.py 就會回復真數。">
@@ -1208,14 +1208,14 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="kpi-label">Strong signals</span>
           <span class="badge blue">≥ 70</span>
         </div>
-        <div class="kpi-val">39 / 85</div>
-        <div class="kpi-sub">mid-band (50-69): 14</div>
+        <div class="kpi-val">40 / 85</div>
+        <div class="kpi-sub">mid-band (50-69): 13</div>
       </div>
       <div class="kpi" title="Average signal score across all Tier 2 stocks. Above 60 = healthy momentum; below 40 = broad weakness across the watchlist.">
         <div class="kpi-head">
           <span class="kpi-label">Avg signal</span>
         </div>
-        <div class="kpi-val">57.6</div>
+        <div class="kpi-val">58.0</div>
         <div class="kpi-sub">across 85 names</div>
       </div>
       <div class="kpi" title="CNN Fear &amp; Greed Index (0–100). 75+ = Greed (market overheating); 25– = Fear (possible buying opportunity). Use alongside stock scores, not as a standalone signal.">
@@ -1261,32 +1261,32 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
           <span style="font-size:13px;color:var(--text);font-weight:600">Signal dist.</span>
-          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">57.6</b></span>
+          <span style="font-size:11px;color:var(--text-2)">avg <b style="color:var(--text)">58.0</b></span>
         </div>
         <div class="hist-bar">
           
           <div class="hist-col">
             <span class="hist-num">6</span>
-            <div class="hist-rect" style="height:18px;background:#f87171;opacity:0.9"></div>
+            <div class="hist-rect" style="height:17px;background:#f87171;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
             <span class="hist-num">19</span>
-            <div class="hist-rect" style="height:58px;background:#ff8a4d;opacity:0.9"></div>
+            <div class="hist-rect" style="height:56px;background:#ff8a4d;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
             <span class="hist-num">10</span>
-            <div class="hist-rect" style="height:30px;background:#f5b942;opacity:0.9"></div>
+            <div class="hist-rect" style="height:29px;background:#f5b942;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
-            <span class="hist-num">24</span>
-            <div class="hist-rect" style="height:73px;background:#80c97f;opacity:0.9"></div>
+            <span class="hist-num">23</span>
+            <div class="hist-rect" style="height:68px;background:#80c97f;opacity:0.9"></div>
           </div>
           
           <div class="hist-col">
-            <span class="hist-num">26</span>
+            <span class="hist-num">27</span>
             <div class="hist-rect" style="height:80px;background:#34d399;opacity:0.9"></div>
           </div>
           
@@ -1351,7 +1351,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             <div class="sr-cell" style="background:rgba(52,211,153,0.15)">
               <div class="sr-tick">Health</div>
-              <div class="sr-val" style="color:var(--up)">73</div>
+              <div class="sr-val" style="color:var(--up)">74</div>
             </div>
           
             
@@ -1367,7 +1367,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             <div class="sr-cell" style="background:rgba(245,185,66,0.12)">
               <div class="sr-tick">Consum</div>
-              <div class="sr-val" style="color:var(--amber)">54</div>
+              <div class="sr-val" style="color:var(--amber)">56</div>
             </div>
           
             
@@ -1486,7 +1486,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+0.86%</span></td>
               <td class="num mob-hide">68.8</td>
               <td class="num mob-hide" style="color: #34d399">+0.04</td>
-              <td class="num mob-hide">1.02×</td>
+              <td class="num mob-hide">1.03×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 11.3,7.3 20.7,18.0 30.0,13.7 39.3,3.1 48.7,18.0 58.0,3.1" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -1635,6 +1635,48 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             
             
+            <tr class="lb-row" data-type="stock" data-market="US" data-score="90" data-rsi="60.76" data-price="1231.93994140625" data-ma20="1173.66" data-ma60="1140.03">
+              <td>
+                <a href="#" onclick="scrollToCard('LLY');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to LLY card below">
+                  <div class="ticker-cell">
+                    <div class="ticker-tile">LL</div>
+                    <div class="ticker-meta">
+                      <div class="ticker-sym">LLY</div>
+                      <div class="ticker-name">Eli Lilly and Company</div>
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <span class="tag stock">stock</span>
+              </td>
+              <td class="num lg">1231.94</td>
+              <td><span class="pct-chip up">+3.90%</span></td>
+              <td class="num mob-hide">60.8</td>
+              <td class="num mob-hide" style="color: #34d399">+1.71</td>
+              <td class="num mob-hide">1.08×</td>
+              <td class="ring-cell">
+                <span style="color:var(--muted);font-family:var(--mono)">—</span>
+              </td>
+              <td class="ring-cell">
+                <div style="width:40px;height:40px;position:relative">
+                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
+                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
+                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
+                      stroke-dasharray="90.48 100.53" stroke-linecap="round"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">90</div>
+                </div>
+              </td>
+              <td class="center"><span class="strength-badge high">強力做多 🔥</span></td>
+            </tr>
+          
+            
+            
+            
+            
+            
+            
             <tr class="lb-row" data-type="stock" data-market="US" data-score="80" data-rsi="68.94" data-price="127.44000244140625" data-ma20="109.11" data-ma60="106.52">
               <td>
                 <a href="#" onclick="scrollToCard('NOW');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to NOW card below">
@@ -1696,7 +1738,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+1.67%</span></td>
               <td class="num mob-hide">67.0</td>
               <td class="num mob-hide" style="color: #34d399">+0.10</td>
-              <td class="num mob-hide">0.66×</td>
+              <td class="num mob-hide">0.71×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -1741,6 +1783,48 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td class="num mob-hide">0.87×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 58.0,18.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              </td>
+              <td class="ring-cell">
+                <div style="width:40px;height:40px;position:relative">
+                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
+                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
+                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
+                      stroke-dasharray="80.42 100.53" stroke-linecap="round"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">80</div>
+                </div>
+              </td>
+              <td class="center"><span class="strength-badge high">強力做多 🔥</span></td>
+            </tr>
+          
+            
+            
+            
+            
+            
+            
+            <tr class="lb-row" data-type="etf" data-market="US" data-score="80" data-rsi="71.88" data-price="100.5999984741211" data-ma20="92.66" data-ma60="88.58">
+              <td>
+                <a href="#" onclick="scrollToCard('CIBR');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to CIBR card below">
+                  <div class="ticker-cell">
+                    <div class="ticker-tile">CI</div>
+                    <div class="ticker-meta">
+                      <div class="ticker-sym">CIBR</div>
+                      <div class="ticker-name">First Trust NASDAQ Cybersecurit</div>
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <span class="tag etf">etf</span>
+              </td>
+              <td class="num lg">100.60</td>
+              <td><span class="pct-chip up">+2.81%</span></td>
+              <td class="num mob-hide">71.9</td>
+              <td class="num mob-hide" style="color: #34d399">+0.83</td>
+              <td class="num mob-hide">1.51×</td>
+              <td class="ring-cell">
+                <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 20.7,18.0 39.3,18.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
               <td class="ring-cell">
                 <div style="width:40px;height:40px;position:relative">
@@ -1948,7 +2032,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+1.00%</span></td>
               <td class="num mob-hide">69.0</td>
               <td class="num mob-hide" style="color: #34d399">+0.30</td>
-              <td class="num mob-hide">0.45×</td>
+              <td class="num mob-hide">0.66×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,6.8 30.0,18.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -2032,7 +2116,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+2.58%</span></td>
               <td class="num mob-hide">68.1</td>
               <td class="num mob-hide" style="color: #34d399">+0.22</td>
-              <td class="num mob-hide">0.72×</td>
+              <td class="num mob-hide">0.92×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -2475,48 +2559,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             
             
             
-            <tr class="lb-row" data-type="stock" data-market="US" data-score="80" data-rsi="60.76" data-price="1231.93994140625" data-ma20="1173.66" data-ma60="1140.03">
-              <td>
-                <a href="#" onclick="scrollToCard('LLY');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to LLY card below">
-                  <div class="ticker-cell">
-                    <div class="ticker-tile">LL</div>
-                    <div class="ticker-meta">
-                      <div class="ticker-sym">LLY</div>
-                      <div class="ticker-name">Eli Lilly and Company</div>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td>
-                <span class="tag stock">stock</span>
-              </td>
-              <td class="num lg">1231.94</td>
-              <td><span class="pct-chip up">+3.90%</span></td>
-              <td class="num mob-hide">60.8</td>
-              <td class="num mob-hide" style="color: #34d399">+1.71</td>
-              <td class="num mob-hide">0.79×</td>
-              <td class="ring-cell">
-                <span style="color:var(--muted);font-family:var(--mono)">—</span>
-              </td>
-              <td class="ring-cell">
-                <div style="width:40px;height:40px;position:relative">
-                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
-                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
-                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
-                      stroke-dasharray="80.42 100.53" stroke-linecap="round"/>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">80</div>
-                </div>
-              </td>
-              <td class="center"><span class="strength-badge high">強力做多 🔥</span></td>
-            </tr>
-          
-            
-            
-            
-            
-            
-            
             <tr class="lb-row" data-type="stock" data-market="US" data-score="75" data-rsi="81.69" data-price="184.6999969482422" data-ma20="151.03" data-ma60="142.65">
               <td>
                 <a href="#" onclick="scrollToCard('ABNB');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to ABNB card below">
@@ -2539,6 +2581,48 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td class="num mob-hide">1.91×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 58.0,18.0" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              </td>
+              <td class="ring-cell">
+                <div style="width:40px;height:40px;position:relative">
+                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
+                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
+                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
+                      stroke-dasharray="75.40 100.53" stroke-linecap="round"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">75</div>
+                </div>
+              </td>
+              <td class="center"><span class="strength-badge high">偏多 📈</span></td>
+            </tr>
+          
+            
+            
+            
+            
+            
+            
+            <tr class="lb-row" data-type="stock" data-market="US" data-score="75" data-rsi="62.69" data-price="74.16000366210938" data-ma20="66.47" data-ma60="66.97">
+              <td>
+                <a href="#" onclick="scrollToCard('CVNA');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to CVNA card below">
+                  <div class="ticker-cell">
+                    <div class="ticker-tile">CV</div>
+                    <div class="ticker-meta">
+                      <div class="ticker-sym">CVNA</div>
+                      <div class="ticker-name">Carvana Co.</div>
+                    </div>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <span class="tag stock">stock</span>
+              </td>
+              <td class="num lg">74.16</td>
+              <td><span class="pct-chip up">+4.67%</span></td>
+              <td class="num mob-hide">62.7</td>
+              <td class="num mob-hide" style="color: #34d399">+1.08</td>
+              <td class="num mob-hide">1.11×</td>
+              <td class="ring-cell">
+                <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
               <td class="ring-cell">
                 <div style="width:40px;height:40px;position:relative">
@@ -2746,7 +2830,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+0.75%</span></td>
               <td class="num mob-hide">69.5</td>
               <td class="num mob-hide" style="color: #34d399">+0.06</td>
-              <td class="num mob-hide">0.32×</td>
+              <td class="num mob-hide">0.46×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 30.0,18.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -2788,7 +2872,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+1.32%</span></td>
               <td class="num mob-hide">65.8</td>
               <td class="num mob-hide" style="color: #34d399">+3.96</td>
-              <td class="num mob-hide">0.65×</td>
+              <td class="num mob-hide">0.69×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,6.1 13.2,12.1 24.4,18.0 35.6,10.9 46.8,2.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -2872,7 +2956,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+0.41%</span></td>
               <td class="num mob-hide">67.6</td>
               <td class="num mob-hide" style="color: #34d399">+1.64</td>
-              <td class="num mob-hide">0.83×</td>
+              <td class="num mob-hide">0.86×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 20.7,8.4 39.3,2.0 58.0,18.0" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -2968,48 +3052,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
                       stroke-dasharray="72.38 100.53" stroke-linecap="round"/>
                   </svg>
                   <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">72</div>
-                </div>
-              </td>
-              <td class="center"><span class="strength-badge high">偏多 📈</span></td>
-            </tr>
-          
-            
-            
-            
-            
-            
-            
-            <tr class="lb-row" data-type="etf" data-market="US" data-score="70" data-rsi="71.88" data-price="100.5999984741211" data-ma20="92.66" data-ma60="88.58">
-              <td>
-                <a href="#" onclick="scrollToCard('CIBR');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to CIBR card below">
-                  <div class="ticker-cell">
-                    <div class="ticker-tile">CI</div>
-                    <div class="ticker-meta">
-                      <div class="ticker-sym">CIBR</div>
-                      <div class="ticker-name">First Trust NASDAQ Cybersecurit</div>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td>
-                <span class="tag etf">etf</span>
-              </td>
-              <td class="num lg">100.60</td>
-              <td><span class="pct-chip up">+2.81%</span></td>
-              <td class="num mob-hide">71.9</td>
-              <td class="num mob-hide" style="color: #34d399">+0.83</td>
-              <td class="num mob-hide">1.33×</td>
-              <td class="ring-cell">
-                <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 20.7,18.0 39.3,18.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-              </td>
-              <td class="ring-cell">
-                <div style="width:40px;height:40px;position:relative">
-                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
-                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
-                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
-                      stroke-dasharray="70.37 100.53" stroke-linecap="round"/>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">70</div>
                 </div>
               </td>
               <td class="center"><span class="strength-badge high">偏多 📈</span></td>
@@ -3124,49 +3166,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+2.33%</span></td>
               <td class="num mob-hide">69.0</td>
               <td class="num mob-hide" style="color: #34d399">+0.66</td>
-              <td class="num mob-hide">0.83×</td>
-              <td class="ring-cell">
-                <span style="color:var(--muted);font-family:var(--mono)">—</span>
-              </td>
-              <td class="ring-cell">
-                <div style="width:40px;height:40px;position:relative">
-                  <svg width="40" height="40" style="transform:rotate(-90deg);display:block">
-                    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.06)" stroke-width="2.5" fill="none"/>
-                    <circle cx="20" cy="20" r="16" stroke="#34d399" stroke-width="2.5" fill="none"
-                      stroke-dasharray="65.34 100.53" stroke-linecap="round"/>
-                  </svg>
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text)">65</div>
-                </div>
-              </td>
-              <td class="center"><span class="strength-badge high">偏多 📈</span></td>
-            </tr>
-          
-            
-            
-            
-            
-            
-            
-            <tr class="lb-row" data-type="stock" data-market="US" data-score="65" data-rsi="62.69" data-price="74.16000366210938" data-ma20="66.47" data-ma60="66.97">
-              <td>
-                <a href="#" onclick="scrollToCard('CVNA');return false;" style="text-decoration:none;color:inherit" title="Click to scroll to CVNA card below">
-                  <div class="ticker-cell">
-                    <div class="ticker-tile">CV</div>
-                    <div class="ticker-meta">
-                      <div class="ticker-sym">CVNA</div>
-                      <div class="ticker-name">Carvana Co.</div>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td>
-                <span class="tag stock">stock</span>
-              </td>
-              <td class="num lg">74.16</td>
-              <td><span class="pct-chip up">+4.67%</span></td>
-              <td class="num mob-hide">62.7</td>
-              <td class="num mob-hide" style="color: #34d399">+1.08</td>
-              <td class="num mob-hide">0.83×</td>
+              <td class="num mob-hide">0.93×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -3334,7 +3334,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+0.00%</span></td>
               <td class="num mob-hide">66.0</td>
               <td class="num mob-hide" style="color: #34d399">+3.38</td>
-              <td class="num mob-hide">0.58×</td>
+              <td class="num mob-hide">0.93×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 11.3,10.5 20.7,2.0 30.0,2.0 39.3,2.0 48.7,2.0 58.0,10.5" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -3418,7 +3418,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+2.59%</span></td>
               <td class="num mob-hide">70.7</td>
               <td class="num mob-hide" style="color: #34d399">+2.91</td>
-              <td class="num mob-hide">0.80×</td>
+              <td class="num mob-hide">0.95×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 20.7,18.0 39.3,11.6 58.0,3.1" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -3586,7 +3586,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+0.36%</span></td>
               <td class="num mob-hide">65.5</td>
               <td class="num mob-hide" style="color: #f87171">-0.02</td>
-              <td class="num mob-hide">0.78×</td>
+              <td class="num mob-hide">0.79×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 58.0,18.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -3670,7 +3670,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+1.21%</span></td>
               <td class="num mob-hide">79.3</td>
               <td class="num mob-hide" style="color: #34d399">+10.50</td>
-              <td class="num mob-hide">0.72×</td>
+              <td class="num mob-hide">0.78×</td>
               <td class="ring-cell">
                 <span style="color:var(--muted);font-family:var(--mono)">—</span>
               </td>
@@ -3796,7 +3796,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip down">-0.44%</span></td>
               <td class="num mob-hide">64.1</td>
               <td class="num mob-hide" style="color: #34d399">+5.16</td>
-              <td class="num mob-hide">0.69×</td>
+              <td class="num mob-hide">0.83×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 20.7,2.0 39.3,18.0 58.0,18.0" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -4132,7 +4132,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip down">-0.52%</span></td>
               <td class="num mob-hide">56.9</td>
               <td class="num mob-hide" style="color: #34d399">+0.77</td>
-              <td class="num mob-hide">0.70×</td>
+              <td class="num mob-hide">0.74×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 11.3,11.5 20.7,5.0 30.0,9.6 39.3,2.0 48.7,2.0 58.0,9.6" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -4342,7 +4342,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip up">+0.91%</span></td>
               <td class="num mob-hide">52.1</td>
               <td class="num mob-hide" style="color: #34d399">+2.71</td>
-              <td class="num mob-hide">0.56×</td>
+              <td class="num mob-hide">0.58×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,8.0 11.3,9.1 20.7,9.1 30.0,2.0 39.3,18.0 48.7,18.0 58.0,18.0" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -4384,7 +4384,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip down">-0.76%</span></td>
               <td class="num mob-hide">62.1</td>
               <td class="num mob-hide" style="color: #f87171">-0.01</td>
-              <td class="num mob-hide">0.47×</td>
+              <td class="num mob-hide">0.65×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,18.0 58.0,2.0" fill="none" stroke="#2ecc71" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -4972,7 +4972,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <td><span class="pct-chip down">-2.28%</span></td>
               <td class="num mob-hide">49.2</td>
               <td class="num mob-hide" style="color: #34d399">+4.46</td>
-              <td class="num mob-hide">0.51×</td>
+              <td class="num mob-hide">0.52×</td>
               <td class="ring-cell">
                 <svg width="60" height="20" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,2.0 11.3,9.0 20.7,2.0 30.0,18.0 39.3,4.1 48.7,4.1 58.0,18.0" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
               </td>
@@ -5129,6 +5129,22 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
           <div class="hl-item">
             <div class="hl-meta">
+              <span class="hl-ticker">LLY</span>
+              <span class="hl-src">24/7 Wall St.</span>
+            </div>
+            <div class="hl-title">3 Beaten-Down Healthcare Stocks to Buy in August</div>
+          </div>
+          
+          <div class="hl-item">
+            <div class="hl-meta">
+              <span class="hl-ticker">LLY</span>
+              <span class="hl-src">Barrons.com</span>
+            </div>
+            <div class="hl-title">Nvidia, Eli Lilly, and Disney Show It’s Time to Back the Top Dogs</div>
+          </div>
+          
+          <div class="hl-item">
+            <div class="hl-meta">
               <span class="hl-ticker">XLV</span>
               <span class="hl-src">MT Newswires</span>
             </div>
@@ -5165,22 +5181,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
               <span class="hl-src">Zacks</span>
             </div>
             <div class="hl-title">AKZOY or APD: Which Is the Better Value Stock Right Now?</div>
-          </div>
-          
-          <div class="hl-item">
-            <div class="hl-meta">
-              <span class="hl-ticker">APD</span>
-              <span class="hl-src">Insider Monkey</span>
-            </div>
-            <div class="hl-title">Linde (LIN) vs. Air Products (APD): Racing for the Chip Boom</div>
-          </div>
-          
-          <div class="hl-item">
-            <div class="hl-meta">
-              <span class="hl-ticker">COP</span>
-              <span class="hl-src">Quartz</span>
-            </div>
-            <div class="hl-title">ConocoPhillips CEO Ryan Lance retiring, Andy O'Brien to take over</div>
           </div>
           
         
@@ -5279,11 +5279,14 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       
       <div class="sector-tile high">
         <div class="sector-name">Healthcare</div>
-        <div class="sector-avg high">73</div>
+        <div class="sector-avg high">74</div>
         <div class="sector-tickers">
           
             
             <span class="sector-chip high">DXCM · 90</span>
+          
+            
+            <span class="sector-chip high">LLY · 90</span>
           
             
             <span class="sector-chip high">MCK · 80</span>
@@ -5296,9 +5299,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
             
             <span class="sector-chip high">IDXX · 80</span>
-          
-            
-            <span class="sector-chip high">LLY · 80</span>
           
             
             <span class="sector-chip high">PFE · 75</span>
@@ -5383,7 +5383,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
       
       <div class="sector-tile mid">
         <div class="sector-name">Consumer Cyclical</div>
-        <div class="sector-avg mid">54</div>
+        <div class="sector-avg mid">56</div>
         <div class="sector-tickers">
           
             
@@ -5393,10 +5393,10 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             <span class="sector-chip high">ABNB · 75</span>
           
             
-            <span class="sector-chip high">AMZN · 72</span>
+            <span class="sector-chip high">CVNA · 75</span>
           
             
-            <span class="sector-chip high">CVNA · 65</span>
+            <span class="sector-chip high">AMZN · 72</span>
           
             
             <span class="sector-chip high">BABA · 60</span>
@@ -5458,6 +5458,9 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
             <span class="sector-chip high">XBI · 80</span>
           
             
+            <span class="sector-chip high">CIBR · 80</span>
+          
+            
             <span class="sector-chip high">XLE · 73</span>
           
             
@@ -5465,9 +5468,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           
             
             <span class="sector-chip high">FNDX · 72</span>
-          
-            
-            <span class="sector-chip high">CIBR · 70</span>
           
             
             <span class="sector-chip high">GLD · 67</span>
@@ -5861,6 +5861,44 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         
         <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
           <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">
+            100.60
+          </td>
+          <td style="padding:9px 10px">
+            <a href="#stock-CIBR" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">CIBR</a>
+          </td>
+          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">First Trust NASDAQ Cybersecurit</td>
+          <td style="padding:9px 10px"><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,.10);color:var(--purple)">Unknown</span>
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
+            —
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--green)">80</td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--red)">
+            71.9
+          </td>
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--green)">
+            +8.6%
+          </td>
+          <td style="padding:9px 10px;text-align:center;font-size:14px">
+            ▲
+          </td><td style="padding:9px 10px;text-align:center">
+            
+              <span style="font-size:10px;color:var(--muted)">Core</span>
+            
+          </td>
+        </tr>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
+          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">
             158.03
           </td>
           <td style="padding:9px 10px">
@@ -6036,44 +6074,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           </td><td style="padding:9px 10px;text-align:center">
             
               <span title="Reddit r/ETFs / r/Bogleheads 2026 community pick" style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(122,162,255,.12);color:var(--blue);border:1px solid rgba(122,162,255,.25)">↑ Reddit</span>
-            
-          </td>
-        </tr>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <tr style="border-bottom:1px solid var(--border);transition:background .15s" onmouseover="this.style.background='var(--elevated)'" onmouseout="this.style.background=''">
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text)">
-            100.60
-          </td>
-          <td style="padding:9px 10px">
-            <a href="#stock-CIBR" style="font-family:var(--mono);font-weight:700;font-size:13px;color:var(--text);text-decoration:none">CIBR</a>
-          </td>
-          <td style="padding:9px 10px;color:var(--text-2);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">First Trust NASDAQ Cybersecurit</td>
-          <td style="padding:9px 10px"><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(177,140,255,.10);color:var(--purple)">Unknown</span>
-          </td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)">
-            —
-          </td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--green)">70</td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--red)">
-            71.9
-          </td>
-          <td style="padding:9px 10px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--green)">
-            +8.6%
-          </td>
-          <td style="padding:9px 10px;text-align:center;font-size:14px">
-            ▲
-          </td><td style="padding:9px 10px;text-align:center">
-            
-              <span style="font-size:10px;color:var(--muted)">Core</span>
             
           </td>
         </tr>
@@ -8139,7 +8139,230 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NOW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NOW" data-rsi="68.94" data-price="127.44000244140625" data-ma20="109.11" data-ma60="106.52" data-bento-idx="6">
+    <article id="stock-LLY" class="scard high" data-type="stock" data-market="US" data-score="90" data-ticker="LLY" data-rsi="60.76" data-price="1231.93994140625" data-ma20="1173.66" data-ma60="1140.03" data-bento-idx="6">
+
+      <div class="scard-head">
+        <div class="scard-id">
+          <div class="scard-tile">LL</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="scard-sym">LLY</div>
+              <!-- Tier 2 history badges -->
+              
+                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(177,140,255,0.15);color:var(--purple);border:1px solid rgba(177,140,255,0.3);font-weight:700;letter-spacing:.04em">↩ RETURN</span>
+              
+              <!-- IBKR position badge -->
+              
+              
+              <!-- Star/favourite button -->
+              <button class="star-btn" data-ticker="LLY"
+                onclick="toggleFavourite('LLY')"
+                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
+                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
+                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
+                title="Click to add LLY to Favourites">☆</button>
+            </div>
+            <div class="scard-name">Eli Lilly and Company</div>
+            <div class="scard-tags">
+              <span class="tag stock">stock</span>
+              <span class="tag market">US</span>
+            </div>
+          </div>
+        </div>
+        <div class="scard-price">
+          <div class="price-block">
+            <div class="price-val">$1231.94</div>
+            <div class="price-chg up">+3.90%</div>
+          </div>
+          <div class="ring high">
+            <svg width="56" height="56">
+              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
+              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
+                stroke-dasharray="130.05 144.50" stroke-linecap="round"/>
+            </svg>
+            <div class="ring-num">90</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
+        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,17.7 6.0,17.0 10.0,14.8 14.0,13.1 18.0,18.6 22.0,13.7 26.0,15.9 30.0,11.9 34.0,10.2 38.0,9.9 42.0,5.9 46.0,7.8 50.0,17.2 54.0,18.3 58.0,23.0 62.0,24.0 66.0,14.7 70.0,10.9 74.0,12.0 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
+      </div>
+      
+
+      <div class="scard-row">
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+          
+          
+          <span class="sentiment pos">+8</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示公司業績成長強勁、展望樂觀，並被視為頂級投資標的，市場情緒極度看好。</span>
+        
+      </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (0.98) — wait for pullback</span>
+      </div>
+      
+
+      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
+      <div class="beginner-only">
+        <div class="beg-verdict high">
+          🔥 Strong Buy — Very bullish technical setup (90/100)
+          
+        </div>
+        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
+      </div>
+
+      
+
+      <div class="expert-only">
+      
+      
+      
+      
+      <div>
+        <div class="scard-sub">Analyst ratings</div>
+        <div class="analyst-bar">
+          <div class="analyst-buy"  style="flex:19"></div>
+          <div class="analyst-hold" style="flex:7"></div>
+          <div class="analyst-sell" style="flex:1"></div>
+        </div>
+        <div class="analyst-counts">
+          <span class="buy">Buy 19</span>
+          <span class="hold">Hold 7</span>
+          <span class="sell">Sell 1</span>
+          <span class="period">2026-08-01</span>
+        </div>
+      </div>
+      
+      </div>
+
+      
+      
+      
+        
+        
+        <div>
+          <div class="scard-sub">52w range · 97.2% from low</div>
+          <div class="range-bar">
+            <div class="range-fill" style="width:97.2%"></div>
+            <div class="range-thumb" style="left:97.2%"></div>
+          </div>
+          <div class="range-labels">
+            <span>L $623.78</span>
+            <span>H $1249.45</span>
+          </div>
+        </div>
+      
+
+      <div class="expert-only">
+        <div class="scard-row">
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 1179.03</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 1173.66</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 1140.03</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 60.76</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.1×</span>
+          
+          
+          
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.98&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.98</span>
+          
+          
+          <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · 54.1</span>
+          
+        </div>
+        <div>
+          <div class="scard-sub">Technical signals</div>
+          <div class="signals" data-sig-ticker="LLY">
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（60.8 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">🟡 量能正常（1.1× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.1%</div><div class="signal-item">KD 中性（K=76.6 · D=59.0）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.4% — 極近歷史高位</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div>
+        <div class="scard-sub">Latest news</div>
+        <div class="news-list">
+          
+          <div class="news-item">
+            3 Beaten-Down Healthcare Stocks to Buy in August
+            
+            <span class="news-pub">24/7 Wall St.</span>
+          </div>
+          
+          <div class="news-item">
+            Nvidia, Eli Lilly, and Disney Show It’s Time to Back the Top Dogs
+            
+            <span class="news-pub">Barrons.com</span>
+          </div>
+          
+          <div class="news-item">
+            Ozempic For $50 a Month? Amazon Pharmacy Rolls Out Cheap Weight-Loss Drugs for Medicare Patients
+            
+            <span class="news-pub">Benzinga</span>
+          </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <details class="ai-details" open>
+        <summary>
+          <span class="ai-label">✦ AI Analysis</span>
+          <span class="ai-arrow">▼</span>
+        </summary>
+        <div class="ai-body">① LLY目前呈現多頭排列，MACD在零軸以上且動能擴張，趨勢強勁偏多。
+② 近期支撐為MA5的$1174.2，壓力為布林上軌$1228.76。
+③ 在沒有重大負面消息前提下，未來3-5個交易日高機率持續震盪走高，挑戰布林上軌。
+④ 極度縮量是主要風險，若未能補量上攻，股價可能面臨整理或回調。</div>
+      </details>
+      
+
+      
+      <div class="entry">
+        <div class="entry-label">Entry timing</div>
+        <div class="entry-body">**
+
+建議買入區間在$1180 - $1200之間，等待量能回補。止損位設於MA20（約$1172.45）下方，若跌破表示短期多頭趨勢可能受阻。第一目標價為$1250，第二目標價為$1280，主要基於過去壓力區與技術延伸。風險回報比約為1:2。目前MACD在0軸以上，無需等待0軸突破確認。</div>
+      </div>
+      
+
+      <a href="./LLY.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+        → 查看詳細分析
+      </a>
+      <button class="copy-btn"
+        data-ticker="LLY"
+        data-price="1231.94"
+        data-score="90"
+        data-entry="**
+
+建議買入區間在$1180 - $1200之間，等待量能回補。止損位設於MA20（約$1172.45）下方，若跌破表示短期多頭趨勢可能受阻。第一目標價為$1250，第二目標價為$1280，主要基於過去壓力區與技術延伸。風險回報比約為1:2。目前MACD在0軸以上，無需等待0軸突破確認。"
+        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
+    </article>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <article id="stock-NOW" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NOW" data-rsi="68.94" data-price="127.44000244140625" data-ma20="109.11" data-ma60="106.52" data-bento-idx="7">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -8279,7 +8502,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLV" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="XLV" data-rsi="66.95" data-price="168.44000244140625" data-ma20="162.62" data-ma60="156.2" data-bento-idx="7">
+    <article id="stock-XLV" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="XLV" data-rsi="66.95" data-price="168.44000244140625" data-ma20="162.62" data-ma60="156.2" data-bento-idx="8">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -8481,7 +8704,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XBI" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="XBI" data-rsi="61.16" data-price="158.02999877929688" data-ma20="152.35" data-ma60="145.17" data-bento-idx="8">
+    <article id="stock-XBI" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="XBI" data-rsi="61.16" data-price="158.02999877929688" data-ma20="152.35" data-ma60="145.17" data-bento-idx="9">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -8687,7 +8910,147 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-APD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="APD" data-rsi="63.73" data-price="308.17999267578125" data-ma20="296.86" data-ma60="289.84" data-bento-idx="9">
+    <article id="stock-CIBR" class="scard high" data-type="etf" data-market="US" data-score="80" data-ticker="CIBR" data-rsi="71.88" data-price="100.5999984741211" data-ma20="92.66" data-ma60="88.58" data-bento-idx="10">
+
+      <div class="scard-head">
+        <div class="scard-id">
+          <div class="scard-tile">CI</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="scard-sym">CIBR</div>
+              <!-- Tier 2 history badges -->
+              
+              <!-- IBKR position badge -->
+              
+              
+              <!-- Star/favourite button -->
+              <button class="star-btn" data-ticker="CIBR"
+                onclick="toggleFavourite('CIBR')"
+                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
+                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
+                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
+                title="Click to add CIBR to Favourites">☆</button>
+            </div>
+            <div class="scard-name">First Trust NASDAQ Cybersecurit</div>
+            <div class="scard-tags">
+              <span class="tag etf">etf</span>
+              <span class="tag market">US</span>
+            </div>
+          </div>
+        </div>
+        <div class="scard-price">
+          <div class="price-block">
+            <div class="price-val">$100.60</div>
+            <div class="price-chg up">+2.81%</div>
+          </div>
+          <div class="ring high">
+            <svg width="56" height="56">
+              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
+              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
+                stroke-dasharray="115.60 144.50" stroke-linecap="round"/>
+            </svg>
+            <div class="ring-num">80</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
+        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,13.1 6.0,15.7 10.0,17.5 14.0,16.8 18.0,17.7 22.0,19.6 26.0,21.5 30.0,24.0 34.0,22.9 38.0,21.9 42.0,21.6 46.0,22.3 50.0,20.4 54.0,17.6 58.0,14.4 62.0,8.1 66.0,8.7 70.0,10.5 74.0,8.3 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
+      </div>
+      
+
+      <div class="scard-row">
+        <span class="strength-badge high">強力做多 🔥</span>
+        
+      </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#38bdf8;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.30)">
+          🏄 RIDING ↑
+        </span>
+        <span class="verdict-reason">Walking the upper band 3+ days — trend has momentum, hold position</span>
+      </div>
+      
+
+      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
+      <div class="beginner-only">
+        <div class="beg-verdict high">
+          🔥 Strong Buy — Very bullish technical setup (80/100)
+          
+        </div>
+        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
+      </div>
+
+      
+
+      <div class="expert-only">
+      
+      
+      
+      
+      </div>
+
+      
+      
+      
+
+      <div class="expert-only">
+        <div class="scard-row">
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 98.07</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 92.66</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 88.58</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 71.88</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.5×</span>
+          
+          
+          
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.03&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.03</span>
+          
+          
+        </div>
+        <div>
+          <div class="scard-sub">Technical signals</div>
+          <div class="signals" data-sig-ticker="CIBR">
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">RSI 中性（71.9）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">✅ 爆量（成交量 1.5× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 13.6%</div><div class="signal-item">⚠️ KD 超買（K=84.1 · D=82.6）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.6% — 極近歷史高位</div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+
+      
+
+      <a href="./CIBR.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+        → 查看詳細分析
+      </a>
+      <button class="copy-btn"
+        data-ticker="CIBR"
+        data-price="100.60"
+        data-score="80"
+        data-entry=""
+        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
+    </article>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <article id="stock-APD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="APD" data-rsi="63.73" data-price="308.17999267578125" data-ma20="296.86" data-ma60="289.84" data-bento-idx="11">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -8904,7 +9267,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-COP" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="COP" data-rsi="63.58" data-price="123.02999877929688" data-ma20="117.01" data-ma60="114.69" data-bento-idx="10">
+    <article id="stock-COP" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="COP" data-rsi="63.58" data-price="123.02999877929688" data-ma20="117.01" data-ma60="114.69" data-bento-idx="12">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9123,7 +9486,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-DELL" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="DELL" data-rsi="57.66" data-price="457.8800048828125" data-ma20="423.32" data-ma60="393.21" data-bento-idx="11">
+    <article id="stock-DELL" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="DELL" data-rsi="57.66" data-price="457.8800048828125" data-ma20="423.32" data-ma60="393.21" data-bento-idx="13">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9347,7 +9710,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-FTNT" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="FTNT" data-rsi="58.36" data-price="164.2100067138672" data-ma20="159.13" data-ma60="149.37" data-bento-idx="12">
+    <article id="stock-FTNT" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="FTNT" data-rsi="58.36" data-price="164.2100067138672" data-ma20="159.13" data-ma60="149.37" data-bento-idx="14">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9566,7 +9929,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-GD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="GD" data-rsi="69.02" data-price="395.9700012207031" data-ma20="380.43" data-ma60="360.38" data-bento-idx="13">
+    <article id="stock-GD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="GD" data-rsi="69.02" data-price="395.9700012207031" data-ma20="380.43" data-ma60="360.38" data-bento-idx="15">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -9697,7 +10060,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 380.43</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 360.38</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 69.02</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.5×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.7×</span>
           
           
           
@@ -9713,7 +10076,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="GD">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（69.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 極度縮量（0.4× 均量）— 量能確認前慎追</div><div class="signal-item">✅ 站穩 MA60 上方 9.9%</div><div class="signal-item">KD 中性（K=67.8 · D=55.0）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.0% — 極近歷史高位</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（69.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 9.9%</div><div class="signal-item">KD 中性（K=67.8 · D=55.0）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.0% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -9789,7 +10152,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-MCK" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="MCK" data-rsi="62.07" data-price="879.8699951171875" data-ma20="846.38" data-ma60="794.92" data-bento-idx="14">
+    <article id="stock-MCK" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="MCK" data-rsi="62.07" data-price="879.8699951171875" data-ma20="846.38" data-ma60="794.92" data-bento-idx="16">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10012,7 +10375,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-MDT" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="MDT" data-rsi="68.12" data-price="89.41000366210938" data-ma20="84.52" data-ma60="80.84" data-bento-idx="15">
+    <article id="stock-MDT" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="MDT" data-rsi="68.12" data-price="89.41000366210938" data-ma20="84.52" data-ma60="80.84" data-bento-idx="17">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10148,7 +10511,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 84.52</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 80.84</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 68.12</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.7×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
@@ -10164,7 +10527,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="MDT">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（68.1 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 10.6%</div><div class="signal-item">KD 中性（K=70.3 · D=60.1）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.0% — 極近歷史高位</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（68.1 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.9× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 10.6%</div><div class="signal-item">KD 中性（K=70.3 · D=60.1）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.0% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -10236,7 +10599,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-NOC" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NOC" data-rsi="69.08" data-price="577.8900146484375" data-ma20="540.76" data-ma60="538.68" data-bento-idx="16">
+    <article id="stock-NOC" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="NOC" data-rsi="69.08" data-price="577.8900146484375" data-ma20="540.76" data-ma60="538.68" data-bento-idx="18">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10459,7 +10822,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-OKTA" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="OKTA" data-rsi="63.08" data-price="150.77000427246094" data-ma20="143.8" data-ma60="126.57" data-bento-idx="17">
+    <article id="stock-OKTA" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="OKTA" data-rsi="63.08" data-price="150.77000427246094" data-ma20="143.8" data-ma60="126.57" data-bento-idx="19">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10683,7 +11046,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-OXY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="OXY" data-rsi="61.78" data-price="58.650001525878906" data-ma20="55.69" data-ma60="55.09" data-bento-idx="18">
+    <article id="stock-OXY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="OXY" data-rsi="61.78" data-price="58.650001525878906" data-ma20="55.69" data-ma60="55.09" data-bento-idx="20">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -10904,7 +11267,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PCVX" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="PCVX" data-rsi="57.67" data-price="58.290000915527344" data-ma20="55.88" data-ma60="53.16" data-bento-idx="19">
+    <article id="stock-PCVX" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="PCVX" data-rsi="57.67" data-price="58.290000915527344" data-ma20="55.88" data-ma60="53.16" data-bento-idx="21">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11130,7 +11493,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ADBE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="ADBE" data-rsi="69.18" data-price="272.9599914550781" data-ma20="242.53" data-ma60="232.98" data-bento-idx="20">
+    <article id="stock-ADBE" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="ADBE" data-rsi="69.18" data-price="272.9599914550781" data-ma20="242.53" data-ma60="232.98" data-bento-idx="22">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11353,7 +11716,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-BILL" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="BILL" data-rsi="66.52" data-price="49.2599983215332" data-ma20="45.45" data-ma60="39.4" data-bento-idx="21">
+    <article id="stock-BILL" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="BILL" data-rsi="66.52" data-price="49.2599983215332" data-ma20="45.45" data-ma60="39.4" data-bento-idx="23">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11581,7 +11944,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CRM" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CRM" data-rsi="65.38" data-price="197.50999450683594" data-ma20="178.03" data-ma60="173.15" data-bento-idx="22">
+    <article id="stock-CRM" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="CRM" data-rsi="65.38" data-price="197.50999450683594" data-ma20="178.03" data-ma60="173.15" data-bento-idx="24">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -11805,7 +12168,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-IDXX" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="IDXX" data-rsi="63.21" data-price="595.760009765625" data-ma20="565.63" data-ma60="558.7" data-bento-idx="23">
+    <article id="stock-IDXX" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="IDXX" data-rsi="63.21" data-price="595.760009765625" data-ma20="565.63" data-ma60="558.7" data-bento-idx="25">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12028,7 +12391,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-INTU" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="INTU" data-rsi="64.98" data-price="334.42999267578125" data-ma20="306.36" data-ma60="301.27" data-bento-idx="24">
+    <article id="stock-INTU" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="INTU" data-rsi="64.98" data-price="334.42999267578125" data-ma20="306.36" data-ma60="301.27" data-bento-idx="26">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12254,7 +12617,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PDD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="PDD" data-rsi="69.07" data-price="93.0" data-ma20="87.18" data-ma60="85.64" data-bento-idx="25">
+    <article id="stock-PDD" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="PDD" data-rsi="69.07" data-price="93.0" data-ma20="87.18" data-ma60="85.64" data-bento-idx="27">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12478,230 +12841,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-LLY" class="scard high" data-type="stock" data-market="US" data-score="80" data-ticker="LLY" data-rsi="60.76" data-price="1231.93994140625" data-ma20="1173.66" data-ma60="1140.03" data-bento-idx="26">
-
-      <div class="scard-head">
-        <div class="scard-id">
-          <div class="scard-tile">LL</div>
-          <div>
-            <div style="display:flex;align-items:center;gap:6px">
-              <div class="scard-sym">LLY</div>
-              <!-- Tier 2 history badges -->
-              
-                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(177,140,255,0.15);color:var(--purple);border:1px solid rgba(177,140,255,0.3);font-weight:700;letter-spacing:.04em">↩ RETURN</span>
-              
-              <!-- IBKR position badge -->
-              
-              
-              <!-- Star/favourite button -->
-              <button class="star-btn" data-ticker="LLY"
-                onclick="toggleFavourite('LLY')"
-                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
-                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
-                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
-                title="Click to add LLY to Favourites">☆</button>
-            </div>
-            <div class="scard-name">Eli Lilly and Company</div>
-            <div class="scard-tags">
-              <span class="tag stock">stock</span>
-              <span class="tag market">US</span>
-            </div>
-          </div>
-        </div>
-        <div class="scard-price">
-          <div class="price-block">
-            <div class="price-val">$1231.94</div>
-            <div class="price-chg up">+3.90%</div>
-          </div>
-          <div class="ring high">
-            <svg width="56" height="56">
-              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
-              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
-                stroke-dasharray="115.60 144.50" stroke-linecap="round"/>
-            </svg>
-            <div class="ring-num">80</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
-        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,17.7 6.0,17.0 10.0,14.8 14.0,13.1 18.0,18.6 22.0,13.7 26.0,15.9 30.0,11.9 34.0,10.2 38.0,9.9 42.0,5.9 46.0,7.8 50.0,17.2 54.0,18.3 58.0,23.0 62.0,24.0 66.0,14.7 70.0,10.9 74.0,12.0 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
-      </div>
-      
-
-      <div class="scard-row">
-        <span class="strength-badge high">強力做多 🔥</span>
-        
-          
-          
-          <span class="sentiment pos">+8</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">多數新聞標題顯示公司業績成長強勁、展望樂觀，並被視為頂級投資標的，市場情緒極度看好。</span>
-        
-      </div>
-
-      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
-      
-      
-      <div class="verdict-row">
-        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
-          🟡 WAIT
-        </span>
-        <span class="verdict-reason">BB extended (0.98) — wait for pullback</span>
-      </div>
-      
-
-      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
-      <div class="beginner-only">
-        <div class="beg-verdict high">
-          🔥 Strong Buy — Very bullish technical setup (80/100)
-          
-        </div>
-        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
-      </div>
-
-      
-
-      <div class="expert-only">
-      
-      
-      
-      
-      <div>
-        <div class="scard-sub">Analyst ratings</div>
-        <div class="analyst-bar">
-          <div class="analyst-buy"  style="flex:19"></div>
-          <div class="analyst-hold" style="flex:7"></div>
-          <div class="analyst-sell" style="flex:1"></div>
-        </div>
-        <div class="analyst-counts">
-          <span class="buy">Buy 19</span>
-          <span class="hold">Hold 7</span>
-          <span class="sell">Sell 1</span>
-          <span class="period">2026-08-01</span>
-        </div>
-      </div>
-      
-      </div>
-
-      
-      
-      
-        
-        
-        <div>
-          <div class="scard-sub">52w range · 97.2% from low</div>
-          <div class="range-bar">
-            <div class="range-fill" style="width:97.2%"></div>
-            <div class="range-thumb" style="left:97.2%"></div>
-          </div>
-          <div class="range-labels">
-            <span>L $623.78</span>
-            <span>H $1249.45</span>
-          </div>
-        </div>
-      
-
-      <div class="expert-only">
-        <div class="scard-row">
-          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 1179.03</span>
-          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 1173.66</span>
-          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 1140.03</span>
-          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 60.76</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
-          
-          
-          
-          
-          
-          
-          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.98&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.98</span>
-          
-          
-          <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · 54.1</span>
-          
-        </div>
-        <div>
-          <div class="scard-sub">Technical signals</div>
-          <div class="signals" data-sig-ticker="LLY">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（60.8 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.1%</div><div class="signal-item">KD 中性（K=76.6 · D=59.0）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.4% — 極近歷史高位</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div>
-        <div class="scard-sub">Latest news</div>
-        <div class="news-list">
-          
-          <div class="news-item">
-            3 Beaten-Down Healthcare Stocks to Buy in August
-            
-            <span class="news-pub">24/7 Wall St.</span>
-          </div>
-          
-          <div class="news-item">
-            Nvidia, Eli Lilly, and Disney Show It’s Time to Back the Top Dogs
-            
-            <span class="news-pub">Barrons.com</span>
-          </div>
-          
-          <div class="news-item">
-            Ozempic For $50 a Month? Amazon Pharmacy Rolls Out Cheap Weight-Loss Drugs for Medicare Patients
-            
-            <span class="news-pub">Benzinga</span>
-          </div>
-          
-        </div>
-      </div>
-      
-
-      
-      <details class="ai-details" open>
-        <summary>
-          <span class="ai-label">✦ AI Analysis</span>
-          <span class="ai-arrow">▼</span>
-        </summary>
-        <div class="ai-body">① LLY目前呈現多頭排列，MACD在零軸以上且動能擴張，趨勢強勁偏多。
-② 近期支撐為MA5的$1174.2，壓力為布林上軌$1228.76。
-③ 在沒有重大負面消息前提下，未來3-5個交易日高機率持續震盪走高，挑戰布林上軌。
-④ 極度縮量是主要風險，若未能補量上攻，股價可能面臨整理或回調。</div>
-      </details>
-      
-
-      
-      <div class="entry">
-        <div class="entry-label">Entry timing</div>
-        <div class="entry-body">**
-
-建議買入區間在$1180 - $1200之間，等待量能回補。止損位設於MA20（約$1172.45）下方，若跌破表示短期多頭趨勢可能受阻。第一目標價為$1250，第二目標價為$1280，主要基於過去壓力區與技術延伸。風險回報比約為1:2。目前MACD在0軸以上，無需等待0軸突破確認。</div>
-      </div>
-      
-
-      <a href="./LLY.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
-        → 查看詳細分析
-      </a>
-      <button class="copy-btn"
-        data-ticker="LLY"
-        data-price="1231.94"
-        data-score="80"
-        data-entry="**
-
-建議買入區間在$1180 - $1200之間，等待量能回補。止損位設於MA20（約$1172.45）下方，若跌破表示短期多頭趨勢可能受阻。第一目標價為$1250，第二目標價為$1280，主要基於過去壓力區與技術延伸。風險回報比約為1:2。目前MACD在0軸以上，無需等待0軸突破確認。"
-        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
-    </article>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <article id="stock-ABNB" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="ABNB" data-rsi="81.69" data-price="184.6999969482422" data-ma20="151.03" data-ma60="142.65" data-bento-idx="27">
+    <article id="stock-ABNB" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="ABNB" data-rsi="81.69" data-price="184.6999969482422" data-ma20="151.03" data-ma60="142.65" data-bento-idx="28">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -12920,7 +13060,226 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ESTC" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="ESTC" data-rsi="77.23" data-price="76.31999969482422" data-ma20="64.73" data-ma60="60.8" data-bento-idx="28">
+    <article id="stock-CVNA" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="CVNA" data-rsi="62.69" data-price="74.16000366210938" data-ma20="66.47" data-ma60="66.97" data-bento-idx="29">
+
+      <div class="scard-head">
+        <div class="scard-id">
+          <div class="scard-tile">CV</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="scard-sym">CVNA</div>
+              <!-- Tier 2 history badges -->
+              
+                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.15);color:var(--up);border:1px solid rgba(52,211,153,0.3);font-weight:700;letter-spacing:.04em">NEW</span>
+              
+              <!-- IBKR position badge -->
+              
+              
+              <!-- Star/favourite button -->
+              <button class="star-btn" data-ticker="CVNA"
+                onclick="toggleFavourite('CVNA')"
+                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
+                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
+                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
+                title="Click to add CVNA to Favourites">☆</button>
+            </div>
+            <div class="scard-name">Carvana Co.</div>
+            <div class="scard-tags">
+              <span class="tag stock">stock</span>
+              <span class="tag market">US</span>
+            </div>
+          </div>
+        </div>
+        <div class="scard-price">
+          <div class="price-block">
+            <div class="price-val">$74.16</div>
+            <div class="price-chg up">+4.67%</div>
+          </div>
+          <div class="ring high">
+            <svg width="56" height="56">
+              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
+              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
+                stroke-dasharray="108.38 144.50" stroke-linecap="round"/>
+            </svg>
+            <div class="ring-num">75</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
+        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,9.4 6.0,9.1 10.0,9.0 14.0,13.8 18.0,18.3 22.0,16.3 26.0,20.3 30.0,24.0 34.0,23.6 38.0,18.5 42.0,15.6 46.0,15.2 50.0,22.2 54.0,20.9 58.0,15.5 62.0,12.8 66.0,10.7 70.0,12.3 74.0,8.7 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
+      </div>
+      
+
+      <div class="scard-row">
+        <span class="strength-badge high">偏多 📈</span>
+        
+          
+          
+          <span class="sentiment pos">+3</span>
+          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有內部人士拋售和對升息的潛在擔憂，但公司財報優於預期，營收和單位數增長強勁，且有內部人士逢低買入的報導，整體略偏樂觀。</span>
+        
+      </div>
+
+      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
+      
+      
+      <div class="verdict-row">
+        <span class="verdict-chip" style="color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.30)">
+          🟡 WAIT
+        </span>
+        <span class="verdict-reason">BB extended (0.99) — wait for pullback</span>
+      </div>
+      
+
+      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
+      <div class="beginner-only">
+        <div class="beg-verdict high">
+          📈 Buy Signal — Most indicators are pointing up (75/100)
+          
+        </div>
+        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
+      </div>
+
+      
+
+      <div class="expert-only">
+      
+      
+      
+      
+      <div>
+        <div class="scard-sub">Analyst ratings</div>
+        <div class="analyst-bar">
+          <div class="analyst-buy"  style="flex:12"></div>
+          <div class="analyst-hold" style="flex:10"></div>
+          <div class="analyst-sell" style="flex:1"></div>
+        </div>
+        <div class="analyst-counts">
+          <span class="buy">Buy 12</span>
+          <span class="hold">Hold 10</span>
+          <span class="sell">Sell 1</span>
+          <span class="period">2026-08-01</span>
+        </div>
+      </div>
+      
+      </div>
+
+      
+      
+      
+        
+        
+        <div>
+          <div class="scard-sub">52w range · 45.9% from low</div>
+          <div class="range-bar">
+            <div class="range-fill" style="width:45.9%"></div>
+            <div class="range-thumb" style="left:45.9%"></div>
+          </div>
+          <div class="range-labels">
+            <span>L $54.46</span>
+            <span>H $97.38</span>
+          </div>
+        </div>
+      
+
+      <div class="expert-only">
+        <div class="scard-row">
+          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 70.17</span>
+          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 66.47</span>
+          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 66.97</span>
+          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 62.69</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.1×</span>
+          
+          
+          
+          
+          
+          
+          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.99&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.99</span>
+          
+          
+          <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · 55.4</span>
+          
+        </div>
+        <div>
+          <div class="scard-sub">Technical signals</div>
+          <div class="signals" data-sig-ticker="CVNA">
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（62.7 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">🟡 量能正常（1.1× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 10.7%</div><div class="signal-item">⚠️ KD 超買（K=90.0 · D=90.0）</div><div class="signal-item">⚠️ 價格在 EMA200 之上，但 EMA200 下彎 — 大趨勢轉弱</div><div class="signal-item">🔴 EMA200 斜率負值（長期趨勢走弱）— 高分但大趨勢唔支持</div><div class="signal-item">⚠️ EMA 三線未齊（EMA20/50/200 排列未完整）— 趨勢質素打折</div><div class="signal-item">✅ 距52週高 -5.4% — 高位強勢</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div>
+        <div class="scard-sub">Latest news</div>
+        <div class="news-list">
+          
+          <div class="news-item">
+            Insiders Are Buying the Dip in These 2 Stocks — and Analysts Are Backing the Move
+            
+            <span class="news-pub">TipRanks</span>
+          </div>
+          
+          <div class="news-item">
+            The Takeover Case for OPLN: A Digital Powerhouse Hiding in Plain Sight
+            
+            <span class="news-pub">Trefis</span>
+          </div>
+          
+          <div class="news-item">
+            Company Insider Dumps Nearly 4,000 Shares of Used Car Seller
+            
+            <span class="news-pub">Motley Fool</span>
+          </div>
+          
+        </div>
+      </div>
+      
+
+      
+      <details class="ai-details" open>
+        <summary>
+          <span class="ai-label">✦ AI Analysis</span>
+          <span class="ai-arrow">▼</span>
+        </summary>
+        <div class="ai-body">① 盤面偏多，MACD在零軸以上且動能擴張，顯示多頭趨勢強勁。
+② 最近支撐位約在 $69.65 (MA5)，壓力位在 $73.65 (BB上軌)。
+③ 未來3-5個交易日高機率將延續上漲趨勢，挑戰前高甚至突破。
+④ 主要風險為極度縮量，若無量能放大確認，上漲動能恐難持續。</div>
+      </details>
+      
+
+      
+      <div class="entry">
+        <div class="entry-label">Entry timing</div>
+        <div class="entry-body">目前MACD在0軸以上，但KD高位死叉且量能極度縮量，存在回檔風險。建議等待回檔，買入區間 $68-$70。止損位 $65（跌破MA20）。第一目標價 $75（挑戰前高），第二目標價 $80（突破區間上緣）。風險回報比約 1:2，若能買在較低點則風險回報比更佳。</div>
+      </div>
+      
+
+      <a href="./CVNA.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
+        → 查看詳細分析
+      </a>
+      <button class="copy-btn"
+        data-ticker="CVNA"
+        data-price="74.16"
+        data-score="75"
+        data-entry="目前MACD在0軸以上，但KD高位死叉且量能極度縮量，存在回檔風險。建議等待回檔，買入區間 $68-$70。止損位 $65（跌破MA20）。第一目標價 $75（挑戰前高），第二目標價 $80（突破區間上緣）。風險回報比約 1:2，若能買在較低點則風險回報比更佳。"
+        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
+    </article>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <article id="stock-ESTC" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="ESTC" data-rsi="77.23" data-price="76.31999969482422" data-ma20="64.73" data-ma60="60.8" data-bento-idx="30">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13144,7 +13503,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-PFE" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="PFE" data-rsi="76.92" data-price="27.049999237060547" data-ma20="25.06" data-ma60="24.86" data-bento-idx="29">
+    <article id="stock-PFE" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="PFE" data-rsi="76.92" data-price="27.049999237060547" data-ma20="25.06" data-ma60="24.86" data-bento-idx="31">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13367,7 +13726,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-UBER" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="UBER" data-rsi="63.18" data-price="78.02999877929688" data-ma20="71.32" data-ma60="72.09" data-bento-idx="30">
+    <article id="stock-UBER" class="scard high" data-type="stock" data-market="US" data-score="75" data-ticker="UBER" data-rsi="63.18" data-price="78.02999877929688" data-ma20="71.32" data-ma60="72.09" data-bento-idx="32">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13592,7 +13951,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-XLE" class="scard high" data-type="etf" data-market="US" data-score="73" data-ticker="XLE" data-rsi="61.75" data-price="60.18000030517578" data-ma20="58.32" data-ma60="56.88" data-bento-idx="31">
+    <article id="stock-XLE" class="scard high" data-type="etf" data-market="US" data-score="73" data-ticker="XLE" data-rsi="61.75" data-price="60.18000030517578" data-ma20="58.32" data-ma60="56.88" data-bento-idx="33">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13732,7 +14091,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ABT" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="ABT" data-rsi="69.54" data-price="108.62000274658203" data-ma20="102.83" data-ma60="93.8" data-bento-idx="32">
+    <article id="stock-ABT" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="ABT" data-rsi="69.54" data-price="108.62000274658203" data-ma20="102.83" data-ma60="93.8" data-bento-idx="34">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -13855,7 +14214,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 102.83</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 93.8</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 69.54</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.3×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.5×</span>
           
           
           
@@ -13871,7 +14230,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="ABT">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（69.5 ↑）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 極度縮量（0.3× 均量）— 量能確認前慎追</div><div class="signal-item">✅ 站穩 MA60 上方 15.8%</div><div class="signal-item">KD 中性（K=73.3 · D=64.8）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.3% — 極近歷史高位</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（69.5 ↑）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 極度縮量（0.5× 均量）— 量能確認前慎追</div><div class="signal-item">✅ 站穩 MA60 上方 15.8%</div><div class="signal-item">KD 中性（K=73.3 · D=64.8）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.3% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -13943,7 +14302,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-AMZN" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="AMZN" data-rsi="65.85" data-price="278.0899963378906" data-ma20="253.13" data-ma60="250.77" data-bento-idx="33">
+    <article id="stock-AMZN" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="AMZN" data-rsi="65.85" data-price="278.0899963378906" data-ma20="253.13" data-ma60="250.77" data-bento-idx="35">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14166,7 +14525,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ICE" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="ICE" data-rsi="60.74" data-price="150.5399932861328" data-ma20="146.83" data-ma60="142.04" data-bento-idx="34">
+    <article id="stock-ICE" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="ICE" data-rsi="60.74" data-price="150.5399932861328" data-ma20="146.83" data-ma60="142.04" data-bento-idx="36">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14381,7 +14740,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-ROP" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="ROP" data-rsi="67.56" data-price="403.8900146484375" data-ma20="376.68" data-ma60="349.0" data-bento-idx="35">
+    <article id="stock-ROP" class="scard high" data-type="stock" data-market="US" data-score="72" data-ticker="ROP" data-rsi="67.56" data-price="403.8900146484375" data-ma20="376.68" data-ma60="349.0" data-bento-idx="37">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14512,7 +14871,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 376.68</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 349.0</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 67.56</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
@@ -14528,7 +14887,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="ROP">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（67.6 ↑）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 15.7%</div><div class="signal-item">KD 中性（K=73.2 · D=70.8）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.6% — 極近歷史高位</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（67.6 ↑）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.9× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 15.7%</div><div class="signal-item">KD 中性（K=73.2 · D=70.8）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.6% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -14595,7 +14954,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-SCHG" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="SCHG" data-rsi="67.47" data-price="35.83000183105469" data-ma20="34.45" data-ma60="34.18" data-bento-idx="36">
+    <article id="stock-SCHG" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="SCHG" data-rsi="67.47" data-price="35.83000183105469" data-ma20="34.45" data-ma60="34.18" data-bento-idx="38">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14797,7 +15156,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-FNDX" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="FNDX" data-rsi="68.15" data-price="32.439998626708984" data-ma20="31.77" data-ma60="31.19" data-bento-idx="37">
+    <article id="stock-FNDX" class="scard high" data-type="etf" data-market="US" data-score="72" data-ticker="FNDX" data-rsi="68.15" data-price="32.439998626708984" data-ma20="31.77" data-ma60="31.19" data-bento-idx="39">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -14994,147 +15353,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-CIBR" class="scard high" data-type="etf" data-market="US" data-score="70" data-ticker="CIBR" data-rsi="71.88" data-price="100.5999984741211" data-ma20="92.66" data-ma60="88.58" data-bento-idx="38">
-
-      <div class="scard-head">
-        <div class="scard-id">
-          <div class="scard-tile">CI</div>
-          <div>
-            <div style="display:flex;align-items:center;gap:6px">
-              <div class="scard-sym">CIBR</div>
-              <!-- Tier 2 history badges -->
-              
-              <!-- IBKR position badge -->
-              
-              
-              <!-- Star/favourite button -->
-              <button class="star-btn" data-ticker="CIBR"
-                onclick="toggleFavourite('CIBR')"
-                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
-                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
-                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
-                title="Click to add CIBR to Favourites">☆</button>
-            </div>
-            <div class="scard-name">First Trust NASDAQ Cybersecurit</div>
-            <div class="scard-tags">
-              <span class="tag etf">etf</span>
-              <span class="tag market">US</span>
-            </div>
-          </div>
-        </div>
-        <div class="scard-price">
-          <div class="price-block">
-            <div class="price-val">$100.60</div>
-            <div class="price-chg up">+2.81%</div>
-          </div>
-          <div class="ring high">
-            <svg width="56" height="56">
-              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
-              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
-                stroke-dasharray="101.15 144.50" stroke-linecap="round"/>
-            </svg>
-            <div class="ring-num">70</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
-        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,13.1 6.0,15.7 10.0,17.5 14.0,16.8 18.0,17.7 22.0,19.6 26.0,21.5 30.0,24.0 34.0,22.9 38.0,21.9 42.0,21.6 46.0,22.3 50.0,20.4 54.0,17.6 58.0,14.4 62.0,8.1 66.0,8.7 70.0,10.5 74.0,8.3 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
-      </div>
-      
-
-      <div class="scard-row">
-        <span class="strength-badge high">偏多 📈</span>
-        
-      </div>
-
-      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
-      
-      
-      <div class="verdict-row">
-        <span class="verdict-chip" style="color:#38bdf8;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.30)">
-          🏄 RIDING ↑
-        </span>
-        <span class="verdict-reason">Walking the upper band 3+ days — trend has momentum, hold position</span>
-      </div>
-      
-
-      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
-      <div class="beginner-only">
-        <div class="beg-verdict high">
-          📈 Buy Signal — Most indicators are pointing up (70/100)
-          
-        </div>
-        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
-      </div>
-
-      
-
-      <div class="expert-only">
-      
-      
-      
-      
-      </div>
-
-      
-      
-      
-
-      <div class="expert-only">
-        <div class="scard-row">
-          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 98.07</span>
-          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 92.66</span>
-          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 88.58</span>
-          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 71.88</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 1.3×</span>
-          
-          
-          
-          
-          
-          
-          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 1.03&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 1.03</span>
-          
-          
-        </div>
-        <div>
-          <div class="scard-sub">Technical signals</div>
-          <div class="signals" data-sig-ticker="CIBR">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">RSI 中性（71.9）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">🟡 量能正常（1.3× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 13.6%</div><div class="signal-item">⚠️ KD 超買（K=84.1 · D=82.6）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.6% — 極近歷史高位</div>
-          </div>
-        </div>
-      </div>
-
-      
-
-      
-
-      
-
-      <a href="./CIBR.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
-        → 查看詳細分析
-      </a>
-      <button class="copy-btn"
-        data-ticker="CIBR"
-        data-price="100.60"
-        data-score="70"
-        data-entry=""
-        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
-    </article>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <article id="stock-BRK-B" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="BRK-B" data-rsi="74.7" data-price="529.4199829101562" data-ma20="504.23" data-ma60="493.83" data-bento-idx="39">
+    <article id="stock-BRK-B" class="scard high" data-type="stock" data-market="US" data-score="70" data-ticker="BRK-B" data-rsi="74.7" data-price="529.4199829101562" data-ma20="504.23" data-ma60="493.83" data-bento-idx="40">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15357,7 +15576,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-GLD" class="scard" data-type="etf" data-market="US" data-score="67" data-ticker="GLD" data-rsi="67.61" data-price="402.5400085449219" data-ma20="376.64" data-ma60="387.75" data-bento-idx="40">
+    <article id="stock-GLD" class="scard" data-type="etf" data-market="US" data-score="67" data-ticker="GLD" data-rsi="67.61" data-price="402.5400085449219" data-ma20="376.64" data-ma60="387.75" data-bento-idx="41">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15554,7 +15773,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     
     
 
-    <article id="stock-BSX" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="BSX" data-rsi="69.02" data-price="50.459999084472656" data-ma20="45.84" data-ma60="47.4" data-bento-idx="41">
+    <article id="stock-BSX" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="BSX" data-rsi="69.02" data-price="50.459999084472656" data-ma20="45.84" data-ma60="47.4" data-bento-idx="42">
 
       <div class="scard-head">
         <div class="scard-id">
@@ -15685,7 +15904,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 45.84</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 47.4</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 69.02</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
@@ -15701,7 +15920,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="BSX">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（69.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 6.5%</div><div class="signal-item">⚠️ KD 超買（K=91.1 · D=87.5）</div><div class="signal-item">❌ 價格在 EMA200 之下，EMA200 下彎 — 長期空頭</div><div class="signal-item">✅ 距52週高 -13.8% — 高位強勢</div>
+            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（69.0 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.9× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 6.5%</div><div class="signal-item">⚠️ KD 超買（K=91.1 · D=87.5）</div><div class="signal-item">❌ 價格在 EMA200 之下，EMA200 下彎 — 長期空頭</div><div class="signal-item">✅ 距52週高 -13.8% — 高位強勢</div>
           </div>
         </div>
       </div>
@@ -15763,217 +15982,6 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         data-score="65"
         data-entry="**
 建議在回調至$49.00 - $49.50區間時考慮買入，此區間接近MA5支撐。止損位設於MA20下方，即$45.50，邏輯是若跌破此關鍵支撐，多頭趨勢可能受損。第一目標價$52.00（接近歷史高點），第二目標價$54.00。當前風險回報比約為1:2至1:3，具吸引力。由於MACD在0軸以上且動能擴張，無需等待0軸突破確認，可直接考慮擇機入場。"
-        onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
-    </article>
-  
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <article id="stock-CVNA" class="scard" data-type="stock" data-market="US" data-score="65" data-ticker="CVNA" data-rsi="62.69" data-price="74.16000366210938" data-ma20="66.47" data-ma60="66.97" data-bento-idx="42">
-
-      <div class="scard-head">
-        <div class="scard-id">
-          <div class="scard-tile">CV</div>
-          <div>
-            <div style="display:flex;align-items:center;gap:6px">
-              <div class="scard-sym">CVNA</div>
-              <!-- Tier 2 history badges -->
-              
-                <span style="font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(52,211,153,0.15);color:var(--up);border:1px solid rgba(52,211,153,0.3);font-weight:700;letter-spacing:.04em">NEW</span>
-              
-              <!-- IBKR position badge -->
-              
-              
-              <!-- Star/favourite button -->
-              <button class="star-btn" data-ticker="CVNA"
-                onclick="toggleFavourite('CVNA')"
-                style="background:none;border:1px solid transparent;cursor:pointer;font-size:17px;padding:2px 5px;line-height:1;border-radius:5px;transition:all .15s;margin-left:4px;color:#8a8c98"
-                onmouseover="this.style.color='#f5b942';this.style.background='rgba(245,185,66,0.12)';this.style.borderColor='rgba(245,185,66,0.3)'"
-                onmouseout="this.style.background='';this.style.borderColor='transparent';if(!window._favs||!window._favs.includes(this.dataset.ticker))this.style.color='#8a8c98'"
-                title="Click to add CVNA to Favourites">☆</button>
-            </div>
-            <div class="scard-name">Carvana Co.</div>
-            <div class="scard-tags">
-              <span class="tag stock">stock</span>
-              <span class="tag market">US</span>
-            </div>
-          </div>
-        </div>
-        <div class="scard-price">
-          <div class="price-block">
-            <div class="price-val">$74.16</div>
-            <div class="price-chg up">+4.67%</div>
-          </div>
-          <div class="ring high">
-            <svg width="56" height="56">
-              <circle cx="28" cy="28" r="23" stroke="rgba(255,255,255,0.06)" stroke-width="3.5" fill="none"/>
-              <circle cx="28" cy="28" r="23" stroke="#34d399" stroke-width="3.5" fill="none"
-                stroke-dasharray="93.92 144.50" stroke-linecap="round"/>
-            </svg>
-            <div class="ring-num">65</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div style="display:flex;align-items:center;gap:8px;margin-top:-4px">
-        <svg width="80" height="28" viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg"><polyline points="2.0,9.4 6.0,9.1 10.0,9.0 14.0,13.8 18.0,18.3 22.0,16.3 26.0,20.3 30.0,24.0 34.0,23.6 38.0,18.5 42.0,15.6 46.0,15.2 50.0,22.2 54.0,20.9 58.0,15.5 62.0,12.8 66.0,10.7 70.0,12.3 74.0,8.7 78.0,4.0" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
-        <span style="font-family:var(--mono);font-size:9px;color:var(--text-2)">20d price</span>
-      </div>
-      
-
-      <div class="scard-row">
-        <span class="strength-badge high">偏多 📈</span>
-        
-          
-          
-          <span class="sentiment pos">+3</span>
-          <span style="font-size:11px;color:var(--text-2);flex:1;min-width:120px">儘管有內部人士拋售和對升息的潛在擔憂，但公司財報優於預期，營收和單位數增長強勁，且有內部人士逢低買入的報導，整體略偏樂觀。</span>
-        
-      </div>
-
-      <!-- ── Entry verdict chip ─────────────────────────────────────── -->
-      
-
-      <!-- ── Simple view: plain-English verdict ─────────────────────── -->
-      <div class="beginner-only">
-        <div class="beg-verdict high">
-          📈 Buy Signal — Most indicators are pointing up (65/100)
-          
-        </div>
-        <div class="beg-explain">This score measures 5 technical factors: price trend (MA alignment), momentum (RSI), MACD crossover, volume strength, and how far price is above/below its 60-day average. 100 = all signals bullish.</div>
-      </div>
-
-      
-
-      <div class="expert-only">
-      
-      
-      
-      
-      <div>
-        <div class="scard-sub">Analyst ratings</div>
-        <div class="analyst-bar">
-          <div class="analyst-buy"  style="flex:12"></div>
-          <div class="analyst-hold" style="flex:10"></div>
-          <div class="analyst-sell" style="flex:1"></div>
-        </div>
-        <div class="analyst-counts">
-          <span class="buy">Buy 12</span>
-          <span class="hold">Hold 10</span>
-          <span class="sell">Sell 1</span>
-          <span class="period">2026-08-01</span>
-        </div>
-      </div>
-      
-      </div>
-
-      
-      
-      
-        
-        
-        <div>
-          <div class="scard-sub">52w range · 45.9% from low</div>
-          <div class="range-bar">
-            <div class="range-fill" style="width:45.9%"></div>
-            <div class="range-thumb" style="left:45.9%"></div>
-          </div>
-          <div class="range-labels">
-            <span>L $54.46</span>
-            <span>H $97.38</span>
-          </div>
-        </div>
-      
-
-      <div class="expert-only">
-        <div class="scard-row">
-          <span class="ma-badge ma5 tip" data-tip="MA5 (5-day avg price)&#10;Price above MA5 = short-term uptrend&#10;Price below MA5 = short-term weakness">MA5 · 70.17</span>
-          <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 66.47</span>
-          <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 66.97</span>
-          <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 62.69</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
-          
-          
-          
-          
-          
-          
-          <span class="bb-badge tip" style="color:#f87171;background:#f8717114;border:1px solid #f8717133" data-tip="BB %B: 0.99&#10;🔴 Near upper band — overbought&#10;High risk of mean reversion — wait&#10;0=lower band · 1=upper band">BB 0.99</span>
-          
-          
-          <span class="ma-badge" style="background:rgba(255,255,255,0.04);color:var(--text-2);border:1px solid var(--border)">P/E · 55.4</span>
-          
-        </div>
-        <div>
-          <div class="scard-sub">Technical signals</div>
-          <div class="signals" data-sig-ticker="CVNA">
-            <div class="signal-item">⚠️ 價格站上 MA60</div><div class="signal-item">✅ RSI 動能走強（62.7 ↑）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 10.7%</div><div class="signal-item">⚠️ KD 超買（K=90.0 · D=90.0）</div><div class="signal-item">⚠️ 價格在 EMA200 之上，但 EMA200 下彎 — 大趨勢轉弱</div><div class="signal-item">✅ 距52週高 -5.4% — 高位強勢</div>
-          </div>
-        </div>
-      </div>
-
-      
-      <div>
-        <div class="scard-sub">Latest news</div>
-        <div class="news-list">
-          
-          <div class="news-item">
-            Insiders Are Buying the Dip in These 2 Stocks — and Analysts Are Backing the Move
-            
-            <span class="news-pub">TipRanks</span>
-          </div>
-          
-          <div class="news-item">
-            The Takeover Case for OPLN: A Digital Powerhouse Hiding in Plain Sight
-            
-            <span class="news-pub">Trefis</span>
-          </div>
-          
-          <div class="news-item">
-            Company Insider Dumps Nearly 4,000 Shares of Used Car Seller
-            
-            <span class="news-pub">Motley Fool</span>
-          </div>
-          
-        </div>
-      </div>
-      
-
-      
-      <details class="ai-details" open>
-        <summary>
-          <span class="ai-label">✦ AI Analysis</span>
-          <span class="ai-arrow">▼</span>
-        </summary>
-        <div class="ai-body">① 盤面偏多，MACD在零軸以上且動能擴張，顯示多頭趨勢強勁。
-② 最近支撐位約在 $69.65 (MA5)，壓力位在 $73.65 (BB上軌)。
-③ 未來3-5個交易日高機率將延續上漲趨勢，挑戰前高甚至突破。
-④ 主要風險為極度縮量，若無量能放大確認，上漲動能恐難持續。</div>
-      </details>
-      
-
-      
-      <div class="entry">
-        <div class="entry-label">Entry timing</div>
-        <div class="entry-body">目前MACD在0軸以上，但KD高位死叉且量能極度縮量，存在回檔風險。建議等待回檔，買入區間 $68-$70。止損位 $65（跌破MA20）。第一目標價 $75（挑戰前高），第二目標價 $80（突破區間上緣）。風險回報比約 1:2，若能買在較低點則風險回報比更佳。</div>
-      </div>
-      
-
-      <a href="./CVNA.html" class="copy-btn" style="display:block;text-align:center;text-decoration:none;margin-top:0;color:var(--blue)">
-        → 查看詳細分析
-      </a>
-      <button class="copy-btn"
-        data-ticker="CVNA"
-        data-price="74.16"
-        data-score="65"
-        data-entry="目前MACD在0軸以上，但KD高位死叉且量能極度縮量，存在回檔風險。建議等待回檔，買入區間 $68-$70。止損位 $65（跌破MA20）。第一目標價 $75（挑戰前高），第二目標價 $80（突破區間上緣）。風險回報比約 1:2，若能買在較低點則風險回報比更佳。"
         onclick="copyTradeSetup(this)">⎘ Copy trade setup</button>
     </article>
   
@@ -16744,7 +16752,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 754.87</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 749.63</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 66.05</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.6×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
@@ -16758,7 +16766,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="IVV">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（66.1 ↑）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.6× 均量）</div><div class="signal-item">🟡 略高於 MA60（+3.6%）</div><div class="signal-item">⚠️ KD 超買（K=88.7 · D=87.5）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.5% — 極近歷史高位</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">✅ RSI 動能走強（66.1 ↑）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.9× 均量）</div><div class="signal-item">🟡 略高於 MA60（+3.6%）</div><div class="signal-item">⚠️ KD 超買（K=88.7 · D=87.5）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.5% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -17088,7 +17096,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 557.42</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 533.58</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 70.69</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.9×</span>
           
           
           
@@ -17104,7 +17112,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="LMT">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">RSI 中性（70.7）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 13.0%</div><div class="signal-item">KD 中性（K=82.7 · D=75.3）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.6% — 極近歷史高位</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">RSI 中性（70.7）</div><div class="signal-item">✅ MACD 金叉且動能擴張（0軸以上）</div><div class="signal-item">⚠️ 量能不足（0.9× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 13.0%</div><div class="signal-item">KD 中性（K=82.7 · D=75.3）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -0.6% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -18252,7 +18260,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 429.59</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 410.2</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 79.31</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.7×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
@@ -18266,7 +18274,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="MSFT">
-            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">⚠️ RSI 超買（79.3）— 注意回調</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 23.4%</div><div class="signal-item">⚠️ KD 超買（K=96.0 · D=95.0）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.5% — 極近歷史高位</div><div class="signal-item">⚠️ 1個月升幅 29.4% — 可能過度延伸，注意追高風險</div><div class="signal-item">🔴 短期過度延伸（1M +29.4%）— 回調風險上升</div>
+            <div class="signal-item">✅ 多頭排列（價格 > MA5 > MA20 > MA60）</div><div class="signal-item">⚠️ RSI 超買（79.3）— 注意回調</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 23.4%</div><div class="signal-item">⚠️ KD 超買（K=96.0 · D=95.0）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.5% — 極近歷史高位</div><div class="signal-item">⚠️ 1個月升幅 29.4% — 可能過度延伸，注意追高風險</div><div class="signal-item">🔴 短期過度延伸（1M +29.4%）— 回調風險上升</div>
           </div>
         </div>
       </div>
@@ -18765,7 +18773,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 1086.8</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 1044.58</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 64.06</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.7×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.8×</span>
           
           
           
@@ -18781,7 +18789,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="BLK">
-            <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div><div class="signal-item">RSI 中性（64.1）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.3%</div><div class="signal-item">KD 中性（K=79.7 · D=81.8）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.6% — 極近歷史高位</div>
+            <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div><div class="signal-item">RSI 中性（64.1）</div><div class="signal-item">🟡 MACD 金叉（動能略收）</div><div class="signal-item">⚠️ 量能不足（0.8× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 8.3%</div><div class="signal-item">KD 中性（K=79.7 · D=81.8）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -1.6% — 極近歷史高位</div>
           </div>
         </div>
       </div>
@@ -21412,7 +21420,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           <span class="ma-badge ma20 tip" data-tip="MA20 (20-day avg price)&#10;Price above MA20 = medium-term trend intact&#10;MA5 crossing above MA20 = bullish signal">MA20 · 94.85</span>
           <span class="ma-badge ma60 tip" data-tip="MA60 (60-day avg price)&#10;Key trend line — price above = bull trend&#10;Price below MA60 = avoid long entries">MA60 · 88.31</span>
           <span class="rsi-badge tip" data-tip="RSI (momentum 0–100)&#10;45–70 rising = strong buy zone&#10;&gt;70 = overbought, wait for pullback&#10;&lt;30 = oversold, watch for bounce">RSI · 62.15</span>
-          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.5×</span>
+          <span class="vol-badge tip" data-tip="Volume vs 20-day average&#10;≥1.5× = strong institutional interest&#10;1.0–1.5× = normal&#10;&lt;1.0× = weak conviction, be cautious">Vol · 0.7×</span>
           
           
           
@@ -21428,7 +21436,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <div>
           <div class="scard-sub">Technical signals</div>
           <div class="signals" data-sig-ticker="MET">
-            <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div><div class="signal-item">RSI 中性（62.1）</div><div class="signal-item">❌ MACD 偏空</div><div class="signal-item">⚠️ 極度縮量（0.5× 均量）— 量能確認前慎追</div><div class="signal-item">✅ 站穩 MA60 上方 9.9%</div><div class="signal-item">KD 中性（K=61.8 · D=73.9）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -3.9% — 極近歷史高位</div>
+            <div class="signal-item">🟡 中多頭（價格 > MA20 > MA60）</div><div class="signal-item">RSI 中性（62.1）</div><div class="signal-item">❌ MACD 偏空</div><div class="signal-item">⚠️ 量能不足（0.7× 均量）</div><div class="signal-item">✅ 站穩 MA60 上方 9.9%</div><div class="signal-item">KD 中性（K=61.8 · D=73.9）</div><div class="signal-item">✅ EMA200 向上（大趨勢支撐）</div><div class="signal-item">✅ EMA 三線排列（EMA20 > EMA50 > EMA200）</div><div class="signal-item">🔥 距52週高 -3.9% — 極近歷史高位</div>
           </div>
         </div>
       </div>
