@@ -1245,8 +1245,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 82.9,
-      "current_date": "2026-08-07",
+      "current_price": 86.6,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1256,7 +1256,9 @@
         "Above MA60",
         "BB Squeeze Breakout Up"
       ],
-      "sector": "Healthcare"
+      "sector": "Healthcare",
+      "float_pnl": 72.38,
+      "float_pnl_pct": 3.62
     },
     {
       "id": "MTD-2026-08-02",
@@ -1271,8 +1273,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1428.56,
-      "current_date": "2026-08-07",
+      "current_price": 1431.38,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1282,7 +1284,9 @@
         "BB Squeeze Breakout Up",
         "BB Walking Up"
       ],
-      "sector": "Healthcare"
+      "sector": "Healthcare",
+      "float_pnl": 12.98,
+      "float_pnl_pct": 0.87
     },
     {
       "id": "NOW-2026-08-02",
@@ -1324,8 +1328,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 132.22,
-      "current_date": "2026-08-07",
+      "current_price": 131.49,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1333,7 +1337,9 @@
         "MACD Bull",
         "Above MA60"
       ],
-      "sector": "Communication Services"
+      "sector": "Communication Services",
+      "float_pnl": -11.82,
+      "float_pnl_pct": -0.79
     },
     {
       "id": "XLE-2026-08-02",
@@ -1348,8 +1354,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 57.5,
-      "current_date": "2026-08-07",
+      "current_price": 59.09,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1357,7 +1363,9 @@
         "MACD Bull",
         "Above MA60"
       ],
-      "sector": "Unknown"
+      "sector": "Unknown",
+      "float_pnl": -51.64,
+      "float_pnl_pct": -3.44
     },
     {
       "id": "IR-2026-08-03",
@@ -1373,8 +1381,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 86.97,
-      "current_date": "2026-08-07",
+      "current_price": 86.62,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1382,7 +1390,9 @@
         "MACD Bull",
         "Above MA60"
       ],
-      "sector": "Industrials"
+      "sector": "Industrials",
+      "float_pnl": 26.5,
+      "float_pnl_pct": 1.77
     },
     {
       "id": "CIBR-2026-08-04",
@@ -1398,8 +1408,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 97.85,
-      "current_date": "2026-08-07",
+      "current_price": 100.35,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1408,7 +1418,9 @@
         "Above MA60",
         "BB Squeeze Breakout Up"
       ],
-      "sector": "Unknown"
+      "sector": "Unknown",
+      "float_pnl": 20.36,
+      "float_pnl_pct": 1.36
     },
     {
       "id": "GE-2026-08-04",
@@ -1424,8 +1436,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 374.49,
-      "current_date": "2026-08-07",
+      "current_price": 369.48,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1434,7 +1446,9 @@
         "Above MA60",
         "BB Squeeze Breakout Up"
       ],
-      "sector": "Industrials"
+      "sector": "Industrials",
+      "float_pnl": 7.65,
+      "float_pnl_pct": 0.51
     },
     {
       "id": "HD-2026-08-05",
@@ -1450,8 +1464,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 355.62,
-      "current_date": "2026-08-07",
+      "current_price": 348.9,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1460,7 +1474,9 @@
         "Above MA60",
         "BB Squeeze Breakout Up"
       ],
-      "sector": "Consumer Cyclical"
+      "sector": "Consumer Cyclical",
+      "float_pnl": 18.66,
+      "float_pnl_pct": 1.24
     },
     {
       "id": "PANW-2026-08-05",
@@ -1476,8 +1492,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 363.86,
-      "current_date": "2026-08-07",
+      "current_price": 378.67,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1486,7 +1502,9 @@
         "Above MA60",
         "BB Squeeze Breakout Up"
       ],
-      "sector": "Technology"
+      "sector": "Technology",
+      "float_pnl": 36.54,
+      "float_pnl_pct": 2.44
     },
     {
       "id": "WYNN-2026-08-05",
@@ -1502,8 +1520,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 100.3,
-      "current_date": "2026-08-07",
+      "current_price": 101.75,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1512,7 +1530,9 @@
         "Above MA60",
         "BB Squeeze Breakout Up"
       ],
-      "sector": "Consumer Cyclical"
+      "sector": "Consumer Cyclical",
+      "float_pnl": -72.58,
+      "float_pnl_pct": -7.26
     },
     {
       "id": "AFRM-2026-08-07",
@@ -1528,8 +1548,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 75.25,
-      "current_date": "2026-08-07",
+      "current_price": 75.97,
+      "current_date": "2026-08-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1537,8 +1557,10 @@
         "MACD Bull",
         "Above MA60"
       ],
-      "sector": "Financial Services"
+      "sector": "Financial Services",
+      "float_pnl": -45.05,
+      "float_pnl_pct": -3.0
     }
   ],
-  "last_updated": "2026-08-07"
+  "last_updated": "2026-08-10"
 }
