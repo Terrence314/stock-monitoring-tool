@@ -1,10 +1,10 @@
 {
- "ts": "2026-08-10 21:59",
+ "ts": "2026-08-10 22:20",
  "buys": [],
  "sells": [],
  "no_action": true,
  "regime": "bull",
- "regime_spy": 64,
+ "regime_spy": 72,
  "regime_min": 70,
  "regime_min_floor": 35,
  "equity_usd": 4698.25,
@@ -14,8 +14,8 @@
  "stop_pct": 8.0,
  "target_pct": 12.0,
  "hold_days": 10,
- "breaker_pct": 0.32,
- "breaker_usd": 58.34,
+ "breaker_pct": 1.41,
+ "breaker_usd": 253.6,
  "breaker_base": 18000.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
@@ -30,12 +30,5 @@
  "gate_pf": null,
  "gate_pnl": 0,
  "gate_trades": 0,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-08-10 14:00",
-  "passed": 0,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_ready": false
 }
