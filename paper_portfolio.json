@@ -1245,8 +1245,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 89.53,
-      "current_date": "2026-08-11",
+      "current_price": 89.41,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1273,8 +1273,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1437.18,
-      "current_date": "2026-08-11",
+      "current_price": 1428.51,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1324,22 +1324,23 @@
       "shares": 11.255346,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
+      "status": "closed",
+      "exit_date": "2026-08-12",
+      "exit_price": 121.94,
+      "exit_reason": "stop_loss",
       "current_price": 127.89,
       "current_date": "2026-08-11",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -129.66,
+      "pnl_pct": -8.64,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
         "Above MA60"
       ],
       "sector": "Communication Services",
-      "float_pnl": -60.55,
-      "float_pnl_pct": -4.04
+      "gapped": true,
+      "pnl_gross": -127.52,
+      "costs": 2.14
     },
     {
       "id": "XLE-2026-08-02",
@@ -1354,8 +1355,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 60.93,
-      "current_date": "2026-08-11",
+      "current_price": 60.81,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1364,8 +1365,8 @@
         "Above MA60"
       ],
       "sector": "Unknown",
-      "float_pnl": 34.76,
-      "float_pnl_pct": 2.32
+      "float_pnl": 31.74,
+      "float_pnl_pct": 2.12
     },
     {
       "id": "IR-2026-08-03",
@@ -1381,8 +1382,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 85.02,
-      "current_date": "2026-08-11",
+      "current_price": 84.08,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1408,8 +1409,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 99.92,
-      "current_date": "2026-08-11",
+      "current_price": 100.03,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1436,8 +1437,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 368.06,
-      "current_date": "2026-08-11",
+      "current_price": 366.46,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1464,8 +1465,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 354.48,
-      "current_date": "2026-08-11",
+      "current_price": 346.79,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1492,8 +1493,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 383.8,
-      "current_date": "2026-08-11",
+      "current_price": 380.89,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1520,8 +1521,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 104.79,
-      "current_date": "2026-08-11",
+      "current_price": 104.69,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1548,8 +1549,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 76.71,
-      "current_date": "2026-08-11",
+      "current_price": 75.51,
+      "current_date": "2026-08-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1562,5 +1563,5 @@
       "float_pnl_pct": -1.12
     }
   ],
-  "last_updated": "2026-08-11"
+  "last_updated": "2026-08-12"
 }
