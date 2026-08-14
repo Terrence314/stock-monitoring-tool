@@ -1245,8 +1245,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 91.48,
-      "current_date": "2026-08-13",
+      "current_price": 91.18,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1273,8 +1273,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1430.76,
-      "current_date": "2026-08-13",
+      "current_price": 1416.96,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1351,22 +1351,22 @@
       "shares": 25.188917,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 61.06,
-      "current_date": "2026-08-13",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-14",
+      "exit_price": 61.72,
+      "exit_reason": "hold_period",
+      "current_price": 61.83,
+      "current_date": "2026-08-14",
+      "pnl": 52.43,
+      "pnl_pct": 3.5,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
         "Above MA60"
       ],
       "sector": "Unknown",
-      "float_pnl": 38.04,
-      "float_pnl_pct": 2.54
+      "pnl_gross": 54.66,
+      "costs": 2.23
     },
     {
       "id": "IR-2026-08-03",
@@ -1382,8 +1382,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 84.28,
-      "current_date": "2026-08-13",
+      "current_price": 84.07,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1409,8 +1409,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 102.2,
-      "current_date": "2026-08-13",
+      "current_price": 100.54,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1437,8 +1437,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 360.64,
-      "current_date": "2026-08-13",
+      "current_price": 364.1,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1465,8 +1465,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 341.7,
-      "current_date": "2026-08-13",
+      "current_price": 337.67,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1493,8 +1493,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 396.0,
-      "current_date": "2026-08-13",
+      "current_price": 387.58,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1521,8 +1521,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 102.37,
-      "current_date": "2026-08-13",
+      "current_price": 102.0,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1549,8 +1549,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 78.32,
-      "current_date": "2026-08-13",
+      "current_price": 78.81,
+      "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1559,9 +1559,9 @@
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": 14.31,
-      "float_pnl_pct": 0.95
+      "float_pnl": 26.68,
+      "float_pnl_pct": 1.78
     }
   ],
-  "last_updated": "2026-08-13"
+  "last_updated": "2026-08-14"
 }
