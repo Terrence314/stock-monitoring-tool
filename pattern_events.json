@@ -33171,5 +33171,91 @@
     "direction": "buy",
     "type": "end",
     "price": 128.83
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "APD",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 308.71,
+    "score": 80
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "HUM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 388.07,
+    "score": 80
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "HUM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 388.07
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "BAC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 64.5,
+    "score": 72
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "BAC",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 64.5
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "BAC",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 64.5,
+    "score": 72
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "GD",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 395.36
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "ESTC",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "start",
+    "price": 85.83,
+    "score": 65
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "PNC",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 256.59
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "USB",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 65.18,
+    "score": 63
   }
 ]
