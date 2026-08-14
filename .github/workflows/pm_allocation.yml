@@ -1,0 +1,81 @@
+name: PM Capital Allocation
+
+on:
+  schedule:
+    # 00:00 UTC = 08:00 HKT. Tue–Sat UTC covers the Mon–Fri US closes, so the
+    # dashboard is always built on fresh data — a Sun/Mon HKT run would only
+    # re-serve Friday's numbers.
+    - cron: "0 0 * * 2-6"
+  workflow_dispatch:
+    # Manual trigger from the Actions tab for testing.
+
+# Independent of daily-analysis so a manual run of either never cancels the other.
+concurrency:
+  group: pm-allocation
+  cancel-in-progress: true
+
+env:
+  # Force all JS actions onto Node 24 (Node 20 deprecated June 2 2026).
+  # Covers peaceiris/actions-gh-pages@v4 which has no Node24 release yet.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  allocate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push the dashboard to gh-pages
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build allocation dashboard
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: python src/pm_dashboard.py
+
+      - name: Verify outputs exist
+        # The script exits non-zero on a config problem, but a partial data
+        # failure still writes a page — fail loudly rather than publishing
+        # an empty dashboard over yesterday's good one.
+        run: |
+          test -s outputs/pm-allocation.html || { echo "::error::pm-allocation.html missing or empty"; exit 1; }
+          test -s outputs/pm_allocation.json || { echo "::error::pm_allocation.json missing or empty"; exit 1; }
+          python - <<'PY'
+          import json, sys
+          payload = json.load(open("outputs/pm_allocation.json", encoding="utf-8"))
+          score = payload["regime"]["score"]
+          degraded = payload["regime"]["degraded_components"]
+          print(f"confidence {score}/100 -> {payload['regime']['band']}")
+          if degraded:
+              print(f"::warning::degraded components ran on neutral defaults: {', '.join(degraded)}")
+          if len(degraded) >= 3:
+              print("::error::too many degraded components — refusing to publish")
+              sys.exit(1)
+          PY
+
+      - name: Stage only the PM files for publishing
+        # Do NOT publish ./outputs wholesale. outputs/ is gitignored except
+        # paper_portfolio.json, whose checked-out copy is older than the one
+        # daily_analysis maintains on Pages — publishing the directory would
+        # roll that state back and corrupt the paper-trading pipeline.
+        run: |
+          mkdir -p pm_publish
+          cp outputs/pm-allocation.html outputs/pm_allocation.json pm_publish/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: success()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir:  ./pm_publish
+          keep_files:   true
