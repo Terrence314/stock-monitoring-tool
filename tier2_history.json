@@ -533,9 +533,9 @@
   },
   "PNC": {
     "first_seen": "2026-05-30",
-    "last_seen": "2026-07-22",
+    "last_seen": "2026-08-14",
     "consecutive_days": 1,
-    "total_appearances": 25,
+    "total_appearances": 26,
     "dates": [
       "2026-05-30",
       "2026-05-31",
@@ -561,7 +561,8 @@
       "2026-07-14",
       "2026-07-15",
       "2026-07-16",
-      "2026-07-22"
+      "2026-07-22",
+      "2026-08-14"
     ]
   },
   "RDDT": {
@@ -1182,9 +1183,9 @@
   },
   "WDAY": {
     "first_seen": "2026-05-30",
-    "last_seen": "2026-08-13",
-    "consecutive_days": 1,
-    "total_appearances": 16,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 2,
+    "total_appearances": 17,
     "dates": [
       "2026-05-30",
       "2026-05-31",
@@ -1201,7 +1202,8 @@
       "2026-08-03",
       "2026-08-04",
       "2026-08-05",
-      "2026-08-13"
+      "2026-08-13",
+      "2026-08-14"
     ]
   },
   "MET": {
@@ -3571,14 +3573,15 @@
   },
   "SLB": {
     "first_seen": "2026-06-03",
-    "last_seen": "2026-06-10",
+    "last_seen": "2026-08-14",
     "consecutive_days": 1,
-    "total_appearances": 4,
+    "total_appearances": 5,
     "dates": [
       "2026-06-03",
       "2026-06-04",
       "2026-06-08",
-      "2026-06-10"
+      "2026-06-10",
+      "2026-08-14"
     ]
   },
   "SPG": {
@@ -3637,13 +3640,14 @@
   },
   "USO": {
     "first_seen": "2026-06-03",
-    "last_seen": "2026-07-22",
-    "consecutive_days": 2,
-    "total_appearances": 3,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 1,
+    "total_appearances": 4,
     "dates": [
       "2026-06-03",
       "2026-07-21",
-      "2026-07-22"
+      "2026-07-22",
+      "2026-08-14"
     ]
   },
   "WOLF": {
@@ -4065,9 +4069,9 @@
   },
   "TFC": {
     "first_seen": "2026-06-05",
-    "last_seen": "2026-08-06",
+    "last_seen": "2026-08-14",
     "consecutive_days": 1,
-    "total_appearances": 20,
+    "total_appearances": 21,
     "dates": [
       "2026-06-05",
       "2026-06-09",
@@ -4088,7 +4092,8 @@
       "2026-07-27",
       "2026-07-28",
       "2026-07-29",
-      "2026-08-06"
+      "2026-08-06",
+      "2026-08-14"
     ]
   },
   "AAPL": {
@@ -4355,16 +4360,17 @@
   },
   "HUM": {
     "first_seen": "2026-06-08",
-    "last_seen": "2026-07-21",
+    "last_seen": "2026-08-14",
     "consecutive_days": 1,
-    "total_appearances": 6,
+    "total_appearances": 7,
     "dates": [
       "2026-06-08",
       "2026-06-09",
       "2026-06-10",
       "2026-06-11",
       "2026-06-12",
-      "2026-07-21"
+      "2026-07-21",
+      "2026-08-14"
     ]
   },
   "INTC": {
@@ -4899,9 +4905,9 @@
   },
   "XBI": {
     "first_seen": "2026-06-15",
-    "last_seen": "2026-08-12",
-    "consecutive_days": 3,
-    "total_appearances": 18,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 1,
+    "total_appearances": 19,
     "dates": [
       "2026-06-15",
       "2026-06-17",
@@ -4920,7 +4926,8 @@
       "2026-08-07",
       "2026-08-10",
       "2026-08-11",
-      "2026-08-12"
+      "2026-08-12",
+      "2026-08-14"
     ]
   },
   "MRNA": {
@@ -5063,9 +5070,9 @@
   },
   "V": {
     "first_seen": "2026-06-16",
-    "last_seen": "2026-08-04",
-    "consecutive_days": 2,
-    "total_appearances": 21,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 1,
+    "total_appearances": 22,
     "dates": [
       "2026-06-16",
       "2026-06-17",
@@ -5087,7 +5094,8 @@
       "2026-07-28",
       "2026-07-29",
       "2026-08-03",
-      "2026-08-04"
+      "2026-08-04",
+      "2026-08-14"
     ]
   },
   "BA": {
@@ -5746,9 +5754,9 @@
   },
   "SCHW": {
     "first_seen": "2026-07-02",
-    "last_seen": "2026-08-06",
-    "consecutive_days": 3,
-    "total_appearances": 18,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 1,
+    "total_appearances": 19,
     "dates": [
       "2026-07-02",
       "2026-07-03",
@@ -5767,7 +5775,8 @@
       "2026-07-31",
       "2026-08-04",
       "2026-08-05",
-      "2026-08-06"
+      "2026-08-06",
+      "2026-08-14"
     ]
   },
   "ABT": {
@@ -5837,13 +5846,14 @@
   },
   "ALGN": {
     "first_seen": "2026-07-03",
-    "last_seen": "2026-07-15",
+    "last_seen": "2026-08-14",
     "consecutive_days": 1,
-    "total_appearances": 3,
+    "total_appearances": 4,
     "dates": [
       "2026-07-03",
       "2026-07-13",
-      "2026-07-15"
+      "2026-07-15",
+      "2026-08-14"
     ]
   },
   "ITW": {
@@ -5949,9 +5959,9 @@
   },
   "MA": {
     "first_seen": "2026-07-07",
-    "last_seen": "2026-08-05",
-    "consecutive_days": 2,
-    "total_appearances": 14,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 1,
+    "total_appearances": 15,
     "dates": [
       "2026-07-07",
       "2026-07-13",
@@ -5966,7 +5976,8 @@
       "2026-07-31",
       "2026-08-02",
       "2026-08-04",
-      "2026-08-05"
+      "2026-08-05",
+      "2026-08-14"
     ]
   },
   "RSG": {
@@ -6124,9 +6135,9 @@
   },
   "APD": {
     "first_seen": "2026-07-14",
-    "last_seen": "2026-08-13",
-    "consecutive_days": 1,
-    "total_appearances": 7,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 2,
+    "total_appearances": 8,
     "dates": [
       "2026-07-14",
       "2026-07-17",
@@ -6134,7 +6145,8 @@
       "2026-07-22",
       "2026-08-10",
       "2026-08-11",
-      "2026-08-13"
+      "2026-08-13",
+      "2026-08-14"
     ]
   },
   "HUBS": {
@@ -6179,16 +6191,17 @@
   },
   "CBRE": {
     "first_seen": "2026-07-16",
-    "last_seen": "2026-08-05",
-    "consecutive_days": 2,
-    "total_appearances": 6,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 1,
+    "total_appearances": 7,
     "dates": [
       "2026-07-16",
       "2026-07-28",
       "2026-07-29",
       "2026-07-30",
       "2026-08-04",
-      "2026-08-05"
+      "2026-08-05",
+      "2026-08-14"
     ]
   },
   "PODD": {
@@ -6367,9 +6380,9 @@
   },
   "REGN": {
     "first_seen": "2026-07-28",
-    "last_seen": "2026-08-13",
-    "consecutive_days": 2,
-    "total_appearances": 12,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 3,
+    "total_appearances": 13,
     "dates": [
       "2026-07-28",
       "2026-07-29",
@@ -6382,7 +6395,8 @@
       "2026-08-06",
       "2026-08-07",
       "2026-08-12",
-      "2026-08-13"
+      "2026-08-13",
+      "2026-08-14"
     ]
   },
   "CRM": {
@@ -6476,12 +6490,13 @@
   },
   "CME": {
     "first_seen": "2026-07-31",
-    "last_seen": "2026-08-13",
-    "consecutive_days": 1,
-    "total_appearances": 2,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 2,
+    "total_appearances": 3,
     "dates": [
       "2026-07-31",
-      "2026-08-13"
+      "2026-08-13",
+      "2026-08-14"
     ]
   },
   "VZ": {
@@ -6591,22 +6606,24 @@
   },
   "CVNA": {
     "first_seen": "2026-08-10",
-    "last_seen": "2026-08-10",
+    "last_seen": "2026-08-14",
     "consecutive_days": 1,
-    "total_appearances": 1,
+    "total_appearances": 2,
     "dates": [
-      "2026-08-10"
+      "2026-08-10",
+      "2026-08-14"
     ]
   },
   "PFE": {
     "first_seen": "2026-08-10",
-    "last_seen": "2026-08-13",
-    "consecutive_days": 1,
-    "total_appearances": 3,
+    "last_seen": "2026-08-14",
+    "consecutive_days": 2,
+    "total_appearances": 4,
     "dates": [
       "2026-08-10",
       "2026-08-11",
-      "2026-08-13"
+      "2026-08-13",
+      "2026-08-14"
     ]
   },
   "UBER": {

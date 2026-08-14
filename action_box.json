@@ -1,5 +1,5 @@
 {
- "ts": "2026-08-15 01:52",
+ "ts": "2026-08-15 02:43",
  "buys": [],
  "sells": [],
  "no_action": true,
@@ -30,5 +30,12 @@
  "gate_pf": null,
  "gate_pnl": 0,
  "gate_trades": 0,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-08-14 18:43",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
