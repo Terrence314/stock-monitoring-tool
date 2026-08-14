@@ -887,6 +887,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
     </div>
 
     <nav class="nav-pills">
+      <a class="nav-pill" href="./index.html" style="border-color:rgba(122,162,247,0.45)">← 配置頁</a>
       <a class="nav-pill active" href="#overview">Overview</a>
       <a class="nav-pill" href="#brief">AI Brief</a>
       <a class="nav-pill" href="#sectors">Sectors</a>
@@ -2868,6 +2869,7 @@ document.addEventListener('keydown', function(e) {
 
 <div class="more-sheet" id="more-sheet">
   <div class="more-sheet-inner">
+    <a href="./index.html">📌 PM 配置頁（首頁）</a>
     <a href="#brief">🌅 AI 早盤簡報</a>
     <a href="#sectors">🔄 板塊輪動</a>
     <a href="#watchlist">📋 觀察名單</a>
@@ -3845,8 +3847,12 @@ def generate_dashboard(
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
 
-    # Always overwrite index.html for GitHub Pages
-    latest_path = os.path.join(output_dir, "index.html")
+    # dashboard.html, not index.html: the PM allocation page is the landing
+    # surface from 2026-08-15 and owns index.html. This page stays the detail
+    # view one click behind it — every ticker link, the paper record and the
+    # watchlist live here, and it still refreshes hourly while the PM brief
+    # rebuilds once a day.
+    latest_path = os.path.join(output_dir, "dashboard.html")
     with open(latest_path, "w", encoding="utf-8") as f:
         f.write(html)
 

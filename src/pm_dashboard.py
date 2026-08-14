@@ -37,6 +37,9 @@ SECRETS_PATH = REPO_ROOT / "config" / "secrets.json"
 OUTPUT_DIR = REPO_ROOT / "outputs"
 JSON_PATH = OUTPUT_DIR / "pm_allocation.json"
 HTML_PATH = OUTPUT_DIR / "pm-allocation.html"
+# The landing page from 2026-08-15. Written alongside pm-allocation.html so
+# the canonical name still resolves for anyone linking to it directly.
+INDEX_PATH = OUTPUT_DIR / "index.html"
 
 HKT = timezone(timedelta(hours=8))
 MISSING = "—"
@@ -347,7 +350,7 @@ def render_html(payload: dict) -> str:
 <div class="wrap">
   <header class="titlebar">
     <h1>PM Capital Allocation Dashboard</h1>
-    <p>{_esc(payload['generated_at_hkt'])} HKT <span class="light">· EXECUTIVE BRIEF</span></p>
+    <p>{_esc(payload['generated_at_hkt'])} HKT <span class="light">· EXECUTIVE BRIEF</span> · <a href="./dashboard.html" style="color:#cfe0ff">詳細儀表板 →</a></p>
   </header>
 
   <div class="cards">{_build_cards(regime, buckets)}</div>
@@ -412,10 +415,13 @@ def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2),
                          encoding="utf-8")
-    HTML_PATH.write_text(render_html(payload), encoding="utf-8")
+    _html = render_html(payload)
+    HTML_PATH.write_text(_html, encoding="utf-8")
+    INDEX_PATH.write_text(_html, encoding="utf-8")
 
     print(f"[pm_dashboard] wrote {JSON_PATH}")
     print(f"[pm_dashboard] wrote {HTML_PATH}")
+    print(f"[pm_dashboard] wrote {INDEX_PATH} (landing page)")
     return 0
 
 

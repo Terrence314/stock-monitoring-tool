@@ -70,7 +70,7 @@ jobs:
         # roll that state back and corrupt the paper-trading pipeline.
         run: |
           mkdir -p pm_publish
-          cp outputs/pm-allocation.html outputs/pm_allocation.json pm_publish/
+          cp outputs/pm-allocation.html outputs/index.html outputs/pm_allocation.json pm_publish/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
