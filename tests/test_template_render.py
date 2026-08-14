@@ -67,18 +67,28 @@ def _breaker_fragment():
     pytest.fail("breaker line not found in DASHBOARD_HTML")
 
 
-@pytest.mark.parametrize("usd,base", [
+@pytest.mark.parametrize("usd,equity", [
     (-2502.22, 41000.0),   # the real shape that crashed production
     (1234.56, 9000.0),
-    (-0.5, 1000.0),
+    (-0.5, 4650.0),
 ])
-def test_breaker_line_renders_with_non_zero_values(usd, base):
+def test_breaker_line_renders_with_non_zero_values(usd, equity):
     out = Template(_breaker_fragment()).render(action_box={
         "breaker_pct": -6.1, "breaker_limit": -5.0,
-        "breaker_usd": usd, "breaker_base": base, "breaker_trip": True,
+        "breaker_usd": usd, "breaker_equity": equity,
+        "breaker_basis": "ibkr", "breaker_trip": True,
     })
     assert "美元" in out
     assert "," in out, "thousands separator missing"
+
+
+def test_breaker_line_flags_an_estimated_account_size():
+    out = Template(_breaker_fragment()).render(action_box={
+        "breaker_pct": -1.0, "breaker_limit": -5.0,
+        "breaker_usd": -50.0, "breaker_equity": 5000.0,
+        "breaker_basis": "fallback", "breaker_trip": False,
+    })
+    assert "估算" in out, "a fallback equity figure must be labelled as estimated"
 
 
 def test_breaker_line_renders_when_zero_and_skips_the_branch():

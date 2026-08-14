@@ -159,7 +159,14 @@ def test_open_position_from_a_previous_month_is_excluded():
     assert box["breaker_usd"] == 0.0
 
 
-def test_breaker_reports_dollars_as_well_as_percent():
+def test_breaker_measures_the_account_not_turnover():
+    """The denominator moved from capital DEPLOYED to account equity.
+
+    Dividing by turnover made the breaker weaker the more you traded — 50
+    trades x $1,000 losing $2,400 read as -4.8% and did not trip, while the
+    same loss is a -52% drawdown on a ~USD 4,650 account. A circuit breaker
+    has to measure the account it protects.
+    """
     this_month = date.today().strftime("%Y-%m")
     t = {"ticker": "AAA", "status": "closed", "signal_date": this_month + "-02",
          "exit_date": this_month + "-05", "pnl": -80.0, "notional": 1000}
@@ -167,8 +174,24 @@ def test_breaker_reports_dollars_as_well_as_percent():
     box = _build_action_box([], _gate_dir([t]))
 
     assert box["breaker_usd"] == -80.0
-    assert box["breaker_base"] == 1000.0
-    assert box["breaker_pct"] == pytest.approx(-8.0)
+    assert box["breaker_equity"] > 0
+    assert box["breaker_basis"] in ("ibkr", "fallback")
+    assert box["breaker_pct"] == pytest.approx(-80.0 / box["breaker_equity"] * 100, abs=0.01)
+
+
+def test_breaker_does_not_weaken_as_turnover_grows():
+    """Same dollar loss must give the same percentage regardless of how many
+    trades produced it — the exact property turnover-weighting destroyed."""
+    this_month = date.today().strftime("%Y-%m")
+
+    def _loss_over(n_trades):
+        per = -240.0 / n_trades
+        rows = [{"ticker": f"T{i}", "status": "closed",
+                 "signal_date": this_month + "-02", "exit_date": this_month + "-05",
+                 "pnl": per, "notional": 1000} for i in range(n_trades)]
+        return _build_action_box([], _gate_dir(rows))["breaker_pct"]
+
+    assert _loss_over(1) == pytest.approx(_loss_over(12), abs=0.01)
 
 
 # ── FOMC table expiry ─────────────────────────────────────────────────────────

@@ -9,7 +9,9 @@ from stock_detail import generate_stock_detail_page
 # engine and the Telegram message must never drift apart again.
 from market_calendar import add_trading_days, is_covered
 from paper_trading import STOP_LOSS_PCT, TAKE_PROFIT_PCT, HOLD_DAYS
-from entry_selection import MAX_OPEN_POSITIONS, REGIME_FLOOR, select_entries
+from entry_selection import (
+    MAX_OPEN_POSITIONS, REGIME_FLOOR, account_equity_usd, select_entries,
+)
 
 DASHBOARD_HTML = """<!DOCTYPE html>
 <html lang="zh-TW">
@@ -1042,7 +1044,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
              "ValueError: unsupported format character ','". This crashed
              every price_refresh run for a day once breaker_usd went
              non-zero and the guard below finally let the branch execute. #}
-          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '{:+,.0f}'.format(action_box.breaker_usd) }} 美元{% if action_box.breaker_base %} / 本月投入 {{ '${:,.0f}'.format(action_box.breaker_base) }}{% endif %})</span>{% endif %}
+          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '{:+,.0f}'.format(action_box.breaker_usd) }} 美元{% if action_box.breaker_equity %} / 帳戶 {{ '${:,.0f}'.format(action_box.breaker_equity) }}{% if action_box.breaker_basis == 'fallback' %} <span style="color:var(--amber)">估算</span>{% endif %}{% endif %})</span>{% endif %}
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
         <span title="每張飛嘅金額 = 戶口淨值 × 信心比重（分數 ≥90 → 12%、80–89 → 10%、70–79 → 7%），上限 {{ action_box.max_open }} 個同時持倉。舊制係固定 $1,000/$1,500/$2,000 base unit，喺一個 USD 4,650 嘅戶口度即係單一倉位食 32–43%。sizing 顯示 fallback 代表讀唔到 IBKR 淨值（未同步或超過 7 日），數字用預設值計 — 跑 ibkr_sync.py 就會回復真數。">
@@ -3234,7 +3236,23 @@ def _collect_headlines(stocks: list) -> list[dict]:
 #
 # Window membership keys on signal_date (entry), not exit_date — the risk
 # rules apply from entry.
-GATE_START_DATE   = "2026-08-09"
+# ── Strategy freeze ───────────────────────────────────────────────────────────
+# The validation window reset three times in one month — 06-11 → 07-17 → 08-05
+# → 08-09 — because each strategy fix legitimately invalidated the sample
+# before it. Each reset returns the counter to zero, so with a 30-trade floor
+# and a 60-day clock the gate could never mature: the rules improved faster
+# than evidence accumulated. Terrence's decision on 2026-08-15 was to FREEZE.
+#
+# From here, entry and exit logic is final. Only genuine defects get fixed —
+# a defect fix does not invalidate the sample, because the sample was always
+# meant to measure the intended rules rather than the buggy ones.
+#
+# Moving GATE_START_DATE now means discarding every trade counted so far, so
+# it must move together with STRATEGY_FROZEN_ON and is guarded by a test.
+# Do not touch either to "start clean"; that is the treadmill this ends.
+STRATEGY_FROZEN_ON = "2026-08-09"
+
+GATE_START_DATE   = STRATEGY_FROZEN_ON
 GATE_DAYS         = 60
 GATE_MIN_TRADES   = 30             # no quality verdict below this sample size.
                                    # Without a floor, two winners and zero
@@ -3411,14 +3429,15 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
             if ep and cp:
                 pnl_month      += (cp - ep) * (t.get("shares") or 0)
                 notional_month += notional
-    breaker_pct  = round(pnl_month / notional_month * 100, 2) if notional_month else 0.0
+    # Denominator is ACCOUNT EQUITY, not capital deployed. Dividing by
+    # turnover made the breaker weaker the more you traded: 50 trades x $1,000
+    # deployed losing $2,400 read as -4.8% and did not trip, while against a
+    # ~USD 4,650 account that is a -52% drawdown. A circuit breaker has to
+    # measure the account it is protecting, so -5% now means -5% of equity.
+    breaker_equity, breaker_basis = account_equity_usd(output_dir)
+    breaker_usd  = round(pnl_month, 2)
+    breaker_pct  = round(pnl_month / breaker_equity * 100, 2) if breaker_equity else 0.0
     breaker_trip = breaker_pct <= BREAKER_LIMIT_PCT
-    # Dollars alongside the percentage. The denominator is capital DEPLOYED
-    # this month, not account equity, so a high-turnover month can post a
-    # small percentage on a large absolute loss — the figure that actually
-    # matters against a ~USD 4.5k account. Choosing an equity base is a
-    # policy call, so surface the dollars rather than silently pick one.
-    breaker_usd = round(pnl_month, 2)
 
     # ── Go-live gate progress ──
     gate_start = datetime.strptime(GATE_START_DATE, "%Y-%m-%d").date()
@@ -3484,6 +3503,8 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "hold_days":     HOLD_DAYS,
         "breaker_pct":   breaker_pct,
         "breaker_usd":   breaker_usd,
+        "breaker_equity": round(breaker_equity, 2),
+        "breaker_basis": breaker_basis,
         "breaker_base":  round(notional_month, 2),
         "breaker_limit": BREAKER_LIMIT_PCT,
         "breaker_trip":  breaker_trip,
