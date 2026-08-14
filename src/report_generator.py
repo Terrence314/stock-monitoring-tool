@@ -829,9 +829,25 @@ body.beginner-mode .beginner-only { display: block; }
    sections by default read as the tool having lost features, which is a far
    worse failure than a dense page. Applied before first paint so an opted-in
    Simple user never sees the Expert layout flash. */
+var VIEW_MODE_VERSION = '2026-08-15';
 (function() {
-  var mode;
-  try { mode = localStorage.getItem('signalViewMode'); } catch (e) {}
+  var mode, stamp;
+  try {
+    mode  = localStorage.getItem('signalViewMode');
+    stamp = localStorage.getItem('signalViewModeVersion');
+  } catch (e) {}
+  /* One-time release valve. For ~24h on 2026-08-02/03 Simple was the DEFAULT,
+     so browsers picked up a 'beginner' preference nobody deliberately chose.
+     Reverting the default did nothing for them: the stale value kept 94% of
+     the page hidden (29,526px -> 1,725px) with no on-screen explanation, for
+     12 days. Any preference saved before this version is discarded once. */
+  if (stamp !== VIEW_MODE_VERSION) {
+    try {
+      localStorage.removeItem('signalViewMode');
+      localStorage.setItem('signalViewModeVersion', VIEW_MODE_VERSION);
+    } catch (e) {}
+    mode = null;
+  }
   if (mode === 'beginner') {
     document.documentElement.setAttribute('data-boot-mode', 'beginner');
   }
@@ -845,6 +861,17 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
 }
 </script>
 <a id="top"></a>
+
+<!-- Simple mode used to hide 8 of 11 sections with NOTHING on screen saying
+     so — the page simply looked broken. This banner only renders in Simple
+     mode and always offers the way back. -->
+<div class="beginner-only" style="max-width:1100px;margin:12px auto 0;padding:12px 16px;border-radius:10px;background:rgba(245,185,66,0.10);border:1px solid rgba(245,185,66,0.32);display:none">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <strong style="color:var(--amber)">📖 簡潔模式</strong>
+    <span style="color:var(--text-2);font-size:13px">觀察名單、Tier 2 詳細分析、Universe、ETF、板塊、早報、港股 已收起 — 冇嘢壞咗，只係收埋咗。</span>
+    <button onclick="toggleMode()" style="margin-left:auto;padding:7px 16px;border-radius:8px;border:1px solid rgba(52,211,153,0.45);background:rgba(52,211,153,0.14);color:var(--up);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">🔬 顯示全部</button>
+  </div>
+</div>
 
 <!-- ─── TOP HEADER ─────────────────────────────────────────────────── -->
 <header class="top">
@@ -2343,7 +2370,10 @@ function toggleMode() {
   var body = document.body;
   var isBeginner = body.classList.toggle('beginner-mode');
   if (btn) btn.textContent = isBeginner ? '🔬 Expert' : '📖 Simple';
-  try { localStorage.setItem('signalViewMode', isBeginner ? 'beginner' : 'expert'); } catch(e) {}
+  try {
+    localStorage.setItem('signalViewMode', isBeginner ? 'beginner' : 'expert');
+    localStorage.setItem('signalViewModeVersion', VIEW_MODE_VERSION);
+  } catch(e) {}
 }
 // Sync the toggle label with the mode the inline <head> script already
 // applied. The class itself is set before first paint — see <head> — so
