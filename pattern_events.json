@@ -33257,5 +33257,72 @@
     "type": "start",
     "price": 65.18,
     "score": 63
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "ESTC",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "end",
+    "price": 86.16
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "PSX",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "end",
+    "price": 233.1
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "GE",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 368.21
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "GE",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 368.21,
+    "score": 63
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "GE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 368.21
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "TFC",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 53.17,
+    "score": 63
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "ICE",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 154.42,
+    "score": 60
+  },
+  {
+    "date": "2026-08-14",
+    "ticker": "ICE",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 154.42
   }
 ]
