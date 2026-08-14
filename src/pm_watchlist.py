@@ -20,7 +20,20 @@ from __future__ import annotations
 import pandas as pd
 import yfinance as yf
 
-from pm_regime import fetch_history
+from pm_regime import SECTOR_ETFS, fetch_history
+
+# Tickers excluded from the trade cards.
+#
+# The sector ETFs ARE the sector-rotation component of the confidence index,
+# and SPY/QQQ ARE its trend components — recommending "買 XLK,順勢突破" under a
+# card that already reads 全倉 because 10/11 sectors hold their MA50 is the same
+# signal printed twice. Broad-market ETFs carry the same problem: card 1 already
+# gives the market call, so "buy the market" adds nothing.
+#
+# Thematic ETFs (CIBR, BOTZ, ARKK, SOXX, XBI) are deliberately kept — they are
+# concentrated bets that can diverge from the index, not restatements of it.
+BROAD_MARKET_ETFS = {"SPY", "QQQ", "VTI", "VOO", "IVV", "IWM", "DIA", "VT"}
+EXCLUDED_TICKERS = BROAD_MARKET_ETFS | set(SECTOR_ETFS)
 
 try:
     import finnhub as _finnhub_module
@@ -203,8 +216,12 @@ def analyse_ticker(ticker: str, name: str,
 
     ma20 = float(closes.rolling(20).mean().iloc[-1])
     ma50 = float(closes.rolling(50).mean().iloc[-1])
+    # Below 200 bars there is no MA200. Substituting the full-series mean would
+    # let a short-history ticker "pass" price>MA200 against a fabricated level
+    # and land in 長線首選 — so flag it and let the long-term test skip.
+    has_ma200 = len(closes) >= 200
     ma200 = (float(closes.rolling(200).mean().iloc[-1])
-             if len(closes) >= 200 else float(closes.mean()))
+             if has_ma200 else float(closes.mean()))
 
     rsi = _rsi(closes)
     macd_hist = _macd_histogram(closes)
@@ -231,6 +248,7 @@ def analyse_ticker(ticker: str, name: str,
         "ma20": round(ma20, 2),
         "ma50": round(ma50, 2),
         "ma200": round(ma200, 2),
+        "has_ma200": has_ma200,
         "change_20d_pct": _pct_change(closes, SHORT_LOOKBACK_DAYS),
         "change_120d_pct": _pct_change(closes, LONG_LOOKBACK_DAYS),
         "notes": notes,
@@ -239,13 +257,19 @@ def analyse_ticker(ticker: str, name: str,
 
 
 def _avoid_reason(row: dict) -> str | None:
+    """Why to stay away. Structural reasons are tested before the score floor —
+    "conviction is low because conviction is low" is not a reason."""
     rsi = row["rsi"]
-    if row["conviction"] < AVOID_MAX_CONVICTION:
-        return f"信心分僅 {row['conviction']} — 結構未成形"
     if row["price"] < row["ma200"] and (row["macd_hist"] or 0) < 0:
         return "跌破 MA200 且 MACD 為負 — 下降趨勢中"
     if rsi is not None and rsi >= RSI_EXTREME:
         return f"RSI {rsi} 極度超買 — 追高風險大"
+    if row["price"] < row["ma50"] and row["price"] < row["ma20"]:
+        return "同時跌穿 MA20 同 MA50 — 短中期結構已破"
+    if (row["change_20d_pct"] or 0) < -10:
+        return f"20 日跌 {row['change_20d_pct']:.1f}% — 動能崩壞"
+    if row["conviction"] < AVOID_MAX_CONVICTION:
+        return f"信心分僅 {row['conviction']} — 未觸發單一硬條件,但四項評分全面偏弱"
     return None
 
 
@@ -274,13 +298,17 @@ def bucket(rows: list[dict], regime_band: str) -> dict[str, list[dict]]:
             tonight.append(row)
 
         is_long_term = (
-            row["price"] > row["ma200"]
+            row["has_ma200"]
+            and row["price"] > row["ma200"]
             and row["ma50"] > row["ma200"]
             and row["conviction"] >= LONG_TERM_MIN_CONVICTION
             and (row["change_120d_pct"] or 0) > 0
         )
         if is_long_term:
-            long_term.append(row)
+            # A name can legitimately be both a setup tonight and a hold for the
+            # year. Mark the overlap so the two cards do not read as ten
+            # independent ideas when some of them are five.
+            long_term.append({**row, "also_tonight": is_tonight_setup})
 
     by_conviction = sorted(tonight, key=lambda r: r["conviction"], reverse=True)
     by_conviction_long = sorted(long_term, key=lambda r: r["conviction"], reverse=True)
@@ -301,7 +329,9 @@ def bucket(rows: list[dict], regime_band: str) -> dict[str, list[dict]]:
 def scan(watchlist: list[dict], regime_band: str, finnhub_key: str = "") -> dict:
     """Full watchlist pass. `watchlist` is config.json's list of ticker dicts."""
     us_entries = [entry for entry in watchlist
-                  if entry.get("ticker") and entry.get("market", "US") == "US"]
+                  if entry.get("ticker")
+                  and entry.get("market", "US") == "US"
+                  and entry["ticker"] not in EXCLUDED_TICKERS]
     tickers = [entry["ticker"] for entry in us_entries]
     if not tickers:
         return {"tonight": [], "long_term": [], "avoid": [],

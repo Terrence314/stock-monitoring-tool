@@ -156,12 +156,17 @@ def _trade_rows(rows: list[dict], show_strategy: bool, qualified: int = 0) -> st
         change = row.get("change_20d_pct")
         change_class = "pos" if (change or 0) >= 0 else "neg"
         change_text = f"{change:+.1f}%" if change is not None else "—"
+        # "Qualified", not "listed" — the tonight card is capped, so a name can
+        # pass the short-term test without appearing there.
+        overlap = ('<span class="overlap">短線亦合格</span>'
+                   if row.get("also_tonight") else "")
         out.append(f"""
         <li class="row">
           <div class="row-head">
             <div>
               <span class="ticker">{_esc(row['ticker'])}</span>
               <span class="name">{_esc(row['name'])}</span>
+              {overlap}
             </div>
             <div class="row-metrics">
               <span class="mono">${_esc(row['price'])}</span>
@@ -270,6 +275,9 @@ def render_html(payload: dict) -> str:
     padding: 2px 8px; border-radius: 6px;
   }}
   .conviction.low {{ background: rgba(248,81,73,.14); color: var(--neg); }}
+  .overlap {{ font-size: 10.5px; color: var(--accent); margin-left: 6px;
+              border: 1px solid rgba(88,166,255,.35); border-radius: 4px;
+              padding: 1px 5px; white-space: nowrap; }}
   .strategy {{ margin: 6px 0 0; font-size: 12.5px; color: var(--text); }}
   .notes {{ margin: 4px 0 0; font-size: 11.5px; color: var(--text-2); }}
   .empty {{ color: var(--text-2); font-size: 13px; margin: 0; }}
