@@ -1,8 +1,14 @@
 {
- "ts": "2026-08-17 21:40",
+ "ts": "2026-08-17 22:27",
  "buys": [],
- "sells": [],
- "no_action": true,
+ "sells": [
+  {
+   "ticker": "AFRM",
+   "float_pct": 1.0,
+   "why": "score 29"
+  }
+ ],
+ "no_action": false,
  "regime": "transitional",
  "regime_spy": 44,
  "regime_min": 80,
