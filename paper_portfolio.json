@@ -1241,14 +1241,14 @@
       "shares": 23.966448,
       "notional": 2000.0,
       "score": 100,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 89.56,
+      "status": "closed",
+      "exit_date": "2026-08-14",
+      "exit_price": 89.75,
+      "exit_reason": "hold_period",
+      "current_price": 89.75,
       "current_date": "2026-08-14",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": 148.21,
+      "pnl_pct": 7.41,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1257,8 +1257,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Healthcare",
-      "float_pnl": 155.3,
-      "float_pnl_pct": 7.77
+      "pnl_gross": 150.99,
+      "costs": 2.78
     },
     {
       "id": "MTD-2026-08-02",
@@ -1269,14 +1269,14 @@
       "shares": 1.059098,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 1418.16,
+      "status": "closed",
+      "exit_date": "2026-08-14",
+      "exit_price": 1419.02,
+      "exit_reason": "hold_period",
+      "current_price": 1419.02,
       "current_date": "2026-08-14",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": 0.68,
+      "pnl_pct": 0.05,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1285,8 +1285,8 @@
         "BB Walking Up"
       ],
       "sector": "Healthcare",
-      "float_pnl": 0.55,
-      "float_pnl_pct": 0.04
+      "pnl_gross": 2.88,
+      "costs": 2.2
     },
     {
       "id": "NOW-2026-08-02",
@@ -1382,7 +1382,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 83.53,
+      "current_price": 83.34,
       "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
@@ -1392,8 +1392,8 @@
         "Above MA60"
       ],
       "sector": "Industrials",
-      "float_pnl": -34.05,
-      "float_pnl_pct": -2.27
+      "float_pnl": -33.88,
+      "float_pnl_pct": -2.26
     },
     {
       "id": "CIBR-2026-08-04",
@@ -1420,8 +1420,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Unknown",
-      "float_pnl": 46.46,
-      "float_pnl_pct": 3.1
+      "float_pnl": 47.55,
+      "float_pnl_pct": 3.17
     },
     {
       "id": "GE-2026-08-04",
@@ -1437,7 +1437,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 368.22,
+      "current_price": 368.38,
       "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
@@ -1448,8 +1448,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -17.63,
-      "float_pnl_pct": -1.18
+      "float_pnl": -17.59,
+      "float_pnl_pct": -1.17
     },
     {
       "id": "HD-2026-08-05",
@@ -1465,7 +1465,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 338.41,
+      "current_price": 338.86,
       "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
@@ -1476,8 +1476,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -51.46,
-      "float_pnl_pct": -3.43
+      "float_pnl": -54.83,
+      "float_pnl_pct": -3.66
     },
     {
       "id": "PANW-2026-08-05",
@@ -1493,7 +1493,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 381.83,
+      "current_price": 384.27,
       "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
@@ -1532,8 +1532,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -52.52,
-      "float_pnl_pct": -5.25
+      "float_pnl": -51.96,
+      "float_pnl_pct": -5.2
     },
     {
       "id": "AFRM-2026-08-07",
@@ -1549,7 +1549,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 79.14,
+      "current_price": 78.35,
       "current_date": "2026-08-14",
       "pnl": null,
       "pnl_pct": null,
@@ -1559,9 +1559,9 @@
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": 28.23,
-      "float_pnl_pct": 1.88
+      "float_pnl": 14.89,
+      "float_pnl_pct": 0.99
     }
   ],
-  "last_updated": "2026-08-14"
+  "last_updated": "2026-08-17"
 }

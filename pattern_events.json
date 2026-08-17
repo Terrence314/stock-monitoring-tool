@@ -33324,5 +33324,65 @@
     "direction": "sell",
     "type": "end",
     "price": 154.42
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "TFC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 53.1,
+    "score": 80
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "TFC",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 53.1
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "ROP",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 399.34
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "ROP",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 399.34,
+    "score": 70
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "ALGN",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 181.31,
+    "score": 67
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "VONG",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 129.0,
+    "score": 29
+  },
+  {
+    "date": "2026-08-17",
+    "ticker": "SPYL.L",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 19.26
   }
 ]
