@@ -1,22 +1,17 @@
 {
- "ts": "2026-08-18 21:27",
+ "ts": "2026-08-18 21:41",
  "buys": [],
  "sells": [
   {
-   "ticker": "GE",
-   "float_pct": -1.1,
-   "why": "score 23"
-  },
-  {
    "ticker": "AFRM",
    "float_pct": 1.0,
-   "why": "score 12"
+   "why": "score 29"
   }
  ],
  "no_action": false,
- "regime": "bear",
- "regime_spy": 12,
- "regime_min": null,
+ "regime": "transitional",
+ "regime_spy": 36,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "equity_usd": 5000.0,
  "sizing_basis": "fallback",
@@ -43,12 +38,5 @@
  "gate_pf": null,
  "gate_pnl": 0,
  "gate_trades": 0,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-08-18 13:27",
-  "passed": 0,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_ready": false
 }
