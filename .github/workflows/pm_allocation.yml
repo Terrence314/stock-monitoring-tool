@@ -38,6 +38,21 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Restore the live paper-trading record from Pages
+        # The provenance line on the landing page quotes this tool's own
+        # closed-trade record, and the checked-out copy of the file is
+        # deliberately older than the one daily_analysis maintains on Pages
+        # (see the staging step below). Reading the repo copy would publish a
+        # stale record — the exact failure this line is meant to prevent.
+        # Read-only here: the staging step never copies it back out.
+        run: |
+          mkdir -p outputs
+          curl -f -s "https://terrence314.github.io/stock-monitoring-tool/paper_portfolio.json" \
+            -o outputs/paper_portfolio.json \
+            && echo "  ✅ paper_portfolio.json loaded from Pages" \
+            || { rm -f outputs/paper_portfolio.json
+                 echo "  ⚠️  not on Pages — provenance falls back to 記錄暫時不可用"; }
+
       - name: Build allocation dashboard
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}

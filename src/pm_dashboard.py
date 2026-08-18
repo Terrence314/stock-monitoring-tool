@@ -44,14 +44,75 @@ INDEX_PATH = OUTPUT_DIR / "index.html"
 HKT = timezone(timedelta(hours=8))
 MISSING = "—"
 
-# Displayed verbatim on the dashboard. The per-ticker signal family this tool
-# ranks with has not passed its own out-of-sample gate; the numbers below come
-# from Projects/Stock Monitoring Tool - Project A/gate-decision-2026-08-12.md.
-PROVENANCE_NOTE = (
-    "信號出處:同一套 per-ticker 機械信號,樣本內 17 筆已平倉 — "
-    "勝率 35.3% / PF 0.58 / 淨 −$333.91,未通過自身 gate(PASS 需 WR≥45% + PF≥1.0)。"
-    "以下標的為排序參考,非已驗證 edge。市場制度卡(第一格)不依賴該套信號。"
-)
+PORTFOLIO_PATH = OUTPUT_DIR / "paper_portfolio.json"
+
+# The gate this record is measured against. Same terms as the dashboard's.
+GATE_WINRATE_PCT = 45.0
+GATE_PF          = 1.0
+
+
+def _track_record(path: Path = None) -> dict | None:
+    """Closed-trade record from the paper engine, or None if unreadable.
+
+    Was a hardcoded string quoting 17 trades / -$333.91, copied from
+    gate-decision-2026-08-12.md. By 2026-08-18 the engine had closed 60 for
+    -$2,600.67, so the one figure on the landing page that tells a reader how
+    well this works understated the loss ~8x and could only ever drift further.
+    A number that describes live state has to be read from live state.
+
+    Profit factor is gross win over gross loss; with no losing trade the ratio
+    is undefined rather than infinite, so it returns None and renders as an
+    em dash. Reporting "PF ∞" off a two-trade sample is how a thin record gets
+    mistaken for an edge.
+    """
+    path = path or PORTFOLIO_PATH
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        closed = [t for t in data.get("trades", [])
+                  if t.get("status") == "closed" and t.get("pnl") is not None]
+    except (OSError, ValueError, AttributeError, TypeError):
+        return None
+    if not closed:
+        return None
+
+    pnls    = [float(t["pnl"]) for t in closed]
+    wins    = [p for p in pnls if p > 0]
+    gross_w = sum(wins)
+    gross_l = -sum(p for p in pnls if p < 0)
+    return {
+        "trades":  len(pnls),
+        "winrate": len(wins) / len(pnls) * 100,
+        "pf":      (gross_w / gross_l) if gross_l > 0 else None,
+        "net":     sum(pnls),
+    }
+
+
+def build_provenance(record: dict | None) -> str:
+    """The line displayed verbatim under the allocation table.
+
+    The per-ticker signal family this tool ranks with has not passed its own
+    out-of-sample gate. Whether it has is now derived from the record rather
+    than asserted, so a future PASS updates the sentence by itself.
+    """
+    tail = ("以下標的為排序參考,非已驗證 edge。"
+            "市場制度卡(第一格)不依賴該套信號。")
+    if not record:
+        return ("信號出處:同一套 per-ticker 機械信號。"
+                "平倉記錄暫時讀取不到 — 未能顯示勝率/PF。" + tail)
+
+    pf      = record["pf"]
+    pf_txt  = f"{pf:.2f}" if pf is not None else MISSING
+    sign    = "−" if record["net"] < 0 else "+"
+    passed  = (record["winrate"] >= GATE_WINRATE_PCT
+               and pf is not None and pf >= GATE_PF)
+    verdict = "已通過自身 gate" if passed else "未通過自身 gate"
+    return (
+        f"信號出處:同一套 per-ticker 機械信號,樣本內 {record['trades']} 筆已平倉 — "
+        f"勝率 {record['winrate']:.1f}% / PF {pf_txt} / "
+        f"淨 {sign}${abs(record['net']):,.2f},"
+        f"{verdict}(PASS 需 WR≥{GATE_WINRATE_PCT:.0f}% + PF≥{GATE_PF:.1f})。"
+        + tail
+    )
 
 # Per-band accent + status dot. The dot is the reference's own convention.
 BAND_STYLE = {
@@ -366,7 +427,7 @@ def render_html(payload: dict) -> str:
   <section class="detail">
     <h2>信心指數組成</h2>
     <div class="components">{_component_rows(regime['components'])}</div>
-    <p class="provenance">{_esc(PROVENANCE_NOTE)}</p>
+    <p class="provenance">{_esc(payload["provenance"])}</p>
     <footer>
       掃描 {_esc(buckets['scanned'])} 隻 · Finnhub 即時報價 {_esc(buckets['live_quote_count'])} 隻 ·
       歷史與 VIX 來自 yfinance · 合格數 今晚 {_esc(buckets['qualified_counts']['tonight'])} /
@@ -409,7 +470,7 @@ def main() -> int:
         # The bar shows the lead clause; the full sentence stays in the JSON.
         "conclusion_short": conclusion.split("。")[0],
         "degraded_note": degraded_note,
-        "provenance": PROVENANCE_NOTE,
+        "provenance": build_provenance(_track_record()),
     }
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
