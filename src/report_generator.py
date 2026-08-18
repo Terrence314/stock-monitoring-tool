@@ -71,7 +71,7 @@ body {
   display: flex; align-items: center; gap: 24px;
   padding: 0 24px; height: 60px;
 }
-.brand { display: flex; align-items: center; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .brand-logo {
   width: 28px; height: 28px; border-radius: 8px;
   background: linear-gradient(135deg, var(--blue), var(--purple));
@@ -82,13 +82,22 @@ body {
 .brand-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
 .brand-sub { font-family: var(--mono); font-size: 10px; color: var(--text-2); margin-top: 1px; }
 
-.nav-pills { display: flex; gap: 4px; }
+/* min-width:0 lets the nav shrink below its content width so overflow-x can
+   scroll it; without it the flex item refuses to shrink and the row spills. */
+.nav-pills {
+  display: flex; gap: 4px; min-width: 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav-pills::-webkit-scrollbar { display: none; }
 .nav-pill {
   font-size: 13px; padding: 8px 12px; border-radius: 8px;
   color: var(--text-2); text-decoration: none;
   font-weight: 500;
   display: flex; align-items: center; gap: 6px;
   border: 1px solid transparent;
+  /* CJK has no spaces, so a shrinking pill wraps one character per line and
+     grows taller than the 60px header. Pills scroll, they never wrap. */
+  white-space: nowrap; flex-shrink: 0;
 }
 .nav-pill:hover { color: var(--text); background: var(--elevated); }
 .nav-pill.active {

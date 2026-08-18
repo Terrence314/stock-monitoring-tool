@@ -101,3 +101,61 @@ def test_bottom_bar_does_not_cover_page_content():
 def test_no_public_link_to_the_unpublished_portfolio_page():
     """portfolio.html holds real IBKR holdings and is never deployed."""
     assert 'href="./portfolio.html"' not in RG
+
+
+# ── Nav pills never wrap ──────────────────────────────────────────────────────
+#
+# Measured live on 2026-08-18: the `← 配置頁` pill added with the landing-page
+# swap rendered 39px wide and 99px tall at top:-19px — it overflowed the 60px
+# header and sat on top of the brand block, pushing the ticker search off-row.
+#
+# Cause: `.nav-pill` is a flex child with the default `flex-shrink: 1` and no
+# `white-space` rule. Fourteen pills overflow the row, so every one of them
+# shrinks. Latin labels break at their spaces and mostly survive; CJK has no
+# spaces, so `配置頁` broke one character per line and grew three lines tall.
+#
+# The nav scrolls horizontally instead. That needs all three declarations:
+# nowrap and no-shrink on the pill, and `min-width: 0` on the container so the
+# flex item is allowed to shrink below its content width and actually scroll.
+
+def _nav_pill_css():
+    m = re.search(r"\.nav-pill\s*\{(.*?)\}", RG, re.S)
+    assert m, ".nav-pill rule not found"
+    return m.group(1)
+
+
+def _nav_pills_css():
+    m = re.search(r"\.nav-pills\s*\{(.*?)\}", RG, re.S)
+    assert m, ".nav-pills rule not found"
+    return m.group(1)
+
+
+def test_nav_pills_do_not_wrap():
+    """CJK labels wrap per character when allowed to. Never allow it."""
+    assert re.search(r"white-space:\s*nowrap", _nav_pill_css()), (
+        "a shrinking .nav-pill wraps CJK one character per line and grows "
+        "taller than the 60px header — see this block's comment"
+    )
+
+
+def test_nav_pills_do_not_shrink():
+    assert re.search(r"flex-shrink:\s*0", _nav_pill_css()), (
+        "nowrap alone still lets the pill shrink and clip its own label"
+    )
+
+
+def test_nav_row_can_scroll_instead_of_overflowing():
+    css = _nav_pills_css()
+    assert re.search(r"overflow-x:\s*auto", css), "nav must scroll, not spill"
+    assert re.search(r"min-width:\s*0", css), (
+        "without min-width:0 the flex item refuses to shrink, so overflow-x "
+        "never engages and the row overflows the header anyway"
+    )
+
+
+def test_brand_block_is_not_squeezed_by_the_nav():
+    m = re.search(r"\.brand\s*\{(.*?)\}", RG, re.S)
+    assert m, ".brand rule not found"
+    assert re.search(r"flex-shrink:\s*0", m.group(1)), (
+        "the brand collapsed under the overflowing nav on 2026-08-18"
+    )
