@@ -1465,7 +1465,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 344.58,
+      "current_price": 343.05,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1476,8 +1476,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -10.46,
-      "float_pnl_pct": -0.7
+      "float_pnl": -28.48,
+      "float_pnl_pct": -1.9
     },
     {
       "id": "PANW-2026-08-05",
@@ -1493,7 +1493,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 358.94,
+      "current_price": 358.29,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1504,8 +1504,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": -57.73,
-      "float_pnl_pct": -3.85
+      "float_pnl": -31.38,
+      "float_pnl_pct": -2.09
     },
     {
       "id": "WYNN-2026-08-05",
@@ -1550,7 +1550,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 77.81,
+      "current_price": 78.4,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1560,8 +1560,8 @@
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": -26.49,
-      "float_pnl_pct": -1.77
+      "float_pnl": 4.45,
+      "float_pnl_pct": 0.3
     },
     {
       "id": "CRM-2026-08-19",
@@ -1577,14 +1577,37 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 205.44,
+      "current_price": 206.82,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 12.55,
-      "float_pnl_pct": 2.51
+      "float_pnl": 15.99,
+      "float_pnl_pct": 3.2
+    },
+    {
+      "id": "DASH-2026-08-19",
+      "ticker": "DASH",
+      "direction": "long",
+      "signal_date": "2026-08-19",
+      "entry_ts": "2026-08-20T00:30:41+08:00",
+      "entry_price": 220.29,
+      "shares": 2.269735,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 220.29,
+      "current_date": "2026-08-19",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Consumer Cyclical",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-08-19"
