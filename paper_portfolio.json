@@ -1465,7 +1465,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 344.74,
+      "current_price": 344.3,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1476,8 +1476,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -28.23,
-      "float_pnl_pct": -1.88
+      "float_pnl": -27.8,
+      "float_pnl_pct": -1.85
     },
     {
       "id": "PANW-2026-08-05",
@@ -1493,7 +1493,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 359.89,
+      "current_price": 359.76,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1504,8 +1504,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": -23.57,
-      "float_pnl_pct": -1.57
+      "float_pnl": -27.49,
+      "float_pnl_pct": -1.83
     },
     {
       "id": "WYNN-2026-08-05",
@@ -1550,7 +1550,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 77.38,
+      "current_price": 77.33,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1560,8 +1560,8 @@
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": -7.54,
-      "float_pnl_pct": -0.5
+      "float_pnl": -3.87,
+      "float_pnl_pct": -0.26
     },
     {
       "id": "CRM-2026-08-19",
@@ -1577,14 +1577,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 206.91,
+      "current_price": 206.09,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 16.22,
-      "float_pnl_pct": 3.24
+      "float_pnl": 14.17,
+      "float_pnl_pct": 2.83
     },
     {
       "id": "DASH-2026-08-19",
@@ -1600,14 +1600,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 221.49,
+      "current_price": 220.22,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Consumer Cyclical",
-      "float_pnl": 2.72,
-      "float_pnl_pct": 0.54
+      "float_pnl": -0.16,
+      "float_pnl_pct": -0.03
     }
   ],
   "last_updated": "2026-08-19"
