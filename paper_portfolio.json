@@ -1465,7 +1465,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 345.68,
+      "current_price": 345.14,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1476,8 +1476,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -52.91,
-      "float_pnl_pct": -3.53
+      "float_pnl": -23.79,
+      "float_pnl_pct": -1.59
     },
     {
       "id": "PANW-2026-08-05",
@@ -1493,7 +1493,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 371.67,
+      "current_price": 368.51,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1504,8 +1504,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": 72.26,
-      "float_pnl_pct": 4.82
+      "float_pnl": 20.7,
+      "float_pnl_pct": 1.38
     },
     {
       "id": "WYNN-2026-08-05",
@@ -1517,14 +1517,14 @@
       "shares": 9.24599,
       "notional": 1000.0,
       "score": 75,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
+      "status": "closed",
+      "exit_date": "2026-08-19",
+      "exit_price": 99.5,
+      "exit_reason": "stop_loss",
       "current_price": 101.75,
       "current_date": "2026-08-19",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -81.66,
+      "pnl_pct": -8.17,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1532,8 +1532,9 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -51.96,
-      "float_pnl_pct": -5.2
+      "gapped": false,
+      "pnl_gross": -80.0,
+      "costs": 1.66
     },
     {
       "id": "AFRM-2026-08-07",
@@ -1549,7 +1550,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 74.28,
+      "current_price": 75.77,
       "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
@@ -1559,8 +1560,31 @@
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": -54.72,
-      "float_pnl_pct": -3.65
+      "float_pnl": -63.81,
+      "float_pnl_pct": -4.25
+    },
+    {
+      "id": "CRM-2026-08-19",
+      "ticker": "CRM",
+      "direction": "long",
+      "signal_date": "2026-08-19",
+      "entry_ts": "2026-08-19T21:45:36+08:00",
+      "entry_price": 200.41,
+      "shares": 2.494885,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 200.41,
+      "current_date": "2026-08-19",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-08-19"
