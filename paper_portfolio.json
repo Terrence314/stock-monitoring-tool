@@ -1378,22 +1378,22 @@
       "shares": 17.551907,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 83.34,
-      "current_date": "2026-08-14",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-17",
+      "exit_price": 82.31,
+      "exit_reason": "hold_period",
+      "current_price": 80.86,
+      "current_date": "2026-08-19",
+      "pnl": -57.46,
+      "pnl_pct": -3.83,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
         "Above MA60"
       ],
       "sector": "Industrials",
-      "float_pnl": -37.21,
-      "float_pnl_pct": -2.48
+      "pnl_gross": -55.29,
+      "costs": 2.17
     },
     {
       "id": "CIBR-2026-08-04",
@@ -1405,14 +1405,14 @@
       "shares": 15.538405,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 98.73,
-      "current_date": "2026-08-18",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-18",
+      "exit_price": 97.44,
+      "exit_reason": "hold_period",
+      "current_price": 97.1,
+      "current_date": "2026-08-19",
+      "pnl": 11.78,
+      "pnl_pct": 0.79,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1420,8 +1420,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Unknown",
-      "float_pnl": 34.03,
-      "float_pnl_pct": 2.27
+      "pnl_gross": 13.98,
+      "costs": 2.21
     },
     {
       "id": "GE-2026-08-04",
@@ -1433,14 +1433,14 @@
       "shares": 4.025875,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 370.62,
-      "current_date": "2026-08-18",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-18",
+      "exit_price": 375.09,
+      "exit_reason": "hold_period",
+      "current_price": 373.08,
+      "current_date": "2026-08-19",
+      "pnl": 7.86,
+      "pnl_pct": 0.52,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1448,8 +1448,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -7.93,
-      "float_pnl_pct": -0.53
+      "pnl_gross": 10.06,
+      "costs": 2.21
     },
     {
       "id": "HD-2026-08-05",
@@ -1465,8 +1465,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 338.86,
-      "current_date": "2026-08-14",
+      "current_price": 345.68,
+      "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1493,8 +1493,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 384.27,
-      "current_date": "2026-08-14",
+      "current_price": 371.67,
+      "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1521,8 +1521,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 102.53,
-      "current_date": "2026-08-14",
+      "current_price": 101.75,
+      "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1549,8 +1549,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 74.75,
-      "current_date": "2026-08-18",
+      "current_price": 74.28,
+      "current_date": "2026-08-19",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1563,5 +1563,5 @@
       "float_pnl_pct": -3.65
     }
   ],
-  "last_updated": "2026-08-18"
+  "last_updated": "2026-08-19"
 }
