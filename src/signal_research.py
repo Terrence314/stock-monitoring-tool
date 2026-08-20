@@ -88,7 +88,16 @@ def _rising(s: pd.Series, n: int) -> pd.Series:
     return out
 
 
+# The control. Enters every name every COOLDOWN days regardless of any signal,
+# so its alpha is what the universe itself pays over the benchmark. A signal is
+# only worth running if it beats THIS, not if it beats zero: a variant showing
+# -0.10% alpha in a universe that pays -0.19% is adding value, and one showing
+# +0.05% in a universe that pays +0.10% is destroying it. Without this row the
+# whole table is unreadable.
+NULL_BASELINE = lambda f: pd.Series(True, index=f.index)   # noqa: E731
+
 VARIANTS = {
+    "NULL_buy_anything":    NULL_BASELINE,
     # --- what the engine does today -----------------------------------------
     "golden_cross_STATE":   lambda f: f["ma5"] > f["ma20"],
     "macd_bull_STATE":      lambda f: f["macd"] > f["macd_signal"],
@@ -168,12 +177,23 @@ def _summarise(rows: list[dict]) -> dict:
     }
 
 
-def main() -> None:
+# The in-sample window this study was built on, and an earlier window it never
+# saw. Every conclusion below was chosen while looking at IN_SAMPLE, so
+# IN_SAMPLE cannot test it — the regime split, the ER threshold and the
+# variant list were all picked with that data in view. OUT_OF_SAMPLE covers
+# the 2022 bear and the 2023 recovery, which is the harder test: a regime
+# filter that only works in the tape it was designed on is a curve fit.
+IN_SAMPLE     = ("2024-08-20", "2026-08-20")
+OUT_OF_SAMPLE = ("2022-01-01", "2024-08-01")
+
+
+def main(window: tuple[str, str] | None = None, label: str = "in-sample") -> dict:
+    start, end = window or IN_SAMPLE
     events = json.load(open(os.path.join("outputs", "pattern_events.json")))
     tickers = sorted({e["ticker"] for e in events if e.get("ticker")})
-    print(f"  [signal_research] {len(tickers)} tickers, {LOOKBACK_Y}y daily bars…")
+    print(f"  [signal_research] {label}: {start} -> {end}, {len(tickers)} tickers…")
 
-    raw = yf.download(tickers + [BENCHMARK], period=f"{LOOKBACK_Y}y",
+    raw = yf.download(tickers + [BENCHMARK], start=start, end=end,
                       progress=False, auto_adjust=True, group_by="ticker")
 
     bench = raw[BENCHMARK].dropna(how="all")
@@ -201,6 +221,7 @@ def main() -> None:
           f"chop {int((regimes == 'chop_or_down').sum())}\n")
 
     report = {"generated": str(date.today()), "hold_days": HOLD_DAYS,
+              "window": {"label": label, "start": start, "end": end},
               "notional_usd": DEFAULT_NOTIONAL_USD, "variants": {}}
 
     hdr = (f"{'variant':24} {'n':>5} {'net%':>7} {'ALPHA%':>7} {'beat':>6} | "
@@ -220,9 +241,14 @@ def main() -> None:
               f"{tr.get('n',0):6} {_a(tr):+7.2f} | {ch.get('n',0):6} {_a(ch):+7.2f}")
 
     os.makedirs("outputs", exist_ok=True)
-    json.dump(report, open(OUT_FILE, "w"), indent=2)
-    print(f"\n  saved -> {OUT_FILE}")
+    out = OUT_FILE if label == "in-sample" else OUT_FILE.replace(
+        ".json", f"_{label.replace('-', '_')}.json")
+    json.dump(report, open(out, "w"), indent=2)
+    print(f"\n  saved -> {out}")
+    return report
 
 
 if __name__ == "__main__":
-    main()
+    which = sys.argv[1] if len(sys.argv) > 1 else "in-sample"
+    main(OUT_OF_SAMPLE if which == "oos" else IN_SAMPLE,
+         "out-of-sample" if which == "oos" else "in-sample")

@@ -127,3 +127,30 @@ def test_the_hold_period_matches_the_live_engine():
         "the study must hold for as long as the engine does, or its numbers "
         "cannot be compared to the engine's record"
     )
+
+
+# ── The control row ──────────────────────────────────────────────────────────
+
+def test_the_null_baseline_fires_unconditionally():
+    """It must ignore every indicator. If a condition crept in it would stop
+    being a control and the whole table would lose its reference point."""
+    idx = pd.date_range("2026-01-01", periods=6, freq="D")
+    f = pd.DataFrame({"close": [1.0] * 6, "ma5": [9.0] * 6, "ma20": [1.0] * 6,
+                      "macd": [-5.0] * 6, "macd_signal": [5.0] * 6,
+                      "hist": [-1.0] * 6, "rsi": [10.0] * 6,
+                      "k": [5.0] * 6, "ma60": [99.0] * 6}, index=idx)
+    assert sr.VARIANTS["NULL_buy_anything"](f).all(), (
+        "the control must fire even when every indicator is bearish"
+    )
+
+
+def test_the_table_includes_the_control():
+    """A signal beating zero proves nothing; it has to beat buying at random
+    from the same universe. That comparison needs this row present."""
+    assert "NULL_buy_anything" in sr.VARIANTS
+
+
+def test_both_study_windows_are_disjoint():
+    """The out-of-sample window must not overlap the one every choice in this
+    module was made while looking at."""
+    assert sr.OUT_OF_SAMPLE[1] <= sr.IN_SAMPLE[0]
