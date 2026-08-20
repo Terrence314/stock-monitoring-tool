@@ -1550,7 +1550,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 76.86,
+      "current_price": 76.31,
       "current_date": "2026-08-20",
       "pnl": null,
       "pnl_pct": null,
@@ -1560,8 +1560,8 @@
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": -4.83,
-      "float_pnl_pct": -0.32
+      "float_pnl": -13.92,
+      "float_pnl_pct": -0.93
     },
     {
       "id": "CRM-2026-08-19",
@@ -1577,14 +1577,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 205.4,
+      "current_price": 206.46,
       "current_date": "2026-08-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 14.17,
-      "float_pnl_pct": 2.83
+      "float_pnl": 14.84,
+      "float_pnl_pct": 2.97
     },
     {
       "id": "DASH-2026-08-19",
@@ -1600,14 +1600,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 220.07,
+      "current_price": 222.26,
       "current_date": "2026-08-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Consumer Cyclical",
-      "float_pnl": -0.16,
-      "float_pnl_pct": -0.03
+      "float_pnl": 3.11,
+      "float_pnl_pct": 0.62
     }
   ],
   "last_updated": "2026-08-20"
