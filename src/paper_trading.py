@@ -21,6 +21,7 @@ import pandas as pd
 import yfinance as yf
 from jinja2 import Template
 
+import trading_costs                                                  # noqa: E402
 from entry_selection import (                                        # noqa: E402
     BUY_THRESHOLD, REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
     MAX_PER_SECTOR, MAX_OPEN_POSITIONS,
@@ -39,36 +40,19 @@ STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
 # Every P&L figure was gross: no commission, no slippage, no spread. On a
 # 42-trade record at PF 0.26 that does not flip the conclusion, but the gate
 # decides real money and an unpriced strategy cannot support that decision.
-# Defaults follow IBKR's US tiered schedule; tune here, nowhere else.
-COMMISSION_PER_SHARE = 0.0035   # USD per share, per side
-COMMISSION_MIN       = 0.35     # USD floor, per side
-COMMISSION_MAX_PCT   = 1.0      # capped at 1% of trade value, per side
-SLIPPAGE_BPS         = 5.0      # basis points per side (0.05%)
+# The model itself now lives in trading_costs.py so the backtests price trades
+# the same way this engine does. They previously priced them at zero, which is
+# how day_trading_backtest came to recommend a strategy whose edge is smaller
+# than one round trip. These names are kept as aliases: they are referenced by
+# tests and by the sweep in this module.
+COMMISSION_PER_SHARE = trading_costs.COMMISSION_PER_SHARE
+COMMISSION_MIN       = trading_costs.COMMISSION_MIN
+COMMISSION_MAX_PCT   = trading_costs.COMMISSION_MAX_PCT
+SLIPPAGE_BPS         = trading_costs.SLIPPAGE_BPS
 
-
-def _side_cost(price: float, shares: float) -> float:
-    """Commission + slippage for ONE side of a trade."""
-    if not price or not shares or price <= 0 or shares <= 0:
-        return 0.0
-    value = price * shares
-    commission = min(
-        max(COMMISSION_PER_SHARE * shares, COMMISSION_MIN),
-        value * COMMISSION_MAX_PCT / 100,
-    )
-    return commission + value * SLIPPAGE_BPS / 10_000
-
-
-def _round_trip_cost(entry_price: float, exit_price: float, shares: float) -> float:
-    """Total cost of entering and exiting a position."""
-    return _side_cost(entry_price, shares) + _side_cost(exit_price, shares)
-
-
-def _net_pnl(entry_price: float, exit_price: float, shares: float,
-             is_short: bool = False) -> tuple[float, float, float]:
-    """Return (net_pnl, gross_pnl, costs) for a closed position."""
-    gross = (entry_price - exit_price) * shares if is_short else (exit_price - entry_price) * shares
-    costs = _round_trip_cost(entry_price, exit_price, shares)
-    return round(gross - costs, 2), round(gross, 2), round(costs, 2)
+_side_cost       = trading_costs.side_cost
+_round_trip_cost = trading_costs.round_trip_cost
+_net_pnl         = trading_costs.net_pnl
 
 
 # ── Strategy settings ──────────────────────────────────────────────────────────

@@ -17,10 +17,14 @@ Output: outputs/day_trading_backtest.json + console summary table.
 """
 import json
 import os
+import sys
 import warnings
 
 import pandas as pd
 import yfinance as yf
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from trading_costs import DEFAULT_NOTIONAL_USD, round_trip_pct   # noqa: E402
 
 warnings.filterwarnings("ignore")
 
@@ -39,6 +43,27 @@ def _session_days(df: pd.DataFrame):
     for date, day_df in df.groupby(df.index.date):
         if len(day_df) >= ORB_BARS + 2:
             yield date, day_df
+
+
+def _priced(entry: float, exit_px: float, reason: str) -> dict:
+    """A trade, priced net of commission and slippage.
+
+    This backtest reported gross returns as if they were net until 2026-08-20.
+    The ORB variant showed +0.139%/trade over 1,060 trades and +147.4% total;
+    a round trip on a ticket this size costs about 0.24%, so the strategy it
+    recommended in fact loses roughly 0.10% per trade. An intraday backtest is
+    the most cost-sensitive kind there is — the edge per trade is small and the
+    trade count is enormous — so this is where omitting costs does most damage.
+    """
+    gross = (exit_px - entry) / entry * 100
+    cost  = round_trip_pct(entry, exit_px, DEFAULT_NOTIONAL_USD)
+    return {
+        "entry": round(entry, 2), "exit": round(exit_px, 2),
+        "pnl_pct":       round(gross - cost, 2),   # NET — what you keep
+        "pnl_pct_gross": round(gross, 2),
+        "cost_pct":      round(cost, 3),
+        "reason": reason,
+    }
 
 
 def _orb_trade(day_df: pd.DataFrame) -> dict | None:
@@ -74,11 +99,7 @@ def _orb_trade(day_df: pd.DataFrame) -> dict | None:
     if exit_px is None:
         exit_px = float(walk["Close"].iloc[-1])
 
-    return {
-        "entry": round(entry, 2), "exit": round(exit_px, 2),
-        "pnl_pct": round((exit_px - entry) / entry * 100, 2),
-        "reason": reason,
-    }
+    return _priced(entry, exit_px, reason)
 
 
 def _vwap_trade(day_df: pd.DataFrame) -> dict | None:
@@ -112,11 +133,7 @@ def _vwap_trade(day_df: pd.DataFrame) -> dict | None:
     if exit_px is None:
         exit_px = float(walk["Close"].iloc[-1])
 
-    return {
-        "entry": round(entry, 2), "exit": round(exit_px, 2),
-        "pnl_pct": round((exit_px - entry) / entry * 100, 2),
-        "reason": reason,
-    }
+    return _priced(entry, exit_px, reason)
 
 
 def _stats(trades: list[dict]) -> dict:
@@ -133,6 +150,12 @@ def _stats(trades: list[dict]) -> dict:
         "avg_loss": round(sum(losses) / len(losses), 2) if losses else 0,
         "total_pnl_pct": round(sum(t["pnl_pct"] for t in trades), 1),
         "expectancy": round(sum(t["pnl_pct"] for t in trades) / len(trades), 3),
+        # Gross figures are kept so the size of the cost drag stays visible
+        # rather than being quietly absorbed into a smaller headline number.
+        "expectancy_gross": round(
+            sum(t.get("pnl_pct_gross", t["pnl_pct"]) for t in trades) / len(trades), 3),
+        "total_cost_pct": round(sum(t.get("cost_pct", 0) for t in trades), 1),
+        "notional_assumed_usd": DEFAULT_NOTIONAL_USD,
         "stops_hit": sum(1 for t in trades if t["reason"] == "stop"),
         "targets_hit": sum(1 for t in trades if t["reason"] == "target"),
         "time_exits": sum(1 for t in trades if t["reason"] == "time"),
@@ -195,7 +218,10 @@ def main() -> None:
             print("  no trades")
             continue
         print(f"  trades {s['trades']} | win rate {s['win_rate']}% | profit factor {s['profit_factor']}")
-        print(f"  avg win {s['avg_win']}% | avg loss {s['avg_loss']}% | expectancy {s['expectancy']}%/trade")
+        print(f"  avg win {s['avg_win']}% | avg loss {s['avg_loss']}% | expectancy {s['expectancy']}%/trade NET")
+        print(f"  gross expectancy {s.get('expectancy_gross')}%/trade | cost drag "
+              f"{round(s.get('expectancy_gross', 0) - s['expectancy'], 3)}%/trade "
+              f"(${s.get('notional_assumed_usd')} tickets)")
         print(f"  exits - stop {s['stops_hit']} / target {s['targets_hit']} / time {s['time_exits']}")
     print(f"\nSaved -> {OUT_FILE}")
 

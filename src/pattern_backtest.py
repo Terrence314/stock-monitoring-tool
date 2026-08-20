@@ -9,11 +9,15 @@ Output: outputs/pattern_backtest.html
 
 import os
 import json
+import sys
 from datetime import datetime
 import yfinance as yf
 from jinja2 import Template
 
 PATTERN_EVENTS_FILE = os.path.join("outputs", "pattern_events.json")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from trading_costs import DEFAULT_NOTIONAL_USD, round_trip_pct   # noqa: E402
+
 FORWARD_DAYS        = [5, 10, 20]
 
 
@@ -94,9 +98,19 @@ def _compute_forward_returns(
             target_idx = entry_idx + fd
             if target_idx < len(all_dates):
                 exit_price = series[all_dates[target_idx]]
-                forward[f"r{fd}"] = round((exit_price - entry_price) / entry_price * 100, 2)
+                gross = (exit_price - entry_price) / entry_price * 100
+                # Net of commission and slippage. Reported gross until
+                # 2026-08-20, which flattered every pattern by a fixed amount
+                # and so inflated the win rate this page ranks patterns by:
+                # any pattern whose true edge is thinner than one round trip
+                # was being sorted above patterns that actually clear it.
+                cost = round_trip_pct(entry_price, exit_price,
+                                      DEFAULT_NOTIONAL_USD)
+                forward[f"r{fd}"]           = round(gross - cost, 2)
+                forward[f"r{fd}_gross"]     = round(gross, 2)
             else:
-                forward[f"r{fd}"] = None
+                forward[f"r{fd}"]       = None
+                forward[f"r{fd}_gross"] = None
 
         results.append({
             "pattern":    event["pattern"],
@@ -111,6 +125,8 @@ def _compute_forward_returns(
 
 
 def _stats_for(rows: list[dict], fd: int) -> dict:
+    """Stats on NET returns. `avg_gross` is carried so the cost drag stays
+    visible instead of vanishing into a smaller headline number."""
     key  = f"r{fd}"
     vals = [r[key] for r in rows if r.get(key) is not None]
     if not vals:
@@ -119,11 +135,13 @@ def _stats_for(rows: list[dict], fd: int) -> dict:
     sv   = sorted(vals)
     mid  = len(sv) // 2
     med  = (sv[mid - 1] + sv[mid]) / 2 if len(sv) % 2 == 0 else sv[mid]
+    gross = [r[f"{key}_gross"] for r in rows if r.get(f"{key}_gross") is not None]
     return {
-        "n":        len(vals),
-        "win_rate": round(wins / len(vals) * 100, 1),
-        "avg":      round(sum(vals) / len(vals), 2),
-        "median":   round(med, 2),
+        "n":         len(vals),
+        "win_rate":  round(wins / len(vals) * 100, 1),
+        "avg":       round(sum(vals) / len(vals), 2),
+        "median":    round(med, 2),
+        "avg_gross": round(sum(gross) / len(gross), 2) if gross else None,
     }
 
 
