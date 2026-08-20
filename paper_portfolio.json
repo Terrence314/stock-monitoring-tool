@@ -1461,14 +1461,14 @@
       "shares": 4.270463,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 344.3,
-      "current_date": "2026-08-19",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-19",
+      "exit_price": 344.3,
+      "exit_reason": "hold_period",
+      "current_price": 332.26,
+      "current_date": "2026-08-20",
+      "pnl": -31.86,
+      "pnl_pct": -2.12,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1476,8 +1476,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -29.68,
-      "float_pnl_pct": -1.98
+      "pnl_gross": -29.68,
+      "costs": 2.19
     },
     {
       "id": "PANW-2026-08-05",
@@ -1489,14 +1489,14 @@
       "shares": 4.091486,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 359.76,
-      "current_date": "2026-08-19",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-19",
+      "exit_price": 359.76,
+      "exit_reason": "hold_period",
+      "current_price": 354.23,
+      "current_date": "2026-08-20",
+      "pnl": -30.21,
+      "pnl_pct": -2.01,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1504,8 +1504,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": -28.03,
-      "float_pnl_pct": -1.87
+      "pnl_gross": -28.03,
+      "costs": 2.19
     },
     {
       "id": "WYNN-2026-08-05",
@@ -1550,8 +1550,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 77.33,
-      "current_date": "2026-08-19",
+      "current_price": 76.86,
+      "current_date": "2026-08-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1577,8 +1577,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 206.09,
-      "current_date": "2026-08-19",
+      "current_price": 205.4,
+      "current_date": "2026-08-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
@@ -1600,8 +1600,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 220.22,
-      "current_date": "2026-08-19",
+      "current_price": 220.07,
+      "current_date": "2026-08-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
@@ -1610,5 +1610,5 @@
       "float_pnl_pct": -0.03
     }
   ],
-  "last_updated": "2026-08-19"
+  "last_updated": "2026-08-20"
 }
