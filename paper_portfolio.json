@@ -1550,8 +1550,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 75.05,
-      "current_date": "2026-08-20",
+      "current_price": 75.74,
+      "current_date": "2026-08-21",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1577,8 +1577,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 205.43,
-      "current_date": "2026-08-20",
+      "current_price": 206.76,
+      "current_date": "2026-08-21",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
@@ -1600,15 +1600,42 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 222.36,
-      "current_date": "2026-08-20",
+      "current_price": 222.74,
+      "current_date": "2026-08-21",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Consumer Cyclical",
       "float_pnl": 4.7,
       "float_pnl_pct": 0.94
+    },
+    {
+      "id": "CVNA-2026-08-21",
+      "ticker": "CVNA",
+      "direction": "long",
+      "signal_date": "2026-08-21",
+      "entry_ts": "2026-08-21T21:31:11+08:00",
+      "entry_price": 71.52,
+      "shares": 8.389262,
+      "notional": 600.0,
+      "score": 90,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 71.52,
+      "current_date": "2026-08-21",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Consumer Cyclical",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-08-20"
+  "last_updated": "2026-08-21"
 }

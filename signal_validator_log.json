@@ -1,9 +1,13 @@
 [
   {
-    "date": "2026-08-20",
-    "ran_at": "2026-08-20 13:33",
-    "passed": [],
+    "date": "2026-08-21",
+    "ran_at": "2026-08-21 13:31",
+    "passed": [
+      "CVNA"
+    ],
     "blocked": [],
-    "cautions": []
+    "cautions": [
+      "⚠️ Monthly options expiry — expect elevated vol"
+    ]
   }
 ]

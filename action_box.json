@@ -1,11 +1,27 @@
 {
- "ts": "2026-08-21 06:26",
- "buys": [],
+ "ts": "2026-08-21 21:30",
+ "buys": [
+  {
+   "ticker": "CVNA",
+   "price": 71.5199966430664,
+   "score": 90,
+   "reason": "Score 90 · BB 0.68 · RSI 54",
+   "stop": 65.8,
+   "target": 80.1,
+   "notional": 600.0,
+   "expiry": "09-04",
+   "ai_review": {
+    "verdict": "NEEDS_REVIEW",
+    "summary": "以下是對 CVNA BUY 信號的審查：\n\n1. 【多頭理據】\nCVNA 呈現明確的多頭排列，價格 (71.52) 顯著高於所有關鍵移動平均線 (MA5: 70.53, MA20: 68.42, MA60: 67.59)，且站穩 MA60 上方 5.8%，顯示強勁的上漲趨勢。MACD 金叉且動能擴張（0軸以上，MACD: 1.22, MACD_HIST: 0.07），以及 RSI 動能走強（54.01 ↑），進一步確認了上行動能。\n\n2. 【空頭理據】\n儘管存在多頭信號，但目前成交量正常（VOL_RATIO: 1.02），未能提供突破性上漲所需的強勁支撐。同時，KD 指標顯示中性（K=37.4"
+   },
+   "caution": "⚠️ Monthly options expiry — expect elevated vol | ⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "regime": "bear",
- "regime_spy": 24,
- "regime_min": null,
+ "no_action": false,
+ "regime": "transitional",
+ "regime_spy": 44,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "equity_usd": 5000.0,
  "sizing_basis": "fallback",
@@ -21,7 +37,7 @@
  "breaker_base": 19000.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 11,
+ "gate_day": 12,
  "gate_days": 60,
  "gate_winrate": null,
  "gate_ci_low": null,
@@ -32,5 +48,14 @@
  "gate_pf": null,
  "gate_pnl": 0,
  "gate_trades": 0,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-08-21 13:31",
+  "passed": 1,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": [
+   "⚠️ Monthly options expiry — expect elevated vol"
+  ]
+ }
 }
