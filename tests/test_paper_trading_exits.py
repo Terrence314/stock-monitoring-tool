@@ -41,14 +41,33 @@ def _bar(low, high, close):
     return {"low": low, "high": high, "close": close}
 
 
+# Bars are built RELATIVE to the live stop/target rather than as literals.
+# These tests hardcoded 97.0 / 92.0 / 113.5, chosen around -8%/+12%. When the
+# exits were reset to -3%/+6% on 2026-08-22 four of them failed -- not because
+# the fill logic broke, but because a bar that used to sit safely inside a wide
+# stop now sits outside a tight one. A fixture pinned to a parameter's old
+# value tests the parameter, not the behaviour.
+
+def _pct(entry, pct):
+    return entry * (1 + pct / 100)
+
+
+def _inside_bar(entry=100.0):
+    """A quiet session: never reaches either exit level."""
+    half_stop = -STOP_LOSS_PCT / 2
+    half_tgt  = TAKE_PROFIT_PCT / 2
+    return _bar(_pct(entry, half_stop), _pct(entry, half_tgt), entry)
+
+
 def test_stop_breach_closes_at_stop_price():
     """Low breaches -8% stop → closed as stop_loss at the stop price, on breach day."""
     t = _trade(entry=100.0)
-    stop_price = 100.0 * (1 - STOP_LOSS_PCT / 100)  # 92.0
+    stop_price = 100.0 * (1 - STOP_LOSS_PCT / 100)
+    deep = _pct(100.0, -STOP_LOSS_PCT * 2.5)      # well through the stop
     ohlc = {"TEST": {
-        "2026-07-02": _bar(97.0, 101.0, 98.0),
-        "2026-07-03": _bar(90.0, 99.0, 95.0),   # breach day
-        "2026-07-06": _bar(80.0, 92.0, 81.0),   # would be -19% by hold-period close
+        "2026-07-02": _inside_bar(),
+        "2026-07-03": _bar(_pct(100.0, -STOP_LOSS_PCT - 1), _pct(100.0, 1), 95.0),
+        "2026-07-06": _bar(deep, deep * 1.1, deep),   # far worse by hold-period close
     }}
     closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
     assert closed == 1, f"expected 1 close, got {closed}"
@@ -66,8 +85,9 @@ def test_no_breach_stays_open_and_updates_price():
     """No stop/target breach → position stays open, current_price = latest close."""
     t = _trade(entry=100.0)
     ohlc = {"TEST": {
-        "2026-07-02": _bar(96.0, 104.0, 103.0),
-        "2026-07-03": _bar(99.0, 105.0, 101.5),
+        "2026-07-02": _inside_bar(),
+        "2026-07-03": _bar(_pct(100.0, -STOP_LOSS_PCT / 3),
+                           _pct(100.0, TAKE_PROFIT_PCT / 3), 101.5),
     }}
     closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
     assert closed == 0
@@ -79,9 +99,10 @@ def test_no_breach_stays_open_and_updates_price():
 def test_target_breach_closes_at_target_price():
     """High breaches +12% target → closed as take_profit at target price."""
     t = _trade(entry=100.0)
-    target = 100.0 * (1 + TAKE_PROFIT_PCT / 100)  # 112.0
+    target = 100.0 * (1 + TAKE_PROFIT_PCT / 100)
     ohlc = {"TEST": {
-        "2026-07-02": _bar(101.0, 113.5, 112.5),
+        "2026-07-02": _bar(_pct(100.0, 1), _pct(100.0, TAKE_PROFIT_PCT + 1.5),
+                           _pct(100.0, TAKE_PROFIT_PCT + 0.5)),
     }}
     closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
     assert closed == 1
@@ -94,7 +115,8 @@ def test_target_breach_closes_at_target_price():
 def test_same_day_stop_and_target_prefers_stop():
     """Both stop and target hit in one bar → conservative: stop_loss wins."""
     t = _trade(entry=100.0)
-    ohlc = {"TEST": {"2026-07-02": _bar(90.0, 115.0, 100.0)}}
+    ohlc = {"TEST": {"2026-07-02": _bar(_pct(100.0, -STOP_LOSS_PCT - 2),
+                                       _pct(100.0, TAKE_PROFIT_PCT + 3), 100.0)}}
     _apply_ohlc_stops([t], ohlc, "2026-07-07")
     assert t["exit_reason"] == "stop_loss", f"got {t['exit_reason']}"
 
@@ -103,8 +125,9 @@ def test_entry_day_bar_ignored():
     """Entry-day low predates the intraday entry — must not trigger the stop."""
     t = _trade(entry=100.0, signal_date="2026-07-01")
     ohlc = {"TEST": {
-        "2026-07-01": _bar(85.0, 102.0, 100.0),  # entry-day dip, before our entry
-        "2026-07-02": _bar(98.0, 103.0, 102.0),
+        # entry-day dip, before our entry
+        "2026-07-01": _bar(_pct(100.0, -STOP_LOSS_PCT * 3), 102.0, 100.0),
+        "2026-07-02": _inside_bar(),
     }}
     closed = _apply_ohlc_stops([t], ohlc, "2026-07-07")
     assert closed == 0

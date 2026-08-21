@@ -82,3 +82,29 @@ def trading_days_between(start: date, target: date) -> int:
         if is_trading_day(d):
             n += step
     return n
+
+
+def missing_sessions(fetched_dates, start: date, end: date) -> list:
+    """Trading days this calendar expects that a price feed did not return.
+
+    yfinance wraps unofficial Yahoo endpoints: no SLA, undocumented rate
+    limits, and gaps that appear without an error. On 2026-08-20 its SPY
+    history had no bar for Monday 2026-08-17 -- a normal trading session.
+
+    That gap is not cosmetic here. paper_trading builds its trading calendar
+    from the SPY series (`_fetch_calendar`), and every hold-period exit is
+    "the Nth trading day after entry". A silently missing session shifts every
+    one of those dates by a day, in the direction of holding too long, and
+    nothing in the run reports anything wrong.
+
+    Returns the dates the feed owes, so a caller can log or refuse rather than
+    quietly compute the wrong exit date.
+    """
+    have = {d if isinstance(d, date) else date.fromisoformat(str(d)[:10])
+            for d in fetched_dates}
+    missing, cur = [], start
+    while cur <= end:
+        if is_trading_day(cur) and cur not in have:
+            missing.append(cur)
+        cur = cur.fromordinal(cur.toordinal() + 1)
+    return missing

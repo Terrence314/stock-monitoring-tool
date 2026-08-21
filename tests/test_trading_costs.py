@@ -140,3 +140,27 @@ def test_a_trade_smaller_than_its_costs_is_booked_as_a_loss():
     t = dt._priced(100.0, 100.1, "time")
     assert t["pnl_pct_gross"] > 0
     assert t["pnl_pct"] < 0
+
+
+def test_the_three_published_figures_reconcile():
+    """net == gross - costs at the printed precision.
+
+    All three go into paper_portfolio.json together. Rounding them off the raw
+    values independently let them disagree by a cent: a -$30.00 gross with
+    $1.685 of costs published as net -31.68, where subtracting the printed
+    figures gives -31.69. Surfaced when the stop moved to -3% and a fixture
+    landed on that boundary.
+    """
+    for entry, exit_, shares in [
+        (100.0, 97.0, 10.0), (100.0, 92.0, 10.0), (250.0, 262.5, 4.0),
+        (37.76, 34.74, 26.5), (7.5, 7.1, 133.0), (1000.0, 1060.0, 0.5),
+    ]:
+        net, gross, costs = net_pnl(entry, exit_, shares)
+        assert net == pytest.approx(gross - costs, abs=1e-9), (
+            f"{entry}->{exit_} x{shares}: {net} != {gross} - {costs}"
+        )
+
+
+def test_reconciliation_holds_for_shorts_too():
+    net, gross, costs = net_pnl(100.0, 97.0, 10.0, is_short=True)
+    assert net == pytest.approx(gross - costs, abs=1e-9)

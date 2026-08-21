@@ -16,12 +16,14 @@ GitHub Pages and restored via curl before each pipeline run.
 
 import os
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 import pandas as pd
 import yfinance as yf
 from jinja2 import Template
 
 import trading_costs                                                  # noqa: E402
+import market_calendar                                               # noqa: E402
+from discipline_log import record_violation                           # noqa: E402
 from entry_selection import (                                        # noqa: E402
     BUY_THRESHOLD, REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
     MAX_PER_SECTOR, MAX_OPEN_POSITIONS,
@@ -33,8 +35,26 @@ SELL_THRESHOLD   = 30       # kept for backtest compat — shorts disabled (LONG
 SIGNAL_THRESHOLD = BUY_THRESHOLD   # kept for backtest compat
 NOTIONAL         = 1000.0   # legacy reporting unit only — sizing is in entry_selection
 HOLD_DAYS        = 10       # trading days before auto-close (fallback)
-TAKE_PROFIT_PCT  = 12.0     # close LONG at +12% price move
-STOP_LOSS_PCT    = 8.0      # close LONG at -8%  price move
+# Exit geometry, reset 2026-08-22 from -8/+12 after measuring it.
+#
+# -8/+12 was the WORST of 30 stop/target combinations replayed against real
+# bars: -2.48% expectancy per trade against -0.02% for the best. The cause is
+# not opinion. Over a 10-day hold this universe touched +12% on 7.8% of trades
+# and -8% on 35.9% -- the stop was 4.6x more likely to fire than the target,
+# and 31 hold-period exits produced a maximum gain of +7.77%, so the target was
+# effectively unreachable. Median favourable excursion was +4.31% against a
+# median adverse -5.35%.
+#
+# A target must sit near the move the tape actually offers. +6% is above the
+# median MFE and was touched 39.1% of the time; -3% is tight enough that the
+# payoff ratio stops depending on an exit that never happens.
+#
+# This does NOT create an edge. The entry signal has none -- measured
+# out-of-sample against a null control it lands within +-0.07 points of picking
+# names at random. Correct exits take the strategy from bleeding to roughly
+# flat. They cannot take it to profitable. See outputs/oos-verdict_2026-08-20.md
+TAKE_PROFIT_PCT  = 6.0      # close LONG at +6% price move
+STOP_LOSS_PCT    = 3.0      # close LONG at -3% price move
 
 # ── Transaction costs ──────────────────────────────────────────────────────────
 # Every P&L figure was gross: no commission, no slippage, no spread. On a
@@ -79,6 +99,25 @@ def _save_portfolio(p: dict) -> None:
         if t.get("status") == "closed":
             t.pop("float_pnl", None)
             t.pop("float_pnl_pct", None)
+    # The cap is enforced HERE, at the write, not only where entries are
+    # selected. entry_selection returns nothing once slots_left <= 0 and that
+    # logic is correct, yet the book still reached 7 open longs against a cap
+    # of 5 on 2026-08-05: two schedules (daily_analysis and price_refresh) both
+    # open positions, each computing slots from the book as it found it. A rule
+    # checked only by the caller is a rule with as many exceptions as callers.
+    #
+    # This does not close anything -- unwinding a real position to satisfy an
+    # accounting invariant would be worse than the breach. It records the
+    # breach so it stops being invisible.
+    open_longs = [t for t in p.get("trades", [])
+                  if t.get("status") == "open"
+                  and t.get("direction", "long") == "long"]
+    if len(open_longs) > MAX_OPEN_POSITIONS:
+        record_violation(
+            "position_cap",
+            f"{len(open_longs)} open longs against a cap of {MAX_OPEN_POSITIONS}",
+            tickers=[t["ticker"] for t in open_longs],
+        )
     os.makedirs(os.path.dirname(PORTFOLIO_FILE) or ".", exist_ok=True)
     with open(PORTFOLIO_FILE, "w", encoding="utf-8") as f:
         json.dump(p, f, ensure_ascii=False, indent=2)
@@ -99,14 +138,40 @@ def _notional_for_score(score: int, equity_usd: float | None = None) -> float:
 # ── Trading calendar ───────────────────────────────────────────────────────────
 
 def _fetch_calendar(from_date: str) -> list:
-    """List of NYSE trading days from from_date to today via SPY."""
+    """List of NYSE trading days from from_date to today via SPY.
+
+    Every hold-period exit is "the Nth trading day after entry" against this
+    list, so a session missing from the feed shifts exit dates by a day in the
+    direction of holding too long. yfinance dropped 2026-08-17 -- a normal
+    Monday -- without an error, so the gap is checked rather than trusted.
+    """
     raw = yf.download("SPY", start=from_date, progress=False, auto_adjust=True)
     if raw.empty:
         return []
     dates = []
     for d in raw.index:
         dates.append(str(d.date()) if hasattr(d, "date") else str(d)[:10])
-    return sorted(dates)
+    dates = sorted(dates)
+
+    if dates:
+        try:
+            gaps = market_calendar.missing_sessions(
+                dates,
+                date.fromisoformat(dates[0]),
+                date.fromisoformat(dates[-1]),
+            )
+            if gaps:
+                record_violation(
+                    "calendar_gap",
+                    f"price feed missing {len(gaps)} trading session(s); "
+                    "hold-period exit dates shift later by that many days",
+                    sessions=[str(g) for g in gaps],
+                )
+                print(f"  [paper_trading] ⚠️ feed missing sessions: "
+                      f"{', '.join(str(g) for g in gaps)}")
+        except Exception as cal_err:      # never let the check break the run
+            print(f"  [paper_trading] calendar check skipped: {cal_err}")
+    return dates
 
 
 def _nth_trading_day_after(start: str, n: int, cal: list) -> str | None:

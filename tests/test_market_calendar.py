@@ -18,7 +18,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from market_calendar import (                                        # noqa: E402
-    add_trading_days, trading_days_between, is_trading_day, is_covered,
+    add_trading_days, trading_days_between, is_trading_day, is_covered, missing_sessions,
     NYSE_HOLIDAYS, COVERED_YEARS,
 )
 import signal_validator as sv                                        # noqa: E402
@@ -95,3 +95,45 @@ def test_uncovered_year_is_reported_not_silently_degraded():
 def test_holiday_table_is_not_empty_for_a_covered_year():
     for year in COVERED_YEARS:
         assert any(h.year == year for h in NYSE_HOLIDAYS)
+
+
+# ── Feed gaps ────────────────────────────────────────────────────────────────
+#
+# yfinance dropped Monday 2026-08-17 from SPY's history with no error. The
+# trading calendar paper_trading builds is derived from that series, and every
+# hold-period exit is "the Nth trading day after entry" against it -- so a
+# missing session shifts exits later by a day and nothing reports it.
+
+def test_a_missing_session_is_detected():
+    """The real gap, replayed."""
+    fetched = ["2026-08-13", "2026-08-14", "2026-08-18", "2026-08-19"]
+    gaps = missing_sessions(fetched, date(2026, 8, 13), date(2026, 8, 19))
+    assert gaps == [date(2026, 8, 17)]
+
+
+def test_a_complete_feed_reports_nothing():
+    fetched = ["2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19"]
+    assert missing_sessions(fetched, date(2026, 8, 13), date(2026, 8, 19)) == []
+
+
+def test_weekends_are_not_reported_as_missing():
+    fetched = ["2026-08-14", "2026-08-17"]           # Fri then Mon
+    assert missing_sessions(fetched, date(2026, 8, 14), date(2026, 8, 17)) == []
+
+
+def test_holidays_are_not_reported_as_missing():
+    """A closed exchange is not a feed failure."""
+    holiday = next(iter(sorted(NYSE_HOLIDAYS)))
+    h = holiday if isinstance(holiday, date) else date.fromisoformat(str(holiday))
+    assert h not in missing_sessions([], h, h)
+
+
+def test_an_empty_feed_reports_every_session():
+    gaps = missing_sessions([], date(2026, 8, 17), date(2026, 8, 19))
+    assert len(gaps) == 3
+
+
+def test_date_objects_and_strings_are_both_accepted():
+    as_str = missing_sessions(["2026-08-18"], date(2026, 8, 17), date(2026, 8, 18))
+    as_obj = missing_sessions([date(2026, 8, 18)], date(2026, 8, 17), date(2026, 8, 18))
+    assert as_str == as_obj == [date(2026, 8, 17)]

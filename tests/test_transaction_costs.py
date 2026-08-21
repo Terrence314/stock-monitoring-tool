@@ -87,16 +87,25 @@ def _trade():
 
 
 def test_history_sweep_records_net_gross_and_costs():
+    """Levels are derived from STOP_LOSS_PCT, not written as literals.
+
+    This test asserted a 92.0 fill and an -80.0 gross, both of which encode
+    a -8% stop. The 2026-08-22 reset to -3% broke it without anything being
+    wrong with the cost model it exists to check.
+    """
     t = _trade()
-    ohlc = {"AAA": {"2026-08-03": {"open": 99.0, "low": 90.0, "high": 99.5, "close": 91.0}}}
+    stop_price = 100.0 * (1 - STOP_LOSS_PCT / 100)
+    through    = stop_price - 2.0            # the session trades through the stop
+    ohlc = {"AAA": {"2026-08-03": {"open": 99.0, "low": through,
+                                   "high": 99.5, "close": through + 1}}}
 
     _apply_ohlc_stops([t], ohlc, "2026-08-05")
 
     assert t["costs"] > 0
-    assert t["pnl_gross"] == pytest.approx(-80.0)
+    assert t["pnl_gross"] == pytest.approx((stop_price - 100.0) * 10.0)
     assert t["pnl"] == pytest.approx(t["pnl_gross"] - t["costs"])
     # The fill is still exactly the stop — only the P&L carries the cost.
-    assert t["exit_price"] == pytest.approx(92.0)
+    assert t["exit_price"] == pytest.approx(stop_price)
 
 
 @pytest.fixture
@@ -108,8 +117,10 @@ def portfolio(tmp_path, monkeypatch):
 
 
 def test_intraday_poll_records_costs(portfolio):
+    # Priced through the stop, whatever the stop currently is.
+    through = 100.0 * (1 - STOP_LOSS_PCT / 100) - 2.0
     pt.update_open_positions(
-        [{"ticker": "AAA", "price": 85.0, "open_price": 99.0}], "2026-08-03"
+        [{"ticker": "AAA", "price": through, "open_price": 99.0}], "2026-08-03"
     )
 
     t = json.loads(portfolio.read_text())["trades"][0]

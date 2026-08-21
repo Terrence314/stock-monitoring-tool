@@ -45,11 +45,23 @@ def round_trip_cost(entry_price: float, exit_price: float, shares: float) -> flo
 
 def net_pnl(entry_price: float, exit_price: float, shares: float,
             is_short: bool = False) -> tuple[float, float, float]:
-    """Return (net_pnl, gross_pnl, costs) for a closed position."""
+    """Return (net_pnl, gross_pnl, costs) for a closed position.
+
+    The three are rounded so that they RECONCILE: net == gross - costs at the
+    published precision. Rounding each independently off the raw values lets
+    them disagree by a cent -- a $30.00 gross against $1.685 of costs published
+    as (-31.68, -30.00, 1.69), where subtracting the printed figures gives
+    -31.69. All three are published together in paper_portfolio.json, so a
+    reader checking the arithmetic finds it wrong.
+
+    Net is derived from the rounded parts rather than rounded separately.
+    """
     gross = ((entry_price - exit_price) * shares if is_short
              else (exit_price - entry_price) * shares)
     costs = round_trip_cost(entry_price, exit_price, shares)
-    return round(gross - costs, 2), round(gross, 2), round(costs, 2)
+    gross_r = round(gross, 2)
+    costs_r = round(costs, 2)
+    return round(gross_r - costs_r, 2), gross_r, costs_r
 
 
 def round_trip_pct(entry_price: float, exit_price: float,
