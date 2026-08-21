@@ -1,5 +1,5 @@
 {
- "ts": "2026-08-22 03:25",
+ "ts": "2026-08-22 04:24",
  "buys": [],
  "sells": [],
  "no_action": true,
@@ -11,8 +11,8 @@
  "sizing_basis": "fallback",
  "slots_left": 1,
  "max_open": 5,
- "stop_pct": 8.0,
- "target_pct": 12.0,
+ "stop_pct": 3.0,
+ "target_pct": 6.0,
  "hold_days": 10,
  "breaker_pct": 1.07,
  "breaker_usd": 53.65,
