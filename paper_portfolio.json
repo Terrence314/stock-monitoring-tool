@@ -1546,22 +1546,23 @@
       "shares": 19.33488,
       "notional": 1500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 75.74,
-      "current_date": "2026-08-21",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-08-10",
+      "exit_price": 75.0,
+      "exit_reason": "stop_loss",
+      "current_price": 78.04,
+      "current_date": "2026-08-24",
+      "pnl": -52.06,
+      "pnl_pct": -3.47,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
         "Above MA60"
       ],
       "sector": "Financial Services",
-      "float_pnl": -48.92,
-      "float_pnl_pct": -3.26
+      "gapped": true,
+      "pnl_gross": -49.88,
+      "costs": 2.18
     },
     {
       "id": "CRM-2026-08-19",
@@ -1577,14 +1578,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 206.76,
-      "current_date": "2026-08-21",
+      "current_price": 210.38,
+      "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 12.52,
-      "float_pnl_pct": 2.5
+      "float_pnl": 22.9,
+      "float_pnl_pct": 4.58
     },
     {
       "id": "DASH-2026-08-19",
@@ -1600,14 +1601,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 222.74,
-      "current_date": "2026-08-21",
+      "current_price": 221.27,
+      "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Consumer Cyclical",
-      "float_pnl": 4.7,
-      "float_pnl_pct": 0.94
+      "float_pnl": 5.56,
+      "float_pnl_pct": 1.11
     },
     {
       "id": "CVNA-2026-08-21",
@@ -1623,8 +1624,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 71.52,
-      "current_date": "2026-08-21",
+      "current_price": 70.68,
+      "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1637,5 +1638,5 @@
       "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-08-21"
+  "last_updated": "2026-08-24"
 }
