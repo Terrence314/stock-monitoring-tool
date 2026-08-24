@@ -1574,18 +1574,19 @@
       "shares": 2.494885,
       "notional": 500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 210.38,
+      "status": "closed",
+      "exit_date": "2026-08-24",
+      "exit_price": 212.43,
+      "exit_reason": "take_profit",
+      "current_price": 212.03,
       "current_date": "2026-08-24",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": 28.79,
+      "pnl_pct": 5.76,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 22.9,
-      "float_pnl_pct": 4.58
+      "gapped": false,
+      "pnl_gross": 30.0,
+      "costs": 1.21
     },
     {
       "id": "DASH-2026-08-19",
@@ -1601,14 +1602,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 221.27,
+      "current_price": 224.29,
       "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Consumer Cyclical",
-      "float_pnl": 5.56,
-      "float_pnl_pct": 1.11
+      "float_pnl": 2.22,
+      "float_pnl_pct": 0.44
     },
     {
       "id": "CVNA-2026-08-21",
@@ -1624,7 +1625,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 70.68,
+      "current_price": 71.85,
       "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
@@ -1634,8 +1635,8 @@
         "Above MA60"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "float_pnl": -7.05,
+      "float_pnl_pct": -1.17
     }
   ],
   "last_updated": "2026-08-24"
