@@ -1602,14 +1602,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 229.16,
+      "current_price": 229.26,
       "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Consumer Cyclical",
-      "float_pnl": 19.54,
-      "float_pnl_pct": 3.91
+      "float_pnl": 20.13,
+      "float_pnl_pct": 4.03
     },
     {
       "id": "CVNA-2026-08-21",
@@ -1625,7 +1625,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 71.63,
+      "current_price": 71.55,
       "current_date": "2026-08-24",
       "pnl": null,
       "pnl_pct": null,
@@ -1635,8 +1635,8 @@
         "Above MA60"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": 1.34,
-      "float_pnl_pct": 0.22
+      "float_pnl": 0.92,
+      "float_pnl_pct": 0.15
     }
   ],
   "last_updated": "2026-08-24"
