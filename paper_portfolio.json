@@ -1622,22 +1622,23 @@
       "shares": 8.389262,
       "notional": 600.0,
       "score": 90,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 75.41,
+      "status": "closed",
+      "exit_date": "2026-08-25",
+      "exit_price": 75.81,
+      "exit_reason": "take_profit",
+      "current_price": 76.09,
       "current_date": "2026-08-25",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": 34.68,
+      "pnl_pct": 5.78,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
         "Above MA60"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": 32.38,
-      "float_pnl_pct": 5.4
+      "gapped": false,
+      "pnl_gross": 36.0,
+      "costs": 1.32
     },
     {
       "id": "NSC-2026-08-25",
@@ -1653,7 +1654,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 352.23,
+      "current_price": 351.6,
       "current_date": "2026-08-25",
       "pnl": null,
       "pnl_pct": null,
@@ -1665,8 +1666,8 @@
         "BB Walking Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -1.27,
-      "float_pnl_pct": -0.21
+      "float_pnl": -2.35,
+      "float_pnl_pct": -0.39
     },
     {
       "id": "SNAP-2026-08-25",
@@ -1682,7 +1683,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 5.67,
+      "current_price": 5.71,
       "current_date": "2026-08-25",
       "pnl": null,
       "pnl_pct": null,
@@ -1692,8 +1693,8 @@
         "Above MA60"
       ],
       "sector": "Communication Services",
-      "float_pnl": 15.19,
-      "float_pnl_pct": 2.53
+      "float_pnl": 19.53,
+      "float_pnl_pct": 3.25
     },
     {
       "id": "V-2026-08-25",
@@ -1709,7 +1710,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 382.7,
+      "current_price": 382.33,
       "current_date": "2026-08-25",
       "pnl": null,
       "pnl_pct": null,
@@ -1720,8 +1721,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": 0.46,
-      "float_pnl_pct": 0.08
+      "float_pnl": -0.13,
+      "float_pnl_pct": -0.02
     }
   ],
   "last_updated": "2026-08-25"
