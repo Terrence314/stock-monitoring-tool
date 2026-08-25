@@ -1654,7 +1654,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 352.45,
+      "current_price": 351.24,
       "current_date": "2026-08-25",
       "pnl": null,
       "pnl_pct": null,
@@ -1666,8 +1666,8 @@
         "BB Walking Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -0.9,
-      "float_pnl_pct": -0.15
+      "float_pnl": -2.96,
+      "float_pnl_pct": -0.49
     },
     {
       "id": "SNAP-2026-08-25",
@@ -1711,7 +1711,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 382.77,
+      "current_price": 384.14,
       "current_date": "2026-08-25",
       "pnl": null,
       "pnl_pct": null,
@@ -1722,8 +1722,31 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": 0.56,
-      "float_pnl_pct": 0.09
+      "float_pnl": 2.71,
+      "float_pnl_pct": 0.45
+    },
+    {
+      "id": "MA-2026-08-25",
+      "ticker": "MA",
+      "direction": "long",
+      "signal_date": "2026-08-25",
+      "entry_ts": "2026-08-26T04:28:30+08:00",
+      "entry_price": 599.37,
+      "shares": 0.583946,
+      "notional": 350.0,
+      "score": 70,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 599.37,
+      "current_date": "2026-08-25",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Financial Services",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-08-25"
