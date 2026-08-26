@@ -1654,8 +1654,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 351.24,
-      "current_date": "2026-08-25",
+      "current_price": 352.08,
+      "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1711,8 +1711,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 384.14,
-      "current_date": "2026-08-25",
+      "current_price": 385.36,
+      "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1722,8 +1722,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": 2.71,
-      "float_pnl_pct": 0.45
+      "float_pnl": 3.69,
+      "float_pnl_pct": 0.61
     },
     {
       "id": "MA-2026-08-25",
@@ -1739,15 +1739,15 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 599.37,
-      "current_date": "2026-08-25",
+      "current_price": 600.11,
+      "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Financial Services",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "float_pnl": 0.58,
+      "float_pnl_pct": 0.17
     }
   ],
-  "last_updated": "2026-08-25"
+  "last_updated": "2026-08-26"
 }
