@@ -1654,7 +1654,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 354.83,
+      "current_price": 355.35,
       "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
@@ -1666,8 +1666,8 @@
         "BB Walking Up"
       ],
       "sector": "Industrials",
-      "float_pnl": 1.87,
-      "float_pnl_pct": 0.31
+      "float_pnl": 3.14,
+      "float_pnl_pct": 0.52
     },
     {
       "id": "SNAP-2026-08-25",
@@ -1711,7 +1711,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 382.4,
+      "current_price": 382.3,
       "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
@@ -1739,14 +1739,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 596.65,
+      "current_price": 597.69,
       "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Financial Services",
-      "float_pnl": -1.69,
-      "float_pnl_pct": -0.48
+      "float_pnl": -0.91,
+      "float_pnl_pct": -0.26
     }
   ],
   "last_updated": "2026-08-26"
