@@ -1654,7 +1654,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 354.08,
+      "current_price": 354.83,
       "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
@@ -1666,8 +1666,8 @@
         "BB Walking Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -1.53,
-      "float_pnl_pct": -0.25
+      "float_pnl": 1.87,
+      "float_pnl_pct": 0.31
     },
     {
       "id": "SNAP-2026-08-25",
@@ -1711,7 +1711,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 383.31,
+      "current_price": 382.4,
       "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
@@ -1722,8 +1722,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": 1.24,
-      "float_pnl_pct": 0.21
+      "float_pnl": -0.13,
+      "float_pnl_pct": -0.02
     },
     {
       "id": "MA-2026-08-25",
@@ -1739,14 +1739,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 596.66,
+      "current_price": 596.65,
       "current_date": "2026-08-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Financial Services",
-      "float_pnl": -1.64,
-      "float_pnl_pct": -0.47
+      "float_pnl": -1.69,
+      "float_pnl_pct": -0.48
     }
   ],
   "last_updated": "2026-08-26"
