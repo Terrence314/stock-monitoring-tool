@@ -1,9 +1,16 @@
 [
   {
-    "date": "2026-08-26",
-    "ran_at": "2026-08-26 13:38",
-    "passed": [],
-    "blocked": [],
+    "date": "2026-08-27",
+    "ran_at": "2026-08-27 22:34",
+    "passed": [
+      "ETSY"
+    ],
+    "blocked": [
+      {
+        "ticker": "MPC",
+        "reason": "AI review REJECTED"
+      }
+    ],
     "cautions": []
   }
 ]

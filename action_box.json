@@ -1,10 +1,26 @@
 {
- "ts": "2026-08-27 10:57",
- "buys": [],
+ "ts": "2026-08-28 06:34",
+ "buys": [
+  {
+   "ticker": "ETSY",
+   "price": 82.94000244140625,
+   "score": 82,
+   "reason": "Score 82 · BB 0.58 · RSI 53",
+   "stop": 80.45,
+   "target": 87.92,
+   "notional": 500.0,
+   "expiry": "09-11",
+   "ai_review": {
+    "verdict": "NEEDS_REVIEW",
+    "summary": "1.【多頭理據】該股今日信號為中多頭，價格處於MA20和MA60上方（82.94 > 82.11 > 78.65），並且站穩MA60上方5.5%，顯示出較強的多頭趨勢。同時，RSI動能走強（52.8↑）且MACD金叉並動能擴張（0.66，MACD_HIST: 0.04），表明短期內動能向上。\n2.【空頭理據】儘管整體趨勢偏多，但目前價格（82.94）低於短期均線MA5（83.43），暗示短期可能存在壓力。此外，量能正常（1.2x均量）並未出現顯著放量，而KD指標處於中性偏弱區域（K=54.0，D=66.1），可能限制價格上行空間，並且止損位80.45距離MA20（82.11）不遠，一旦跌破MA"
+   },
+   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
+  }
+ ],
  "sells": [],
- "no_action": true,
+ "no_action": false,
  "regime": "transitional",
- "regime_spy": 37,
+ "regime_spy": 47,
  "regime_min": 80,
  "regime_min_floor": 35,
  "equity_usd": 5000.0,
@@ -32,5 +48,17 @@
  "gate_pf": null,
  "gate_pnl": 126.88,
  "gate_trades": 4,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-08-27 22:34",
+  "passed": 1,
+  "blocked": 1,
+  "blocked_list": [
+   {
+    "ticker": "MPC",
+    "reason": "AI review REJECTED"
+   }
+  ],
+  "caution_tags": []
+ }
 }
