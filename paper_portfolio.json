@@ -1654,7 +1654,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 343.43,
+      "current_price": 342.91,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
@@ -1666,8 +1666,8 @@
         "BB Walking Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -7.31,
-      "float_pnl_pct": -1.22
+      "float_pnl": -16.23,
+      "float_pnl_pct": -2.71
     },
     {
       "id": "SNAP-2026-08-25",
@@ -1711,7 +1711,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 380.64,
+      "current_price": 380.3,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
@@ -1722,8 +1722,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -1.27,
-      "float_pnl_pct": -0.21
+      "float_pnl": -2.78,
+      "float_pnl_pct": -0.46
     },
     {
       "id": "MA-2026-08-25",
@@ -1739,14 +1739,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 590.21,
+      "current_price": 589.71,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Financial Services",
-      "float_pnl": -2.38,
-      "float_pnl_pct": -0.68
+      "float_pnl": -5.35,
+      "float_pnl_pct": -1.53
     },
     {
       "id": "ETSY-2026-08-27",
@@ -1762,7 +1762,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 81.76,
+      "current_price": 81.71,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
@@ -1772,8 +1772,8 @@
         "Above MA60"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": 3.92,
-      "float_pnl_pct": 0.78
+      "float_pnl": -7.11,
+      "float_pnl_pct": -1.42
     }
   ],
   "last_updated": "2026-08-31"
