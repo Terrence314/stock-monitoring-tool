@@ -1650,14 +1650,14 @@
       "shares": 1.699813,
       "notional": 600.0,
       "score": 90,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
+      "status": "closed",
+      "exit_date": "2026-08-31",
+      "exit_price": 342.39,
+      "exit_reason": "stop_loss",
       "current_price": 342.91,
       "current_date": "2026-08-31",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -19.29,
+      "pnl_pct": -3.22,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1666,8 +1666,9 @@
         "BB Walking Up"
       ],
       "sector": "Industrials",
-      "float_pnl": -16.23,
-      "float_pnl_pct": -2.71
+      "gapped": false,
+      "pnl_gross": -18.0,
+      "costs": 1.29
     },
     {
       "id": "SNAP-2026-08-25",
@@ -1711,7 +1712,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 380.3,
+      "current_price": 379.37,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
@@ -1722,8 +1723,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -2.78,
-      "float_pnl_pct": -0.46
+      "float_pnl": -3.31,
+      "float_pnl_pct": -0.55
     },
     {
       "id": "MA-2026-08-25",
@@ -1739,14 +1740,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 589.71,
+      "current_price": 589.31,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Financial Services",
-      "float_pnl": -5.35,
-      "float_pnl_pct": -1.53
+      "float_pnl": -5.64,
+      "float_pnl_pct": -1.61
     },
     {
       "id": "ETSY-2026-08-27",
@@ -1762,7 +1763,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 81.71,
+      "current_price": 81.33,
       "current_date": "2026-08-31",
       "pnl": null,
       "pnl_pct": null,
@@ -1772,8 +1773,8 @@
         "Above MA60"
       ],
       "sector": "Consumer Cyclical",
-      "float_pnl": -7.11,
-      "float_pnl_pct": -1.42
+      "float_pnl": -7.41,
+      "float_pnl_pct": -1.48
     }
   ],
   "last_updated": "2026-08-31"
