@@ -1,0 +1,11 @@
+[
+  {
+    "ts": "2026-08-31T19:17:15+00:00",
+    "kind": "violation",
+    "rule": "calendar_gap",
+    "detail": "price feed missing 1 trading session(s); hold-period exit dates shift later by that many days",
+    "sessions": [
+      "2026-08-28"
+    ]
+  }
+]
