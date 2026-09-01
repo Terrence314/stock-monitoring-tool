@@ -1712,7 +1712,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 375.82,
+      "current_price": 372.67,
       "current_date": "2026-09-01",
       "pnl": null,
       "pnl_pct": null,
@@ -1723,8 +1723,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -10.95,
-      "float_pnl_pct": -1.83
+      "float_pnl": -10.34,
+      "float_pnl_pct": -1.72
     },
     {
       "id": "MA-2026-08-25",
@@ -1736,18 +1736,19 @@
       "shares": 0.583946,
       "notional": 350.0,
       "score": 70,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
+      "status": "closed",
+      "exit_date": "2026-09-01",
+      "exit_price": 581.39,
+      "exit_reason": "stop_loss",
       "current_price": 585.62,
       "current_date": "2026-09-01",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -11.54,
+      "pnl_pct": -3.3,
       "patterns_triggered": [],
       "sector": "Financial Services",
-      "float_pnl": -8.32,
-      "float_pnl_pct": -2.38
+      "gapped": false,
+      "pnl_gross": -10.5,
+      "costs": 1.04
     },
     {
       "id": "ETSY-2026-08-27",
