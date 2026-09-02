@@ -1,9 +1,14 @@
 [
   {
-    "date": "2026-09-01",
-    "ran_at": "2026-09-01 16:53",
+    "date": "2026-09-02",
+    "ran_at": "2026-09-02 16:52",
     "passed": [],
-    "blocked": [],
+    "blocked": [
+      {
+        "ticker": "DVN",
+        "reason": "AI review REJECTED"
+      }
+    ],
     "cautions": []
   }
 ]

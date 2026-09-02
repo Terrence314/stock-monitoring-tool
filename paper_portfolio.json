@@ -1712,8 +1712,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 372.67,
-      "current_date": "2026-09-01",
+      "current_price": 378.62,
+      "current_date": "2026-09-02",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1723,8 +1723,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -15.28,
-      "float_pnl_pct": -2.55
+      "float_pnl": -5.71,
+      "float_pnl_pct": -0.95
     },
     {
       "id": "MA-2026-08-25",
@@ -1779,5 +1779,5 @@
       "costs": 1.19
     }
   ],
-  "last_updated": "2026-09-01"
+  "last_updated": "2026-09-02"
 }
