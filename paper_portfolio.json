@@ -1712,7 +1712,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 378.71,
+      "current_price": 379.82,
       "current_date": "2026-09-02",
       "pnl": null,
       "pnl_pct": null,
@@ -1723,8 +1723,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -5.71,
-      "float_pnl_pct": -0.95
+      "float_pnl": -3.95,
+      "float_pnl_pct": -0.66
     },
     {
       "id": "MA-2026-08-25",
@@ -1777,6 +1777,29 @@
       "gapped": false,
       "pnl_gross": -15.0,
       "costs": 1.19
+    },
+    {
+      "id": "VRTX-2026-09-02",
+      "ticker": "VRTX",
+      "direction": "long",
+      "signal_date": "2026-09-02",
+      "entry_ts": "2026-09-03T03:40:54+08:00",
+      "entry_price": 556.56,
+      "shares": 1.078051,
+      "notional": 600.0,
+      "score": 90,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 556.56,
+      "current_date": "2026-09-02",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Healthcare",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-09-02"

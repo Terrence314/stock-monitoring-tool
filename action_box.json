@@ -1,8 +1,19 @@
 {
- "ts": "2026-09-03 01:01",
- "buys": [],
+ "ts": "2026-09-03 03:40",
+ "buys": [
+  {
+   "ticker": "VRTX",
+   "price": 556.5599975585938,
+   "score": 90,
+   "reason": "Score 90 · BB 0.79 · RSI 67",
+   "stop": 539.86,
+   "target": 589.95,
+   "notional": 600.0,
+   "expiry": "09-17"
+  }
+ ],
  "sells": [],
- "no_action": true,
+ "no_action": false,
  "regime": "transitional",
  "regime_spy": 40,
  "regime_min": 80,
