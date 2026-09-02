@@ -1,10 +1,10 @@
 {
- "ts": "2026-09-03 00:51",
+ "ts": "2026-09-03 01:01",
  "buys": [],
  "sells": [],
  "no_action": true,
  "regime": "transitional",
- "regime_spy": 37,
+ "regime_spy": 40,
  "regime_min": 80,
  "regime_min_floor": 35,
  "equity_usd": 5000.0,
@@ -32,17 +32,5 @@
  "gate_pf": 2.7,
  "gate_pnl": 79.86,
  "gate_trades": 7,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-09-02 16:52",
-  "passed": 0,
-  "blocked": 1,
-  "blocked_list": [
-   {
-    "ticker": "DVN",
-    "reason": "AI review REJECTED"
-   }
-  ],
-  "caution_tags": []
- }
+ "gate_ready": false
 }
