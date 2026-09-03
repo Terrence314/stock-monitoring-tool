@@ -1712,7 +1712,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 378.85,
+      "current_price": 378.75,
       "current_date": "2026-09-03",
       "pnl": null,
       "pnl_pct": null,
@@ -1723,8 +1723,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -7.06,
-      "float_pnl_pct": -1.18
+      "float_pnl": -5.59,
+      "float_pnl_pct": -0.93
     },
     {
       "id": "MA-2026-08-25",
@@ -1792,14 +1792,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 557.69,
+      "current_price": 557.96,
       "current_date": "2026-09-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": 1.1,
-      "float_pnl_pct": 0.18
+      "float_pnl": 1.51,
+      "float_pnl_pct": 0.25
     },
     {
       "id": "DELL-2026-09-03",
@@ -1815,7 +1815,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 513.02,
+      "current_price": 516.39,
       "current_date": "2026-09-03",
       "pnl": null,
       "pnl_pct": null,
@@ -1826,8 +1826,31 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": -7.24,
-      "float_pnl_pct": -1.21
+      "float_pnl": -3.35,
+      "float_pnl_pct": -0.56
+    },
+    {
+      "id": "CRWD-2026-09-03",
+      "ticker": "CRWD",
+      "direction": "long",
+      "signal_date": "2026-09-03",
+      "entry_ts": "2026-09-04T06:19:26+08:00",
+      "entry_price": 214.97,
+      "shares": 2.325906,
+      "notional": 500.0,
+      "score": 82,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 214.97,
+      "current_date": "2026-09-03",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-09-03"
