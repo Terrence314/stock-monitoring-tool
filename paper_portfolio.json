@@ -1712,7 +1712,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 377.93,
+      "current_price": 377.91,
       "current_date": "2026-09-03",
       "pnl": null,
       "pnl_pct": null,
@@ -1723,8 +1723,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Financial Services",
-      "float_pnl": -6.29,
-      "float_pnl_pct": -1.05
+      "float_pnl": -7.03,
+      "float_pnl_pct": -1.17
     },
     {
       "id": "MA-2026-08-25",
@@ -1792,14 +1792,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 556.54,
+      "current_price": 557.0,
       "current_date": "2026-09-03",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": 0.56,
-      "float_pnl_pct": 0.09
+      "float_pnl": -0.11,
+      "float_pnl_pct": -0.02
     },
     {
       "id": "DELL-2026-09-03",
@@ -1815,7 +1815,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 519.29,
+      "current_price": 517.55,
       "current_date": "2026-09-03",
       "pnl": null,
       "pnl_pct": null,
@@ -1826,8 +1826,8 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "float_pnl": -2.01,
+      "float_pnl_pct": -0.34
     }
   ],
   "last_updated": "2026-09-03"
