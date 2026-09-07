@@ -42733,5 +42733,210 @@
     "type": "start",
     "price": 92.54,
     "score": 17
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "DOCU",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 68.41,
+    "score": 100
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "BE",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 252.87,
+    "score": 75
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "GM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 87.76
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "GM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 87.76,
+    "score": 73
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "F",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 14.62,
+    "score": 72
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "VGT",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 121.27
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "VGT",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 121.27,
+    "score": 55
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "CVNA",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 74.59,
+    "score": 80
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "CVNA",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 74.59
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "SNOW",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "end",
+    "price": 337.18
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "MET",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 97.62
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "MET",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 97.62,
+    "score": 43
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "MS",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 217.72
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "MS",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 217.72,
+    "score": 57
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "AMT",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 175.85
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "AMT",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 175.85,
+    "score": 42
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "XLE",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "end",
+    "price": 64.06
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "XLE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 64.06
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "DLR",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 188.39,
+    "score": 50
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "DLR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 188.39
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "DLR",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 188.39,
+    "score": 50
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "DLR",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "start",
+    "price": 188.39,
+    "score": 50
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "SCHG",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 35.53
+  },
+  {
+    "date": "2026-09-07",
+    "ticker": "SCHG",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 35.53,
+    "score": 34
   }
 ]
