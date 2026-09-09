@@ -1813,14 +1813,14 @@
       "shares": 1.155416,
       "notional": 600.0,
       "score": 100,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 533.88,
-      "current_date": "2026-09-08",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-09-09",
+      "exit_price": 550.45,
+      "exit_reason": "take_profit",
+      "current_price": 544.36,
+      "current_date": "2026-09-09",
+      "pnl": 34.68,
+      "pnl_pct": 5.78,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -1828,8 +1828,9 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": 16.86,
-      "float_pnl_pct": 2.81
+      "gapped": false,
+      "pnl_gross": 36.0,
+      "costs": 1.32
     },
     {
       "id": "CRWD-2026-09-03",
@@ -1856,5 +1857,5 @@
       "costs": 1.19
     }
   ],
-  "last_updated": "2026-09-08"
+  "last_updated": "2026-09-09"
 }
