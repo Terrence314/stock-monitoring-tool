@@ -1855,6 +1855,29 @@
       "gapped": false,
       "pnl_gross": -15.0,
       "costs": 1.19
+    },
+    {
+      "id": "ELV-2026-09-10",
+      "ticker": "ELV",
+      "direction": "long",
+      "signal_date": "2026-09-10",
+      "entry_ts": "2026-09-11T06:17:58+08:00",
+      "entry_price": 416.54,
+      "shares": 1.440438,
+      "notional": 600.0,
+      "score": 100,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 416.54,
+      "current_date": "2026-09-10",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Healthcare",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-09-10"

@@ -1,11 +1,22 @@
 {
- "ts": "2026-09-11 03:28",
- "buys": [],
+ "ts": "2026-09-11 06:17",
+ "buys": [
+  {
+   "ticker": "ELV",
+   "price": 416.5400085449219,
+   "score": 100,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.10",
+   "stop": 404.04,
+   "target": 441.53,
+   "notional": 600.0,
+   "expiry": "09-24"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "regime": "bear",
- "regime_spy": 27,
- "regime_min": null,
+ "no_action": false,
+ "regime": "transitional",
+ "regime_spy": 37,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "equity_usd": 5000.0,
  "sizing_basis": "fallback",
