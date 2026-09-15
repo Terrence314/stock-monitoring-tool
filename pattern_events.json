@@ -45553,5 +45553,574 @@
     "type": "start",
     "price": 18.87,
     "score": 37
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "CIBR",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 101.42,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "CIBR",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 101.42
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "CIBR",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 101.42,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "CIBR",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 101.42
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "CIBR",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 101.42,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "CVX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 216.31
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "EOG",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 153.34,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "EOG",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 153.34
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "EOG",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 153.34,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "EOG",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 153.34
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SNAP",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 5.91
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SNAP",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 5.91,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "XOM",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 169.14,
+    "score": 80
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "XOM",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 169.14
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "DELL",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 545.16,
+    "score": 72
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "NUE",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 257.59
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "NUE",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 257.59,
+    "score": 55
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "PANW",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 379.71,
+    "score": 72
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "PANW",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 379.71
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ZS",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 195.89,
+    "score": 72
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ZS",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 195.89
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ACN",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 197.02,
+    "score": 63
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ACN",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 197.02
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ACN",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 197.02
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MDT",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.43,
+    "score": 63
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MDT",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 94.43
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "TWLO",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "start",
+    "price": 244.35,
+    "score": 63
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "TWLO",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "end",
+    "price": 244.35
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "AI",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 10.99
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "DOCU",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 73.47,
+    "score": 60
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "DOCU",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 73.47
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "BE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 261.97
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "IBM",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 251.42
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "IBM",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 251.42,
+    "score": 57
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "BILL",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 50.07,
+    "score": 55
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ILMN",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 223.53
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ILMN",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 223.53,
+    "score": 55
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "BRK-B",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 514.44,
+    "score": 52
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MET",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "start",
+    "price": 97.69,
+    "score": 52
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MET",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "end",
+    "price": 97.69
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ESTC",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 86.93
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ESTC",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 86.93,
+    "score": 48
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ESTC",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 86.93
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "ESTC",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 86.93,
+    "score": 48
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MDB",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 387.03
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MDB",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 387.03,
+    "score": 40
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "PSX",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 265.04
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "PSX",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 265.04,
+    "score": 48
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "PSX",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 265.04
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "GLD",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "start",
+    "price": 393.84,
+    "score": 30
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MGK",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 89.02
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "MGK",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 89.02,
+    "score": 17
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "IVV",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "end",
+    "price": 758.5
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "IVV",
+    "pattern": "Below MA60",
+    "direction": "sell",
+    "type": "start",
+    "price": 758.5,
+    "score": 10
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SMH",
+    "pattern": "Golden Cross",
+    "direction": "buy",
+    "type": "end",
+    "price": 540.6
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SMH",
+    "pattern": "Death Cross",
+    "direction": "sell",
+    "type": "start",
+    "price": 540.6,
+    "score": 10
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SMH",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 540.6
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SMH",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 540.6,
+    "score": 10
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "TLT",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "end",
+    "price": 80.67
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "TLT",
+    "pattern": "BB Walking Down",
+    "direction": "sell",
+    "type": "start",
+    "price": 80.67,
+    "score": 10
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "VT",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "end",
+    "price": 157.99
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "VT",
+    "pattern": "Below MA60",
+    "direction": "sell",
+    "type": "start",
+    "price": 157.99,
+    "score": 10
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "VTI",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "end",
+    "price": 372.8
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "VTI",
+    "pattern": "Below MA60",
+    "direction": "sell",
+    "type": "start",
+    "price": 372.8,
+    "score": 10
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "GOOGL",
+    "pattern": "Above MA60",
+    "direction": "buy",
+    "type": "end",
+    "price": 343.3
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "GOOGL",
+    "pattern": "Below MA60",
+    "direction": "sell",
+    "type": "start",
+    "price": 343.3,
+    "score": 0
+  },
+  {
+    "date": "2026-09-15",
+    "ticker": "SPYL.L",
+    "pattern": "Volume Breakdown",
+    "direction": "sell",
+    "type": "end",
+    "price": 18.78
   }
 ]
