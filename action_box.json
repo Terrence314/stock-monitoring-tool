@@ -1,11 +1,27 @@
 {
- "ts": "2026-09-17 07:33",
- "buys": [],
+ "ts": "2026-09-18 01:15",
+ "buys": [
+  {
+   "ticker": "MRVL",
+   "price": 242.27000427246094,
+   "score": 80,
+   "reason": "Score 80 · BB 0.77 · RSI 57",
+   "stop": 235.0,
+   "target": 256.81,
+   "notional": 500.0,
+   "expiry": "10-01",
+   "ai_review": {
+    "verdict": "NEEDS_REVIEW",
+    "summary": "1. 【多頭理據】MRVL 表現出強勁的多頭排列，價格（242.27）顯著高於所有關鍵移動平均線（MA5: 229.72, MA20: 227.89, MA60: 223.78），且RSI動能正在走強（57.29）。MACD在0軸上方形成金叉且動能擴張（MACD: 2.71, MACD_HIST: 1.06），顯示強勁的上升趨勢和買入動力。\n2. 【空頭理據】該股票的成交量嚴重不足（0.61× 均量），這可能導致當前上升趨勢缺乏足夠的市場支持，容易出現假突破或回調。雖然技術指標偏多，但若沒有足夠的買盤量能跟進，止損價235.0與現價242.27之間7.27點的緩衝可能不足以應對潛在的賣壓。\n3"
+   },
+   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "regime": "bear",
- "regime_spy": 20,
- "regime_min": null,
+ "no_action": false,
+ "regime": "transitional",
+ "regime_spy": 40,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "equity_usd": 5000.0,
  "sizing_basis": "fallback",
@@ -21,7 +37,7 @@
  "breaker_base": 4350.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 38,
+ "gate_day": 39,
  "gate_days": 60,
  "gate_winrate": 45.5,
  "gate_ci_low": 16.0,
@@ -32,5 +48,12 @@
  "gate_pf": 1.41,
  "gate_pnl": 47.3,
  "gate_trades": 11,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-09-17 17:15",
+  "passed": 1,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }

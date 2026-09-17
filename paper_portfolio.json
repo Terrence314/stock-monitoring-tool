@@ -1870,14 +1870,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 412.56,
-      "current_date": "2026-09-16",
+      "current_price": 414.69,
+      "current_date": "2026-09-17",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": -5.73,
-      "float_pnl_pct": -0.96
+      "float_pnl": -2.66,
+      "float_pnl_pct": -0.44
     },
     {
       "id": "CIBR-2026-09-15",
@@ -1893,15 +1893,42 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 100.3,
-      "current_date": "2026-09-16",
+      "current_price": 101.67,
+      "current_date": "2026-09-17",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": -4.16,
-      "float_pnl_pct": -0.69
+      "float_pnl": 4.04,
+      "float_pnl_pct": 0.67
+    },
+    {
+      "id": "MRVL-2026-09-17",
+      "ticker": "MRVL",
+      "direction": "long",
+      "signal_date": "2026-09-17",
+      "entry_ts": "2026-09-18T01:16:01+08:00",
+      "entry_price": 242.27,
+      "shares": 2.063813,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 242.27,
+      "current_date": "2026-09-17",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-09-16"
+  "last_updated": "2026-09-17"
 }
