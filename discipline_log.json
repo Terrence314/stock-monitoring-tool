@@ -1,5 +1,29 @@
 [
   {
+    "ts": "2026-08-21T20:16:28+00:00",
+    "kind": "parameter_change",
+    "rule": "STOP_LOSS_PCT",
+    "old": 8.0,
+    "new": 3.0,
+    "reason": "Worst of 30 stop/target cells replayed on real bars: -8/+12 gave -2.48%/trade. -8% was touched on 35.9% of trades against 7.8% for +12%. Terrence approved 2026-08-22."
+  },
+  {
+    "ts": "2026-08-21T20:16:28+00:00",
+    "kind": "parameter_change",
+    "rule": "TAKE_PROFIT_PCT",
+    "old": 12.0,
+    "new": 6.0,
+    "reason": "Median 10-day favourable excursion is +4.31%; 31 hold-period exits peaked at +7.77%, so +12% was unreachable. +6% was touched on 39.1% of trades. Terrence approved 2026-08-22."
+  },
+  {
+    "ts": "2026-08-21T20:16:28+00:00",
+    "kind": "parameter_change",
+    "rule": "exit_geometry_applied_to_open_positions",
+    "old": "new positions only",
+    "new": "all 4 open",
+    "reason": "Terrence chose immediate application 2026-08-22. AFRM at -3.26% float will trigger the new -3% stop on the next run."
+  },
+  {
     "ts": "2026-08-31T19:17:15+00:00",
     "kind": "violation",
     "rule": "calendar_gap",
