@@ -1893,14 +1893,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 101.66,
-      "current_date": "2026-09-17",
+      "current_price": 99.31,
+      "current_date": "2026-09-18",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": 3.92,
-      "float_pnl_pct": 0.65
+      "float_pnl": -10.04,
+      "float_pnl_pct": -1.67
     },
     {
       "id": "MRVL-2026-09-17",
@@ -1916,8 +1916,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 240.76,
-      "current_date": "2026-09-17",
+      "current_price": 236.79,
+      "current_date": "2026-09-18",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -1926,8 +1926,8 @@
         "Above MA60"
       ],
       "sector": "Technology",
-      "float_pnl": -3.12,
-      "float_pnl_pct": -0.62
+      "float_pnl": -11.31,
+      "float_pnl_pct": -2.26
     },
     {
       "id": "SNAP-2026-09-17",
@@ -1966,15 +1966,15 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 245.18,
-      "current_date": "2026-09-17",
+      "current_price": 241.01,
+      "current_date": "2026-09-18",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "float_pnl": -8.5,
+      "float_pnl_pct": -1.7
     }
   ],
-  "last_updated": "2026-09-17"
+  "last_updated": "2026-09-18"
 }
