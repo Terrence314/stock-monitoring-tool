@@ -147,3 +147,41 @@ def test_an_over_cap_book_is_still_written(tmp_path, monkeypatch):
               for i in range(pt.MAX_OPEN_POSITIONS + 3)]
     pt._save_portfolio({"trades": trades})
     assert len(json.loads(book.read_text())["trades"]) == len(trades)
+
+
+# ── The log has to survive between CI runs ───────────────────────────────────
+#
+# Shipped 2026-08-22 without this, and it made the log pointless. CI jobs share
+# no filesystem: every run starts with an empty outputs/ and gets state back
+# only by downloading it from Pages. discipline_log.json was in no restore
+# list, so each run began with no log and published only what that run wrote.
+# By 2026-09-19 there were two logs -- 3 parameter changes on the laptop, 1
+# calendar gap on the site -- and neither knew about the other. "The fifth
+# reset must be visible as the fifth" could not happen.
+
+WORKFLOWS = os.path.join(os.path.dirname(__file__), "..", ".github", "workflows")
+
+
+def _restore_lists(name):
+    import re
+    with open(os.path.join(WORKFLOWS, name), encoding="utf-8") as f:
+        return " ".join(re.findall(r"for FILE in ([^;]+); do", f.read()))
+
+
+@pytest.mark.parametrize("workflow", ["daily_analysis.yml", "price_refresh.yml"])
+def test_every_workflow_that_trades_restores_the_log(workflow):
+    """Both schedules run the paper engine, and the engine writes the log."""
+    assert "discipline_log.json" in _restore_lists(workflow), (
+        f"{workflow} starts each run with an empty discipline log and "
+        "overwrites the published one -- the log can never accumulate"
+    )
+
+
+def test_the_log_is_restored_wherever_the_portfolio_is():
+    """The rule, stated generally: a file the engine appends to must travel
+    with the book. If a new schedule restores the portfolio, it restores the
+    log too."""
+    for wf in os.listdir(WORKFLOWS):
+        restored = _restore_lists(wf)
+        if "paper_portfolio.json" in restored and wf != "weekly_review.yml":
+            assert "discipline_log.json" in restored, wf

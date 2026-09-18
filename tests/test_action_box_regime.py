@@ -152,3 +152,33 @@ def test_squeeze_breakout_still_needs_volume(outdir):
     box = _build_action_box(stocks, outdir)
 
     assert [b["ticker"] for b in box["buys"]] == ["FAT"]
+
+
+# ── The regime is recorded with each snapshot ───────────────────────────────
+
+def test_action_history_records_the_regime(tmp_path):
+    """Auditing a past entry needs the regime at that moment. 2026-09-17 was
+    transitional (SPY 40) and 09-19 was bear (SPY 20); the history held
+    neither, so checking whether three 09-17 entries were legal meant grepping
+    that day's CI log."""
+    import json
+    import report_generator as rg
+
+    rg._log_action_history(
+        {"buys": [{"ticker": "AAA", "score": 85, "price": 10.0}], "sells": [],
+         "regime": "transitional", "regime_spy": 40},
+        str(tmp_path),
+    )
+    row = json.loads((tmp_path / "action_history.json").read_text())[-1]
+    assert row["regime"] == "transitional"
+    assert row["regime_spy"] == 40
+
+
+def test_action_history_tolerates_a_box_without_regime(tmp_path):
+    """Older action_box.json restored from Pages has no regime fields."""
+    import json
+    import report_generator as rg
+
+    rg._log_action_history({"buys": [{"ticker": "BBB"}], "sells": []}, str(tmp_path))
+    row = json.loads((tmp_path / "action_history.json").read_text())[-1]
+    assert row["regime"] is None

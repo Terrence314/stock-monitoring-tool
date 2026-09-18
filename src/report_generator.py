@@ -3334,6 +3334,12 @@ def _log_action_history(action_box: dict, output_dir: str) -> list:
             "sells":   sells,
             "added":   sorted(curr_all - prev_all),
             "removed": sorted(prev_all - curr_all),
+            # Whether an entry was legal depends on the regime at that moment,
+            # and the regime moves (transitional SPY 40 on 2026-09-17, bear
+            # SPY 20 two days later). Without these two fields the only way to
+            # audit a past entry was to grep that day's CI log.
+            "regime":     action_box.get("regime"),
+            "regime_spy": action_box.get("regime_spy"),
         }
         history.append(entry)
         history = history[-ACTION_HISTORY_MAX:]
