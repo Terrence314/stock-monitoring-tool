@@ -77,6 +77,14 @@ def _pct_for_score(score: int) -> float:
 def account_equity_usd(output_dir: str = "outputs") -> tuple[float, str]:
     """Return (equity_usd, basis) where basis is 'ibkr' or 'fallback'.
 
+    UNUSED since 6fe30155 (2026-09-20). Nothing in src/ calls it: paper sizing
+    uses PAPER_EQUITY_USD, and portfolio_report.py reads the snapshot itself.
+    That commit's message says this "stays for local use" -- it does not; that
+    claim was wrong. It is kept only because ibkr_sync.py still writes this
+    snapshot and test_fx_conversion.py guards the HKD-to-USD handling. Delete
+    it, FALLBACK_EQUITY_USD and EQUITY_MAX_AGE_DAYS if real-equity sizing is
+    not brought back -- and if it is, read PAPER_EQUITY_USD's comment first.
+
     Reads the snapshot `ibkr_sync.py` writes. Prefers the pre-converted USD
     figure; a HKD net liquidation read as USD would undersize every ticket by
     roughly 8x, so an unconverted non-USD account counts as unreadable.
