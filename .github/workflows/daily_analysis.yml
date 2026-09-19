@@ -45,11 +45,12 @@ jobs:
         run: |
           mkdir -p outputs data
           BASE="https://terrence314.github.io/stock-monitoring-tool"
-          # ibkr_positions.json holds account net liquidation, which sizes every
-          # position. It is produced by ibkr_sync.py on the laptop (the broker
-          # gateway is not reachable from CI), so Pages is the only way it gets
-          # here; without it sizing silently falls back to a default equity.
-          for FILE in score_history.json alert_history.json last_analysis.json paper_portfolio.json pattern_history.json pattern_events.json broad_scan_latest.json action_history.json exit_alert_history.json ibkr_positions.json discipline_log.json; do
+          # ibkr_positions.json is deliberately NOT here. It holds the real
+          # account's net liquidation, and anything restored into outputs/ is
+          # republished to this public site on deploy. The paper book sizes
+          # from a fixed simulation account (entry_selection.PAPER_EQUITY_USD),
+          # so CI has no use for the real figure.
+          for FILE in score_history.json alert_history.json last_analysis.json paper_portfolio.json pattern_history.json pattern_events.json broad_scan_latest.json action_history.json exit_alert_history.json discipline_log.json; do
             curl -f -s "$BASE/$FILE" -o "outputs/$FILE" || echo "  $FILE not yet on Pages — will be created this run"
           done
           # Restore data/ files (tier2_history + favourites) from Pages

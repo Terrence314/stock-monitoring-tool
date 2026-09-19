@@ -27,7 +27,7 @@ from discipline_log import record_violation                           # noqa: E4
 from entry_selection import (                                        # noqa: E402
     BUY_THRESHOLD, REGIME_FLOOR, REGIME_NORMAL, HIGH_CONVICTION_MIN,
     MAX_PER_SECTOR, MAX_OPEN_POSITIONS,
-    account_equity_usd, position_notional, select_entries, sector_cap_ok,
+    PAPER_EQUITY_USD, position_notional, select_entries, sector_cap_ok,
 )
 
 PORTFOLIO_FILE   = os.path.join("outputs", "paper_portfolio.json")
@@ -131,7 +131,7 @@ def _notional_for_score(score: int, equity_usd: float | None = None) -> float:
     already resolved it — otherwise this re-reads the broker snapshot.
     """
     if equity_usd is None:
-        equity_usd, _basis = account_equity_usd()
+        equity_usd = PAPER_EQUITY_USD
     return position_notional(score, equity_usd)
 
 
@@ -1111,13 +1111,11 @@ def run_paper_trading(
     ranked = sorted(stock_results, key=lambda s: (s.get("score") or 0), reverse=True)
     entries, ctx = select_entries(ranked, trades, blocked_tickers=blocked_tickers)
 
+    # No account figure in this line: Actions logs on a public repo are public.
     print(f"  [paper_trading] regime={ctx['regime']} (SPY {ctx['regime_spy']}) · "
-          f"equity ${ctx['equity_usd']:,.0f} ({ctx['sizing_basis']}) · "
+          f"sizing {ctx['sizing_basis']} · "
           f"{ctx['slots_left']}/{ctx['max_open']} slots free · "
           f"{len(entries)} entry candidate(s)")
-    if ctx["sizing_basis"] == "fallback":
-        print("  [paper_trading] ⚠️ account equity unreadable or stale — "
-              f"sizing off the ${ctx['equity_usd']:,.0f} fallback; run ibkr_sync.py")
 
     for e in entries:
         _open_trade(e["ticker"], e["score"], "long", e["price"], notional=e["notional"])

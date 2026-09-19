@@ -20,6 +20,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from entry_selection import (                                        # noqa: E402
+    PAPER_EQUITY_USD,
     FALLBACK_EQUITY_USD, HIGH_CONVICTION_MIN, MAX_OPEN_POSITIONS,
     MAX_PER_SECTOR, REGIME_FLOOR, REGIME_NORMAL,
     account_equity_usd, entry_timing_ok, position_notional, select_entries,
@@ -182,9 +183,27 @@ def test_unconverted_foreign_currency_is_not_read_as_usd(outdir):
     assert (equity, basis) == (FALLBACK_EQUITY_USD, "fallback")
 
 
-def test_selected_entries_carry_sizing_context(outdir):
+def test_selection_ignores_a_real_account_snapshot(outdir):
+    """A fresh real snapshot sits right there, and sizing must not read it.
+
+    Changed 2026-09-20. This used to assert the opposite: an $8,000 snapshot
+    sized the ticket off $8,000. But every paper trade is published with its
+    notional, and notional / band% gives the account value back exactly, so
+    reading the real figure meant publishing it. The paper book now sizes from
+    PAPER_EQUITY_USD whatever the laptop has synced.
+    """
     _equity_file(outdir, 8000.0)
     stocks = [_stock("SPY", REGIME_NORMAL), _stock("AAA", 90)]
     entries, ctx = select_entries(stocks, [], output_dir=outdir)
-    assert ctx["sizing_basis"] == "ibkr"
-    assert entries[0]["notional"] == position_notional(90, 8000.0)
+    assert ctx["sizing_basis"] == "paper"
+    assert "equity_usd" not in ctx
+    assert entries[0]["notional"] == position_notional(90, PAPER_EQUITY_USD)
+    assert entries[0]["notional"] != position_notional(90, 8000.0)
+
+
+def test_entries_carry_the_account_share_for_a_real_ticket(outdir):
+    """The instruction a real order needs, true at any account size."""
+    stocks = [_stock("SPY", REGIME_NORMAL), _stock("AAA", 95), _stock("BBB", 85)]
+    entries, _ = select_entries(stocks, [], output_dir=outdir)
+    by = {e["ticker"]: e["pct"] for e in entries}
+    assert by == {"AAA": 12.0, "BBB": 10.0}

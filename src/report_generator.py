@@ -10,7 +10,7 @@ from stock_detail import generate_stock_detail_page
 from market_calendar import add_trading_days, is_covered
 from paper_trading import STOP_LOSS_PCT, TAKE_PROFIT_PCT, HOLD_DAYS
 from entry_selection import (
-    MAX_OPEN_POSITIONS, REGIME_FLOOR, account_equity_usd, select_entries,
+    MAX_OPEN_POSITIONS, PAPER_EQUITY_USD, REGIME_FLOOR, select_entries,
 )
 
 DASHBOARD_HTML = """<!DOCTYPE html>
@@ -1034,7 +1034,7 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
         <span class="mono" style="font-size:11px;color:var(--down)">止損 ${{ '%.2f'|format(b.stop) if b.stop else '—' }} (−{{ '%g'|format(action_box.stop_pct) }}%)</span>
         <span class="mono" style="font-size:11px;color:var(--up)">目標 ${{ '%.2f'|format(b.target) if b.target else '—' }} (+{{ '%g'|format(action_box.target_pct) }}%)</span>
         <span class="mono" style="font-size:11px;color:var(--amber)">期限 {{ b.expiry }}（{{ action_box.hold_days }} 交易日）</span>
-        <span style="font-size:11px;color:var(--text-2)">{{ '${:,.0f}'.format(b.notional) if b.notional else '—' }} · score {{ b.score }} · {{ b.reason }}</span>
+        <span style="font-size:11px;color:var(--text-2)">{{ (b.pct|string + '% 戶口') if b.pct else '—' }} · score {{ b.score }} · {{ b.reason }}</span>
         <span style="flex-basis:100%;font-size:10px;color:var(--muted);padding-left:2px">📋 落單即設止損單 — 買入後馬上喺 IBKR 掛 stop order，唔好等</span>
       </div>
       {% endfor %}
@@ -1054,12 +1054,11 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
              "ValueError: unsupported format character ','". This crashed
              every price_refresh run for a day once breaker_usd went
              non-zero and the guard below finally let the branch execute. #}
-          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '{:+,.0f}'.format(action_box.breaker_usd) }} 美元{% if action_box.breaker_equity %} / 帳戶 {{ '${:,.0f}'.format(action_box.breaker_equity) }}{% if action_box.breaker_basis == 'fallback' %} <span style="color:var(--amber)">估算</span>{% endif %}{% endif %})</span>{% endif %}
+          斷路器 {{ '%+.1f'|format(action_box.breaker_pct) }}% / {{ action_box.breaker_limit }}%{% if action_box.breaker_usd is defined and action_box.breaker_usd %} <span style="color:var(--text-2)">({{ '{:+,.0f}'.format(action_box.breaker_usd) }} 美元 paper)</span>{% endif %}
           <span style="color:{{ '#f87171' if action_box.breaker_trip else '#34d399' }}">{{ '🛑 TRIPPED' if action_box.breaker_trip else '✓ ok' }}</span>
         </span>
-        <span title="每張飛嘅金額 = 戶口淨值 × 信心比重（分數 ≥90 → 12%、80–89 → 10%、70–79 → 7%），上限 {{ action_box.max_open }} 個同時持倉。舊制係固定 $1,000/$1,500/$2,000 base unit，喺一個 USD 4,650 嘅戶口度即係單一倉位食 32–43%。sizing 顯示 fallback 代表讀唔到 IBKR 淨值（未同步或超過 7 日），數字用預設值計 — 跑 ibkr_sync.py 就會回復真數。">
-          倉位 {{ '${:,.0f}'.format(action_box.equity_usd) }} × 7–12%
-          {%- if action_box.sizing_basis == 'fallback' %} <span style="color:var(--amber)">⚠ fallback 淨值</span>{% else %} <span style="color:var(--muted)">IBKR 淨值</span>{% endif %}
+        <span title="每張飛 = 你戶口嘅 7–12%（分數 ≥90 → 12%、80–89 → 10%、70–79 → 7%），上限 {{ action_box.max_open }} 個同時持倉。Paper 紀錄用一個固定 $5,000 模擬戶口計，唔讀你真實戶口 — 呢個網站係公開嘅，真實淨值一放上嚟就會被人由倉位大細反推出嚟。真錢落單時，用你自己戶口淨值乘返個百分比。">
+          倉位 7–12% 戶口 <span style="color:var(--muted)">paper 模擬</span>
           · 空位 {{ action_box.slots_left }}/{{ action_box.max_open }}
         </span>
         <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即 Action Box 同 paper 引擎統一用同一個選股決策、倉位改按戶口淨值計（7–12%，上限 {{ action_box.max_open }} 倉）之後開倉嘅單。之前嗰批用固定 $1,000–$2,000 落單、一日只決策一次，喺一個細戶口度單一倉位食到 43%；混埋一齊計 PF 同勝率就係量度兩個唔同策略，兩個都驗唔到。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
@@ -3451,7 +3450,10 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     # deployed losing $2,400 read as -4.8% and did not trip, while against a
     # ~USD 4,650 account that is a -52% drawdown. A circuit breaker has to
     # measure the account it is protecting, so -5% now means -5% of equity.
-    breaker_equity, breaker_basis = account_equity_usd(output_dir)
+    # The account the paper book trades IS the $5,000 simulation it is sized
+    # from, so that is the denominator. Never the real account: the percent is
+    # published, and pnl_month is published, so equity = pnl / pct.
+    breaker_equity = PAPER_EQUITY_USD
     breaker_usd  = round(pnl_month, 2)
     breaker_pct  = round(pnl_month / breaker_equity * 100, 2) if breaker_equity else 0.0
     breaker_trip = breaker_pct <= BREAKER_LIMIT_PCT
@@ -3511,7 +3513,6 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "regime_min_floor": REGIME_FLOOR,
         # Sizing provenance and the position cap, so a ticket that looks small
         # (or a day with no tickets at all) explains itself on the page.
-        "equity_usd":    ctx["equity_usd"],
         "sizing_basis":  ctx["sizing_basis"],
         "slots_left":    ctx["slots_left"],
         "max_open":      MAX_OPEN_POSITIONS,
@@ -3520,8 +3521,6 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "hold_days":     HOLD_DAYS,
         "breaker_pct":   breaker_pct,
         "breaker_usd":   breaker_usd,
-        "breaker_equity": round(breaker_equity, 2),
-        "breaker_basis": breaker_basis,
         "breaker_base":  round(notional_month, 2),
         "breaker_limit": BREAKER_LIMIT_PCT,
         "breaker_trip":  breaker_trip,

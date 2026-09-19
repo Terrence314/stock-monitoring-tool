@@ -44,6 +44,28 @@ POSITION_PCT = ((90, 12.0), (80, 10.0), (0, 7.0))
 FALLBACK_EQUITY_USD = 5000.0
 EQUITY_MAX_AGE_DAYS = 7
 
+# The paper book sizes from a FIXED simulation account, not the real one.
+#
+# It used to read the real net liquidation from ibkr_positions.json. Two
+# problems made that untenable (2026-09-20):
+#
+#   1. Privacy. This repo and its Pages site are public, and every published
+#      paper trade carries `notional`. POSITION_PCT is public too, so
+#      notional / band% gives the account value back exactly: score 80 ->
+#      10% -> notional 500 -> 5,000. Feeding the real figure in would have
+#      republished it on every entry, whatever was done to hide the snapshot.
+#   2. It never worked. ibkr_sync.py writes a local file only; CI read a copy
+#      pushed to Pages once by hand on 2026-08-09, so for 41 days every
+#      ticket was sized off the $5,000 fallback anyway, under a permanent
+#      amber warning that trained the eye to skip it.
+#
+# A paper book is a simulation, and its record is kept in percent. Sizing it
+# from a constant changes nothing numerically -- it is the number it already
+# ran on -- and removes both the leak and the stale-data failure mode. Real
+# tickets are expressed as a percent of the account (see `pct` on each entry),
+# which is correct at any account size and reveals nothing.
+PAPER_EQUITY_USD = 5000.0
+
 
 def _pct_for_score(score: int) -> float:
     for floor, pct in POSITION_PCT:
@@ -147,7 +169,7 @@ def select_entries(stocks_sorted: list, open_trades: list,
     """
     blocked_tickers = set(blocked_tickers or ())
     regime, spy_score, min_score = market_regime(stocks_sorted)
-    equity_usd, sizing_basis = account_equity_usd(output_dir)
+    equity_usd = PAPER_EQUITY_USD       # never the real account -- see its comment
 
     open_longs = [t for t in open_trades
                   if t.get("status") == "open" and t.get("direction", "long") == "long"]
@@ -157,7 +179,7 @@ def select_entries(stocks_sorted: list, open_trades: list,
 
     context = {
         "regime": regime, "regime_spy": spy_score, "regime_min": min_score,
-        "equity_usd": equity_usd, "sizing_basis": sizing_basis,
+        "sizing_basis": "paper",
         "slots_left": max(0, slots_left), "max_open": MAX_OPEN_POSITIONS,
     }
 
@@ -184,6 +206,9 @@ def select_entries(stocks_sorted: list, open_trades: list,
             "score":    score,
             "price":    price,
             "notional": position_notional(score, equity_usd),
+            # What a real ticket should be: a share of YOUR account. The paper
+            # notional is a share of a $5,000 simulation.
+            "pct":      _pct_for_score(score),
             "sector":   sector_map.get(ticker, "Unknown"),
             "reason":   (s.get("entry_verdict") or {}).get("reason", ""),
         })

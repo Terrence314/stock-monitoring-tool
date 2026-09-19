@@ -173,10 +173,12 @@ def test_breaker_measures_the_account_not_turnover():
 
     box = _build_action_box([], _gate_dir([t]))
 
+    from entry_selection import PAPER_EQUITY_USD
     assert box["breaker_usd"] == -80.0
-    assert box["breaker_equity"] > 0
-    assert box["breaker_basis"] in ("ibkr", "fallback")
-    assert box["breaker_pct"] == pytest.approx(-80.0 / box["breaker_equity"] * 100, abs=0.01)
+    # The account the paper book trades is the simulation it is sized from.
+    assert box["breaker_pct"] == pytest.approx(-80.0 / PAPER_EQUITY_USD * 100, abs=0.01)
+    # And it is not published: pct and usd are, so equity = usd / pct.
+    assert "breaker_equity" not in box
 
 
 def test_breaker_does_not_weaken_as_turnover_grows():

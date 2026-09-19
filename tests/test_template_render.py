@@ -67,28 +67,28 @@ def _breaker_fragment():
     pytest.fail("breaker line not found in DASHBOARD_HTML")
 
 
-@pytest.mark.parametrize("usd,equity", [
-    (-2502.22, 41000.0),   # the real shape that crashed production
-    (1234.56, 9000.0),
-    (-0.5, 4650.0),
-])
-def test_breaker_line_renders_with_non_zero_values(usd, equity):
+@pytest.mark.parametrize("usd", [-2502.22, 1234.56, -0.5])
+def test_breaker_line_renders_with_non_zero_values(usd):
+    """-2502.22 is the real shape that crashed production."""
     out = Template(_breaker_fragment()).render(action_box={
         "breaker_pct": -6.1, "breaker_limit": -5.0,
-        "breaker_usd": usd, "breaker_equity": equity,
-        "breaker_basis": "ibkr", "breaker_trip": True,
+        "breaker_usd": usd, "breaker_trip": True,
     })
     assert "美元" in out
-    assert "," in out, "thousands separator missing"
+    if abs(usd) >= 1000:
+        assert "," in out, "thousands separator missing"
 
 
-def test_breaker_line_flags_an_estimated_account_size():
+def test_breaker_line_shows_no_account_figure():
+    """An old action_box.json restored from Pages still carries the account
+    value. The line must not print it -- the site is public (2026-09-20)."""
     out = Template(_breaker_fragment()).render(action_box={
         "breaker_pct": -1.0, "breaker_limit": -5.0,
-        "breaker_usd": -50.0, "breaker_equity": 5000.0,
-        "breaker_basis": "fallback", "breaker_trip": False,
+        "breaker_usd": -50.0, "breaker_equity": 4698.25,
+        "breaker_basis": "ibkr", "breaker_trip": False,
     })
-    assert "估算" in out, "a fallback equity figure must be labelled as estimated"
+    assert "帳戶" not in out
+    assert "4,698" not in out and "4698" not in out
 
 
 def test_breaker_line_renders_when_zero_and_skips_the_branch():
@@ -108,39 +108,38 @@ def test_breaker_line_renders_when_keys_are_absent():
     assert "斷路器" in out
 
 
-# ── Position-sizing line (added 2026-08-05 with equity-based sizing) ─────────
+# ── Position-sizing line ──────────────────────────────────────────────────────
+#
+# Showed "倉位 $4,650 × 7–12%" until 2026-09-20: the real account value, on a
+# public page. It now states the share of the account, which is what a real
+# ticket needs and is true at any account size.
 
 def _sizing_fragment():
-    """The 倉位 / 空位 block, extracted from the live template."""
     lines = rg.DASHBOARD_HTML.splitlines()
-    start = next((i for i, ln in enumerate(lines) if "每張飛嘅金額" in ln), None)
+    start = next((i for i, ln in enumerate(lines) if "每張飛 =" in ln), None)
     if start is None:
         pytest.fail("sizing line not found in DASHBOARD_HTML")
     end = next(i for i in range(start, len(lines)) if "空位" in lines[i])
     return "\n".join(lines[start:end + 1])
 
 
-@pytest.mark.parametrize("basis,expected", [
-    ("fallback", "fallback"),
-    ("ibkr", "IBKR"),
-])
-def test_sizing_line_renders_both_bases(basis, expected):
-    """Grouped money here needs str.format; the printf filter would raise."""
+def test_sizing_line_states_the_account_share():
     out = Template(_sizing_fragment()).render(action_box={
-        "equity_usd": 4650.0, "sizing_basis": basis,
-        "slots_left": 2, "max_open": 5,
+        "sizing_basis": "paper", "slots_left": 2, "max_open": 5,
     })
-    assert "$4,650" in out, "thousands separator missing"
-    assert expected in out
+    assert "7–12% 戶口" in out
     assert "2/5" in out
 
 
-def test_sizing_line_renders_large_equity():
+@pytest.mark.parametrize("equity", [4650.0, 1234567.0])
+def test_sizing_line_never_prints_an_account_value(equity):
+    """Even when a stale action_box.json restored from Pages still has one."""
     out = Template(_sizing_fragment()).render(action_box={
-        "equity_usd": 1234567.0, "sizing_basis": "ibkr",
+        "equity_usd": equity, "sizing_basis": "ibkr",
         "slots_left": 0, "max_open": 5,
     })
-    assert "$1,234,567" in out
+    body = out.split(">", 1)[1]                  # past the tooltip attribute
+    assert "$" not in body, f"account figure rendered: {body!r}"
 
 
 # ── Portfolio page carried the same defect ────────────────────────────────────
