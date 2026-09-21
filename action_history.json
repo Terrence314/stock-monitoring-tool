@@ -3816,5 +3816,34 @@
   "removed": [
    "ILMN"
   ]
+ },
+ {
+  "ts": "2026-09-22 02:29",
+  "buys": [
+   {
+    "ticker": "VGT",
+    "score": 90,
+    "price": 125.26499938964844
+   },
+   {
+    "ticker": "WBD",
+    "score": 85,
+    "price": 30.790000915527344
+   },
+   {
+    "ticker": "OEF",
+    "score": 82,
+    "price": 387.1199951171875
+   }
+  ],
+  "sells": [],
+  "added": [
+   "OEF",
+   "VGT",
+   "WBD"
+  ],
+  "removed": [],
+  "regime": "bull",
+  "regime_spy": 64
  }
 ]
