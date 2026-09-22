@@ -3858,5 +3858,21 @@
   ],
   "regime": "bull",
   "regime_spy": 74
+ },
+ {
+  "ts": "2026-09-23 01:13",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "WBD",
+    "why": "score 85"
+   }
+  ],
+  "added": [
+   "WBD"
+  ],
+  "removed": [],
+  "regime": "bull",
+  "regime_spy": 52
  }
 ]
