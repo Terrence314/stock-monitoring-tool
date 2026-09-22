@@ -1894,14 +1894,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 102.09,
+      "current_price": 102.25,
       "current_date": "2026-09-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": 12.42,
-      "float_pnl_pct": 2.07
+      "float_pnl": 7.49,
+      "float_pnl_pct": 1.25
     },
     {
       "id": "MRVL-2026-09-17",
@@ -1993,14 +1993,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 126.14,
+      "current_price": 126.07,
       "current_date": "2026-09-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": 4.26,
-      "float_pnl_pct": 0.71
+      "float_pnl": 4.02,
+      "float_pnl_pct": 0.67
     },
     {
       "id": "WBD-2026-09-21",
@@ -2016,14 +2016,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 30.81,
+      "current_price": 30.8,
       "current_date": "2026-09-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Communication Services",
-      "float_pnl": 0.16,
-      "float_pnl_pct": 0.03
+      "float_pnl": 0.32,
+      "float_pnl_pct": 0.06
     },
     {
       "id": "OEF-2026-09-21",
@@ -2039,14 +2039,37 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 386.74,
+      "current_price": 386.8,
       "current_date": "2026-09-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": -0.5,
-      "float_pnl_pct": -0.1
+      "float_pnl": -0.41,
+      "float_pnl_pct": -0.08
+    },
+    {
+      "id": "DXCM-2026-09-22",
+      "ticker": "DXCM",
+      "direction": "long",
+      "signal_date": "2026-09-22",
+      "entry_ts": "2026-09-23T01:32:45+08:00",
+      "entry_price": 89.88,
+      "shares": 5.563282,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 89.88,
+      "current_date": "2026-09-22",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Healthcare",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-09-22"
