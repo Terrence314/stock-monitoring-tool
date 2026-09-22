@@ -1,21 +1,10 @@
 {
- "ts": "2026-09-23 01:32",
- "buys": [
-  {
-   "ticker": "DXCM",
-   "price": 89.875,
-   "score": 80,
-   "reason": "Score 80 · BB 0.70 · RSI 60",
-   "stop": 87.18,
-   "target": 95.27,
-   "notional": 500.0,
-   "expiry": "10-06"
-  }
- ],
+ "ts": "2026-09-23 04:56",
+ "buys": [],
  "sells": [
   {
    "ticker": "WBD",
-   "float_pct": 0.1,
+   "float_pct": 0.0,
    "why": "score 85"
   }
  ],
@@ -25,14 +14,14 @@
  "regime_min": 70,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
- "slots_left": 1,
+ "slots_left": 0,
  "max_open": 5,
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": -1.45,
- "breaker_usd": -72.65,
- "breaker_base": 7450.0,
+ "breaker_pct": -1.44,
+ "breaker_usd": -72.12,
+ "breaker_base": 7950.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 44,
