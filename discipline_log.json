@@ -40,5 +40,14 @@
     "sessions": [
       "2026-09-22"
     ]
+  },
+  {
+    "ts": "2026-09-23T17:43:55+00:00",
+    "kind": "violation",
+    "rule": "calendar_gap",
+    "detail": "price feed missing 1 trading session(s); hold-period exit dates shift later by that many days",
+    "sessions": [
+      "2026-09-22"
+    ]
   }
 ]
