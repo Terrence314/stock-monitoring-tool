@@ -1,27 +1,11 @@
 {
- "ts": "2026-09-24 08:15",
+ "ts": "2026-09-25 01:30",
  "buys": [],
- "sells": [
-  {
-   "ticker": "CIBR",
-   "float_pct": 3.0,
-   "why": "score 22"
-  },
-  {
-   "ticker": "VGT",
-   "float_pct": 0.3,
-   "why": "score 22"
-  },
-  {
-   "ticker": "OEF",
-   "float_pct": -0.9,
-   "why": "score 12"
-  }
- ],
- "no_action": false,
- "regime": "bear",
- "regime_spy": 22,
- "regime_min": null,
+ "sells": [],
+ "no_action": true,
+ "regime": "transitional",
+ "regime_spy": 36,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 0,
@@ -45,5 +29,12 @@
  "gate_pf": 1.15,
  "gate_pnl": 24.42,
  "gate_trades": 15,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-09-24 17:30",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
