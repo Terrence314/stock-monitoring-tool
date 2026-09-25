@@ -1,32 +1,5 @@
 [
  {
-  "ts": "2026-06-12 23:35",
-  "buys": [
-   {
-    "ticker": "GD",
-    "score": 80,
-    "price": 361.864990234375
-   },
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 201.88499450683594
-   },
-   {
-    "ticker": "GE",
-    "score": 80,
-    "price": 333.29998779296875
-   }
-  ],
-  "sells": [],
-  "added": [
-   "BIIB",
-   "GD",
-   "GE"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-12 23:41",
   "buys": [
    {
@@ -3997,6 +3970,17 @@
    "CIBR",
    "OEF",
    "WBD"
+  ],
+  "regime": "bull",
+  "regime_spy": 72
+ },
+ {
+  "ts": "2026-09-26 01:47",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "MSFT"
   ],
   "regime": "bull",
   "regime_spy": 72

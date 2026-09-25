@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-26 01:29",
+ "ts": "2026-09-26 01:47",
  "buys": [],
  "sells": [],
  "no_action": true,
@@ -13,8 +13,8 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": -1.8,
- "breaker_usd": -90.03,
+ "breaker_pct": -1.79,
+ "breaker_usd": -89.37,
  "breaker_base": 7950.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
@@ -29,17 +29,5 @@
  "gate_pf": 1.05,
  "gate_pnl": 8.23,
  "gate_trades": 16,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-09-25 17:29",
-  "passed": 0,
-  "blocked": 1,
-  "blocked_list": [
-   {
-    "ticker": "MSFT",
-    "reason": "AI review REJECTED"
-   }
-  ],
-  "caution_tags": []
- }
+ "gate_ready": false
 }
