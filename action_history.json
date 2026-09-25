@@ -3953,5 +3953,31 @@
   ],
   "regime": "transitional",
   "regime_spy": 36
+ },
+ {
+  "ts": "2026-09-25 08:18",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "CIBR",
+    "why": "score 12"
+   },
+   {
+    "ticker": "WBD",
+    "why": "score 27"
+   },
+   {
+    "ticker": "OEF",
+    "why": "score 22"
+   }
+  ],
+  "added": [
+   "CIBR",
+   "OEF",
+   "WBD"
+  ],
+  "removed": [],
+  "regime": "bear",
+  "regime_spy": 12
  }
 ]

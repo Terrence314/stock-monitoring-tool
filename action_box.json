@@ -1,11 +1,27 @@
 {
- "ts": "2026-09-25 05:11",
+ "ts": "2026-09-25 08:18",
  "buys": [],
- "sells": [],
- "no_action": true,
- "regime": "transitional",
- "regime_spy": 36,
- "regime_min": 80,
+ "sells": [
+  {
+   "ticker": "CIBR",
+   "float_pct": 2.2,
+   "why": "score 12"
+  },
+  {
+   "ticker": "WBD",
+   "float_pct": 0.2,
+   "why": "score 27"
+  },
+  {
+   "ticker": "OEF",
+   "float_pct": -0.8,
+   "why": "score 22"
+  }
+ ],
+ "no_action": false,
+ "regime": "bear",
+ "regime_spy": 12,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 1,
@@ -13,12 +29,12 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": -1.84,
- "breaker_usd": -91.76,
+ "breaker_pct": -1.8,
+ "breaker_usd": -90.03,
  "breaker_base": 7950.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 46,
+ "gate_day": 47,
  "gate_days": 60,
  "gate_winrate": 37.5,
  "gate_ci_low": 13.8,
