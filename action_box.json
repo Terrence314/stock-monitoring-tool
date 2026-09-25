@@ -1,27 +1,11 @@
 {
- "ts": "2026-09-25 08:18",
+ "ts": "2026-09-26 01:29",
  "buys": [],
- "sells": [
-  {
-   "ticker": "CIBR",
-   "float_pct": 2.2,
-   "why": "score 12"
-  },
-  {
-   "ticker": "WBD",
-   "float_pct": 0.2,
-   "why": "score 27"
-  },
-  {
-   "ticker": "OEF",
-   "float_pct": -0.8,
-   "why": "score 22"
-  }
- ],
- "no_action": false,
- "regime": "bear",
- "regime_spy": 12,
- "regime_min": null,
+ "sells": [],
+ "no_action": true,
+ "regime": "bull",
+ "regime_spy": 72,
+ "regime_min": 70,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 1,
@@ -45,5 +29,17 @@
  "gate_pf": 1.05,
  "gate_pnl": 8.23,
  "gate_trades": 16,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-09-25 17:29",
+  "passed": 0,
+  "blocked": 1,
+  "blocked_list": [
+   {
+    "ticker": "MSFT",
+    "reason": "AI review REJECTED"
+   }
+  ],
+  "caution_tags": []
+ }
 }
