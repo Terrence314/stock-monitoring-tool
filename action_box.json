@@ -1,11 +1,32 @@
 {
- "ts": "2026-09-26 05:08",
+ "ts": "2026-09-26 08:23",
  "buys": [],
- "sells": [],
- "no_action": true,
- "regime": "bull",
- "regime_spy": 72,
- "regime_min": 70,
+ "sells": [
+  {
+   "ticker": "CIBR",
+   "float_pct": 0.8,
+   "why": "score 12"
+  },
+  {
+   "ticker": "VGT",
+   "float_pct": 0.9,
+   "why": "score 12"
+  },
+  {
+   "ticker": "WBD",
+   "float_pct": 0.2,
+   "why": "score 17"
+  },
+  {
+   "ticker": "OEF",
+   "float_pct": -0.3,
+   "why": "score 22"
+  }
+ ],
+ "no_action": false,
+ "regime": "bear",
+ "regime_spy": 12,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 1,
@@ -18,7 +39,7 @@
  "breaker_base": 7950.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 47,
+ "gate_day": 48,
  "gate_days": 60,
  "gate_winrate": 37.5,
  "gate_ci_low": 13.8,

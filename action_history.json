@@ -1,43 +1,5 @@
 [
  {
-  "ts": "2026-06-12 23:41",
-  "buys": [
-   {
-    "ticker": "GD",
-    "score": 80,
-    "price": 360.8699951171875
-   },
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 201.5500030517578
-   },
-   {
-    "ticker": "RCL",
-    "score": 80,
-    "price": 290.3999938964844
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "CIBR",
-    "why": "score 25"
-   },
-   {
-    "ticker": "ARKK",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "ARKK",
-   "CIBR",
-   "RCL"
-  ],
-  "removed": [
-   "GE"
-  ]
- },
- {
   "ts": "2026-06-12 23:49",
   "buys": [
    {
@@ -3984,5 +3946,36 @@
   ],
   "regime": "bull",
   "regime_spy": 72
+ },
+ {
+  "ts": "2026-09-26 08:23",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "CIBR",
+    "why": "score 12"
+   },
+   {
+    "ticker": "VGT",
+    "why": "score 12"
+   },
+   {
+    "ticker": "WBD",
+    "why": "score 17"
+   },
+   {
+    "ticker": "OEF",
+    "why": "score 22"
+   }
+  ],
+  "added": [
+   "CIBR",
+   "OEF",
+   "VGT",
+   "WBD"
+  ],
+  "removed": [],
+  "regime": "bear",
+  "regime_spy": 12
  }
 ]
