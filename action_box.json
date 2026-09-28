@@ -1,32 +1,26 @@
 {
- "ts": "2026-09-26 08:23",
- "buys": [],
- "sells": [
+ "ts": "2026-09-29 03:51",
+ "buys": [
   {
-   "ticker": "CIBR",
-   "float_pct": 0.8,
-   "why": "score 12"
-  },
-  {
-   "ticker": "VGT",
-   "float_pct": 0.9,
-   "why": "score 12"
-  },
-  {
-   "ticker": "WBD",
-   "float_pct": 0.2,
-   "why": "score 17"
-  },
-  {
-   "ticker": "OEF",
-   "float_pct": -0.3,
-   "why": "score 22"
+   "ticker": "NVDA",
+   "price": 228.6649932861328,
+   "score": 90,
+   "reason": "Score 90 · BB 0.78 · RSI 59",
+   "stop": 221.81,
+   "target": 242.38,
+   "notional": 600.0,
+   "expiry": "10-12",
+   "ai_review": {
+    "verdict": "APPROVED",
+    "summary": "1.【多頭理據】NVDA 目前股價強勢站穩於所有短期和長期均線之上，呈現清晰的多頭排列（價格 > MA5 > MA20 > MA60），且RSI動能走強至58.6，MACD在0軸上方金叉並動能擴張，顯示多方趨勢正在強化。\n2.【空頭理據】儘管技術指標偏多，但KD指標已處於高位且K值低於D值（K=75.4 · D=77.9），表明股價可能面臨超買和回調風險。此外，量能僅為均量的1.05倍，並未出現明顯放量突破，可能限制上漲空間，且止損點距離現價較近，風險敞口在波動市場中可能較大。\n3.【關鍵未知】在KD指標顯示潛在超買的情況下，市場是否會出現獲利了結壓力？\n4. VERDICT: APPROVE"
+   }
   }
  ],
+ "sells": [],
  "no_action": false,
- "regime": "bear",
- "regime_spy": 12,
- "regime_min": null,
+ "regime": "transitional",
+ "regime_spy": 36,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 1,
@@ -39,7 +33,7 @@
  "breaker_base": 7950.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 48,
+ "gate_day": 50,
  "gate_days": 60,
  "gate_winrate": 37.5,
  "gate_ci_low": 13.8,
@@ -50,5 +44,12 @@
  "gate_pf": 1.05,
  "gate_pnl": 8.23,
  "gate_trades": 16,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-09-28 19:51",
+  "passed": 1,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }

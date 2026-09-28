@@ -1,36 +1,5 @@
 [
  {
-  "ts": "2026-06-12 23:49",
-  "buys": [
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 201.69000244140625
-   },
-   {
-    "ticker": "CCI",
-    "score": 80,
-    "price": 93.45500183105469
-   },
-   {
-    "ticker": "EL",
-    "score": 80,
-    "price": 89.27369689941406
-   }
-  ],
-  "sells": [],
-  "added": [
-   "CCI",
-   "EL"
-  ],
-  "removed": [
-   "ARKK",
-   "CIBR",
-   "GD",
-   "RCL"
-  ]
- },
- {
   "ts": "2026-06-12 23:53",
   "buys": [
    {
@@ -3977,5 +3946,27 @@
   "removed": [],
   "regime": "bear",
   "regime_spy": 12
+ },
+ {
+  "ts": "2026-09-29 03:51",
+  "buys": [
+   {
+    "ticker": "NVDA",
+    "score": 90,
+    "price": 228.6649932861328
+   }
+  ],
+  "sells": [],
+  "added": [
+   "NVDA"
+  ],
+  "removed": [
+   "CIBR",
+   "OEF",
+   "VGT",
+   "WBD"
+  ],
+  "regime": "transitional",
+  "regime_spy": 36
  }
 ]

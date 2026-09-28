@@ -1,14 +1,11 @@
 [
   {
-    "date": "2026-09-25",
-    "ran_at": "2026-09-25 17:29",
-    "passed": [],
-    "blocked": [
-      {
-        "ticker": "MSFT",
-        "reason": "AI review REJECTED"
-      }
+    "date": "2026-09-28",
+    "ran_at": "2026-09-28 19:51",
+    "passed": [
+      "NVDA"
     ],
+    "blocked": [],
     "cautions": []
   }
 ]
