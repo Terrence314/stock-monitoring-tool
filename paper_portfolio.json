@@ -1894,14 +1894,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 101.85,
-      "current_date": "2026-09-25",
+      "current_price": 101.63,
+      "current_date": "2026-09-28",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": 5.05,
-      "float_pnl_pct": 0.84
+      "float_pnl": 3.74,
+      "float_pnl_pct": 0.62
     },
     {
       "id": "MRVL-2026-09-17",
@@ -1993,14 +1993,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 126.43,
-      "current_date": "2026-09-25",
+      "current_price": 125.12,
+      "current_date": "2026-09-28",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": 5.6,
-      "float_pnl_pct": 0.93
+      "float_pnl": -0.67,
+      "float_pnl_pct": -0.11
     },
     {
       "id": "WBD-2026-09-21",
@@ -2016,14 +2016,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 30.85,
-      "current_date": "2026-09-25",
+      "current_price": 30.9,
+      "current_date": "2026-09-28",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Communication Services",
-      "float_pnl": 0.97,
-      "float_pnl_pct": 0.19
+      "float_pnl": 1.79,
+      "float_pnl_pct": 0.36
     },
     {
       "id": "OEF-2026-09-21",
@@ -2039,14 +2039,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 385.85,
-      "current_date": "2026-09-25",
+      "current_price": 382.97,
+      "current_date": "2026-09-28",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": -1.64,
-      "float_pnl_pct": -0.33
+      "float_pnl": -5.36,
+      "float_pnl_pct": -1.07
     },
     {
       "id": "DXCM-2026-09-22",
@@ -2073,5 +2073,5 @@
       "costs": 1.19
     }
   ],
-  "last_updated": "2026-09-26"
+  "last_updated": "2026-09-28"
 }
