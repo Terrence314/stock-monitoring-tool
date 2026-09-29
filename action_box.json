@@ -1,31 +1,10 @@
 {
- "ts": "2026-09-29 08:16",
+ "ts": "2026-09-30 02:16",
  "buys": [],
- "sells": [
-  {
-   "ticker": "CIBR",
-   "float_pct": 0.6,
-   "why": "score 12"
-  },
-  {
-   "ticker": "VGT",
-   "float_pct": -0.1,
-   "why": "score 12"
-  },
-  {
-   "ticker": "WBD",
-   "float_pct": 0.4,
-   "why": "score 27"
-  },
-  {
-   "ticker": "OEF",
-   "float_pct": -1.1,
-   "why": "score 22"
-  }
- ],
- "no_action": false,
+ "sells": [],
+ "no_action": true,
  "regime": "bear",
- "regime_spy": 12,
+ "regime_spy": 29,
  "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
@@ -50,5 +29,12 @@
  "gate_pf": 1.05,
  "gate_pnl": 8.23,
  "gate_trades": 16,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-09-29 18:16",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
