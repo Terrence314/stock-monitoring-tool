@@ -27,6 +27,10 @@ def fetch_stock_data(ticker: str, period: str = "6mo") -> dict | None:
     try:
         stock = yf.Ticker(ticker)
         hist = stock.history(period=period)
+        # Yahoo can append a placeholder bar with NaN Close for the new
+        # session (every run just after 00:00 UTC) — iloc[-1] then poisons
+        # price, change % and every TA score.
+        hist = hist.dropna(subset=["Close"])
         if hist.empty or len(hist) < 5:
             return None
         info = stock.info or {}
@@ -250,7 +254,7 @@ def fetch_hk_indicators() -> dict:
     for ticker, label in HK_TICKERS.items():
         try:
             t = yf.Ticker(ticker)
-            hist = t.history(period="5d")
+            hist = t.history(period="5d").dropna(subset=["Close"])
             if hist.empty or len(hist) < 2:
                 result[ticker] = {"label": label, "price": None, "prev": None, "change_pct": None}
                 continue
