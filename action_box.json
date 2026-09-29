@@ -1,11 +1,22 @@
 {
- "ts": "2026-09-30 02:16",
- "buys": [],
+ "ts": "2026-09-30 02:28",
+ "buys": [
+  {
+   "ticker": "AMGN",
+   "price": 421.05999755859375,
+   "score": 80,
+   "reason": "Score 80 · BB 0.68 · RSI 60",
+   "stop": 408.43,
+   "target": 446.32,
+   "notional": 500.0,
+   "expiry": "10-13"
+  }
+ ],
  "sells": [],
- "no_action": true,
- "regime": "bear",
- "regime_spy": 29,
- "regime_min": null,
+ "no_action": false,
+ "regime": "transitional",
+ "regime_spy": 36,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 1,
@@ -29,12 +40,5 @@
  "gate_pf": 1.05,
  "gate_pnl": 8.23,
  "gate_trades": 16,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-09-29 18:16",
-  "passed": 0,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_ready": false
 }

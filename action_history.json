@@ -1,32 +1,5 @@
 [
  {
-  "ts": "2026-06-13 03:05",
-  "buys": [
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 200.32000732421875
-   },
-   {
-    "ticker": "EL",
-    "score": 80,
-    "price": 89.4800033569336
-   },
-   {
-    "ticker": "GD",
-    "score": 80,
-    "price": 360.1499938964844
-   }
-  ],
-  "sells": [],
-  "added": [
-   "GD"
-  ],
-  "removed": [
-   "CCI"
-  ]
- },
- {
   "ts": "2026-06-13 21:06",
   "buys": [
    {
@@ -3960,5 +3933,22 @@
   ],
   "regime": "bear",
   "regime_spy": 29
+ },
+ {
+  "ts": "2026-09-30 02:28",
+  "buys": [
+   {
+    "ticker": "AMGN",
+    "score": 80,
+    "price": 421.05999755859375
+   }
+  ],
+  "sells": [],
+  "added": [
+   "AMGN"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 36
  }
 ]
