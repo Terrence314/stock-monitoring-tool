@@ -1,14 +1,14 @@
 {
- "ts": "2026-09-30 02:28",
+ "ts": "2026-09-30 06:51",
  "buys": [
   {
    "ticker": "AMGN",
-   "price": 421.05999755859375,
-   "score": 80,
-   "reason": "Score 80 · BB 0.68 · RSI 60",
-   "stop": 408.43,
-   "target": 446.32,
-   "notional": 500.0,
+   "price": 423.6400146484375,
+   "score": 90,
+   "reason": "Score 90 · BB 0.71 · RSI 61",
+   "stop": 410.93,
+   "target": 449.06,
+   "notional": 600.0,
    "expiry": "10-13"
   }
  ],
