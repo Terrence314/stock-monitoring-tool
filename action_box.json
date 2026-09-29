@@ -1,22 +1,32 @@
 {
- "ts": "2026-09-29 04:00",
- "buys": [
+ "ts": "2026-09-29 08:16",
+ "buys": [],
+ "sells": [
   {
-   "ticker": "NVDA",
-   "price": 228.8300018310547,
-   "score": 90,
-   "reason": "Score 90 · BB 0.79 · RSI 59",
-   "stop": 221.97,
-   "target": 242.56,
-   "notional": 600.0,
-   "expiry": "10-12"
+   "ticker": "CIBR",
+   "float_pct": 0.6,
+   "why": "score 12"
+  },
+  {
+   "ticker": "VGT",
+   "float_pct": -0.1,
+   "why": "score 12"
+  },
+  {
+   "ticker": "WBD",
+   "float_pct": 0.4,
+   "why": "score 27"
+  },
+  {
+   "ticker": "OEF",
+   "float_pct": -1.1,
+   "why": "score 22"
   }
  ],
- "sells": [],
  "no_action": false,
- "regime": "transitional",
- "regime_spy": 36,
- "regime_min": 80,
+ "regime": "bear",
+ "regime_spy": 12,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 1,
@@ -24,12 +34,12 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": -1.79,
- "breaker_usd": -89.37,
+ "breaker_pct": -2.0,
+ "breaker_usd": -99.86,
  "breaker_base": 7950.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 50,
+ "gate_day": 51,
  "gate_days": 60,
  "gate_winrate": 37.5,
  "gate_ci_low": 13.8,
