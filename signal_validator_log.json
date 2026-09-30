@@ -1,9 +1,14 @@
 [
   {
-    "date": "2026-09-29",
-    "ran_at": "2026-09-29 18:16",
+    "date": "2026-09-30",
+    "ran_at": "2026-09-30 18:07",
     "passed": [],
-    "blocked": [],
+    "blocked": [
+      {
+        "ticker": "NVDA",
+        "reason": "AI review REJECTED"
+      }
+    ],
     "cautions": []
   }
 ]

@@ -1,32 +1,5 @@
 [
  {
-  "ts": "2026-06-13 21:06",
-  "buys": [
-   {
-    "ticker": "DIA",
-    "score": 80,
-    "price": 513.0599975585938
-   },
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 200.0500030517578
-   },
-   {
-    "ticker": "EL",
-    "score": 80,
-    "price": 89.68000030517578
-   }
-  ],
-  "sells": [],
-  "added": [
-   "DIA"
-  ],
-  "removed": [
-   "GD"
-  ]
- },
- {
   "ts": "2026-06-16 01:32",
   "buys": [
    {
@@ -3950,5 +3923,24 @@
   "removed": [],
   "regime": "transitional",
   "regime_spy": 36
+ },
+ {
+  "ts": "2026-10-01 02:07",
+  "buys": [
+   {
+    "ticker": "NVDA",
+    "score": 80,
+    "price": 230.3800048828125
+   }
+  ],
+  "sells": [],
+  "added": [
+   "NVDA"
+  ],
+  "removed": [
+   "AMGN"
+  ],
+  "regime": "bull",
+  "regime_spy": 56
  }
 ]
