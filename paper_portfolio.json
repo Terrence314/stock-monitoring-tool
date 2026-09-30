@@ -1894,14 +1894,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 101.63,
-      "current_date": "2026-09-28",
+      "current_price": 103.61,
+      "current_date": "2026-09-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": 3.74,
-      "float_pnl_pct": 0.62
+      "float_pnl": 15.5,
+      "float_pnl_pct": 2.58
     },
     {
       "id": "MRVL-2026-09-17",
@@ -1993,14 +1993,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 125.12,
-      "current_date": "2026-09-28",
+      "current_price": 126.38,
+      "current_date": "2026-09-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": -0.67,
-      "float_pnl_pct": -0.11
+      "float_pnl": 5.36,
+      "float_pnl_pct": 0.89
     },
     {
       "id": "WBD-2026-09-21",
@@ -2039,14 +2039,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 382.97,
-      "current_date": "2026-09-28",
+      "current_price": 384.36,
+      "current_date": "2026-09-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Unknown",
-      "float_pnl": -5.36,
-      "float_pnl_pct": -1.07
+      "float_pnl": -3.56,
+      "float_pnl_pct": -0.71
     },
     {
       "id": "DXCM-2026-09-22",
@@ -2073,5 +2073,5 @@
       "costs": 1.19
     }
   ],
-  "last_updated": "2026-09-29"
+  "last_updated": "2026-09-30"
 }
