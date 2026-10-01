@@ -1,26 +1,5 @@
 [
  {
-  "ts": "2026-06-16 04:55",
-  "buys": [
-   {
-    "ticker": "EL",
-    "score": 80,
-    "price": 90.0
-   },
-   {
-    "ticker": "FDX",
-    "score": 80,
-    "price": 338.75
-   }
-  ],
-  "sells": [],
-  "added": [
-   "EL",
-   "FDX"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-16 12:26",
   "buys": [
    {
@@ -3935,5 +3914,24 @@
   "removed": [],
   "regime": "transitional",
   "regime_spy": 44
+ },
+ {
+  "ts": "2026-10-02 07:01",
+  "buys": [
+   {
+    "ticker": "MGK",
+    "score": 84,
+    "price": 92.76000213623047
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MGK"
+  ],
+  "removed": [
+   "MU"
+  ],
+  "regime": "transitional",
+  "regime_spy": 47
  }
 ]

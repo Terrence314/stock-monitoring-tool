@@ -1,13 +1,13 @@
 {
- "ts": "2026-10-02 02:42",
+ "ts": "2026-10-02 07:01",
  "buys": [
   {
-   "ticker": "MU",
-   "price": 1081.6650390625,
-   "score": 82,
-   "reason": "Score 82 · BB 0.78 · RSI 62",
-   "stop": 1049.22,
-   "target": 1146.56,
+   "ticker": "MGK",
+   "price": 92.76000213623047,
+   "score": 84,
+   "reason": "Score 84 · BB 0.73 · RSI 61",
+   "stop": 89.98,
+   "target": 98.33,
    "notional": 500.0,
    "expiry": "10-15"
   }
@@ -15,7 +15,7 @@
  "sells": [],
  "no_action": false,
  "regime": "transitional",
- "regime_spy": 44,
+ "regime_spy": 47,
  "regime_min": 80,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
