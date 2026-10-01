@@ -1,15 +1,5 @@
 [
  {
-  "ts": "2026-06-16 01:59",
-  "buys": [],
-  "sells": [],
-  "added": [],
-  "removed": [
-   "RDDT",
-   "RIVN"
-  ]
- },
- {
   "ts": "2026-06-16 04:55",
   "buys": [
    {
@@ -3928,5 +3918,22 @@
   ],
   "regime": "bull",
   "regime_spy": 64
+ },
+ {
+  "ts": "2026-10-02 02:35",
+  "buys": [
+   {
+    "ticker": "MU",
+    "score": 82,
+    "price": 1078.0
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MU"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 44
  }
 ]
