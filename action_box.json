@@ -1,11 +1,11 @@
 {
- "ts": "2026-10-03 02:13",
+ "ts": "2026-10-03 06:49",
  "buys": [
   {
    "ticker": "SPYL.L",
    "price": 19.1200008392334,
    "score": 92,
-   "reason": "Score 92 · BB 0.75 · RSI 55",
+   "reason": "Score 92 · BB 0.77 · RSI 54",
    "stop": 18.55,
    "target": 20.27,
    "notional": 600.0,
@@ -15,7 +15,7 @@
  "sells": [],
  "no_action": false,
  "regime": "bull",
- "regime_spy": 55,
+ "regime_spy": 72,
  "regime_min": 70,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
