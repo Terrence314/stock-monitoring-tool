@@ -1,15 +1,19 @@
 {
- "ts": "2026-10-03 06:49",
+ "ts": "2026-10-06 04:44",
  "buys": [
   {
-   "ticker": "SPYL.L",
-   "price": 19.1200008392334,
-   "score": 92,
-   "reason": "Score 92 · BB 0.77 · RSI 54",
-   "stop": 18.55,
-   "target": 20.27,
-   "notional": 600.0,
-   "expiry": "10-16"
+   "ticker": "MTD",
+   "price": 1541.6300048828125,
+   "score": 80,
+   "reason": "Score 80 · BB 0.80 · RSI 66",
+   "stop": 1495.38,
+   "target": 1634.13,
+   "notional": 500.0,
+   "expiry": "10-19",
+   "ai_review": {
+    "verdict": "APPROVED",
+    "summary": "1.【多頭理據】MTD目前展現強勁多頭排列，價格（1541.63）顯著高於所有關鍵移動平均線（MA5: 1511.45, MA20: 1426.72, MA60: 1395.52），且RSI動能（66.42↑）與MACD金叉及動能擴張（MACD: 40.94, MACD_HIST: 8.07）均支持上升趨勢。止損位（1495.38）設置在MA5下方，顯示了對近期支撐的考量，同時目標價（1634.13）提供了可觀的潛在收益。\n2.【空頭理據】儘管技術面看漲，但今日量能僅為均量的0.77倍，顯示目前的上漲可能缺乏足夠的成交量支持。同時，KD指標處於中性區間（K=61.5, D=64.2），並未提供"
+   }
   }
  ],
  "sells": [],
@@ -29,7 +33,7 @@
  "breaker_base": 0.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 54,
+ "gate_day": 57,
  "gate_days": 60,
  "gate_winrate": 37.5,
  "gate_ci_low": 13.8,
@@ -40,5 +44,12 @@
  "gate_pf": 1.05,
  "gate_pnl": 8.23,
  "gate_trades": 16,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-10-05 20:44",
+  "passed": 1,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
