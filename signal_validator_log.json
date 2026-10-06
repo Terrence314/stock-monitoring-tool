@@ -1,11 +1,16 @@
 [
   {
-    "date": "2026-10-05",
-    "ran_at": "2026-10-05 20:44",
+    "date": "2026-10-06",
+    "ran_at": "2026-10-06 18:37",
     "passed": [
-      "MTD"
+      "PLTR"
     ],
-    "blocked": [],
+    "blocked": [
+      {
+        "ticker": "ETN",
+        "reason": "AI review REJECTED"
+      }
+    ],
     "cautions": []
   }
 ]

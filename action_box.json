@@ -1,15 +1,20 @@
 {
- "ts": "2026-10-06 09:41",
+ "ts": "2026-10-07 02:37",
  "buys": [
   {
-   "ticker": "MTD",
-   "price": 1541.6300048828125,
+   "ticker": "PLTR",
+   "price": 192.44000244140625,
    "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 66",
-   "stop": 1495.38,
-   "target": 1634.13,
+   "reason": "Score 80 · BB 0.79 · RSI 65",
+   "stop": 186.67,
+   "target": 203.99,
    "notional": 500.0,
-   "expiry": "10-20"
+   "expiry": "10-20",
+   "ai_review": {
+    "verdict": "NEEDS_REVIEW",
+    "summary": "以下是對 PLTR 交易信號的審查：\n\n1.  **【多頭理據】**\n    PLTR 目前處於強勁的多頭排列，股價 (192.44) 站穩所有均線 (MA5: 189.54, MA20: 182.05, MA60: 165.34)，且已在 MA60 上方 16.4%，顯示長期趨勢向上。RSI 動能 (64.64) 走強，配合 MACD 金叉且動能擴張 (5.54, 0.02)，表明短期上漲動能充足。\n\n2.  **【空頭理據】**\n    儘管技術指標偏多，但今日量能僅為均量的 0.55 倍，顯示當前上漲缺乏足夠的市場參與度，可能使股價難以持續突破。此外，止損價 (186.67) 位於 MA"
+   },
+   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
   }
  ],
  "sells": [],
@@ -19,26 +24,38 @@
  "regime_min": 70,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
- "slots_left": 1,
+ "slots_left": 4,
  "max_open": 5,
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 0.0,
- "breaker_usd": 0.0,
- "breaker_base": 0.0,
+ "breaker_pct": 0.36,
+ "breaker_usd": 17.9,
+ "breaker_base": 2100.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 58,
  "gate_days": 60,
- "gate_winrate": 37.5,
- "gate_ci_low": 13.8,
- "gate_ci_high": 61.2,
+ "gate_winrate": 45.0,
+ "gate_ci_low": 23.2,
+ "gate_ci_high": 66.8,
  "gate_min_trades": 30,
  "gate_enough": false,
  "gate_start": "2026-08-09",
- "gate_pf": 1.05,
- "gate_pnl": 8.23,
- "gate_trades": 16,
- "gate_ready": false
+ "gate_pf": 1.17,
+ "gate_pnl": 30.59,
+ "gate_trades": 20,
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-10-06 18:37",
+  "passed": 1,
+  "blocked": 1,
+  "blocked_list": [
+   {
+    "ticker": "ETN",
+    "reason": "AI review REJECTED"
+   }
+  ],
+  "caution_tags": []
+ }
 }

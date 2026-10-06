@@ -1,33 +1,5 @@
 [
  {
-  "ts": "2026-06-17 01:35",
-  "buys": [
-   {
-    "ticker": "MCO",
-    "score": 80,
-    "price": 470.1050109863281
-   },
-   {
-    "ticker": "PINS",
-    "score": 80,
-    "price": 21.514999389648438
-   },
-   {
-    "ticker": "UPS",
-    "score": 80,
-    "price": 110.375
-   }
-  ],
-  "sells": [],
-  "added": [
-   "MCO",
-   "PINS"
-  ],
-  "removed": [
-   "GM"
-  ]
- },
- {
   "ts": "2026-06-17 02:04",
   "buys": [
    {
@@ -3915,6 +3887,31 @@
   ],
   "removed": [
    "SPYL.L"
+  ],
+  "regime": "bull",
+  "regime_spy": 72
+ },
+ {
+  "ts": "2026-10-07 02:37",
+  "buys": [
+   {
+    "ticker": "ETN",
+    "score": 80,
+    "price": 443.4200134277344
+   },
+   {
+    "ticker": "PLTR",
+    "score": 80,
+    "price": 192.44000244140625
+   }
+  ],
+  "sells": [],
+  "added": [
+   "ETN",
+   "PLTR"
+  ],
+  "removed": [
+   "MTD"
   ],
   "regime": "bull",
   "regime_spy": 72

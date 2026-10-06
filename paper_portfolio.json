@@ -2094,6 +2094,33 @@
       "sector": "Healthcare",
       "float_pnl": 0.0,
       "float_pnl_pct": 0.0
+    },
+    {
+      "id": "PLTR-2026-10-06",
+      "ticker": "PLTR",
+      "direction": "long",
+      "signal_date": "2026-10-06",
+      "entry_ts": "2026-10-07T02:37:15+08:00",
+      "entry_price": 192.44,
+      "shares": 2.598212,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 192.44,
+      "current_date": "2026-10-06",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-10-06"
