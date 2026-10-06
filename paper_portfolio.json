@@ -2109,7 +2109,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 192.51,
+      "current_price": 192.07,
       "current_date": "2026-10-06",
       "pnl": null,
       "pnl_pct": null,
@@ -2119,8 +2119,31 @@
         "Above MA60"
       ],
       "sector": "Technology",
-      "float_pnl": 0.18,
-      "float_pnl_pct": 0.04
+      "float_pnl": -0.96,
+      "float_pnl_pct": -0.19
+    },
+    {
+      "id": "SNAP-2026-10-06",
+      "ticker": "SNAP",
+      "direction": "long",
+      "signal_date": "2026-10-06",
+      "entry_ts": "2026-10-07T06:54:37+08:00",
+      "entry_price": 5.78,
+      "shares": 103.806225,
+      "notional": 600.0,
+      "score": 90,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 5.78,
+      "current_date": "2026-10-06",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Communication Services",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-10-06"

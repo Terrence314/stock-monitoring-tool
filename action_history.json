@@ -1,30 +1,5 @@
 [
  {
-  "ts": "2026-06-17 05:34",
-  "buys": [
-   {
-    "ticker": "MCO",
-    "score": 82,
-    "price": 468.4100036621094
-   },
-   {
-    "ticker": "UPS",
-    "score": 80,
-    "price": 110.0199966430664
-   },
-   {
-    "ticker": "SOFI",
-    "score": 75,
-    "price": 17.709999084472656
-   }
-  ],
-  "sells": [],
-  "added": [
-   "SOFI"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-18 00:16",
   "buys": [
    {
@@ -3905,6 +3880,23 @@
    "ETN",
    "PLTR"
   ],
+  "regime": "bull",
+  "regime_spy": 72
+ },
+ {
+  "ts": "2026-10-07 06:54",
+  "buys": [
+   {
+    "ticker": "SNAP",
+    "score": 90,
+    "price": 5.78000020980835
+   }
+  ],
+  "sells": [],
+  "added": [
+   "SNAP"
+  ],
+  "removed": [],
   "regime": "bull",
   "regime_spy": 72
  }
