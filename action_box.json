@@ -1,5 +1,5 @@
 {
- "ts": "2026-10-06 04:59",
+ "ts": "2026-10-06 09:41",
  "buys": [
   {
    "ticker": "MTD",
@@ -9,7 +9,7 @@
    "stop": 1495.38,
    "target": 1634.13,
    "notional": 500.0,
-   "expiry": "10-19"
+   "expiry": "10-20"
   }
  ],
  "sells": [],
@@ -29,7 +29,7 @@
  "breaker_base": 0.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 57,
+ "gate_day": 58,
  "gate_days": 60,
  "gate_winrate": 37.5,
  "gate_ci_low": 13.8,
