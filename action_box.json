@@ -1,11 +1,27 @@
 {
- "ts": "2026-10-08 03:13",
+ "ts": "2026-10-08 08:02",
  "buys": [],
- "sells": [],
- "no_action": true,
- "regime": "bull",
- "regime_spy": 52,
- "regime_min": 70,
+ "sells": [
+  {
+   "ticker": "MTD",
+   "float_pct": -0.5,
+   "why": "score 22"
+  },
+  {
+   "ticker": "PLTR",
+   "float_pct": 0.4,
+   "why": "score 12"
+  },
+  {
+   "ticker": "SNAP",
+   "float_pct": 1.7,
+   "why": "score 12"
+  }
+ ],
+ "no_action": false,
+ "regime": "bear",
+ "regime_spy": 12,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 2,
@@ -13,12 +29,12 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 0.59,
- "breaker_usd": 29.28,
+ "breaker_pct": 0.56,
+ "breaker_usd": 27.77,
  "breaker_base": 3200.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 59,
+ "gate_day": 60,
  "gate_days": 60,
  "gate_winrate": 45.0,
  "gate_ci_low": 23.2,

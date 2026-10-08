@@ -1,14 +1,5 @@
 [
  {
-  "ts": "2026-06-18 00:39",
-  "buys": [],
-  "sells": [],
-  "added": [],
-  "removed": [
-   "HON"
-  ]
- },
- {
   "ts": "2026-06-18 03:26",
   "buys": [
    {
@@ -3891,5 +3882,31 @@
   ],
   "regime": "bull",
   "regime_spy": 52
+ },
+ {
+  "ts": "2026-10-08 08:02",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "MTD",
+    "why": "score 22"
+   },
+   {
+    "ticker": "PLTR",
+    "why": "score 12"
+   },
+   {
+    "ticker": "SNAP",
+    "why": "score 12"
+   }
+  ],
+  "added": [
+   "MTD",
+   "PLTR",
+   "SNAP"
+  ],
+  "removed": [],
+  "regime": "bear",
+  "regime_spy": 12
  }
 ]
