@@ -1,20 +1,5 @@
 [
  {
-  "ts": "2026-06-18 03:26",
-  "buys": [
-   {
-    "ticker": "ARKK",
-    "score": 80,
-    "price": 79.48999786376953
-   }
-  ],
-  "sells": [],
-  "added": [
-   "ARKK"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-18 06:01",
   "buys": [
    {
@@ -3908,5 +3893,26 @@
   "removed": [],
   "regime": "bear",
   "regime_spy": 12
+ },
+ {
+  "ts": "2026-10-09 03:01",
+  "buys": [
+   {
+    "ticker": "DVN",
+    "score": 80,
+    "price": 49.03499984741211
+   }
+  ],
+  "sells": [],
+  "added": [
+   "DVN"
+  ],
+  "removed": [
+   "MTD",
+   "PLTR",
+   "SNAP"
+  ],
+  "regime": "transitional",
+  "regime_spy": 36
  }
 ]

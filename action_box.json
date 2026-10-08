@@ -1,27 +1,27 @@
 {
- "ts": "2026-10-08 08:02",
- "buys": [],
- "sells": [
+ "ts": "2026-10-09 03:01",
+ "buys": [
   {
-   "ticker": "MTD",
-   "float_pct": -0.5,
-   "why": "score 22"
-  },
-  {
-   "ticker": "PLTR",
-   "float_pct": 0.4,
-   "why": "score 12"
-  },
-  {
-   "ticker": "SNAP",
-   "float_pct": 1.7,
-   "why": "score 12"
+   "ticker": "DVN",
+   "price": 49.03499984741211,
+   "score": 80,
+   "reason": "Score 80 · BB 0.69 · RSI 57",
+   "stop": 47.56,
+   "target": 51.98,
+   "notional": 500.0,
+   "expiry": "10-22",
+   "ai_review": {
+    "verdict": "NEEDS_REVIEW",
+    "summary": "1.【多頭理據】DVN 的多頭排列（價格 49.03 > MA5 48.11 > MA20 48.1 > MA60 46.53）顯示強勁上升趨勢，且RSI動能走強至57.43，MACD金叉並在0軸上方擴張動能，表明買盤積極。價格已站穩MA60上方5.4%，支撐穩固。\n2.【空頭理據】該信號的主要缺陷在於量能嚴重不足（僅為均量的0.55倍），這可能限制未來上漲的持續性，並提高回調風險。此外，雖然KD指標中性，但K值已達72.6，暗示短期可能面臨超買壓力。\n3.【關鍵未知】若量能持續不足，能否支撐價格突破目標位51.98？\n4. VERDICT: NEEDS_REVIEW"
+   },
+   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
   }
  ],
+ "sells": [],
  "no_action": false,
- "regime": "bear",
- "regime_spy": 12,
- "regime_min": null,
+ "regime": "transitional",
+ "regime_spy": 36,
+ "regime_min": 80,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 2,
@@ -45,5 +45,12 @@
  "gate_pf": 1.17,
  "gate_pnl": 30.59,
  "gate_trades": 20,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-10-08 19:02",
+  "passed": 1,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
