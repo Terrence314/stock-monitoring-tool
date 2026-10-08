@@ -1,22 +1,5 @@
 [
  {
-  "ts": "2026-06-18 06:01",
-  "buys": [
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 198.6699981689453
-   }
-  ],
-  "sells": [],
-  "added": [
-   "BIIB"
-  ],
-  "removed": [
-   "ARKK"
-  ]
- },
- {
   "ts": "2026-06-19 00:04",
   "buys": [
    {
@@ -3911,6 +3894,17 @@
    "MTD",
    "PLTR",
    "SNAP"
+  ],
+  "regime": "transitional",
+  "regime_spy": 36
+ },
+ {
+  "ts": "2026-10-09 03:10",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "DVN"
   ],
   "regime": "transitional",
   "regime_spy": 36
