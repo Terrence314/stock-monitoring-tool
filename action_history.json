@@ -1,25 +1,5 @@
 [
  {
-  "ts": "2026-06-19 03:28",
-  "buys": [
-   {
-    "ticker": "ARKK",
-    "score": 80,
-    "price": 79.43000030517578
-   },
-   {
-    "ticker": "SOFI",
-    "score": 80,
-    "price": 17.799999237060547
-   }
-  ],
-  "sells": [],
-  "added": [
-   "ARKK"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-19 06:08",
   "buys": [
    {
@@ -3912,5 +3892,31 @@
   "removed": [],
   "regime": "bear",
   "regime_spy": 12
+ },
+ {
+  "ts": "2026-10-10 02:33",
+  "buys": [
+   {
+    "ticker": "SNOW",
+    "score": 90,
+    "price": 366.0150146484375
+   },
+   {
+    "ticker": "COP",
+    "score": 80,
+    "price": 134.83999633789062
+   }
+  ],
+  "sells": [],
+  "added": [
+   "COP",
+   "SNOW"
+  ],
+  "removed": [
+   "DVN",
+   "SNAP"
+  ],
+  "regime": "bull",
+  "regime_spy": 72
  }
 ]
