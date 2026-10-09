@@ -1,11 +1,22 @@
 {
- "ts": "2026-10-09 03:10",
+ "ts": "2026-10-09 08:09",
  "buys": [],
- "sells": [],
- "no_action": true,
- "regime": "transitional",
- "regime_spy": 36,
- "regime_min": 80,
+ "sells": [
+  {
+   "ticker": "SNAP",
+   "float_pct": 0.7,
+   "why": "score 12"
+  },
+  {
+   "ticker": "DVN",
+   "float_pct": 0.2,
+   "why": "score 3"
+  }
+ ],
+ "no_action": false,
+ "regime": "bear",
+ "regime_spy": 12,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 2,
@@ -13,8 +24,8 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 0.9,
- "breaker_usd": 45.16,
+ "breaker_pct": 0.93,
+ "breaker_usd": 46.29,
  "breaker_base": 3700.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
