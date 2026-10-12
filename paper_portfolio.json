@@ -2086,14 +2086,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 1549.99,
+      "current_price": 1563.01,
       "current_date": "2026-10-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": 2.71,
-      "float_pnl_pct": 0.54
+      "float_pnl": 6.93,
+      "float_pnl_pct": 1.39
     },
     {
       "id": "PLTR-2026-10-06",
@@ -2161,8 +2161,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 48.43,
-      "current_date": "2026-10-09",
+      "current_price": 48.96,
+      "current_date": "2026-10-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -2171,8 +2171,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": -6.12,
-      "float_pnl_pct": -1.22
+      "float_pnl": -0.71,
+      "float_pnl_pct": -0.14
     },
     {
       "id": "COP-2026-10-09",
@@ -2188,7 +2188,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 134.1,
+      "current_price": 137.56,
       "current_date": "2026-10-12",
       "pnl": null,
       "pnl_pct": null,
@@ -2198,8 +2198,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": -2.74,
-      "float_pnl_pct": -0.55
+      "float_pnl": 10.09,
+      "float_pnl_pct": 2.02
     },
     {
       "id": "EMR-2026-10-09",
@@ -2215,7 +2215,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 161.83,
+      "current_price": 162.46,
       "current_date": "2026-10-12",
       "pnl": null,
       "pnl_pct": null,
@@ -2225,8 +2225,8 @@
         "Above MA60"
       ],
       "sector": "Industrials",
-      "float_pnl": -0.43,
-      "float_pnl_pct": -0.09
+      "float_pnl": 1.51,
+      "float_pnl_pct": 0.3
     },
     {
       "id": "ELV-2026-10-09",
@@ -2242,14 +2242,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 412.7,
+      "current_price": 422.09,
       "current_date": "2026-10-12",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": -4.4,
-      "float_pnl_pct": -0.73
+      "float_pnl": 9.15,
+      "float_pnl_pct": 1.52
     }
   ],
   "last_updated": "2026-10-12"
