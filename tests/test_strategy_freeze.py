@@ -48,9 +48,14 @@ def test_freeze_date_is_a_real_date_and_not_in_the_future():
 
 def test_gate_terms_are_unchanged():
     """The floor and clock Terrence agreed to. Quietly lowering either is the
-    same evasion as resetting the window."""
+    same evasion as resetting the window.
+
+    2026-10-12: Terrence chose EXTEND at Day 60 — clock 60 -> 90 days, same
+    start date. The NaN-close bug (fixed e6ca5bd8) corrupted prices and TA
+    scores 09-24..10-09, so the Day-60 numbers were not a fair read. Extending
+    keeps every trade counted so far; it is not a reset."""
     assert GATE_MIN_TRADES == 30
-    assert GATE_DAYS == 60
+    assert GATE_DAYS == 90
 
 
 def test_the_window_can_actually_complete():

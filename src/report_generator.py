@@ -3263,7 +3263,8 @@ def _collect_headlines(stocks: list) -> list[dict]:
 STRATEGY_FROZEN_ON = "2026-08-09"
 
 GATE_START_DATE   = STRATEGY_FROZEN_ON
-GATE_DAYS         = 60
+GATE_DAYS         = 90             # 60 -> 90 on 2026-10-12: Terrence chose EXTEND at
+                                   # Day 60; NaN-close bug corrupted 09-24..10-09.
 GATE_MIN_TRADES   = 30             # no quality verdict below this sample size.
                                    # Without a floor, two winners and zero
                                    # losers satisfied quality_ok outright.

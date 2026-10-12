@@ -34,7 +34,7 @@ your hands move it.**
    - ✅ **今日無行動** → close the page. Done.
 3. Check the two status lines under the actions:
    - **斷路器 (circuit breaker)** — monthly PnL vs −5% limit. If 🛑 TRIPPED: no new buys this month, period.
-   - **真錢門檻 (go-live gate)** — Day N/60, win rate, PnL. This decides when real money starts.
+   - **真錢門檻 (go-live gate)** — Day N/90, win rate, PnL. This decides when real money starts.
 
 That's the whole routine. Everything below is reference.
 
@@ -137,7 +137,7 @@ Alert hygiene: 4-hour cooldown per ticker per rule — you get ONE ping per even
 
 ### The go-live gate (started 2026-06-11)
 Real money unlocks ONLY when ALL of these are true:
-1. **60 days** of validation elapsed (earliest ~Aug 10)
+1. **90 days** of validation elapsed (window from 2026-08-09; extended from 60 on 2026-10-12)
 2. **Win rate >50%** on trades closed in the window
 3. **Total PnL positive**
 4. Circuit breaker not tripped
