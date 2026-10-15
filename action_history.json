@@ -1,16 +1,5 @@
 [
  {
-  "ts": "2026-06-20 00:00",
-  "buys": [],
-  "sells": [],
-  "added": [],
-  "removed": [
-   "ARKK",
-   "MAR",
-   "MRVL"
-  ]
- },
- {
   "ts": "2026-06-20 02:09",
   "buys": [],
   "sells": [
@@ -3894,5 +3883,22 @@
   ],
   "regime": "bull",
   "regime_spy": 72
+ },
+ {
+  "ts": "2026-10-16 04:58",
+  "buys": [
+   {
+    "ticker": "NOW",
+    "score": 100,
+    "price": 148.57000732421875
+   }
+  ],
+  "sells": [],
+  "added": [
+   "NOW"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 44
  }
 ]
