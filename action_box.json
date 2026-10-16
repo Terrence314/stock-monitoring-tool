@@ -1,11 +1,11 @@
 {
- "ts": "2026-10-16 07:33",
+ "ts": "2026-10-17 00:55",
  "buys": [],
  "sells": [],
  "no_action": true,
- "regime": "bull",
- "regime_spy": 54,
- "regime_min": 70,
+ "regime": "bear",
+ "regime_spy": 17,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
  "slots_left": 2,
@@ -18,7 +18,7 @@
  "breaker_base": 5900.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 67,
+ "gate_day": 68,
  "gate_days": 90,
  "gate_winrate": 52.0,
  "gate_ci_low": 32.4,
@@ -29,5 +29,14 @@
  "gate_pf": 1.68,
  "gate_pnl": 135.68,
  "gate_trades": 25,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-10-16 16:56",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": [
+   "⚠️ Monthly options expiry — expect elevated vol"
+  ]
+ }
 }
