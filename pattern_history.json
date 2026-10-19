@@ -252,7 +252,7 @@
     },
     "BB Squeeze Breakout Up": {
       "start": "2026-10-15",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bear": {
       "start": "2026-09-10",
@@ -310,7 +310,7 @@
   "SPY": {
     "Golden Cross": {
       "start": "2026-09-24",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bear": {
       "start": "2026-10-15",
@@ -329,8 +329,8 @@
       "end": "2026-10-15"
     },
     "Death Cross": {
-      "start": "2026-09-23",
-      "end": "2026-09-24"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Squeeze Breakout Down": {
       "start": "2026-07-29",
@@ -387,8 +387,8 @@
       "end": null
     },
     "RSI Oversold Bounce": {
-      "start": "2026-07-30",
-      "end": "2026-08-02"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Walking Down": {
       "start": "2026-10-16",
@@ -441,8 +441,8 @@
       "end": "2026-08-05"
     },
     "RSI Oversold Bounce": {
-      "start": "2026-10-15",
-      "end": "2026-10-16"
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "DIA": {
@@ -459,8 +459,8 @@
       "end": "2026-09-09"
     },
     "BB Walking Up": {
-      "start": "2026-08-05",
-      "end": "2026-08-12"
+      "start": "2026-10-19",
+      "end": null
     },
     "MACD Bear": {
       "start": "2026-08-19",
@@ -490,7 +490,7 @@
   "VTI": {
     "Golden Cross": {
       "start": "2026-10-05",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bear": {
       "start": "2026-10-15",
@@ -509,8 +509,8 @@
       "end": "2026-10-08"
     },
     "Death Cross": {
-      "start": "2026-10-02",
-      "end": "2026-10-05"
+      "start": "2026-10-19",
+      "end": null
     },
     "Below MA60": {
       "start": "2026-10-16",
@@ -655,8 +655,8 @@
       "end": null
     },
     "MACD Bull": {
-      "start": "2026-05-29",
-      "end": "2026-08-24"
+      "start": "2026-10-19",
+      "end": null
     },
     "Above MA60": {
       "start": "2026-05-29",
@@ -664,7 +664,7 @@
     },
     "MACD Bear": {
       "start": "2026-08-24",
-      "end": null
+      "end": "2026-10-19"
     }
   },
   "XLI": {
@@ -973,6 +973,10 @@
     "RSI Overbought": {
       "start": "2026-09-11",
       "end": "2026-09-14"
+    },
+    "BB Squeeze Breakout Up": {
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "DOCU": {
@@ -1255,8 +1259,8 @@
       "end": "2026-10-16"
     },
     "BB Walking Up": {
-      "start": "2026-06-24",
-      "end": "2026-07-14"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Squeeze Breakout Up": {
       "start": "2026-06-24",
@@ -1538,7 +1542,7 @@
     },
     "MACD Bull": {
       "start": "2026-10-02",
-      "end": null
+      "end": "2026-10-19"
     },
     "Volume Breakout": {
       "start": "2026-08-27",
@@ -1550,7 +1554,7 @@
     },
     "BB Walking Up": {
       "start": "2026-10-12",
-      "end": null
+      "end": "2026-10-19"
     },
     "RSI Overbought": {
       "start": "2026-08-31",
@@ -1561,8 +1565,8 @@
       "end": "2026-10-07"
     },
     "MACD Bear": {
-      "start": "2026-09-15",
-      "end": "2026-10-02"
+      "start": "2026-10-19",
+      "end": null
     },
     "Death Cross": {
       "start": "2026-09-15",
@@ -2375,6 +2379,10 @@
     "BB Squeeze Breakout Up": {
       "start": "2026-09-21",
       "end": "2026-09-22"
+    },
+    "RSI Oversold Bounce": {
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "MGK": {
@@ -2411,16 +2419,16 @@
       "end": null
     },
     "BB Squeeze Breakout Down": {
-      "start": "2026-06-09",
-      "end": "2026-06-10"
+      "start": "2026-10-19",
+      "end": null
     },
     "Volume Breakdown": {
       "start": "2026-06-09",
       "end": "2026-06-10"
     },
     "RSI Oversold Bounce": {
-      "start": "2026-07-30",
-      "end": "2026-07-31"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Walking Down": {
       "start": "2026-07-27",
@@ -2438,7 +2446,7 @@
   "IVV": {
     "Golden Cross": {
       "start": "2026-09-24",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bear": {
       "start": "2026-10-15",
@@ -2457,8 +2465,8 @@
       "end": "2026-10-15"
     },
     "Death Cross": {
-      "start": "2026-09-23",
-      "end": "2026-09-24"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Squeeze Breakout Down": {
       "start": "2026-07-29",
@@ -2488,7 +2496,7 @@
   "OEF": {
     "Golden Cross": {
       "start": "2026-09-21",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bear": {
       "start": "2026-10-14",
@@ -2503,8 +2511,8 @@
       "end": "2026-10-08"
     },
     "Death Cross": {
-      "start": "2026-09-14",
-      "end": "2026-09-21"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Walking Down": {
       "start": "2026-06-25",
@@ -2565,12 +2573,12 @@
       "end": null
     },
     "BB Walking Down": {
-      "start": "2026-07-27",
-      "end": "2026-07-31"
+      "start": "2026-10-19",
+      "end": null
     },
     "RSI Oversold Bounce": {
-      "start": "2026-07-30",
-      "end": "2026-08-02"
+      "start": "2026-10-19",
+      "end": null
     },
     "Below MA60": {
       "start": "2026-10-16",
@@ -2661,8 +2669,8 @@
       "end": null
     },
     "RSI Oversold Bounce": {
-      "start": "2026-09-02",
-      "end": "2026-09-04"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Walking Down": {
       "start": "2026-10-16",
@@ -2676,7 +2684,7 @@
   "VOO": {
     "Golden Cross": {
       "start": "2026-09-24",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bear": {
       "start": "2026-10-15",
@@ -2695,8 +2703,8 @@
       "end": "2026-10-15"
     },
     "Death Cross": {
-      "start": "2026-09-23",
-      "end": "2026-09-24"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Squeeze Breakout Down": {
       "start": "2026-07-29",
@@ -2753,8 +2761,8 @@
       "end": "2026-09-17"
     },
     "RSI Oversold Bounce": {
-      "start": "2026-10-15",
-      "end": "2026-10-16"
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "SCHG": {
@@ -2767,8 +2775,8 @@
       "end": null
     },
     "Above MA60": {
-      "start": "2026-08-19",
-      "end": "2026-10-16"
+      "start": "2026-10-19",
+      "end": null
     },
     "MACD Bull": {
       "start": "2026-09-21",
@@ -2799,12 +2807,12 @@
       "end": "2026-07-29"
     },
     "RSI Oversold Bounce": {
-      "start": "2026-07-24",
-      "end": "2026-07-28"
+      "start": "2026-10-19",
+      "end": null
     },
     "Below MA60": {
       "start": "2026-10-16",
-      "end": null
+      "end": "2026-10-19"
     }
   },
   "SCHD": {
@@ -3288,7 +3296,7 @@
     },
     "MACD Bull": {
       "start": "2026-10-07",
-      "end": null
+      "end": "2026-10-19"
     },
     "Above MA60": {
       "start": "2026-06-01",
@@ -3307,8 +3315,8 @@
       "end": "2026-10-09"
     },
     "MACD Bear": {
-      "start": "2026-09-10",
-      "end": "2026-10-07"
+      "start": "2026-10-19",
+      "end": null
     },
     "Volume Breakout": {
       "start": "2026-09-02",
@@ -3947,6 +3955,10 @@
     "BB Walking Up": {
       "start": "2026-10-08",
       "end": null
+    },
+    "RSI Overbought": {
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "XLB": {
@@ -4395,6 +4407,10 @@
     "Death Cross": {
       "start": "2026-09-09",
       "end": "2026-09-15"
+    },
+    "RSI Overbought": {
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "FAST": {
@@ -4416,7 +4432,7 @@
     },
     "BB Walking Up": {
       "start": "2026-10-14",
-      "end": null
+      "end": "2026-10-19"
     },
     "Death Cross": {
       "start": "2026-07-27",
@@ -4863,8 +4879,8 @@
       "end": null
     },
     "BB Walking Up": {
-      "start": "2026-07-09",
-      "end": "2026-07-16"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Squeeze Breakout Up": {
       "start": "2026-07-08",
@@ -5124,7 +5140,7 @@
     },
     "BB Walking Up": {
       "start": "2026-10-14",
-      "end": null
+      "end": "2026-10-19"
     },
     "RSI Overbought": {
       "start": "2026-06-09",
@@ -5475,6 +5491,10 @@
     "BB Squeeze Breakout Up": {
       "start": "2026-07-28",
       "end": "2026-07-29"
+    },
+    "RSI Overbought": {
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "GD": {
@@ -5782,7 +5802,7 @@
     },
     "BB Walking Up": {
       "start": "2026-10-13",
-      "end": null
+      "end": "2026-10-19"
     },
     "RSI Overbought": {
       "start": "2026-09-28",
@@ -6007,20 +6027,20 @@
       "end": null
     },
     "MACD Bull": {
-      "start": "2026-07-29",
-      "end": "2026-09-03"
+      "start": "2026-10-19",
+      "end": null
     },
     "Above MA60": {
       "start": "2026-06-17",
       "end": null
     },
     "BB Walking Up": {
-      "start": "2026-08-11",
-      "end": "2026-08-26"
+      "start": "2026-10-19",
+      "end": null
     },
     "MACD Bear": {
       "start": "2026-09-03",
-      "end": null
+      "end": "2026-10-19"
     },
     "RSI Overbought": {
       "start": "2026-08-11",
@@ -6953,8 +6973,8 @@
       "end": null
     },
     "BB Squeeze Breakout Up": {
-      "start": "2026-09-14",
-      "end": "2026-09-15"
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "NTNX": {
@@ -7222,7 +7242,7 @@
     },
     "BB Walking Up": {
       "start": "2026-10-01",
-      "end": null
+      "end": "2026-10-19"
     },
     "Death Cross": {
       "start": "2026-09-04",
@@ -7845,8 +7865,8 @@
       "end": null
     },
     "BB Walking Up": {
-      "start": "2026-08-02",
-      "end": "2026-08-06"
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "T": {
@@ -7931,8 +7951,8 @@
       "end": "2026-07-31"
     },
     "BB Walking Up": {
-      "start": "2026-08-31",
-      "end": "2026-09-10"
+      "start": "2026-10-19",
+      "end": null
     },
     "Volume Breakout": {
       "start": "2026-08-27",
@@ -8034,11 +8054,11 @@
   "AMZN": {
     "Death Cross": {
       "start": "2026-09-18",
-      "end": null
+      "end": "2026-10-19"
     },
     "MACD Bull": {
-      "start": "2026-07-31",
-      "end": "2026-09-18"
+      "start": "2026-10-19",
+      "end": null
     },
     "Above MA60": {
       "start": "2026-07-31",
@@ -8049,8 +8069,8 @@
       "end": "2026-08-03"
     },
     "Golden Cross": {
-      "start": "2026-08-03",
-      "end": "2026-09-18"
+      "start": "2026-10-19",
+      "end": null
     },
     "BB Walking Up": {
       "start": "2026-08-05",
@@ -8058,7 +8078,7 @@
     },
     "MACD Bear": {
       "start": "2026-09-18",
-      "end": null
+      "end": "2026-10-19"
     }
   },
   "ICE": {
@@ -8113,8 +8133,8 @@
       "end": "2026-08-28"
     },
     "RSI Overbought": {
-      "start": "2026-09-01",
-      "end": "2026-09-03"
+      "start": "2026-10-19",
+      "end": null
     },
     "Death Cross": {
       "start": "2026-09-14",
@@ -8725,8 +8745,8 @@
       "end": "2026-09-21"
     },
     "BB Walking Up": {
-      "start": "2026-10-09",
-      "end": "2026-10-15"
+      "start": "2026-10-19",
+      "end": null
     }
   },
   "IONQ": {
