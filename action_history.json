@@ -1,29 +1,5 @@
 [
  {
-  "ts": "2026-06-20 03:33",
-  "buys": [],
-  "sells": [
-   {
-    "ticker": "MAR",
-    "why": "score 22"
-   },
-   {
-    "ticker": "SPG",
-    "why": "score 12"
-   },
-   {
-    "ticker": "URI",
-    "why": "score 8"
-   }
-  ],
-  "added": [
-   "MAR",
-   "SPG",
-   "URI"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-20 03:47",
   "buys": [],
   "sells": [],
@@ -3837,6 +3813,17 @@
    "AI"
   ],
   "removed": [],
+  "regime": "transitional",
+  "regime_spy": 40
+ },
+ {
+  "ts": "2026-10-21 01:47",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "AI"
+  ],
   "regime": "transitional",
   "regime_spy": 40
  }

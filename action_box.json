@@ -1,37 +1,21 @@
 {
- "ts": "2026-10-21 01:29",
- "buys": [
-  {
-   "ticker": "AI",
-   "price": 11.800000190734863,
-   "score": 80,
-   "reason": "Score 80 · BB 0.80 · RSI 59",
-   "stop": 11.45,
-   "target": 12.51,
-   "notional": 500.0,
-   "expiry": "11-03",
-   "ai_review": {
-    "verdict": "NEEDS_REVIEW",
-    "summary": "1.【多頭理據】該股票呈現明顯的多頭排列，價格（11.80）高於所有均線（MA5: 11.65 > MA20: 11.22 > MA60: 10.55），顯示出強勁的上漲趨勢。此外，RSI（59.02）動能走強且MACD金叉並在0軸上方擴張（MACD: 0.3, MACD_HIST: 0.01），支持多頭動能持續。\n2.【空頭理據】儘管技術指標看好，但今日成交量極度縮量（僅為均量的0.3倍），在量能確認前追高存在較大風險。此外，KD指標處於中性區間（K=26.4, D=33.4），未能提供額外的買入信號。\n3.【關鍵未知】極度縮量能否在後續交易日得到有效補足以確認趨勢？\n4. VERDICT:"
-   },
-   "caution": "⚠️ AI review: NEEDS REVIEW — 人手覆核後再行動"
-  }
- ],
+ "ts": "2026-10-21 01:47",
+ "buys": [],
  "sells": [],
- "no_action": false,
+ "no_action": true,
  "regime": "transitional",
  "regime_spy": 40,
  "regime_min": 80,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
- "slots_left": 3,
+ "slots_left": 2,
  "max_open": 5,
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 2.88,
- "breaker_usd": 143.87,
- "breaker_base": 5900.0,
+ "breaker_pct": 3.0,
+ "breaker_usd": 149.83,
+ "breaker_base": 6400.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 72,
@@ -45,12 +29,5 @@
  "gate_pf": 1.53,
  "gate_pnl": 116.39,
  "gate_trades": 26,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-10-20 17:29",
-  "passed": 1,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_ready": false
 }
