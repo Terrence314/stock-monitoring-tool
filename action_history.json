@@ -1,25 +1,5 @@
 [
  {
-  "ts": "2026-06-20 02:37",
-  "buys": [],
-  "sells": [],
-  "added": [],
-  "removed": [
-   "ARKK",
-   "HON",
-   "LYFT",
-   "MAR",
-   "MRVL",
-   "NXPI",
-   "ON",
-   "QCOM",
-   "QQQ",
-   "SPG",
-   "URI",
-   "VOO"
-  ]
- },
- {
   "ts": "2026-06-20 03:33",
   "buys": [],
   "sells": [
@@ -3842,5 +3822,22 @@
   ],
   "regime": "bull",
   "regime_spy": 54
+ },
+ {
+  "ts": "2026-10-21 01:29",
+  "buys": [
+   {
+    "ticker": "AI",
+    "score": 80,
+    "price": 11.800000190734863
+   }
+  ],
+  "sells": [],
+  "added": [
+   "AI"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 40
  }
 ]

@@ -2162,8 +2162,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 50.92,
-      "current_date": "2026-10-19",
+      "current_price": 50.33,
+      "current_date": "2026-10-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -2245,14 +2245,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 430.23,
-      "current_date": "2026-10-19",
+      "current_price": 438.53,
+      "current_date": "2026-10-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": 20.9,
-      "float_pnl_pct": 3.48
+      "float_pnl": 32.57,
+      "float_pnl_pct": 5.43
     },
     {
       "id": "NOW-2026-10-15",
@@ -2277,7 +2277,34 @@
       "gapped": false,
       "pnl_gross": -18.0,
       "costs": 1.29
+    },
+    {
+      "id": "AI-2026-10-20",
+      "ticker": "AI",
+      "direction": "long",
+      "signal_date": "2026-10-20",
+      "entry_ts": "2026-10-21T01:29:53+08:00",
+      "entry_price": 11.8,
+      "shares": 42.372881,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 11.8,
+      "current_date": "2026-10-20",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [
+        "Golden Cross",
+        "MACD Bull",
+        "Above MA60"
+      ],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-10-19"
+  "last_updated": "2026-10-20"
 }
