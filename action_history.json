@@ -1,16 +1,5 @@
 [
  {
-  "ts": "2026-06-20 03:47",
-  "buys": [],
-  "sells": [],
-  "added": [],
-  "removed": [
-   "MAR",
-   "SPG",
-   "URI"
-  ]
- },
- {
   "ts": "2026-06-23 01:22",
   "buys": [
    {
@@ -3824,6 +3813,29 @@
   "removed": [
    "AI"
   ],
+  "regime": "transitional",
+  "regime_spy": 40
+ },
+ {
+  "ts": "2026-10-21 05:18",
+  "buys": [
+   {
+    "ticker": "WDAY",
+    "score": 90,
+    "price": 203.97999572753906
+   },
+   {
+    "ticker": "HUM",
+    "score": 82,
+    "price": 427.3800048828125
+   }
+  ],
+  "sells": [],
+  "added": [
+   "HUM",
+   "WDAY"
+  ],
+  "removed": [],
   "regime": "transitional",
   "regime_spy": 40
  }
