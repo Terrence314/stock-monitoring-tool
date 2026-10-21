@@ -1,32 +1,5 @@
 [
  {
-  "ts": "2026-06-23 01:22",
-  "buys": [
-   {
-    "ticker": "IRM",
-    "score": 80,
-    "price": 132.86000061035156
-   },
-   {
-    "ticker": "PWR",
-    "score": 80,
-    "price": 731.0399780273438
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "IRM",
-   "PWR",
-   "VOO"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-23 01:43",
   "buys": [
    {
@@ -3838,5 +3811,17 @@
   "removed": [],
   "regime": "transitional",
   "regime_spy": 40
+ },
+ {
+  "ts": "2026-10-21 08:24",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "HUM",
+   "WDAY"
+  ],
+  "regime": "transitional",
+  "regime_spy": 37
  }
 ]
