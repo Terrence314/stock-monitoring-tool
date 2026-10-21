@@ -2162,8 +2162,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 50.92,
-      "current_date": "2026-10-19",
+      "current_price": 50.12,
+      "current_date": "2026-10-21",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -2172,8 +2172,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": 13.77,
-      "float_pnl_pct": 2.75
+      "float_pnl": 19.27,
+      "float_pnl_pct": 3.85
     },
     {
       "id": "COP-2026-10-09",
@@ -2241,18 +2241,19 @@
       "shares": 1.443175,
       "notional": 600.0,
       "score": 90,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 430.23,
-      "current_date": "2026-10-19",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-10-21",
+      "exit_price": 445.0,
+      "exit_reason": "take_profit",
+      "current_price": 440.9,
+      "current_date": "2026-10-21",
+      "pnl": 40.89,
+      "pnl_pct": 6.81,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": 20.9,
-      "float_pnl_pct": 3.48
+      "gapped": true,
+      "pnl_gross": 42.21,
+      "costs": 1.32
     },
     {
       "id": "NOW-2026-10-15",
@@ -2344,7 +2345,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 414.98,
+      "current_price": 425.05,
       "current_date": "2026-10-21",
       "pnl": null,
       "pnl_pct": null,
