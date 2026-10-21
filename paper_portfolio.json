@@ -2162,7 +2162,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 50.12,
+      "current_price": 49.87,
       "current_date": "2026-10-21",
       "pnl": null,
       "pnl_pct": null,
@@ -2172,8 +2172,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": 19.27,
-      "float_pnl_pct": 3.85
+      "float_pnl": 11.11,
+      "float_pnl_pct": 2.22
     },
     {
       "id": "COP-2026-10-09",
@@ -2345,14 +2345,37 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 425.05,
+      "current_price": 425.93,
       "current_date": "2026-10-21",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": -14.51,
-      "float_pnl_pct": -2.9
+      "float_pnl": -2.73,
+      "float_pnl_pct": -0.55
+    },
+    {
+      "id": "GTLB-2026-10-21",
+      "ticker": "GTLB",
+      "direction": "long",
+      "signal_date": "2026-10-21",
+      "entry_ts": "2026-10-22T01:55:39+08:00",
+      "entry_price": 55.5,
+      "shares": 9.009009,
+      "notional": 500.0,
+      "score": 80,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 55.5,
+      "current_date": "2026-10-21",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-10-21"

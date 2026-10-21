@@ -1,35 +1,5 @@
 [
  {
-  "ts": "2026-06-23 01:43",
-  "buys": [
-   {
-    "ticker": "IRM",
-    "score": 80,
-    "price": 132.75
-   },
-   {
-    "ticker": "PWR",
-    "score": 80,
-    "price": 730.7349853515625
-   },
-   {
-    "ticker": "VEA",
-    "score": 80,
-    "price": 72.36990356445312
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "VEA"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-23 04:48",
   "buys": [
    {
@@ -3823,5 +3793,22 @@
   ],
   "regime": "transitional",
   "regime_spy": 37
+ },
+ {
+  "ts": "2026-10-22 01:55",
+  "buys": [
+   {
+    "ticker": "GTLB",
+    "score": 80,
+    "price": 55.5
+   }
+  ],
+  "sells": [],
+  "added": [
+   "GTLB"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 47
  }
 ]
