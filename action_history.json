@@ -1,30 +1,5 @@
 [
  {
-  "ts": "2026-06-23 06:48",
-  "buys": [
-   {
-    "ticker": "WFC",
-    "score": 82,
-    "price": 83.83999633789062
-   },
-   {
-    "ticker": "IRM",
-    "score": 80,
-    "price": 131.86000061035156
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "WFC"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-23 23:37",
   "buys": [
    {
@@ -3800,5 +3775,28 @@
   ],
   "regime": "transitional",
   "regime_spy": 47
+ },
+ {
+  "ts": "2026-10-22 08:27",
+  "buys": [
+   {
+    "ticker": "WDAY",
+    "score": 90,
+    "price": 203.97999572753906
+   },
+   {
+    "ticker": "MRK",
+    "score": 82,
+    "price": 148.3000030517578
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MRK",
+   "WDAY"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 40
  }
 ]

@@ -2162,8 +2162,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 49.87,
-      "current_date": "2026-10-21",
+      "current_price": 50.38,
+      "current_date": "2026-10-20",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -2351,8 +2351,8 @@
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": -1.7,
-      "float_pnl_pct": -0.34
+      "float_pnl": -2.29,
+      "float_pnl_pct": -0.46
     },
     {
       "id": "GTLB-2026-10-21",
@@ -2368,15 +2368,61 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 55.45,
-      "current_date": "2026-10-21",
+      "current_price": 55.0,
+      "current_date": "2026-10-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": -0.45,
-      "float_pnl_pct": -0.09
+      "float_pnl": -4.5,
+      "float_pnl_pct": -0.9
+    },
+    {
+      "id": "WDAY-2026-10-22",
+      "ticker": "WDAY",
+      "direction": "long",
+      "signal_date": "2026-10-22",
+      "entry_ts": "2026-10-22T08:27:39+08:00",
+      "entry_price": 203.98,
+      "shares": 2.941465,
+      "notional": 600.0,
+      "score": 90,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 203.98,
+      "current_date": "2026-10-22",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Technology",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
+    },
+    {
+      "id": "MRK-2026-10-22",
+      "ticker": "MRK",
+      "direction": "long",
+      "signal_date": "2026-10-22",
+      "entry_ts": "2026-10-22T08:27:39+08:00",
+      "entry_price": 148.3,
+      "shares": 3.371544,
+      "notional": 500.0,
+      "score": 82,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 148.3,
+      "current_date": "2026-10-22",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Healthcare",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-10-21"
+  "last_updated": "2026-10-22"
 }
