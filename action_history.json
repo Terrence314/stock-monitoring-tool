@@ -1,33 +1,5 @@
 [
  {
-  "ts": "2026-06-23 23:37",
-  "buys": [
-   {
-    "ticker": "PSA",
-    "score": 80,
-    "price": 322.80999755859375
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 17"
-   },
-   {
-    "ticker": "QQQ",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "PSA",
-   "QQQ"
-  ],
-  "removed": [
-   "IRM",
-   "WFC"
-  ]
- },
- {
   "ts": "2026-06-23 23:49",
   "buys": [
    {
@@ -3798,5 +3770,17 @@
   "removed": [],
   "regime": "transitional",
   "regime_spy": 40
+ },
+ {
+  "ts": "2026-10-23 01:34",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "MRK",
+   "WDAY"
+  ],
+  "regime": "bear",
+  "regime_spy": 0
  }
 ]
