@@ -2162,7 +2162,7 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 49.28,
+      "current_price": 49.42,
       "current_date": "2026-10-22",
       "pnl": null,
       "pnl_pct": null,
@@ -2172,8 +2172,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": 13.77,
-      "float_pnl_pct": 2.75
+      "float_pnl": 2.55,
+      "float_pnl_pct": 0.51
     },
     {
       "id": "COP-2026-10-09",
@@ -2345,14 +2345,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 423.32,
+      "current_price": 422.02,
       "current_date": "2026-10-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": -2.29,
-      "float_pnl_pct": -0.46
+      "float_pnl": -4.75,
+      "float_pnl_pct": -0.95
     },
     {
       "id": "GTLB-2026-10-21",
@@ -2368,14 +2368,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 55.44,
+      "current_price": 55.45,
       "current_date": "2026-10-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": -4.5,
-      "float_pnl_pct": -0.9
+      "float_pnl": -0.54,
+      "float_pnl_pct": -0.11
     },
     {
       "id": "WDAY-2026-10-22",
@@ -2391,14 +2391,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 207.7,
+      "current_price": 208.15,
       "current_date": "2026-10-22",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 10.94,
-      "float_pnl_pct": 1.82
+      "float_pnl": 12.27,
+      "float_pnl_pct": 2.04
     },
     {
       "id": "MRK-2026-10-22",
