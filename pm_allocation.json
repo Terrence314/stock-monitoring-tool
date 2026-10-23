@@ -1,37 +1,37 @@
 {
-  "generated_at_hkt": "2026-10-22 10:14",
-  "generated_at_utc": "2026-10-22T02:14:15+00:00",
+  "generated_at_hkt": "2026-10-23 10:20",
+  "generated_at_utc": "2026-10-23T02:20:06+00:00",
   "regime": {
-    "score": 65.0,
+    "score": 48.6,
     "max": 100,
-    "band": "SELECTIVE",
-    "label": "選擇性部署",
-    "deploy_pct": "25-50%",
-    "instruction": "信心指數 60-75 — 只做最高信心標的,倉位 25-50%",
+    "band": "CASH",
+    "label": "空倉",
+    "deploy_pct": "0%",
+    "instruction": "信心指數 <60 — 空倉觀望,不開新倉",
     "components": {
       "spy": {
-        "score": 25.0,
+        "score": 12.5,
         "max": 25,
-        "detail": "價>MA50 · 價>MA200 · MA50>MA200 · 20日動能正",
-        "price": 773.09,
-        "ma50": 767.35,
-        "ma200": 723.24,
-        "momentum_pct": 0.69
+        "detail": "價>MA200 · MA50>MA200",
+        "price": 763.96,
+        "ma50": 767.22,
+        "ma200": 723.62,
+        "momentum_pct": -0.42
       },
       "qqq": {
         "score": 10.0,
         "max": 20,
         "detail": "價>MA200 · MA50>MA200",
-        "price": 725.2,
-        "ma50": 726.35,
-        "ma200": 675.27,
-        "momentum_pct": -2.16
+        "price": 704.47,
+        "ma50": 725.98,
+        "ma200": 675.69,
+        "momentum_pct": -4.94
       },
       "vix": {
-        "score": 20.5,
+        "score": 16.6,
         "max": 25,
-        "detail": "VIX 16.7 — 偏高",
-        "level": 16.68,
+        "detail": "VIX 19.0 — 偏高",
+        "level": 19.03,
         "label": "偏高"
       },
       "sector": {
@@ -39,39 +39,39 @@
         "max": 30,
         "detail": "7/11 板塊企穩 MA50 · 防守板塊領先",
         "breadth_pct": 63.6,
-        "offense_minus_defense_pct": -6.61,
+        "offense_minus_defense_pct": -10.88,
         "leaders": [
-          {
-            "ticker": "XLE",
-            "name": "能源",
-            "momentum_pct": 9.28
-          },
-          {
-            "ticker": "XLV",
-            "name": "醫療",
-            "momentum_pct": 6.01
-          },
           {
             "ticker": "XLP",
             "name": "必需消費",
-            "momentum_pct": 5.68
+            "momentum_pct": 10.15
+          },
+          {
+            "ticker": "XLU",
+            "name": "公用",
+            "momentum_pct": 8.92
+          },
+          {
+            "ticker": "XLE",
+            "name": "能源",
+            "momentum_pct": 7.94
           }
         ],
         "laggards": [
           {
             "ticker": "XLK",
             "name": "科技",
-            "momentum_pct": -3.48
+            "momentum_pct": -6.35
           },
           {
             "ticker": "XLC",
             "name": "通訊",
-            "momentum_pct": -3.19
+            "momentum_pct": -5.76
           },
           {
             "ticker": "XLI",
             "name": "工業",
-            "momentum_pct": -1.05
+            "momentum_pct": -1.24
           }
         ]
       }
@@ -79,154 +79,30 @@
     "degraded_components": []
   },
   "watchlist": {
-    "tonight": [
-      {
-        "ticker": "NOW",
-        "name": "ServiceNow",
-        "price": 153.12,
-        "price_source": "finnhub",
-        "conviction": 98.1,
-        "rsi": 65.7,
-        "macd_hist": 1.1634,
-        "ma20": 139.55,
-        "ma50": 136.21,
-        "ma200": 115.03,
-        "has_ma200": true,
-        "change_20d_pct": 8.77,
-        "change_120d_pct": 73.39,
-        "notes": [
-          "價>MA20",
-          "價>MA50",
-          "價>MA200",
-          "MACD 柱正",
-          "RSI 65.7 健康區",
-          "20日相對 SPY +8.1pp",
-          "量能 1.2× 放大"
-        ],
-        "strategy": "順勢突破 — 均線多頭排列,突破前高進場"
-      },
-      {
-        "ticker": "USO",
-        "name": "Oil ETF",
-        "price": 159.8,
-        "price_source": "finnhub",
-        "conviction": 92.7,
-        "rsi": 63.4,
-        "macd_hist": 0.939,
-        "ma20": 151.22,
-        "ma50": 144.88,
-        "ma200": 120.63,
-        "has_ma200": true,
-        "change_20d_pct": 7.37,
-        "change_120d_pct": 8.64,
-        "notes": [
-          "價>MA20",
-          "價>MA50",
-          "價>MA200",
-          "MACD 柱正",
-          "RSI 63.4 健康區",
-          "20日相對 SPY +6.7pp",
-          "量能 1.1× 正常"
-        ],
-        "strategy": "順勢突破 — 均線多頭排列,突破前高進場"
-      },
-      {
-        "ticker": "SCHD",
-        "name": "Schwab Dividend ETF",
-        "price": 34.66,
-        "price_source": "finnhub",
-        "conviction": 89.5,
-        "rsi": 69.1,
-        "macd_hist": 0.2245,
-        "ma20": 33.34,
-        "ma50": 33.86,
-        "ma200": 31.67,
-        "has_ma200": true,
-        "change_20d_pct": 4.15,
-        "change_120d_pct": 9.81,
-        "notes": [
-          "價>MA20",
-          "價>MA50",
-          "價>MA200",
-          "MACD 柱正",
-          "RSI 69.1 健康區",
-          "20日相對 SPY +3.5pp",
-          "量能 0.8× 正常"
-        ],
-        "strategy": "動能延續 — MACD 轉正,MA50 之上持有"
-      },
-      {
-        "ticker": "TSLA",
-        "name": "Tesla",
-        "price": 386.47,
-        "price_source": "finnhub",
-        "conviction": 76.0,
-        "rsi": 59.8,
-        "macd_hist": 0.069,
-        "ma20": 370.03,
-        "ma50": 362.18,
-        "ma200": 386.94,
-        "has_ma200": true,
-        "change_20d_pct": 1.67,
-        "change_120d_pct": 1.27,
-        "notes": [
-          "價>MA20",
-          "價>MA50",
-          "MACD 柱正",
-          "RSI 59.8 健康區",
-          "20日相對 SPY +1.0pp",
-          "量能 1.4× 放大"
-        ],
-        "strategy": "順勢突破 — 均線多頭排列,突破前高進場"
-      },
-      {
-        "ticker": "XBI",
-        "name": "Biotech ETF",
-        "price": 152.78,
-        "price_source": "finnhub",
-        "conviction": 68.8,
-        "rsi": 49.7,
-        "macd_hist": 0.2397,
-        "ma20": 152.22,
-        "ma50": 157.57,
-        "ma200": 140.54,
-        "has_ma200": true,
-        "change_20d_pct": -1.56,
-        "change_120d_pct": 16.45,
-        "notes": [
-          "價>MA20",
-          "價>MA200",
-          "MACD 柱正",
-          "RSI 49.7 健康區",
-          "20日相對 SPY -2.2pp",
-          "量能 0.8× 正常"
-        ],
-        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探"
-      }
-    ],
+    "tonight": [],
     "long_term": [
       {
         "ticker": "NOW",
         "name": "ServiceNow",
-        "price": 153.12,
+        "price": 157.0,
         "price_source": "finnhub",
-        "conviction": 98.1,
-        "rsi": 65.7,
-        "macd_hist": 1.1634,
-        "ma20": 139.55,
-        "ma50": 136.21,
-        "ma200": 115.03,
+        "conviction": 100.0,
+        "rsi": 68.6,
+        "macd_hist": 1.5377,
+        "ma20": 140.51,
+        "ma50": 136.85,
+        "ma200": 115.07,
         "has_ma200": true,
-        "change_20d_pct": 8.77,
-        "change_120d_pct": 73.39,
+        "change_20d_pct": 13.95,
+        "change_120d_pct": 72.22,
         "notes": [
           "價>MA20",
           "價>MA50",
           "價>MA200",
           "MACD 柱正",
-          "RSI 65.7 健康區",
-          "20日相對 SPY +8.1pp",
-          "量能 1.2× 放大"
+          "RSI 68.6 健康區",
+          "20日相對 SPY +14.4pp",
+          "量能 1.6× 放大"
         ],
         "strategy": "順勢突破 — 均線多頭排列,突破前高進場",
         "also_tonight": true
@@ -234,25 +110,25 @@
       {
         "ticker": "USO",
         "name": "Oil ETF",
-        "price": 159.8,
+        "price": 162.51,
         "price_source": "finnhub",
-        "conviction": 92.7,
-        "rsi": 63.4,
-        "macd_hist": 0.939,
-        "ma20": 151.22,
-        "ma50": 144.88,
-        "ma200": 120.63,
+        "conviction": 92.6,
+        "rsi": 66.2,
+        "macd_hist": 0.9564,
+        "ma20": 151.69,
+        "ma50": 145.58,
+        "ma200": 121.1,
         "has_ma200": true,
-        "change_20d_pct": 7.37,
-        "change_120d_pct": 8.64,
+        "change_20d_pct": 6.15,
+        "change_120d_pct": 13.8,
         "notes": [
           "價>MA20",
           "價>MA50",
           "價>MA200",
           "MACD 柱正",
-          "RSI 63.4 健康區",
-          "20日相對 SPY +6.7pp",
-          "量能 1.1× 正常"
+          "RSI 66.2 健康區",
+          "20日相對 SPY +6.6pp",
+          "量能 0.8× 正常"
         ],
         "strategy": "順勢突破 — 均線多頭排列,突破前高進場",
         "also_tonight": true
@@ -260,50 +136,50 @@
       {
         "ticker": "SCHD",
         "name": "Schwab Dividend ETF",
-        "price": 34.66,
+        "price": 35.4,
         "price_source": "finnhub",
-        "conviction": 89.5,
-        "rsi": 69.1,
-        "macd_hist": 0.2245,
-        "ma20": 33.34,
-        "ma50": 33.86,
-        "ma200": 31.67,
+        "conviction": 82.4,
+        "rsi": 75.9,
+        "macd_hist": 0.2611,
+        "ma20": 33.46,
+        "ma50": 33.89,
+        "ma200": 31.71,
         "has_ma200": true,
-        "change_20d_pct": 4.15,
-        "change_120d_pct": 9.81,
+        "change_20d_pct": 6.95,
+        "change_120d_pct": 12.89,
         "notes": [
           "價>MA20",
           "價>MA50",
           "價>MA200",
           "MACD 柱正",
-          "RSI 69.1 健康區",
-          "20日相對 SPY +3.5pp",
-          "量能 0.8× 正常"
+          "RSI 75.9 超買",
+          "20日相對 SPY +7.4pp",
+          "量能 1.3× 放大"
         ],
         "strategy": "動能延續 — MACD 轉正,MA50 之上持有",
-        "also_tonight": true
+        "also_tonight": false
       },
       {
         "ticker": "PLTR",
         "name": "Palantir",
-        "price": 201.72,
+        "price": 196.19,
         "price_source": "finnhub",
-        "conviction": 75.5,
-        "rsi": 59.2,
-        "macd_hist": -1.0739,
-        "ma20": 194.98,
-        "ma50": 183.89,
-        "ma200": 152.99,
+        "conviction": 73.3,
+        "rsi": 54.0,
+        "macd_hist": -1.171,
+        "ma20": 195.16,
+        "ma50": 184.4,
+        "ma200": 153.07,
         "has_ma200": true,
-        "change_20d_pct": 5.18,
-        "change_120d_pct": 45.01,
+        "change_20d_pct": 1.87,
+        "change_120d_pct": 36.18,
         "notes": [
           "價>MA20",
           "價>MA50",
           "價>MA200",
-          "RSI 59.2 健康區",
-          "20日相對 SPY +4.5pp",
-          "量能 0.9× 正常"
+          "RSI 54.0 健康區",
+          "20日相對 SPY +2.3pp",
+          "量能 1.0× 正常"
         ],
         "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
         "also_tonight": false
@@ -311,24 +187,23 @@
       {
         "ticker": "MSFT",
         "name": "Microsoft",
-        "price": 532.95,
+        "price": 521.08,
         "price_source": "finnhub",
-        "conviction": 72.8,
-        "rsi": 59.0,
-        "macd_hist": -0.9319,
-        "ma20": 525.13,
-        "ma50": 507.19,
-        "ma200": 434.92,
+        "conviction": 66.1,
+        "rsi": 50.5,
+        "macd_hist": -1.9197,
+        "ma20": 526.29,
+        "ma50": 507.78,
+        "ma200": 435.15,
         "has_ma200": true,
-        "change_20d_pct": 6.46,
-        "change_120d_pct": 31.23,
+        "change_20d_pct": 4.65,
+        "change_120d_pct": 26.24,
         "notes": [
-          "價>MA20",
           "價>MA50",
           "價>MA200",
-          "RSI 59.0 健康區",
-          "20日相對 SPY +5.8pp",
-          "量能 0.6× 萎縮"
+          "RSI 50.5 健康區",
+          "20日相對 SPY +5.1pp",
+          "量能 1.0× 正常"
         ],
         "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
         "also_tonight": false
@@ -336,22 +211,64 @@
     ],
     "avoid": [
       {
+        "ticker": "IBKR",
+        "name": "Interactive Brokers",
+        "price": 82.28,
+        "price_source": "finnhub",
+        "conviction": 16.0,
+        "rsi": 40.4,
+        "macd_hist": -0.324,
+        "ma20": 86.19,
+        "ma50": 89.65,
+        "ma200": 82.57,
+        "has_ma200": true,
+        "change_20d_pct": -8.39,
+        "change_120d_pct": 2.46,
+        "notes": [
+          "20日相對 SPY -8.0pp",
+          "量能 1.0× 正常"
+        ],
+        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
+        "reason": "跌破 MA200 且 MACD 為負 — 下降趨勢中"
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "Alphabet",
+        "price": 324.22,
+        "price_source": "finnhub",
+        "conviction": 19.1,
+        "rsi": 33.5,
+        "macd_hist": -2.2859,
+        "ma20": 344.27,
+        "ma50": 343.4,
+        "ma200": 340.99,
+        "has_ma200": true,
+        "change_20d_pct": -5.3,
+        "change_120d_pct": -15.83,
+        "notes": [
+          "20日相對 SPY -4.9pp",
+          "量能 1.2× 正常"
+        ],
+        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
+        "reason": "跌破 MA200 且 MACD 為負 — 下降趨勢中"
+      },
+      {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 337.8,
+        "price": 323.24,
         "price_source": "finnhub",
-        "conviction": 14.5,
-        "rsi": 41.1,
-        "macd_hist": -2.1568,
-        "ma20": 351.62,
-        "ma50": 360.18,
-        "ma200": 366.93,
+        "conviction": 20.7,
+        "rsi": 34.9,
+        "macd_hist": -2.7303,
+        "ma20": 350.27,
+        "ma50": 358.33,
+        "ma200": 366.84,
         "has_ma200": true,
-        "change_20d_pct": -4.84,
-        "change_120d_pct": -18.8,
+        "change_20d_pct": -7.74,
+        "change_120d_pct": -23.01,
         "notes": [
-          "20日相對 SPY -5.5pp",
-          "量能 0.8× 萎縮"
+          "20日相對 SPY -7.3pp",
+          "量能 1.3× 放大"
         ],
         "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
         "reason": "跌破 MA200 且 MACD 為負 — 下降趨勢中"
@@ -359,20 +276,41 @@
       {
         "ticker": "BOTZ",
         "name": "Robotics & AI ETF",
-        "price": 33.59,
+        "price": 32.68,
         "price_source": "finnhub",
-        "conviction": 22.5,
-        "rsi": 37.6,
-        "macd_hist": -0.1913,
-        "ma20": 34.86,
-        "ma50": 35.44,
-        "ma200": 36.75,
+        "conviction": 21.2,
+        "rsi": 31.7,
+        "macd_hist": -0.2178,
+        "ma20": 34.74,
+        "ma50": 35.34,
+        "ma200": 36.72,
         "has_ma200": true,
-        "change_20d_pct": -4.82,
-        "change_120d_pct": -12.6,
+        "change_20d_pct": -7.21,
+        "change_120d_pct": -15.29,
         "notes": [
-          "20日相對 SPY -5.5pp",
-          "量能 1.6× 放大"
+          "20日相對 SPY -6.8pp",
+          "量能 1.9× 放大"
+        ],
+        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
+        "reason": "跌破 MA200 且 MACD 為負 — 下降趨勢中"
+      },
+      {
+        "ticker": "GLD",
+        "name": "Gold ETF",
+        "price": 369.0,
+        "price_source": "finnhub",
+        "conviction": 22.6,
+        "rsi": 35.7,
+        "macd_hist": -0.2127,
+        "ma20": 380.43,
+        "ma50": 395.15,
+        "ma200": 414.42,
+        "has_ma200": true,
+        "change_20d_pct": -5.79,
+        "change_120d_pct": -12.8,
+        "notes": [
+          "20日相對 SPY -5.4pp",
+          "量能 2.2× 放大"
         ],
         "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
         "reason": "跌破 MA200 且 MACD 為負 — 下降趨勢中"
@@ -380,85 +318,20 @@
       {
         "ticker": "APP",
         "name": "AppLovin",
-        "price": 267.9,
+        "price": 264.28,
         "price_source": "finnhub",
         "conviction": 25.0,
-        "rsi": 38.8,
-        "macd_hist": 0.6803,
-        "ma20": 281.83,
-        "ma50": 301.78,
-        "ma200": 429.16,
+        "rsi": 37.3,
+        "macd_hist": 0.635,
+        "ma20": 279.42,
+        "ma50": 300.99,
+        "ma200": 427.39,
         "has_ma200": true,
-        "change_20d_pct": -15.02,
-        "change_120d_pct": -39.98,
+        "change_20d_pct": -15.42,
+        "change_120d_pct": -42.55,
         "notes": [
           "MACD 柱正",
-          "20日相對 SPY -15.7pp",
-          "量能 0.6× 萎縮"
-        ],
-        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
-        "reason": "同時跌穿 MA20 同 MA50 — 短中期結構已破"
-      },
-      {
-        "ticker": "GOOGL",
-        "name": "Alphabet",
-        "price": 334.76,
-        "price_source": "finnhub",
-        "conviction": 26.4,
-        "rsi": 40.3,
-        "macd_hist": -1.329,
-        "ma20": 345.18,
-        "ma50": 343.78,
-        "ma200": 340.94,
-        "has_ma200": true,
-        "change_20d_pct": -0.91,
-        "change_120d_pct": -12.9,
-        "notes": [
-          "20日相對 SPY -1.6pp",
-          "量能 1.2× 放大"
-        ],
-        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
-        "reason": "跌破 MA200 且 MACD 為負 — 下降趨勢中"
-      },
-      {
-        "ticker": "SOXX",
-        "name": "Semiconductors ETF",
-        "price": 510.36,
-        "price_source": "finnhub",
-        "conviction": 29.0,
-        "rsi": 39.4,
-        "macd_hist": -8.5425,
-        "ma20": 550.69,
-        "ma50": 535.28,
-        "ma200": 470.12,
-        "has_ma200": true,
-        "change_20d_pct": -9.79,
-        "change_120d_pct": 10.73,
-        "notes": [
-          "價>MA200",
-          "20日相對 SPY -10.5pp",
-          "量能 1.1× 正常"
-        ],
-        "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
-        "reason": "同時跌穿 MA20 同 MA50 — 短中期結構已破"
-      },
-      {
-        "ticker": "HYG",
-        "name": "High Yield Bond ETF",
-        "price": 76.98,
-        "price_source": "finnhub",
-        "conviction": 33.3,
-        "rsi": 39.9,
-        "macd_hist": 0.0285,
-        "ma20": 77.08,
-        "ma50": 78.02,
-        "ma200": 77.9,
-        "has_ma200": true,
-        "change_20d_pct": -1.0,
-        "change_120d_pct": -1.34,
-        "notes": [
-          "MACD 柱正",
-          "20日相對 SPY -1.7pp",
+          "20日相對 SPY -15.0pp",
           "量能 0.6× 萎縮"
         ],
         "strategy": "區間操作 — 結構尚可但無明確突破,小倉試探",
@@ -466,17 +339,17 @@
       }
     ],
     "qualified_counts": {
-      "tonight": 5,
-      "long_term": 8,
-      "avoid": 11
+      "tonight": 0,
+      "long_term": 6,
+      "avoid": 12
     },
     "scanned": 21,
     "skipped": [],
     "live_quote_count": 21,
-    "suppressed_by_regime": false
+    "suppressed_by_regime": true
   },
-  "conclusion": "可選擇性部署 Selective。信心指數 65.0/100 — 只做首選 NOW,倉位控制喺 25-50%,其餘現金。",
-  "conclusion_short": "可選擇性部署 Selective",
+  "conclusion": "空倉。信心指數 48.6/100 低於 60,今晚不開新倉 — 6 隻長線標的維持觀察名單,等指數回到 60 以上再談部署。",
+  "conclusion_short": "空倉",
   "degraded_note": "",
   "provenance": "信號出處:同一套 per-ticker 機械信號,樣本內 96 筆已平倉 — 勝率 37.5% / PF 0.39 / 淨 −$2,737.14,未通過自身 gate(PASS 需 WR≥45% + PF≥1.0)。以下標的為排序參考,非已驗證 edge。市場制度卡(第一格)不依賴該套信號。"
 }
