@@ -2172,8 +2172,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": 3.98,
-      "float_pnl_pct": 0.8
+      "float_pnl": 1.53,
+      "float_pnl_pct": 0.31
     },
     {
       "id": "COP-2026-10-09",
@@ -2351,8 +2351,8 @@
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Healthcare",
-      "float_pnl": -6.27,
-      "float_pnl_pct": -1.25
+      "float_pnl": -7.5,
+      "float_pnl_pct": -1.5
     },
     {
       "id": "GTLB-2026-10-21",
@@ -2374,8 +2374,8 @@
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": -0.45,
-      "float_pnl_pct": -0.09
+      "float_pnl": -8.74,
+      "float_pnl_pct": -1.75
     },
     {
       "id": "WDAY-2026-10-22",
@@ -2391,14 +2391,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 209.99,
-      "current_date": "2026-10-22",
+      "current_price": 202.96,
+      "current_date": "2026-10-23",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 17.68,
-      "float_pnl_pct": 2.95
+      "float_pnl": -3.0,
+      "float_pnl_pct": -0.5
     },
     {
       "id": "MRK-2026-10-22",
@@ -2424,5 +2424,5 @@
       "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-10-22"
+  "last_updated": "2026-10-23"
 }
