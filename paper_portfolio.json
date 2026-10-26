@@ -2162,8 +2162,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 49.18,
-      "current_date": "2026-10-22",
+      "current_price": 51.67,
+      "current_date": "2026-10-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [
@@ -2172,8 +2172,8 @@
         "Above MA60"
       ],
       "sector": "Energy",
-      "float_pnl": 1.53,
-      "float_pnl_pct": 0.31
+      "float_pnl": 26.92,
+      "float_pnl_pct": 5.38
     },
     {
       "id": "COP-2026-10-09",
@@ -2368,14 +2368,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 54.53,
-      "current_date": "2026-10-22",
+      "current_price": 56.29,
+      "current_date": "2026-10-26",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": -8.74,
-      "float_pnl_pct": -1.75
+      "float_pnl": 7.12,
+      "float_pnl_pct": 1.42
     },
     {
       "id": "WDAY-2026-10-22",
@@ -2424,5 +2424,5 @@
       "float_pnl_pct": 0.0
     }
   ],
-  "last_updated": "2026-10-23"
+  "last_updated": "2026-10-26"
 }
