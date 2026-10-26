@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signal Backtest · 2026/10/23</title>
+<title>Signal Backtest · 2026/10/26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -106,7 +106,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <div class="brand-logo">S</div>
     <div>
       <div class="brand-title">Backtest · Signal ≥ 70</div>
-      <div class="brand-sub">generated 2026/10/23 · 168 signal events · 59 tickers</div>
+      <div class="brand-sub">generated 2026/10/26 · 182 signal events · 63 tickers</div>
     </div>
     <a href="./index.html" class="back-btn">← 返回總覽</a>
   </div>
@@ -121,8 +121,8 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
   <span class="section-pill">Overall Performance</span>
   <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px">
     <div>
-      <div class="card-title">168 Signal Events · Score ≥ 70</div>
-      <div class="card-sub" style="margin-top:3px">59 tickers · dates from 2026-10-12 → 2026-10-23</div>
+      <div class="card-title">182 Signal Events · Score ≥ 70</div>
+      <div class="card-sub" style="margin-top:3px">63 tickers · dates from 2026-10-12 → 2026-10-26</div>
     </div>
   </div>
 
@@ -134,38 +134,38 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       
       <div class="fd-metric">
         <span class="fd-metric-label">Signals</span>
-        <span class="fd-metric-val" style="color:var(--text)">87</span>
+        <span class="fd-metric-val" style="color:var(--text)">99</span>
       </div>
       <div class="fd-metric">
         <span class="fd-metric-label">Win rate</span>
-        <span class="fd-metric-val" style="color:var(--up)">77.0%</span>
+        <span class="fd-metric-val" style="color:var(--up)">78.8%</span>
       </div>
       <div class="fd-metric">
         <span class="fd-metric-label">Avg return</span>
-        <span class="fd-metric-val" style="color:var(--up)">+2.01%</span>
+        <span class="fd-metric-val" style="color:var(--up)">+2.29%</span>
       </div>
       <div class="fd-metric">
         <span class="fd-metric-label">Median return</span>
-        <span class="fd-metric-val" style="color:var(--up)">+2.04%</span>
+        <span class="fd-metric-val" style="color:var(--up)">+2.19%</span>
       </div>
       
       <div class="fd-metric" title="Holding SPY over the identical window. The signal is only worth anything to the extent it beats this.">
         <span class="fd-metric-label">SPY same window</span>
-        <span class="fd-metric-val" style="color:var(--text-2)">-1.00%</span>
+        <span class="fd-metric-val" style="color:var(--text-2)">-0.92%</span>
       </div>
       <div class="fd-metric" title="Average return minus SPY over the same window — the part not explained by market direction.">
         <span class="fd-metric-label">Excess vs SPY</span>
-        <span class="fd-metric-val" style="color:var(--up)">+3.01%</span>
+        <span class="fd-metric-val" style="color:var(--up)">+3.22%</span>
       </div>
       <div class="fd-metric" title="Share of signals that beat simply holding SPY. 50% means the signal added nothing.">
         <span class="fd-metric-label">Beat SPY</span>
-        <span class="fd-metric-val" style="color:var(--up)">82.8%</span>
+        <span class="fd-metric-val" style="color:var(--up)">84.8%</span>
       </div>
       
       
       <div class="fd-metric" title="t-statistic on excess return. Below about 2 the edge is not distinguishable from chance at this sample size — sd is the spread of individual excess returns.">
-        <span class="fd-metric-label">t-stat (sd 3.4%)</span>
-        <span class="fd-metric-val" style="color:var(--up)">+8.35</span>
+        <span class="fd-metric-label">t-stat (sd 3.3%)</span>
+        <span class="fd-metric-val" style="color:var(--up)">+9.62</span>
       </div>
       
       
@@ -175,7 +175,42 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <div class="fd-card">
       <div class="fd-label">+10 Trading Days</div>
       
-      <div style="color:var(--muted);font-family:var(--mono);font-size:11px">Insufficient data</div>
+      <div class="fd-metric">
+        <span class="fd-metric-label">Signals</span>
+        <span class="fd-metric-val" style="color:var(--text)">36</span>
+      </div>
+      <div class="fd-metric">
+        <span class="fd-metric-label">Win rate</span>
+        <span class="fd-metric-val" style="color:var(--up)">75.0%</span>
+      </div>
+      <div class="fd-metric">
+        <span class="fd-metric-label">Avg return</span>
+        <span class="fd-metric-val" style="color:var(--up)">+3.07%</span>
+      </div>
+      <div class="fd-metric">
+        <span class="fd-metric-label">Median return</span>
+        <span class="fd-metric-val" style="color:var(--up)">+3.56%</span>
+      </div>
+      
+      <div class="fd-metric" title="Holding SPY over the identical window. The signal is only worth anything to the extent it beats this.">
+        <span class="fd-metric-label">SPY same window</span>
+        <span class="fd-metric-val" style="color:var(--text-2)">-1.83%</span>
+      </div>
+      <div class="fd-metric" title="Average return minus SPY over the same window — the part not explained by market direction.">
+        <span class="fd-metric-label">Excess vs SPY</span>
+        <span class="fd-metric-val" style="color:var(--up)">+4.89%</span>
+      </div>
+      <div class="fd-metric" title="Share of signals that beat simply holding SPY. 50% means the signal added nothing.">
+        <span class="fd-metric-label">Beat SPY</span>
+        <span class="fd-metric-val" style="color:var(--up)">83.3%</span>
+      </div>
+      
+      
+      <div class="fd-metric" title="t-statistic on excess return. Below about 2 the edge is not distinguishable from chance at this sample size — sd is the spread of individual excess returns.">
+        <span class="fd-metric-label">t-stat (sd 6.0%)</span>
+        <span class="fd-metric-val" style="color:var(--up)">+4.94</span>
+      </div>
+      
       
     </div>
     
@@ -213,6 +248,347 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
     </thead>
     <tbody>
+      
+      <tr>
+        <td><span class="ticker-tag">AI</span></td>
+        <td class="num">7</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip down">-2.1%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+10.9%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">DIS</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+1.5%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+1.3%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">DVN</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+2.1%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+5.3%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">EL</span></td>
+        <td class="num">8</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+2.6%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+8.6%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">FAST</span></td>
+        <td class="num">6</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--amber)">50.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip down">-0.2%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+1.7%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">GTLB</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip down">-3.9%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+0.2%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">ISRG</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+3.6%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+5.2%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">RBLX</span></td>
+        <td class="num">6</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+4.1%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+7.1%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">SAP</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+5.5%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+9.0%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">ULTA</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+3.8%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+9.4%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">XLV</span></td>
+        <td class="num">5</td>
+        <td class="num">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num">
+          
+          <span class="chip up">+2.3%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
+          
+        </td>
+        <td class="num mob-hide">
+          
+          <span class="chip up">+3.7%</span>
+          
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
       
       <tr>
         <td><span class="ticker-tag">AAPL</span></td>
@@ -284,35 +660,8 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
       
       <tr>
-        <td><span class="ticker-tag">AI</span></td>
-        <td class="num">6</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip down">-2.1%</span>
-          
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
         <td><span class="ticker-tag">AMGN</span></td>
-        <td class="num">5</td>
+        <td class="num">6</td>
         <td class="num">
           
           <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
@@ -320,7 +669,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         </td>
         <td class="num">
           
-          <span class="chip up">+2.5%</span>
+          <span class="chip up">+2.3%</span>
           
         </td>
         <td class="num mob-hide">
@@ -431,7 +780,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       
       <tr>
         <td><span class="ticker-tag">CCL</span></td>
-        <td class="num">1</td>
+        <td class="num">2</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -545,58 +894,8 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
       
       <tr>
-        <td><span class="ticker-tag">DIS</span></td>
-        <td class="num">5</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip up">+1.4%</span>
-          
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
         <td><span class="ticker-tag">DOCU</span></td>
         <td class="num">2</td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">DVN</span></td>
-        <td class="num">4</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -625,33 +924,6 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         </td>
         <td class="num">
           <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">EL</span></td>
-        <td class="num">7</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip up">+2.6%</span>
-          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -715,39 +987,12 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       
       <tr>
         <td><span class="ticker-tag">ESTC</span></td>
-        <td class="num">1</td>
+        <td class="num">2</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
         <td class="num">
           <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">FAST</span></td>
-        <td class="num">5</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--amber)">50.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip down">-0.2%</span>
-          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -765,12 +1010,16 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       
       <tr>
         <td><span class="ticker-tag">GILD</span></td>
-        <td class="num">4</td>
+        <td class="num">5</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
+          
         </td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-0.2%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -810,17 +1059,13 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
       
       <tr>
-        <td><span class="ticker-tag">GTLB</span></td>
-        <td class="num">5</td>
+        <td><span class="ticker-tag">HLT</span></td>
+        <td class="num">1</td>
         <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
-          
+          <span class="chip na">—</span>
         </td>
         <td class="num">
-          
-          <span class="chip down">-3.9%</span>
-          
+          <span class="chip na">—</span>
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -837,7 +1082,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
       
       <tr>
-        <td><span class="ticker-tag">HLT</span></td>
+        <td><span class="ticker-tag">HPQ</span></td>
         <td class="num">1</td>
         <td class="num">
           <span class="chip na">—</span>
@@ -873,37 +1118,14 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">ISRG</span></td>
-        <td class="num">5</td>
-        <td class="num">
           
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip up">+3.9%</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-4.1%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -1153,8 +1375,31 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         </td>
         <td class="num">
           
-          <span class="chip up">+5.5%</span>
+          <span class="chip up">+6.5%</span>
           
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">NXPI</span></td>
+        <td class="num">1</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -1241,7 +1486,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       
       <tr>
         <td><span class="ticker-tag">PGR</span></td>
-        <td class="num">1</td>
+        <td class="num">2</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1270,60 +1515,6 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         </td>
         <td class="num">
           <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">RBLX</span></td>
-        <td class="num">6</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip up">+3.8%</span>
-          
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">SAP</span></td>
-        <td class="num">5</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip up">+5.5%</span>
-          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -1376,10 +1567,14 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span style="font-family:var(--mono);font-size:11px;color:var(--down)">0.0%</span>
+          
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-4.7%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -1436,7 +1631,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
       
       <tr>
-        <td><span class="ticker-tag">TSLA</span></td>
+        <td><span class="ticker-tag">SWKS</span></td>
         <td class="num">1</td>
         <td class="num">
           <span class="chip na">—</span>
@@ -1459,17 +1654,36 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
       </tr>
       
       <tr>
-        <td><span class="ticker-tag">ULTA</span></td>
-        <td class="num">5</td>
+        <td><span class="ticker-tag">TSLA</span></td>
+        <td class="num">2</td>
         <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
+          <span class="chip na">—</span>
         </td>
         <td class="num">
-          
-          <span class="chip up">+3.2%</span>
-          
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td><span class="ticker-tag">TXN</span></td>
+        <td class="num">1</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -1539,33 +1753,6 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         </td>
         <td class="num">
           <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num mob-hide">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-        <td class="num">
-          <span class="chip na">—</span>
-        </td>
-      </tr>
-      
-      <tr>
-        <td><span class="ticker-tag">XLV</span></td>
-        <td class="num">5</td>
-        <td class="num">
-          
-          <span style="font-family:var(--mono);font-size:11px;color:var(--up)">100.0%</span>
-          
-        </td>
-        <td class="num">
-          
-          <span class="chip up">+2.3%</span>
-          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -1654,10 +1841,234 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
     <tbody>
       
       <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">TSLA</span></td>
+        <td class="num" style="color:var(--amber)">90</td>
+        <td class="num">394.04</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">DVN</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">51.67</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">ESTC</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">106.07</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">GILD</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">157.68</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">HPQ</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">33.99</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">NXPI</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">248.37</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">PGR</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">228.61</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">TXN</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">297.90</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">AMGN</span></td>
+        <td class="num" style="color:var(--amber)">72</td>
+        <td class="num">441.39</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">CCL</span></td>
+        <td class="num" style="color:var(--amber)">72</td>
+        <td class="num">26.92</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">EL</span></td>
+        <td class="num" style="color:var(--amber)">72</td>
+        <td class="num">108.80</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">FAST</span></td>
+        <td class="num" style="color:var(--amber)">72</td>
+        <td class="num">52.44</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">AI</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">12.90</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="mono" style="color:var(--text-2)">2026-10-26</td>
+        <td><span class="ticker-tag">SWKS</span></td>
+        <td class="num" style="color:var(--amber)">80</td>
+        <td class="num">83.69</td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num mob-hide">
+          <span class="chip na">—</span>
+        </td>
+        <td class="num">
+          <span class="chip na">—</span>
+        </td>
+      </tr>
+      
+      <tr>
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">AMT</span></td>
         <td class="num" style="color:var(--amber)">100</td>
-        <td class="num">188.62</td>
+        <td class="num">188.97</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1673,7 +2084,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">AI</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">12.13</td>
+        <td class="num">12.46</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1689,7 +2100,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">DVN</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">51.29</td>
+        <td class="num">51.39</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1705,7 +2116,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">ESTC</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">101.20</td>
+        <td class="num">102.43</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1721,7 +2132,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">GTLB</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">56.59</td>
+        <td class="num">56.28</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1737,7 +2148,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">NOW</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">157.71</td>
+        <td class="num">158.96</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1753,7 +2164,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">OXY</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">64.44</td>
+        <td class="num">64.17</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1769,7 +2180,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">XLE</span></td>
         <td class="num" style="color:var(--amber)">80</td>
-        <td class="num">69.28</td>
+        <td class="num">69.33</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1785,7 +2196,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">ABBV</span></td>
         <td class="num" style="color:var(--amber)">72</td>
-        <td class="num">285.85</td>
+        <td class="num">285.64</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1801,7 +2212,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">EL</span></td>
         <td class="num" style="color:var(--amber)">72</td>
-        <td class="num">107.97</td>
+        <td class="num">108.67</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1817,7 +2228,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">HUM</span></td>
         <td class="num" style="color:var(--amber)">72</td>
-        <td class="num">423.39</td>
+        <td class="num">422.07</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -1849,7 +2260,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-23</td>
         <td><span class="ticker-tag">CCI</span></td>
         <td class="num" style="color:var(--amber)">70</td>
-        <td class="num">86.34</td>
+        <td class="num">85.97</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -2201,7 +2612,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-22</td>
         <td><span class="ticker-tag">PG</span></td>
         <td class="num" style="color:var(--amber)">70</td>
-        <td class="num">165.59</td>
+        <td class="num">164.50</td>
         <td class="num">
           <span class="chip na">—</span>
         </td>
@@ -2763,7 +3174,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">233.48</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+6.92%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2779,7 +3192,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">242.45</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+0.91%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2795,7 +3210,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">76.66</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+10.37%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2811,7 +3228,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">50.92</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+1.29%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2827,7 +3246,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">105.78</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+2.68%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2843,7 +3264,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">433.18</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+3.84%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2859,7 +3282,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">145.36</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+7.45%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2875,7 +3300,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">62.72</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+2.13%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2891,7 +3318,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">80</td>
         <td class="num">50.75</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+4.62%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2907,7 +3336,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">72</td>
         <td class="num">430.23</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-0.08%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2923,7 +3354,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">72</td>
         <td class="num">591.62</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+4.96%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2939,7 +3372,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num" style="color:var(--amber)">72</td>
         <td class="num">195.20</td>
         <td class="num">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+6.08%</span>
+          
         </td>
         <td class="num mob-hide">
           <span class="chip na">—</span>
@@ -2956,7 +3391,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">343.46</td>
         <td class="num">
           
-          <span class="chip up">+0.54%</span>
+          <span class="chip up">+1.07%</span>
           
         </td>
         <td class="num mob-hide">
@@ -2974,7 +3409,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">432.49</td>
         <td class="num">
           
-          <span class="chip up">+1.85%</span>
+          <span class="chip up">+1.40%</span>
           
         </td>
         <td class="num mob-hide">
@@ -2992,7 +3427,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">293.87</td>
         <td class="num">
           
-          <span class="chip up">+4.02%</span>
+          <span class="chip up">+3.86%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3010,7 +3445,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">224.99</td>
         <td class="num">
           
-          <span class="chip up">+3.06%</span>
+          <span class="chip up">+3.48%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3028,7 +3463,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">110.59</td>
         <td class="num">
           
-          <span class="chip up">+1.44%</span>
+          <span class="chip up">+1.58%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3046,7 +3481,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">50.73</td>
         <td class="num">
           
-          <span class="chip up">+0.94%</span>
+          <span class="chip up">+1.13%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3064,7 +3499,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">426.70</td>
         <td class="num">
           
-          <span class="chip up">+6.93%</span>
+          <span class="chip up">+5.83%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3082,7 +3517,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">1257.03</td>
         <td class="num">
           
-          <span class="chip up">+1.22%</span>
+          <span class="chip up">+1.14%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3100,7 +3535,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">29.58</td>
         <td class="num">
           
-          <span class="chip up">+1.11%</span>
+          <span class="chip up">+1.35%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3118,7 +3553,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">224.29</td>
         <td class="num">
           
-          <span class="chip up">+6.04%</span>
+          <span class="chip up">+6.01%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3136,7 +3571,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">161.76</td>
         <td class="num">
           
-          <span class="chip up">+4.06%</span>
+          <span class="chip up">+4.63%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3154,7 +3589,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">68.24</td>
         <td class="num">
           
-          <span class="chip up">+1.35%</span>
+          <span class="chip up">+1.43%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3172,7 +3607,7 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="num">100.76</td>
         <td class="num">
           
-          <span class="chip down">-2.94%</span>
+          <span class="chip down">-2.10%</span>
           
         </td>
         <td class="num mob-hide">
@@ -3878,7 +4313,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+10.90%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -3896,7 +4333,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+3.20%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -3914,7 +4353,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+8.59%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -3932,7 +4373,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-4.10%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -3950,7 +4393,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+8.98%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -3968,7 +4413,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+14.52%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -3986,7 +4433,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+9.95%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4004,7 +4453,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+8.03%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4022,7 +4473,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+1.85%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4040,7 +4493,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+5.19%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4058,7 +4513,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+3.44%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4076,7 +4533,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+6.29%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4094,7 +4553,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+4.79%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4112,7 +4573,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+7.09%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4130,7 +4593,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+5.34%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4148,7 +4613,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+6.92%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4166,7 +4633,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+2.01%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4184,7 +4653,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+3.25%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4202,7 +4673,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+0.23%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4220,7 +4693,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-4.82%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4238,7 +4713,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+8.82%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4256,7 +4733,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-15.01%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4274,7 +4753,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+5.61%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4292,7 +4773,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+1.26%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4310,7 +4793,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+5.35%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4328,7 +4813,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-0.10%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4346,7 +4833,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+1.68%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4364,7 +4853,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-10.32%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4382,7 +4873,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+2.92%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4400,7 +4893,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-0.56%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4411,14 +4906,16 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
         <td class="mono" style="color:var(--text-2)">2026-10-12</td>
         <td><span class="ticker-tag">PG</span></td>
         <td class="num" style="color:var(--amber)">72</td>
-        <td class="num">153.20</td>
+        <td class="num">152.19</td>
         <td class="num">
           
           <span class="chip up">+2.76%</span>
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+4.29%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4436,7 +4933,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+3.69%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4454,7 +4953,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-4.69%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4472,7 +4973,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip up">+9.44%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4490,7 +4993,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-1.78%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4508,7 +5013,9 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
           
         </td>
         <td class="num mob-hide">
-          <span class="chip na">—</span>
+          
+          <span class="chip down">-1.82%</span>
+          
         </td>
         <td class="num">
           <span class="chip na">—</span>
@@ -4523,6 +5030,6 @@ tbody tr:hover td { background:rgba(255,255,255,0.02); }
 
 
 </div><!-- /.page -->
-<div class="footer">SIGNAL MONITOR · BACKTEST ENGINE · 2026/10/23</div>
+<div class="footer">SIGNAL MONITOR · BACKTEST ENGINE · 2026/10/26</div>
 </body>
 </html>
