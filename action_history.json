@@ -1,33 +1,5 @@
 [
  {
-  "ts": "2026-06-23 23:49",
-  "buys": [
-   {
-    "ticker": "PSA",
-    "score": 80,
-    "price": 322.44000244140625
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "ARKK",
-    "why": "score 29"
-   },
-   {
-    "ticker": "VOO",
-    "why": "score 17"
-   },
-   {
-    "ticker": "QQQ",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "ARKK"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-24 01:55",
   "buys": [
    {
@@ -3782,5 +3754,22 @@
   ],
   "regime": "bear",
   "regime_spy": 0
+ },
+ {
+  "ts": "2026-10-29 06:57",
+  "buys": [
+   {
+    "ticker": "XOM",
+    "score": 82,
+    "price": 182.02000427246094
+   }
+  ],
+  "sells": [],
+  "added": [
+   "XOM"
+  ],
+  "removed": [],
+  "regime": "transitional",
+  "regime_spy": 47
  }
 ]

@@ -2370,14 +2370,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 57.76,
+      "current_price": 57.97,
       "current_date": "2026-10-28",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 19.91,
-      "float_pnl_pct": 3.98
+      "float_pnl": 22.25,
+      "float_pnl_pct": 4.45
     },
     {
       "id": "WDAY-2026-10-22",
@@ -2393,14 +2393,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 202.76,
+      "current_price": 204.36,
       "current_date": "2026-10-28",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": -4.32,
-      "float_pnl_pct": -0.72
+      "float_pnl": -3.59,
+      "float_pnl_pct": -0.6
     },
     {
       "id": "MRK-2026-10-22",
@@ -2425,6 +2425,29 @@
       "gapped": false,
       "pnl_gross": -15.0,
       "costs": 1.19
+    },
+    {
+      "id": "XOM-2026-10-28",
+      "ticker": "XOM",
+      "direction": "long",
+      "signal_date": "2026-10-28",
+      "entry_ts": "2026-10-29T06:57:49+08:00",
+      "entry_price": 182.02,
+      "shares": 2.746951,
+      "notional": 500.0,
+      "score": 82,
+      "status": "open",
+      "exit_date": null,
+      "exit_price": null,
+      "exit_reason": null,
+      "current_price": 182.02,
+      "current_date": "2026-10-28",
+      "pnl": null,
+      "pnl_pct": null,
+      "patterns_triggered": [],
+      "sector": "Energy",
+      "float_pnl": 0.0,
+      "float_pnl_pct": 0.0
     }
   ],
   "last_updated": "2026-10-28"
