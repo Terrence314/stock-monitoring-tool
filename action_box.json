@@ -1,35 +1,24 @@
 {
- "ts": "2026-10-29 06:57",
- "buys": [
-  {
-   "ticker": "XOM",
-   "price": 182.02000427246094,
-   "score": 82,
-   "reason": "Score 82 · BB 0.79 · RSI 67",
-   "stop": 176.56,
-   "target": 192.94,
-   "notional": 500.0,
-   "expiry": "11-11"
-  }
- ],
+ "ts": "2026-10-30 02:42",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "regime": "transitional",
- "regime_spy": 47,
- "regime_min": 80,
+ "no_action": true,
+ "regime": "bear",
+ "regime_spy": 0,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
- "slots_left": 3,
+ "slots_left": 2,
  "max_open": 5,
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 1.95,
- "breaker_usd": 97.63,
- "breaker_base": 9100.0,
+ "breaker_pct": 2.08,
+ "breaker_usd": 104.23,
+ "breaker_base": 9600.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 80,
+ "gate_day": 81,
  "gate_days": 90,
  "gate_winrate": 46.9,
  "gate_ci_low": 29.6,
@@ -40,5 +29,12 @@
  "gate_pf": 1.3,
  "gate_pnl": 93.55,
  "gate_trades": 32,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-10-29 18:42",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }

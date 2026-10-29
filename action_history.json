@@ -1,35 +1,5 @@
 [
  {
-  "ts": "2026-06-24 01:55",
-  "buys": [
-   {
-    "ticker": "INCY",
-    "score": 80,
-    "price": 104.90499877929688
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "ARKK",
-    "why": "score 29"
-   },
-   {
-    "ticker": "VOO",
-    "why": "score 17"
-   },
-   {
-    "ticker": "QQQ",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "INCY"
-  ],
-  "removed": [
-   "PSA"
-  ]
- },
- {
   "ts": "2026-06-24 04:05",
   "buys": [
    {
@@ -3771,5 +3741,16 @@
   "removed": [],
   "regime": "transitional",
   "regime_spy": 47
+ },
+ {
+  "ts": "2026-10-30 02:42",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "XOM"
+  ],
+  "regime": "bear",
+  "regime_spy": 0
  }
 ]

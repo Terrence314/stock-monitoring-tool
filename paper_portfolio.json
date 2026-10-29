@@ -2370,8 +2370,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 57.97,
-      "current_date": "2026-10-28",
+      "current_price": 56.43,
+      "current_date": "2026-10-29",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
@@ -2389,18 +2389,19 @@
       "shares": 2.941465,
       "notional": 600.0,
       "score": 90,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
+      "status": "closed",
+      "exit_date": "2026-10-29",
+      "exit_price": 196.69,
+      "exit_reason": "stop_loss",
       "current_price": 204.36,
       "current_date": "2026-10-28",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -22.73,
+      "pnl_pct": -3.79,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": -3.59,
-      "float_pnl_pct": -0.6
+      "gapped": true,
+      "pnl_gross": -21.44,
+      "costs": 1.29
     },
     {
       "id": "MRK-2026-10-22",
@@ -2440,15 +2441,15 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 182.02,
-      "current_date": "2026-10-28",
+      "current_price": 182.4,
+      "current_date": "2026-10-29",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Energy",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "float_pnl": 1.13,
+      "float_pnl_pct": 0.23
     }
   ],
-  "last_updated": "2026-10-28"
+  "last_updated": "2026-10-29"
 }
