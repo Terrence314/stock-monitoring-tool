@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from report_generator import (                                        # noqa: E402
     _build_action_box, GATE_START_DATE, GATE_MIN_TRADES, GATE_MIN_WINRATE,
+    GATE_MIN_PF,
 )
 
 def _days_from_window_start(n: int) -> str:
@@ -159,3 +160,65 @@ def test_empty_window_has_no_interval():
     assert box["gate_ci_low"] is None
     assert box["gate_enough"] is False
     assert box["gate_ready"] is False
+
+
+# ── C. The coded rule must match the pre-committed doc ────────────────────────
+#
+# gate-decision-2026-08-12.md fixed PASS as WR >= 45 AND PF >= 1.0 AND average
+# return > 0, before the outcome was known. The code ran WR > 50 OR PF >= 1.3,
+# so the site could pass a sample the doc fails, and fail one it passes.
+
+def test_thresholds_match_the_precommitted_doc():
+    assert GATE_MIN_WINRATE == 45.0
+    assert GATE_MIN_PF == 1.0
+
+
+def test_sample_meeting_all_three_criteria_passes_quality():
+    """46.7% WR, PF 1.05: failed the old rule, passes the doc."""
+    box = _gate(_trades(n_win=14, n_loss=16, win=120.0, loss=-100.0))
+
+    assert box["gate_quality_ok"] is True
+
+
+def test_exactly_on_the_winrate_floor_passes_quality():
+    box = _gate(_trades(n_win=18, n_loss=22, win=130.0, loss=-100.0))
+
+    assert box["gate_winrate"] == 45.0
+    assert box["gate_quality_ok"] is True
+
+
+def test_high_winrate_with_pf_below_one_fails_quality():
+    """60% WR, PF 0.9: the old OR let win rate alone carry this."""
+    box = _gate(_trades(n_win=18, n_loss=12, win=50.0, loss=-83.34))
+
+    assert box["gate_quality_ok"] is False
+
+
+def test_high_pf_with_winrate_below_floor_fails_quality():
+    """40% WR, PF 1.5: the old OR let PF alone carry this."""
+    box = _gate(_trades(n_win=12, n_loss=18, win=150.0, loss=-66.67))
+
+    assert box["gate_quality_ok"] is False
+
+
+def test_non_positive_average_return_fails_quality():
+    """Dollar PnL is positive, but the average percent return is not."""
+    trades = _trades(n_win=15, n_loss=15, win=120.0, loss=-100.0)
+    for t in trades:
+        t["pnl_pct"] = -1.0
+
+    assert _gate(trades)["gate_quality_ok"] is False
+
+
+def test_all_winners_at_the_floor_pass_quality():
+    """PF stays hidden as None, but no losses cannot fail PF >= 1.0."""
+    box = _gate(_trades(n_win=GATE_MIN_TRADES, n_loss=0))
+
+    assert box["gate_pf"] is None
+    assert box["gate_quality_ok"] is True
+
+
+def test_undersized_sample_never_passes_quality():
+    box = _gate(_trades(n_win=9, n_loss=1))
+
+    assert box["gate_quality_ok"] is False

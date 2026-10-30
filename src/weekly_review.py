@@ -19,9 +19,10 @@ CONFIG_FILE      = os.path.join("config", "config.json")
 SECRETS_FILE     = os.path.join("config", "secrets.json")
 DAY_TRADING_FILE = os.path.join("outputs", "day_trading_portfolio.json")
 
-# Validation gate thresholds (must match active-projects.md go-live gate)
-GATE_WIN_RATE    = 50.0   # %
-GATE_PROFIT_FACTOR = 1.3
+# Validation gate thresholds (must match GATE_MIN_* in report_generator.py and
+# gate-decision-2026-08-12.md)
+GATE_WIN_RATE    = 45.0   # %
+GATE_PROFIT_FACTOR = 1.0
 
 # Strategy unified and restarted June 13 — ignore pre-reset trades for gate calc
 VALIDATION_START = "2026-06-13"
@@ -108,11 +109,11 @@ def _project_day60(closed: list, days_elapsed: int) -> dict:
 
 
 def _go_live_status(win_rate: float, profit_factor: float, days: int) -> str:
-    gate_met = win_rate >= GATE_WIN_RATE or profit_factor >= GATE_PROFIT_FACTOR
+    gate_met = win_rate >= GATE_WIN_RATE and profit_factor >= GATE_PROFIT_FACTOR
     if days < 14:
         return "🕐 Too early — need more data"
     if gate_met:
-        return "✅ On track for go-live"
+        return "✅ On track for the gate (not a real-money signal)"
     if win_rate >= GATE_WIN_RATE - 5 or profit_factor >= GATE_PROFIT_FACTOR - 0.1:
         return "⚠️ Watch — borderline"
     return "🔴 Off track — review strategy"

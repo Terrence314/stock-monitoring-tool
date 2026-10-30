@@ -1061,12 +1061,12 @@ if (document.documentElement.getAttribute('data-boot-mode') === 'beginner') {
           倉位 7–12% 戶口 <span style="color:var(--muted)">paper 模擬</span>
           · 空位 {{ action_box.slots_left }}/{{ action_box.max_open }}
         </span>
-        <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + (勝率>50% 或 獲利因子PF≥1.3) + 總盈虧為正 + 斷路器未觸發。驗證窗由 {{ action_box.gate_start }} 起計 — 即 Action Box 同 paper 引擎統一用同一個選股決策、倉位改按戶口淨值計（7–12%，上限 {{ action_box.max_open }} 倉）之後開倉嘅單。之前嗰批用固定 $1,000–$2,000 落單、一日只決策一次，喺一個細戶口度單一倉位食到 43%；混埋一齊計 PF 同勝率就係量度兩個唔同策略，兩個都驗唔到。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
+        <span title="真錢上線門檻：{{ action_box.gate_days }}日驗證 + 至少 {{ action_box.gate_min_trades }} 筆已平倉 + 勝率≥45% + 獲利因子PF≥1.0 + 平均回報>0 + 總盈虧為正 + 斷路器未觸發。過關只係可以開第二個驗證期,唔等於可以落真錢。驗證窗由 {{ action_box.gate_start }} 起計 — 即 Action Box 同 paper 引擎統一用同一個選股決策、倉位改按戶口淨值計（7–12%，上限 {{ action_box.max_open }} 倉）之後開倉嘅單。之前嗰批用固定 $1,000–$2,000 落單、一日只決策一次，喺一個細戶口度單一倉位食到 43%；混埋一齊計 PF 同勝率就係量度兩個唔同策略，兩個都驗唔到。勝率後面括號係 95% 信賴區間 — 樣本細嗰陣個數字可以擺動好大。PF 顯示「—」代表未有輸單，即係樣本唔夠，唔係無敵。">
           真錢門檻 Day {{ action_box.gate_day }}/{{ action_box.gate_days }}
           · 勝率 {{ action_box.gate_winrate if action_box.gate_winrate is not none else '—' }}%{% if action_box.gate_ci_low is not none %} <span style="color:var(--muted)">[{{ action_box.gate_ci_low }}–{{ action_box.gate_ci_high }}]</span>{% endif %}
           · PF {{ action_box.gate_pf if action_box.gate_pf is not none else '—' }}
           · PnL ${{ action_box.gate_pnl }}
-          · {% if action_box.gate_ready %}🎓 GO-LIVE READY{% elif not action_box.gate_enough %}<span style="color:var(--amber)">🔬 樣本不足 ({{ action_box.gate_trades }}/{{ action_box.gate_min_trades }} 筆已平倉)</span>{% else %}🔬 驗證中 ({{ action_box.gate_trades }} 筆已平倉){% endif %}
+          · {% if action_box.gate_ready %}✅ 過第一關 · 下一步第二驗證期,未可落真錢{% elif not action_box.gate_enough %}<span style="color:var(--amber)">🔬 樣本不足 ({{ action_box.gate_trades }}/{{ action_box.gate_min_trades }} 筆已平倉)</span>{% else %}🔬 驗證中 ({{ action_box.gate_trades }} 筆已平倉){% endif %}
         </span>
       </div>
 
@@ -3268,10 +3268,11 @@ GATE_DAYS         = 90             # 60 -> 90 on 2026-10-12: Terrence chose EXTE
 GATE_MIN_TRADES   = 30             # no quality verdict below this sample size.
                                    # Without a floor, two winners and zero
                                    # losers satisfied quality_ok outright.
-GATE_MIN_WINRATE  = 50.0           # %
-GATE_MIN_PF       = 1.3            # profit factor alternative — win-rate-only
-                                   # gates structurally fail breakout/trend styles
-                                   # that profit at 40% win rates via large winners
+# PASS = WR >= 45 AND PF >= 1.0 AND average return > 0, as pre-committed in
+# gate-decision-2026-08-12.md. A pass earns a second out-of-sample window, not
+# real money. Do not loosen these after reading the numbers.
+GATE_MIN_WINRATE  = 45.0           # %
+GATE_MIN_PF       = 1.0            # profit factor
 BREAKER_LIMIT_PCT = -5.0           # monthly circuit breaker
 
 
@@ -3491,11 +3492,18 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
     # be reported as a passing 99.0 — infinite PF means "no losses observed
     # yet", which is a statement about sample size, not about edge.
     enough_data = n_window >= GATE_MIN_TRADES
-    quality_ok = enough_data and (
-        (winrate is not None and winrate > GATE_MIN_WINRATE)
-        or (profit_factor is not None
-            and profit_factor != float("inf")
-            and profit_factor >= GATE_MIN_PF)
+    avg_return_pct = (
+        sum(t.get("pnl_pct") or 0 for t in closed_in_window) / n_window
+        if n_window else None
+    )
+    # inf still clears the PF floor here: no losses cannot fail "PF >= 1.0".
+    # The quality verdict needs the sample floor above, and gate_pf stays
+    # hidden, so an all-winners sample never displays as a score.
+    quality_ok = (
+        enough_data
+        and winrate is not None and winrate >= GATE_MIN_WINRATE
+        and profit_factor is not None and profit_factor >= GATE_MIN_PF
+        and avg_return_pct is not None and avg_return_pct > 0
     )
     gate_ready = (
         days_in >= GATE_DAYS
@@ -3538,6 +3546,7 @@ def _build_action_box(stocks_sorted: list, output_dir: str) -> dict:
         "gate_pf":       (profit_factor if profit_factor != float("inf") else None),
         "gate_pnl":      pnl_window,
         "gate_trades":   len(closed_in_window),
+        "gate_quality_ok": quality_ok,
         "gate_ready":    gate_ready,
     }
 

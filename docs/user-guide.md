@@ -34,7 +34,7 @@ your hands move it.**
    - ✅ **今日無行動** → close the page. Done.
 3. Check the two status lines under the actions:
    - **斷路器 (circuit breaker)** — monthly PnL vs −5% limit. If 🛑 TRIPPED: no new buys this month, period.
-   - **真錢門檻 (go-live gate)** — Day N/90, win rate, PnL. This decides when real money starts.
+   - **真錢門檻 (go-live gate)** — Day N/90, win rate, PnL. A pass earns a second validation window, not real money.
 
 That's the whole routine. Everything below is reference.
 
@@ -136,15 +136,16 @@ Alert hygiene: 4-hour cooldown per ticker per rule — you get ONE ping per even
 - Track record on the paper trading page (linked from dashboard)
 
 ### The go-live gate (started 2026-06-11)
-Real money unlocks ONLY when ALL of these are true:
+The gate passes ONLY when ALL of these are true:
 1. **90 days** of validation elapsed (window from 2026-08-09; extended from 60 on 2026-10-12)
-2. **Win rate >50%** on trades closed in the window
-3. **Total PnL positive**
-4. Circuit breaker not tripped
+2. **At least 30 closed trades** in the window
+3. **Win rate ≥45%, profit factor ≥1.0, and average return >0** (pre-committed in `gate-decision-2026-08-12.md`)
+4. **Total PnL positive**
+5. Circuit breaker not tripped
 
-Progress shows in the Action Box daily. The decision makes itself from data.
+Progress shows in the Action Box daily. A pass earns a second out-of-sample window. Real money stays a separate, later decision by Terrence.
 
-### When gate opens — the plan
+### If the second window also passes — the plan
 - Start under HK$50k, ~HK$8k per position
 - Same rules as paper: −8% stop / +12% target, ≤10 day hold, max 5-6 concurrent positions
 - −5% monthly circuit breaker stays — tool shows 🛑 STOP TRADING, you stop
