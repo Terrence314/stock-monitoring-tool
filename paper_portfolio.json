@@ -2366,18 +2366,19 @@
       "shares": 9.009009,
       "notional": 500.0,
       "score": 80,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
+      "status": "closed",
+      "exit_date": "2026-10-30",
+      "exit_price": 53.84,
+      "exit_reason": "stop_loss",
       "current_price": 56.65,
       "current_date": "2026-10-29",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -16.19,
+      "pnl_pct": -3.24,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 7.48,
-      "float_pnl_pct": 1.5
+      "gapped": false,
+      "pnl_gross": -15.0,
+      "costs": 1.19
     },
     {
       "id": "WDAY-2026-10-22",
@@ -2441,15 +2442,15 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 183.29,
-      "current_date": "2026-10-29",
+      "current_price": 186.46,
+      "current_date": "2026-10-30",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Energy",
-      "float_pnl": 3.49,
-      "float_pnl_pct": 0.7
+      "float_pnl": 12.17,
+      "float_pnl_pct": 2.43
     }
   ],
-  "last_updated": "2026-10-29"
+  "last_updated": "2026-10-30"
 }

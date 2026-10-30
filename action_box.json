@@ -1,10 +1,10 @@
 {
- "ts": "2026-10-30 07:06",
+ "ts": "2026-10-31 02:13",
  "buys": [],
  "sells": [],
  "no_action": true,
  "regime": "bear",
- "regime_spy": 30,
+ "regime_spy": 10,
  "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
@@ -13,12 +13,12 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 1.34,
- "breaker_usd": 66.82,
+ "breaker_pct": 1.44,
+ "breaker_usd": 71.98,
  "breaker_base": 9600.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 81,
+ "gate_day": 82,
  "gate_days": 90,
  "gate_winrate": 45.5,
  "gate_ci_low": 28.5,
@@ -29,5 +29,12 @@
  "gate_pf": 1.21,
  "gate_pnl": 70.82,
  "gate_trades": 33,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-10-30 18:14",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
