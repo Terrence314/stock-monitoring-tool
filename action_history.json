@@ -1,32 +1,5 @@
 [
  {
-  "ts": "2026-06-24 04:05",
-  "buys": [
-   {
-    "ticker": "RXT",
-    "score": 70,
-    "price": 7.269999980926514
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 17"
-   },
-   {
-    "ticker": "QQQ",
-    "why": "score 25"
-   }
-  ],
-  "added": [
-   "RXT"
-  ],
-  "removed": [
-   "ARKK",
-   "INCY"
-  ]
- },
- {
   "ts": "2026-06-24 06:13",
   "buys": [
    {
@@ -3752,5 +3725,21 @@
   ],
   "regime": "bear",
   "regime_spy": 0
+ },
+ {
+  "ts": "2026-10-31 06:49",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "XOM",
+    "why": "score 80"
+   }
+  ],
+  "added": [
+   "XOM"
+  ],
+  "removed": [],
+  "regime": "bear",
+  "regime_spy": 30
  }
 ]

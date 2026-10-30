@@ -1,10 +1,16 @@
 {
- "ts": "2026-10-31 02:26",
+ "ts": "2026-10-31 06:49",
  "buys": [],
- "sells": [],
- "no_action": true,
+ "sells": [
+  {
+   "ticker": "XOM",
+   "float_pct": 2.2,
+   "why": "score 80"
+  }
+ ],
+ "no_action": false,
  "regime": "bear",
- "regime_spy": 10,
+ "regime_spy": 30,
  "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
@@ -13,8 +19,8 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 1.08,
- "breaker_usd": 54.14,
+ "breaker_pct": 1.06,
+ "breaker_usd": 52.79,
  "breaker_base": 9600.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
