@@ -7,7 +7,7 @@
 <style>
   :root {
     --navy: #1F3864;
-    --accent: #8A5A00;
+    --accent: #B02418;
     --page: #FFFFFF;
     --ink: #1A1A1A;
     --ink-2: #6B6B6B;
@@ -91,27 +91,27 @@
 <div class="wrap">
   <header class="titlebar">
     <h1>PM Capital Allocation Dashboard</h1>
-    <p>2026-10-30 11:17 HKT <span class="light">· EXECUTIVE BRIEF</span> · <a href="./dashboard.html" style="color:#cfe0ff">詳細儀表板 →</a></p>
+    <p>2026-10-31 11:01 HKT <span class="light">· EXECUTIVE BRIEF</span> · <a href="./dashboard.html" style="color:#cfe0ff">詳細儀表板 →</a></p>
   </header>
 
   <div class="cards">
-      <section class="card" style="border-color:#8A5A00;">
+      <section class="card" style="border-color:#B02418;">
         <p class="card-label">PM 信心指數</p>
-        <p class="card-headline" style="color:#8A5A00">
-          <span class="dot" aria-hidden="true">🟡</span>65.6
+        <p class="card-headline" style="color:#B02418">
+          <span class="dot" aria-hidden="true">🔴</span>49.4
         </p>
-        <p class="card-support">SELECTIVE · Deploy 25-50%</p>
-        <p class="card-note">信心指數 60-75 — 只做最高信心標的,倉位 25-50%</p>
+        <p class="card-support">CASH · Deploy 0%</p>
+        <p class="card-note">信心指數 &lt;60 — 空倉觀望,不開新倉</p>
         
       </section>
-      <section class="card" style="border-color:#8A5A00;background:#FFFCF3;">
+      <section class="card" style="border-color:#6B6B6B;background:#F4F4F4;">
         <p class="card-label">今晚交易</p>
-        <p class="card-headline" style="color:#8A5A00">
-          <span class="dot" aria-hidden="true"></span>USO
+        <p class="card-headline" style="color:#6B6B6B">
+          <span class="dot" aria-hidden="true"></span>NO TRADE
         </p>
-        <p class="card-support">順勢突破 · Conv 9.6</p>
-        <p class="card-note">$168.19 · Oil ETF</p>
-        <p class="card-more">其餘:TSLA、XBI、SCHD、TLT</p>
+        <p class="card-support">Conv —</p>
+        <p class="card-note">空倉制度封鎖今晚交易。</p>
+        
       </section>
       <section class="card" style="border-color:#1E7B34;background:#F1F8F2;">
         <p class="card-label">長線首選</p>
@@ -119,26 +119,26 @@
           <span class="dot" aria-hidden="true">🟢</span>USO
         </p>
         <p class="card-support">Oil ETF · Score 9.6</p>
-        <p class="card-note">$168.19 · 120 日 25.9%</p>
-        <p class="card-more">其餘:XBI、SCHD、CIBR、MSFT +1</p>
+        <p class="card-note">$168.83 · 120 日 21.76%</p>
+        <p class="card-more">其餘:SCHD、XBI、MSFT</p>
       </section>
       <section class="card" style="border-color:#B02418;background:#FDF2F1;">
         <p class="card-label">避免交易</p>
         <p class="card-headline" style="color:#B02418">
-          <span class="dot" aria-hidden="true">🔴</span>GOOGL
+          <span class="dot" aria-hidden="true">🔴</span>META
         </p>
         <p class="card-support">NO TRADE</p>
         <p class="card-note">跌破 MA200 且 MACD 為負 — 下降趨勢中</p>
-        <p class="card-more">其餘:NOW、BOTZ、META、IBKR、GLD +4</p>
+        <p class="card-more">其餘:GOOGL、NOW、APP、SOXX、IBKR +8</p>
       </section></div>
 
-  <div class="conclusion">行動結論:🟡 可選擇性部署 Selective</div>
+  <div class="conclusion">行動結論:🔴 空倉</div>
   <div class="summary">
-    <div><b>首選:</b> <span class="muted">USO 順勢突破</span></div>
-    <div><b>建議部署:</b> 25-50%</div>
-    <div><b>避免:</b> <span class="danger">GOOGL</span></div>
+    <div><b>首選:</b> <span class="muted">無 — 今晚不開新倉</span></div>
+    <div><b>建議部署:</b> 0%</div>
+    <div><b>避免:</b> <span class="danger">META</span></div>
   </div>
-  
+  <p class="suppressed">市場制度為空倉 — 今晚交易已被制度規則封鎖,無論個股信心分幾高。</p>
 
   <section class="detail">
     <h2>信心指數組成</h2>
@@ -146,10 +146,10 @@
         <div class="component">
           <div class="component-head">
             <span>SPY 趨勢</span>
-            <span class="mono">25.0 / 25</span>
+            <span class="mono">12.5 / 25</span>
           </div>
-          <div class="bar"><span style="width:100%"></span></div>
-          <p class="component-detail">價&gt;MA50 · 價&gt;MA200 · MA50&gt;MA200 · 20日動能正</p>
+          <div class="bar"><span style="width:50%"></span></div>
+          <p class="component-detail">價&gt;MA200 · MA50&gt;MA200</p>
         </div>
         <div class="component">
           <div class="component-head">
@@ -162,10 +162,10 @@
         <div class="component">
           <div class="component-head">
             <span>VIX 波動</span>
-            <span class="mono">19.7 / 25</span>
+            <span class="mono">16.0 / 25</span>
           </div>
-          <div class="bar"><span style="width:79%"></span></div>
-          <p class="component-detail">VIX 17.2 — 偏高</p>
+          <div class="bar"><span style="width:64%"></span></div>
+          <p class="component-detail">VIX 19.4 — 偏高</p>
         </div>
         <div class="component">
           <div class="component-head">
@@ -175,12 +175,12 @@
           <div class="bar"><span style="width:36%"></span></div>
           <p class="component-detail">8/11 板塊企穩 MA50 · 防守板塊領先</p>
         </div></div>
-    <p class="provenance">信號出處:同一套 per-ticker 機械信號,樣本內 100 筆已平倉 — 勝率 37.0% / PF 0.39 / 淨 −$2,763.46,未通過自身 gate(PASS 需 WR≥45% + PF≥1.0)。以下標的為排序參考,非已驗證 edge。市場制度卡(第一格)不依賴該套信號。</p>
+    <p class="provenance">信號出處:同一套 per-ticker 機械信號,樣本內 101 筆已平倉 — 勝率 36.6% / PF 0.39 / 淨 −$2,779.65,未通過自身 gate(PASS 需 WR≥45% + PF≥1.0)。以下標的為排序參考,非已驗證 edge。市場制度卡(第一格)不依賴該套信號。</p>
     <footer>
       掃描 21 隻 · Finnhub 即時報價 21 隻 ·
-      歷史與 VIX 來自 yfinance · 合格數 今晚 5 /
-      長線 6 /
-      避免 10
+      歷史與 VIX 來自 yfinance · 合格數 今晚 0 /
+      長線 4 /
+      避免 14
     </footer>
   </section>
 </div>
