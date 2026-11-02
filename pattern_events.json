@@ -62255,5 +62255,240 @@
     "type": "start",
     "price": 18.83,
     "score": 20
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "ICE",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 172.28,
+    "score": 90
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "INTU",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 352.1
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "SO",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 94.61,
+    "score": 90
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "CVNA",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 72.0,
+    "score": 85
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "PYPL",
+    "pattern": "BB Squeeze Breakout Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 58.78,
+    "score": 82
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "CB",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 368.98,
+    "score": 80
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "DIS",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 113.11
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "PGR",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 233.92,
+    "score": 80
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "BILL",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 49.72
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "GM",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 89.94,
+    "score": 75
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "IDXX",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "start",
+    "price": 671.64,
+    "score": 75
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "LLY",
+    "pattern": "RSI Overbought",
+    "direction": "sell",
+    "type": "start",
+    "price": 1410.99,
+    "score": 75
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "LLY",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 1410.99,
+    "score": 75
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "MA",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 658.1,
+    "score": 75
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "NCLH",
+    "pattern": "Volume Breakout",
+    "direction": "buy",
+    "type": "end",
+    "price": 17.94
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "REGN",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 961.26,
+    "score": 75
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "EMR",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 165.96
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "TXN",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "end",
+    "price": 302.02
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "ISRG",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 436.87
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "ISRG",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 436.87,
+    "score": 72
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "SCHD",
+    "pattern": "BB Walking Up",
+    "direction": "buy",
+    "type": "start",
+    "price": 35.9,
+    "score": 67
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "DIA",
+    "pattern": "MACD Bull",
+    "direction": "buy",
+    "type": "end",
+    "price": 519.34
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "DIA",
+    "pattern": "MACD Bear",
+    "direction": "sell",
+    "type": "start",
+    "price": 519.34,
+    "score": 20
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "VTI",
+    "pattern": "Volume Breakdown",
+    "direction": "sell",
+    "type": "start",
+    "price": 370.0,
+    "score": 30
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "GLD",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "start",
+    "price": 361.65,
+    "score": 10
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "GLD",
+    "pattern": "BB Walking Down",
+    "direction": "sell",
+    "type": "start",
+    "price": 361.65,
+    "score": 10
+  },
+  {
+    "date": "2026-11-02",
+    "ticker": "SPYL.L",
+    "pattern": "RSI Oversold Bounce",
+    "direction": "buy",
+    "type": "start",
+    "price": 18.91,
+    "score": 10
   }
 ]
