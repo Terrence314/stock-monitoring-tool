@@ -1,10 +1,10 @@
 {
- "ts": "2026-11-03 06:10",
+ "ts": "2026-11-04 03:46",
  "buys": [],
  "sells": [],
  "no_action": true,
  "regime": "bear",
- "regime_spy": 20,
+ "regime_spy": 10,
  "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
@@ -18,7 +18,7 @@
  "breaker_base": 0.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
- "gate_day": 85,
+ "gate_day": 86,
  "gate_days": 90,
  "gate_winrate": 44.1,
  "gate_ci_low": 27.4,
@@ -29,5 +29,12 @@
  "gate_pf": 1.16,
  "gate_pnl": 54.63,
  "gate_trades": 34,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-11-03 19:46",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
