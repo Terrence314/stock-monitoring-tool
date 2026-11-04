@@ -1,38 +1,5 @@
 [
  {
-  "ts": "2026-06-25 01:55",
-  "buys": [
-   {
-    "ticker": "RUN",
-    "score": 84,
-    "price": 15.181599617004395
-   },
-   {
-    "ticker": "TLT",
-    "score": 82,
-    "price": 87.3949966430664
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 17"
-   },
-   {
-    "ticker": "QQQ",
-    "why": "score 17"
-   }
-  ],
-  "added": [
-   "QQQ",
-   "RUN",
-   "VOO"
-  ],
-  "removed": [
-   "NCLH"
-  ]
- },
- {
   "ts": "2026-06-25 03:45",
   "buys": [
    {
@@ -3737,5 +3704,26 @@
   "removed": [],
   "regime": "bull",
   "regime_spy": 50
+ },
+ {
+  "ts": "2026-11-05 04:18",
+  "buys": [
+   {
+    "ticker": "MSFT",
+    "score": 75,
+    "price": 558.6851196289062
+   }
+  ],
+  "sells": [],
+  "added": [
+   "MSFT"
+  ],
+  "removed": [
+   "LYFT",
+   "SO",
+   "WM"
+  ],
+  "regime": "bull",
+  "regime_spy": 57
  }
 ]

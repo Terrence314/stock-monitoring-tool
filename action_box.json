@@ -1,25 +1,21 @@
 {
- "ts": "2026-11-05 04:05",
+ "ts": "2026-11-05 04:18",
  "buys": [
   {
-   "ticker": "LYFT",
-   "price": 18.645000457763672,
-   "score": 100,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.30",
-   "stop": 18.09,
-   "target": 19.76,
-   "notional": 600.0,
-   "expiry": "11-18",
-   "ai_review": {
-    "verdict": "APPROVED",
-    "summary": "1.【多頭理據】LYFT 展現強勁多頭排列，價格（18.645）遠高於所有關鍵均線（MA5: 16.9, MA20: 16.77, MA60: 16.37），且 RSI 動能強勁（69.8），MACD 在零軸上方金叉並動能擴張（0.32, 0.07），同時伴隨爆量（成交量是均量的1.66倍），這些都指向強烈的上漲趨勢和市場買盤意願。\n\n2.【空頭理據】儘管技術指標強勁，但 RSI 已接近超買區間（69.8），顯示短期上漲動能可能過熱。同時，目標價（19.76）與當前價格（18.645）之間僅有約 6% 的空間，而止損（18.09）距離當前價格約 3% 的跌幅，報酬風險比不夠理想。\n\n3.【關鍵"
-   }
+   "ticker": "MSFT",
+   "price": 558.6851196289062,
+   "score": 75,
+   "reason": "BB squeeze just fired upward — bands expanding, BB 1.16",
+   "stop": 541.92,
+   "target": 592.21,
+   "notional": 350.0,
+   "expiry": "11-18"
   }
  ],
  "sells": [],
  "no_action": false,
  "regime": "bull",
- "regime_spy": 50,
+ "regime_spy": 57,
  "regime_min": 70,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
@@ -28,37 +24,21 @@
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
- "breaker_pct": 0.0,
- "breaker_usd": 0.0,
- "breaker_base": 0.0,
+ "breaker_pct": -0.45,
+ "breaker_usd": -22.51,
+ "breaker_base": 1100.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 87,
  "gate_days": 90,
- "gate_winrate": 44.1,
- "gate_ci_low": 27.4,
- "gate_ci_high": 60.8,
+ "gate_winrate": 42.9,
+ "gate_ci_low": 26.5,
+ "gate_ci_high": 59.3,
  "gate_min_trades": 30,
  "gate_enough": true,
  "gate_start": "2026-08-09",
- "gate_pf": 1.16,
- "gate_pnl": 54.63,
- "gate_trades": 34,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-11-04 20:05",
-  "passed": 1,
-  "blocked": 2,
-  "blocked_list": [
-   {
-    "ticker": "SO",
-    "reason": "AI review REJECTED"
-   },
-   {
-    "ticker": "WM",
-    "reason": "AI review REJECTED"
-   }
-  ],
-  "caution_tags": []
- }
+ "gate_pf": 1.09,
+ "gate_pnl": 32.12,
+ "gate_trades": 35,
+ "gate_ready": false
 }
