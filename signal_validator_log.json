@@ -1,9 +1,20 @@
 [
   {
-    "date": "2026-11-03",
-    "ran_at": "2026-11-03 19:46",
-    "passed": [],
-    "blocked": [],
+    "date": "2026-11-04",
+    "ran_at": "2026-11-04 20:05",
+    "passed": [
+      "LYFT"
+    ],
+    "blocked": [
+      {
+        "ticker": "SO",
+        "reason": "AI review REJECTED"
+      },
+      {
+        "ticker": "WM",
+        "reason": "AI review REJECTED"
+      }
+    ],
     "cautions": []
   }
 ]

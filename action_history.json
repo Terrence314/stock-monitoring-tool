@@ -1,29 +1,5 @@
 [
  {
-  "ts": "2026-06-24 23:24",
-  "buys": [
-   {
-    "ticker": "NCLH",
-    "score": 80,
-    "price": 21.219999313354492
-   },
-   {
-    "ticker": "TLT",
-    "score": 72,
-    "price": 87.34500122070312
-   }
-  ],
-  "sells": [],
-  "added": [
-   "NCLH",
-   "TLT"
-  ],
-  "removed": [
-   "RXT",
-   "VOO"
-  ]
- },
- {
   "ts": "2026-06-25 01:55",
   "buys": [
    {
@@ -3732,5 +3708,34 @@
   ],
   "regime": "bear",
   "regime_spy": 20
+ },
+ {
+  "ts": "2026-11-05 04:05",
+  "buys": [
+   {
+    "ticker": "LYFT",
+    "score": 100,
+    "price": 18.645000457763672
+   },
+   {
+    "ticker": "SO",
+    "score": 92,
+    "price": 93.88999938964844
+   },
+   {
+    "ticker": "WM",
+    "score": 80,
+    "price": 238.80499267578125
+   }
+  ],
+  "sells": [],
+  "added": [
+   "LYFT",
+   "SO",
+   "WM"
+  ],
+  "removed": [],
+  "regime": "bull",
+  "regime_spy": 50
  }
 ]
