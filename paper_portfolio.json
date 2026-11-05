@@ -2462,14 +2462,14 @@
       "shares": 32.180208,
       "notional": 600.0,
       "score": 100,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 18.76,
-      "current_date": "2026-11-04",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-11-05",
+      "exit_price": 16.52,
+      "exit_reason": "stop_loss",
+      "current_price": 16.67,
+      "current_date": "2026-11-05",
+      "pnl": -69.81,
+      "pnl_pct": -11.63,
       "patterns_triggered": [
         "Golden Cross",
         "MACD Bull",
@@ -2477,8 +2477,9 @@
         "BB Squeeze Breakout Up"
       ],
       "sector": "Technology",
-      "float_pnl": 3.54,
-      "float_pnl_pct": 0.59
+      "gapped": true,
+      "pnl_gross": -68.54,
+      "costs": 1.27
     },
     {
       "id": "MSFT-2026-11-04",
@@ -2490,19 +2491,20 @@
       "shares": 0.626471,
       "notional": 350.0,
       "score": 75,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 558.69,
-      "current_date": "2026-11-04",
-      "pnl": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "exit_date": "2026-11-05",
+      "exit_price": 509.01,
+      "exit_reason": "stop_loss",
+      "current_price": 520.99,
+      "current_date": "2026-11-05",
+      "pnl": -32.15,
+      "pnl_pct": -9.19,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "gapped": true,
+      "pnl_gross": -31.12,
+      "costs": 1.03
     }
   ],
-  "last_updated": "2026-11-04"
+  "last_updated": "2026-11-05"
 }

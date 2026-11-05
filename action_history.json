@@ -1,39 +1,5 @@
 [
  {
-  "ts": "2026-06-25 03:45",
-  "buys": [
-   {
-    "ticker": "RUN",
-    "score": 84,
-    "price": 14.595000267028809
-   },
-   {
-    "ticker": "TLT",
-    "score": 82,
-    "price": 87.375
-   },
-   {
-    "ticker": "BIIB",
-    "score": 80,
-    "price": 201.09500122070312
-   }
-  ],
-  "sells": [
-   {
-    "ticker": "VOO",
-    "why": "score 17"
-   },
-   {
-    "ticker": "QQQ",
-    "why": "score 17"
-   }
-  ],
-  "added": [
-   "BIIB"
-  ],
-  "removed": []
- },
- {
   "ts": "2026-06-25 05:23",
   "buys": [
    {
@@ -3725,5 +3691,16 @@
   ],
   "regime": "bull",
   "regime_spy": 57
+ },
+ {
+  "ts": "2026-11-05 09:20",
+  "buys": [],
+  "sells": [],
+  "added": [],
+  "removed": [
+   "MSFT"
+  ],
+  "regime": "bear",
+  "regime_spy": 10
  }
 ]
