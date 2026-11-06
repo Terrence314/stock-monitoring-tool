@@ -1,8 +1,14 @@
 {
- "ts": "2026-11-07 03:39",
+ "ts": "2026-11-07 03:51",
  "buys": [],
- "sells": [],
- "no_action": true,
+ "sells": [
+  {
+   "ticker": "MSFT",
+   "float_pct": 0.0,
+   "why": "score 24"
+  }
+ ],
+ "no_action": false,
  "regime": "bear",
  "regime_spy": 10,
  "regime_min": null,
@@ -29,12 +35,5 @@
  "gate_pf": 0.85,
  "gate_pnl": -69.84,
  "gate_trades": 37,
- "gate_ready": false,
- "validator": {
-  "ran_at": "2026-11-06 19:39",
-  "passed": 0,
-  "blocked": 0,
-  "blocked_list": [],
-  "caution_tags": []
- }
+ "gate_ready": false
 }

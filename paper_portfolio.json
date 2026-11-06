@@ -2584,18 +2584,19 @@
       "shares": 0.629723,
       "notional": 350.0,
       "score": 75,
-      "status": "open",
-      "exit_date": null,
-      "exit_price": null,
-      "exit_reason": null,
-      "current_price": 555.8,
+      "status": "closed",
+      "exit_date": "2026-11-06",
+      "exit_price": 525.0,
+      "exit_reason": "stop_loss",
+      "current_price": 532.3,
       "current_date": "2026-11-06",
-      "pnl": null,
-      "pnl_pct": null,
+      "pnl": -20.44,
+      "pnl_pct": -5.84,
       "patterns_triggered": [],
       "sector": "Technology",
-      "float_pnl": 0.0,
-      "float_pnl_pct": 0.0
+      "gapped": true,
+      "pnl_gross": -19.4,
+      "costs": 1.04
     }
   ],
   "last_updated": "2026-11-06"

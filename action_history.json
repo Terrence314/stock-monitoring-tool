@@ -1,25 +1,5 @@
 [
  {
-  "ts": "2026-06-25 23:44",
-  "buys": [
-   {
-    "ticker": "MRK",
-    "score": 80,
-    "price": 123.9800033569336
-   },
-   {
-    "ticker": "NCLH",
-    "score": 80,
-    "price": 21.264999389648438
-   }
-  ],
-  "sells": [],
-  "added": [],
-  "removed": [
-   "WY"
-  ]
- },
- {
   "ts": "2026-06-26 02:10",
   "buys": [
    {
@@ -3673,6 +3653,22 @@
    "VRSK",
    "WM"
   ],
+  "regime": "bear",
+  "regime_spy": 10
+ },
+ {
+  "ts": "2026-11-07 03:51",
+  "buys": [],
+  "sells": [
+   {
+    "ticker": "MSFT",
+    "why": "score 24"
+   }
+  ],
+  "added": [
+   "MSFT"
+  ],
+  "removed": [],
   "regime": "bear",
   "regime_spy": 10
  }
