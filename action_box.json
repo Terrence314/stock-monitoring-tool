@@ -1,52 +1,21 @@
 {
- "ts": "2026-11-06 09:23",
- "buys": [
-  {
-   "ticker": "VRSK",
-   "price": 197.85000610351562,
-   "score": 82,
-   "reason": "Score 82 · BB 0.74 · RSI 61",
-   "stop": 191.91,
-   "target": 209.72,
-   "notional": 500.0,
-   "expiry": "11-20"
-  },
-  {
-   "ticker": "WM",
-   "price": 238.49000549316406,
-   "score": 80,
-   "reason": "Score 80 · BB 0.75 · RSI 63",
-   "stop": 231.34,
-   "target": 252.8,
-   "notional": 500.0,
-   "expiry": "11-20"
-  },
-  {
-   "ticker": "LYFT",
-   "price": 18.739999771118164,
-   "score": 80,
-   "reason": "BB squeeze just fired upward — bands expanding, BB 1.31",
-   "stop": 18.18,
-   "target": 19.86,
-   "notional": 500.0,
-   "expiry": "11-20"
-  }
- ],
+ "ts": "2026-11-07 03:39",
+ "buys": [],
  "sells": [],
- "no_action": false,
- "regime": "bull",
- "regime_spy": 60,
- "regime_min": 70,
+ "no_action": true,
+ "regime": "bear",
+ "regime_spy": 10,
+ "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
- "slots_left": 5,
+ "slots_left": 1,
  "max_open": 5,
  "stop_pct": 3.0,
  "target_pct": 6.0,
  "hold_days": 10,
  "breaker_pct": -2.49,
  "breaker_usd": -124.47,
- "breaker_base": 1450.0,
+ "breaker_base": 3300.0,
  "breaker_limit": -5.0,
  "breaker_trip": false,
  "gate_day": 89,
@@ -60,5 +29,12 @@
  "gate_pf": 0.85,
  "gate_pnl": -69.84,
  "gate_trades": 37,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-11-06 19:39",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
