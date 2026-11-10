@@ -2519,14 +2519,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 200.6,
-      "current_date": "2026-11-09",
+      "current_price": 203.93,
+      "current_date": "2026-11-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Industrials",
-      "float_pnl": 6.95,
-      "float_pnl_pct": 1.39
+      "float_pnl": 15.57,
+      "float_pnl_pct": 3.11
     },
     {
       "id": "WM-2026-11-06",
@@ -2542,8 +2542,8 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 236.61,
-      "current_date": "2026-11-09",
+      "current_price": 238.2,
+      "current_date": "2026-11-10",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
@@ -2600,5 +2600,5 @@
       "costs": 1.04
     }
   ],
-  "last_updated": "2026-11-09"
+  "last_updated": "2026-11-10"
 }

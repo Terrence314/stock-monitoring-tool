@@ -1,10 +1,10 @@
 {
- "ts": "2026-11-10 06:53",
+ "ts": "2026-11-11 03:55",
  "buys": [],
  "sells": [],
  "no_action": true,
  "regime": "bear",
- "regime_spy": 33,
+ "regime_spy": 13,
  "regime_min": null,
  "regime_min_floor": 35,
  "sizing_basis": "paper",
@@ -30,5 +30,12 @@
  "gate_pnl": -139.22,
  "gate_trades": 39,
  "gate_quality_ok": false,
- "gate_ready": false
+ "gate_ready": false,
+ "validator": {
+  "ran_at": "2026-11-10 19:56",
+  "passed": 0,
+  "blocked": 0,
+  "blocked_list": [],
+  "caution_tags": []
+ }
 }
