@@ -2519,14 +2519,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 206.74,
-      "current_date": "2026-11-12",
+      "current_price": 205.98,
+      "current_date": "2026-11-11",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Industrials",
-      "float_pnl": 22.87,
-      "float_pnl_pct": 4.57
+      "float_pnl": 20.55,
+      "float_pnl_pct": 4.11
     },
     {
       "id": "WM-2026-11-06",
@@ -2542,14 +2542,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 243.33,
-      "current_date": "2026-11-12",
+      "current_price": 240.29,
+      "current_date": "2026-11-11",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Industrials",
-      "float_pnl": 10.23,
-      "float_pnl_pct": 2.05
+      "float_pnl": 3.77,
+      "float_pnl_pct": 0.75
     },
     {
       "id": "LYFT-2026-11-06",
@@ -2600,5 +2600,5 @@
       "costs": 1.04
     }
   ],
-  "last_updated": "2026-11-12"
+  "last_updated": "2026-11-13"
 }
