@@ -2543,14 +2543,14 @@
       "exit_date": null,
       "exit_price": null,
       "exit_reason": null,
-      "current_price": 244.11,
-      "current_date": "2026-11-12",
+      "current_price": 244.33,
+      "current_date": "2026-11-16",
       "pnl": null,
       "pnl_pct": null,
       "patterns_triggered": [],
       "sector": "Industrials",
-      "float_pnl": 11.78,
-      "float_pnl_pct": 2.36
+      "float_pnl": 12.24,
+      "float_pnl_pct": 2.45
     },
     {
       "id": "LYFT-2026-11-06",
@@ -2601,5 +2601,5 @@
       "costs": 1.04
     }
   ],
-  "last_updated": "2026-11-14"
+  "last_updated": "2026-11-16"
 }
